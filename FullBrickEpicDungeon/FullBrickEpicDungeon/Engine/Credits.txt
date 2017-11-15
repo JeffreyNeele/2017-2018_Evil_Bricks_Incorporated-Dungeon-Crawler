@@ -1,0 +1,3 @@
+﻿Credits:
+
+Game uses a modified version of the GameManagement folder of the Tick Tick Game.
