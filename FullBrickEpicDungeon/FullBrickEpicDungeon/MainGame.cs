@@ -26,20 +26,8 @@ namespace FullBrickEpicDungeon
         /// </summary>
         protected override void Initialize()
         {
-            int haai;
             // TODO: Add your initialization logic here
-
-            //Een leuke test comment haha
             base.Initialize();
-            //
-                //
-                //
-                //
-                //
-                //
-                //
-                // test 2
-                ///
         }
 
         /// <summary>
