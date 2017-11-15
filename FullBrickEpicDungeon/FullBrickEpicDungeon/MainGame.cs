@@ -27,9 +27,7 @@ namespace FullBrickEpicDungeon
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            int y;
             base.Initialize();
-            int x = 3;
         }
 
         /// <summary>
