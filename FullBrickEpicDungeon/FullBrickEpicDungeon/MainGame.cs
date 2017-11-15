@@ -29,6 +29,7 @@ namespace FullBrickEpicDungeon
             // TODO: Add your initialization logic here
 
             base.Initialize();
+            int x = 3;
         }
 
         /// <summary>
