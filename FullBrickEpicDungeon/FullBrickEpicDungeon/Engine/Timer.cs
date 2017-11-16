@@ -24,6 +24,11 @@ class Timer
         return currentime >= targettime;
     }
 
+    public void Reset()
+    {
+        currentime = 0;
+    }
+
     public bool IsPaused
     {
         get { return paused; }
