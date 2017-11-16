@@ -51,6 +51,7 @@
     <Compile Include="Engine\GameStateManager.cs" />
     <Compile Include="Engine\IGameLoopObject.cs" />
     <Compile Include="Engine\InputHelper.cs" />
+    <Compile Include="Engine\Timer.cs" />
     <Compile Include="MainGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
