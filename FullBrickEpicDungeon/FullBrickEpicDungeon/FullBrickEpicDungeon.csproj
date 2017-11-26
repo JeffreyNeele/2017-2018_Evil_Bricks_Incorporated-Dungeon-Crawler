@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Engine\Credits.txt" />
+    <Content Include="Engine\Shader.fx" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
