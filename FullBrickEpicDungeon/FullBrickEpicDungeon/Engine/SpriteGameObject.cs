@@ -4,13 +4,14 @@ using Microsoft.Xna.Framework.Graphics;
 public class SpriteGameObject : GameObject
 {
     protected SpriteSheet sprite;
-    protected Vector2 origin;
+    protected Vector2 origin, cameraOffset;
+    protected bool affectedByCamera;
     public bool PerPixelCollisionDetection = true;
     CameraHelper cameraHelper;
-    public SpriteGameObject(string assetName, int layer = 0, string id = "", int sheetIndex = 0)
+    public SpriteGameObject(string assetName, int layer = 0, string id = "", int sheetIndex = 0, bool affectedByCamera = true)
         : base(layer, id)
     {
-        offset = new Vector2(0, 0);
+        this.affectedByCamera = affectedByCamera;
         if (assetName != "")
         {
             sprite = new SpriteSheet(assetName, sheetIndex);
@@ -19,8 +20,16 @@ public class SpriteGameObject : GameObject
         {
             sprite = null;
         }
-    }    
+    }
+    public override void Update(GameTime gameTime)
+    {
+        if (affectedByCamera)
+        {
+            cameraOffset = GameEnvironment.CameraHelper.CameraOffset;
+        }
 
+        base.Update(gameTime);
+    }
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         if (!visible || sprite == null)
@@ -28,7 +37,7 @@ public class SpriteGameObject : GameObject
             return;
         }
         
-        sprite.Draw(spriteBatch, this.GlobalPosition + GameEnvironment.CameraHelper.CameraOffset, origin);
+        sprite.Draw(spriteBatch, this.GlobalPosition + cameraOffset, origin);
     }
 
     public SpriteSheet Sprite
@@ -69,6 +78,17 @@ public class SpriteGameObject : GameObject
         set { origin = value; }
     }
 
+    public bool CameraManipulation
+    {
+        get { return affectedByCamera; }
+        set { affectedByCamera = value; }
+    }
+
+    public Vector2 CameraOffset
+    {
+        get { return cameraOffset; }
+        set { cameraOffset = value; }
+    }
     public override Rectangle BoundingBox
     {
         get
