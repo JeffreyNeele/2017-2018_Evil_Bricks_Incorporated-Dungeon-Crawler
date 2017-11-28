@@ -10,23 +10,23 @@ public class GameEnvironment : Game
     protected InputHelper inputHelper;
     protected Matrix spriteScale;
     protected Point windowSize;
-
     protected static Point screen;
     protected static GameStateManager gameStateManager;
     protected static Random random;
     protected static AssetManager assetManager;
     protected static GameSettingsManager gameSettingsManager;
+    protected static CameraHelper cameraHelper;
 
     public GameEnvironment()
     {
         graphics = new GraphicsDeviceManager(this);
-
         inputHelper = new InputHelper();
         gameStateManager = new GameStateManager();
         spriteScale = Matrix.CreateScale(1, 1, 1);
         random = new Random();
         assetManager = new AssetManager(Content);
         gameSettingsManager = new GameSettingsManager();
+        cameraHelper = new CameraHelper(new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height));
     }
 
     public static Point Screen
@@ -54,7 +54,10 @@ public class GameEnvironment : Game
     {
         get { return gameSettingsManager; }
     }
-
+    public static CameraHelper CameraHelper
+    {
+        get { return cameraHelper; }
+    }
     public bool FullScreen
     {
         get { return graphics.IsFullScreen; }
@@ -96,7 +99,7 @@ public class GameEnvironment : Game
         viewport.Width = width;
         viewport.Height = height;
         GraphicsDevice.Viewport = viewport;
-
+        cameraHelper.WindowSize = new Vector2(viewport.X, viewport.Y);
         inputHelper.Scale = new Vector2((float)GraphicsDevice.Viewport.Width / screen.X,
                                         (float)GraphicsDevice.Viewport.Height / screen.Y);
         inputHelper.Offset = new Vector2(viewport.X, viewport.Y);

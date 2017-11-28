@@ -6,7 +6,7 @@ public class SpriteGameObject : GameObject
     protected SpriteSheet sprite;
     protected Vector2 origin;
     public bool PerPixelCollisionDetection = true;
-
+    CameraHelper cameraHelper;
     public SpriteGameObject(string assetName, int layer = 0, string id = "", int sheetIndex = 0)
         : base(layer, id)
     {
@@ -27,7 +27,8 @@ public class SpriteGameObject : GameObject
         {
             return;
         }
-        sprite.Draw(spriteBatch, this.GlobalPosition + offset, origin);
+        
+        sprite.Draw(spriteBatch, this.GlobalPosition + GameEnvironment.CameraHelper.CameraOffset, origin);
     }
 
     public SpriteSheet Sprite
