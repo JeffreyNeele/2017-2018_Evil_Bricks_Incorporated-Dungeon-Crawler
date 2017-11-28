@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 class Button : SpriteGameObject
 {
     protected bool isPressed;
+    // Dictionary for the different states that a button can have eg on / off
     protected Dictionary<string, int> stateNamesList;
     public Button(string AssetName, int layer = 0, string id = "") : base(AssetName, layer, id)
     {
@@ -14,12 +12,14 @@ class Button : SpriteGameObject
         stateNamesList = new Dictionary<string, int>();
     }
 
+    //This Method checks if the button was pressed
     public override void HandleInput(InputHelper inputHelper)
     {
         isPressed = inputHelper.MouseLeftButtonPressed() &&
             BoundingBox.Contains((int)inputHelper.MousePosition.X, (int)inputHelper.MousePosition.Y);
     }
 
+    // Add a new state to the button
     public void AddState(int sheetindex, string id)
     {
         if(sheetindex <= Sprite.NumberSheetElements)
@@ -32,6 +32,7 @@ class Button : SpriteGameObject
         }
     }
 
+    // Switch to an already defined state
     public void SwitchState(string id)
     {
         int index;
