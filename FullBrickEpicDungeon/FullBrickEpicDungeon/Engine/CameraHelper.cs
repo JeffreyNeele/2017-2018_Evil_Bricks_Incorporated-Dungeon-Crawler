@@ -7,11 +7,10 @@ public class CameraHelper
     public CameraHelper(Vector2 windowSize)
     {
         this.position = Vector2.Zero;
-        cameraOffset = Vector2.Zero;
     }
     public void Reset(Vector2 playerPosition, Vector2 gameSize, Point screenSize)
     {
-        position = Vector2.Zero;
+        this.position = Vector2.Zero;
     }
     // Place the position of the Camera on the middle of the screen
     public void Center()

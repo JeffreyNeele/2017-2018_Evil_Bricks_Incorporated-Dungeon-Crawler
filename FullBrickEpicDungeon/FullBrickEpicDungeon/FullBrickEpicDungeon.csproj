@@ -57,6 +57,7 @@
     <Compile Include="Engine\ParticleEffects\DropParticleEffect.cs" />
     <Compile Include="Engine\ParticleEffects\FadeParticleEffect.cs" />
     <Compile Include="Engine\ParticleEffects\ParticleEffect.cs" />
+    <Compile Include="Engine\ScrollingTextBox.cs" />
     <Compile Include="Engine\Timer.cs" />
     <Compile Include="MainGame.cs" />
     <Compile Include="Program.cs" />
