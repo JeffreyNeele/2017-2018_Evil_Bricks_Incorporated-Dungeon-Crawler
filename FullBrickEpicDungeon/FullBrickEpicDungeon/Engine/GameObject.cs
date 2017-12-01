@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 
 public abstract class GameObject : IGameLoopObject
 {
-    protected Vector2 offset;
     protected GameObject parent;
     protected Vector2 position, velocity;
     protected int layer;
@@ -64,11 +63,6 @@ public abstract class GameObject : IGameLoopObject
         }
     }
 
-    public Vector2 Offset
-    {
-        get { return offset; }
-        set { offset = value; }
-    }
 
 
     public GameObject Root
