@@ -11,7 +11,6 @@ abstract class TimedAbility : Ability
 
     protected override void Update(GameTime gameTime)
     {
-
         base.Update(gameTime);
     }
 

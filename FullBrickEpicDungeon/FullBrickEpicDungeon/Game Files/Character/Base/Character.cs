@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 
-abstract partial class Character
+abstract partial class Character : AnimatedGameObject
 {
     protected int hitpoints, armour, gold;
     Weapon weapon;
@@ -42,7 +42,14 @@ abstract partial class Character
 
         if (remove)
         {
-           inventory.Remove(item);
+            try
+            {
+                inventory.Remove(item);
+            }
+            catch
+            {
+                throw new ArgumentOutOfRangeException("No such item was found in this characters inventory!");
+            }
         }
         else
         {
@@ -56,15 +63,6 @@ abstract partial class Character
         return inventory.Contains(item);
     }
 
-    public void UseAbility()
-    {
-
-    }
-
-    public void UseSpecial()
-    {
-
-    }
 
     public void PassiveAbility()
     {

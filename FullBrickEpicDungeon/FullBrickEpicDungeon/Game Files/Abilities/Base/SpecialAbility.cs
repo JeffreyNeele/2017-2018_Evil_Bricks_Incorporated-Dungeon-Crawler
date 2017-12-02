@@ -1,0 +1,7 @@
+﻿class SpecialAbility
+{
+    protected SpecialAbility()
+    {
+
+    }
+}

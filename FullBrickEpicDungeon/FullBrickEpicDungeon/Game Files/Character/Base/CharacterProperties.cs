@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-abstract partial class Character
+abstract partial class Character : AnimatedGameObject
 {
     // Main attributes of the character
     public int HP

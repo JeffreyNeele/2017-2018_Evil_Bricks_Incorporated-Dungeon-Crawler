@@ -1,6 +1,6 @@
-﻿abstract class LightSource
+﻿abstract class LightSource : SpriteGameObject
 {
-    protected LightSource()
+    protected LightSource(string assetName) : base(assetName)
     {
 
     }

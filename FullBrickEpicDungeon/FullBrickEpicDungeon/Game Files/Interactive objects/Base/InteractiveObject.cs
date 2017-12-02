@@ -1,7 +1,9 @@
-﻿abstract class InteractiveObject
+﻿abstract class InteractiveObject : SpriteGameObject
 {
-    protected InteractiveObject()
+    protected InteractiveObject(string assetName) : base(assetName)
     {
 
     }
+
+
 }
