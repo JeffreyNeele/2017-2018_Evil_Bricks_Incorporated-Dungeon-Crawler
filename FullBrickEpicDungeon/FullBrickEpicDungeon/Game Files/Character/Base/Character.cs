@@ -5,11 +5,11 @@ abstract partial class Character
 {
     protected int hitpoints, armour, gold;
     Weapon weapon;
-    List<Gear> inventory;
+    List<Equipment> inventory;
     protected Character(Weapon weapon)
     {
         this.weapon = weapon;
-        inventory = new List<Gear>();
+        inventory = new List<Equipment>();
     }
 
     // Transfers money to another character
@@ -33,7 +33,7 @@ abstract partial class Character
 
     }
  
-    public void ChangeItems(Gear item, bool remove = false)
+    public void ChangeItems(Equipment item, bool remove = false)
     {
         if(item == null)
         {
@@ -51,7 +51,7 @@ abstract partial class Character
 
     }
 
-    public bool OwnsItem(Gear item)
+    public bool OwnsItem(Equipment item)
     {
         return inventory.Contains(item);
     }

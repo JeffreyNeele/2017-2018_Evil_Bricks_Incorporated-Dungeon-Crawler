@@ -64,7 +64,7 @@
     <Compile Include="Game Files\Abilities\Base\TimedAbility.cs" />
     <Compile Include="Game Files\Character\Base\Character.cs" />
     <Compile Include="Game Files\Character\Base\CharacterProperties.cs" />
-    <Compile Include="Game Files\Gear\Base\Gear.cs" />
+    <Compile Include="Game Files\Equipment\Base\Equipment.cs" />
     <Compile Include="Game Files\Interactive objects\Base\InteractiveObject.cs" />
     <Compile Include="Game Files\Lightsources\Base\LightSource.cs" />
     <Compile Include="Game Files\Weapons\Base\Weapon.cs" />
