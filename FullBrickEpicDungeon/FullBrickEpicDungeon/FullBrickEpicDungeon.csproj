@@ -59,7 +59,15 @@
     <Compile Include="Engine\ParticleEffects\ParticleEffect.cs" />
     <Compile Include="Engine\ScrollingTextBox.cs" />
     <Compile Include="Engine\Timer.cs" />
-    <Compile Include="Game Files\Playable Characters\Character.cs" />
+    <Compile Include="Game Files\Abilities\Base\Ability.cs" />
+    <Compile Include="Game Files\Abilities\Base\PassiveAbility.cs" />
+    <Compile Include="Game Files\Abilities\Base\TimedAbility.cs" />
+    <Compile Include="Game Files\Character\Base\Character.cs" />
+    <Compile Include="Game Files\Character\Base\CharacterProperties.cs" />
+    <Compile Include="Game Files\Gear\Base\Gear.cs" />
+    <Compile Include="Game Files\Interactive objects\Base\InteractiveObject.cs" />
+    <Compile Include="Game Files\Lightsources\Base\LightSource.cs" />
+    <Compile Include="Game Files\Weapons\Base\Weapon.cs" />
     <Compile Include="MainGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -82,10 +90,7 @@
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Game Files\Interactive objects\" />
-    <Folder Include="Game Files\Lightsources\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
