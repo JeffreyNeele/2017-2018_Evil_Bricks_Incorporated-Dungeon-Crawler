@@ -4,8 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-class ProjectileAbility
+class Talismaniac
 {
+    public Talismaniac()
+    {
 
+    }
 }
 

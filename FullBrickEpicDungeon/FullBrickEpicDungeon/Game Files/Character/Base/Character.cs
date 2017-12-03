@@ -7,6 +7,7 @@ abstract partial class Character : AnimatedGameObject
     protected Weapon weapon;
     protected List<Equipment> inventory;
     string type;
+    bool playerControlled;
     protected Character(Weapon weapon, string type)
     {
         this.weapon = weapon;

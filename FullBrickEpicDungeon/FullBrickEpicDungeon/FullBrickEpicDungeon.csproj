@@ -66,6 +66,10 @@
     <Compile Include="Game Files\Abilities\Types\ProjectileAbility.cs" />
     <Compile Include="Game Files\Character\Base\Character.cs" />
     <Compile Include="Game Files\BaseAttributes.cs" />
+    <Compile Include="Game Files\Character\Types\Lightbringer.cs" />
+    <Compile Include="Game Files\Character\Types\Shadowhunter.cs" />
+    <Compile Include="Game Files\Character\Types\ShieldMaiden.cs" />
+    <Compile Include="Game Files\Character\Types\Talismaniac.cs" />
     <Compile Include="Game Files\Cutscenes\1LarryShits.cs" />
     <Compile Include="Game Files\Cutscenes\Cutscene.cs" />
     <Compile Include="Game Files\Equipment\Base\Equipment.cs" />
@@ -74,6 +78,7 @@
     <Compile Include="Game Files\Game states\PlayingState.cs" />
     <Compile Include="Game Files\Game states\SettingsState.cs" />
     <Compile Include="Game Files\Game states\TitleMenu.cs" />
+    <Compile Include="Game Files\IBaseAI.cs" />
     <Compile Include="Game Files\Interactive objects\Base\InteractiveObject.cs" />
     <Compile Include="Game Files\Level\LevelGameLoop.cs" />
     <Compile Include="Game Files\Level\LevelLoading.cs" />
