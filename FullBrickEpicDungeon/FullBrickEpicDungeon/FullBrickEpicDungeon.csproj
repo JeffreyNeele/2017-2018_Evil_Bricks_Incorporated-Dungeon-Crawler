@@ -66,7 +66,15 @@
     <Compile Include="Game Files\Abilities\Types\ProjectileAbility.cs" />
     <Compile Include="Game Files\Character\Base\Character.cs" />
     <Compile Include="Game Files\BaseAttributes.cs" />
+    <Compile Include="Game Files\Character\Base\CharacterProperties.cs" />
+    <Compile Include="Game Files\Cutscenes\1LarryShits.cs" />
+    <Compile Include="Game Files\Cutscenes\Cutscene.cs" />
     <Compile Include="Game Files\Equipment\Base\Equipment.cs" />
+    <Compile Include="Game Files\Game states\CharacterSelection.cs" />
+    <Compile Include="Game Files\Game states\CutsceneState.cs" />
+    <Compile Include="Game Files\Game states\PlayingState.cs" />
+    <Compile Include="Game Files\Game states\SettingsState.cs" />
+    <Compile Include="Game Files\Game states\TitleMenu.cs" />
     <Compile Include="Game Files\Interactive objects\Base\InteractiveObject.cs" />
     <Compile Include="Game Files\Lightsources\Base\LightSource.cs" />
     <Compile Include="Game Files\Monsters\Base\Monster.cs" />
@@ -95,7 +103,6 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Game Files\Game states\" />
     <Folder Include="Game Files\HUD\" />
     <Folder Include="Game Files\Level\" />
     <Folder Include="Game Files\Shop\" />

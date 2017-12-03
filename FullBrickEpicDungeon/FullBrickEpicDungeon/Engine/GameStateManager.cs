@@ -6,6 +6,7 @@ public class GameStateManager : IGameLoopObject
 {
     Dictionary<string, IGameLoopObject> gameStates;
     IGameLoopObject currentGameState;
+    IGameLoopObject previousGameState;
 
     public GameStateManager()
     {
@@ -27,6 +28,7 @@ public class GameStateManager : IGameLoopObject
     {
         if (gameStates.ContainsKey(name))
         {
+            previousGameState = currentGameState;
             currentGameState = gameStates[name];
         }
         else
