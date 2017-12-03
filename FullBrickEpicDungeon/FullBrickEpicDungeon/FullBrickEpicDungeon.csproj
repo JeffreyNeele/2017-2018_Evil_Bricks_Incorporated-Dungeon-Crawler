@@ -79,6 +79,7 @@
     <Compile Include="Game Files\Game states\SettingsState.cs" />
     <Compile Include="Game Files\Game states\TitleMenu.cs" />
     <Compile Include="Game Files\IBaseAI.cs" />
+    <Compile Include="Game Files\Interactive objects\Base\DroppedItem.cs" />
     <Compile Include="Game Files\Interactive objects\Base\InteractiveObject.cs" />
     <Compile Include="Game Files\Level\LevelGameLoop.cs" />
     <Compile Include="Game Files\Level\LevelLoading.cs" />
