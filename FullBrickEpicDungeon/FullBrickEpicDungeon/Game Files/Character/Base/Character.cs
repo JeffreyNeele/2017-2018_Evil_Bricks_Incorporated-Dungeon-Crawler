@@ -1,17 +1,22 @@
 ﻿using System.Collections.Generic;
 using System;
+using Microsoft.Xna.Framework;
 
 abstract partial class Character : AnimatedGameObject
 {
     protected BaseAttributes attributes;
     protected Weapon weapon;
     protected List<Equipment> inventory;
-    string type;
     protected Character(Weapon weapon, string type)
     {
         this.weapon = weapon;
         inventory = new List<Equipment>();
         attributes = new BaseAttributes(type);
+    }
+
+    public override void Update(GameTime gameTime)
+    {
+        base.Update(gameTime);
     }
 
     // Transfers money to another character
@@ -28,11 +33,31 @@ abstract partial class Character : AnimatedGameObject
         }
     }
 
+    public void CollisionChecker()
+    {
+        GameObjectList monsterList = GameWorld.Find("monsterLIST") as GameObjectList;
+        GameObjectList objectList = GameWorld.Find("objectLIST") as GameObjectList;
+        // TODO: Add Tilefield collision with walls puzzles etc, (not doable atm as it isn't programmed as of writing this)
+        foreach(Monster monsterobj in monsterList.Children)
+        {
+            if (monsterobj.CollidesWith(this))
+            {
+                this.TakeDamage(monsterobj.Attributes.Attack);
+            }
+        }
+        foreach(InteractiveObject intObj in objectList.Children)
+        {
+            if (intObj.CollidesWith(this))
+            {
+                intObj.IsInteracting = true;
+                intObj.TargetCharacter = this;
+            }
+        }
+    }
     public void ChangeWeapon(Weapon weapon)
     {
         this.weapon = weapon;
         // Drop the weapon on the floor after it changes
-
     }
  
     public void ChangeItems(Equipment item, bool remove = false)
@@ -50,7 +75,7 @@ abstract partial class Character : AnimatedGameObject
             }
             catch
             {
-                throw new ArgumentOutOfRangeException("No such item was found in this characters inventory!");
+                throw new ArgumentOutOfRangeException("No such item was found in " + this.attributes.Type + "'s inventory!");
             }
         }
         else
