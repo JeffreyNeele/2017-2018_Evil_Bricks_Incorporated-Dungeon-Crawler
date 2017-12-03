@@ -39,4 +39,8 @@ class Timer
         get { return targettime; }
         set { targettime = value; }
     }
+    public float SecondsElapsed
+    {
+        get { return currentime; }
+    }
 }
