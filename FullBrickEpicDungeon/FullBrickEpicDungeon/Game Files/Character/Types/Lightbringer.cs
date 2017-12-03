@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-class Lightbringer
+class Lightbringer : Character
 {
-    public Lightbringer()
+    public Lightbringer(Weapon weapon) : base(weapon, "Lightbringer")
     {
 
     }

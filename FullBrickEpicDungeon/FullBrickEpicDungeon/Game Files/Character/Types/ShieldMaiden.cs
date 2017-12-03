@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-class ShieldMaiden
+class ShieldMaiden : Character
 {
-    public ShieldMaiden()
+    public ShieldMaiden(Weapon weapon) : base(weapon, "Shieldmaiden")
     {
 
     }

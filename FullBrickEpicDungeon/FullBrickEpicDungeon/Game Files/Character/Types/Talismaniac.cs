@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-class Talismaniac
+class Talismaniac : Character
 {
-    public Talismaniac()
+    public Talismaniac(Weapon weapon) : base(weapon, "Talismaniac")
     {
 
     }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-class Shadowhunter
+class Shadowhunter : Character
 {
-    public Shadowhunter()
+    public Shadowhunter(Weapon weapon) : base(weapon, "Shadowhunter")
     {
 
     }
