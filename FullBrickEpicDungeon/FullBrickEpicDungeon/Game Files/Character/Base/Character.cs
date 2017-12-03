@@ -3,14 +3,15 @@ using System;
 
 abstract partial class Character : AnimatedGameObject
 {
-    BaseAttributes attributes;
-    Weapon weapon;
-    List<Equipment> inventory;
-    protected Character(Weapon weapon)
+    protected BaseAttributes attributes;
+    protected Weapon weapon;
+    protected List<Equipment> inventory;
+    string type;
+    protected Character(Weapon weapon, string type)
     {
         this.weapon = weapon;
         inventory = new List<Equipment>();
-        attributes = new BaseAttributes();
+        attributes = new BaseAttributes(type);
     }
 
     // Transfers money to another character
@@ -74,4 +75,5 @@ abstract partial class Character : AnimatedGameObject
         get { return attributes; }
         set { attributes = value; }
     }
+
 }

@@ -3,8 +3,11 @@ using System.Collections.Generic;
 
 class Projectile : SpriteGameObject
 {
-    protected Projectile(string assetName) : base (assetName)
+    protected bool piercing;
+    protected Projectile(bool piercing, string assetName) : base (assetName)
     {
-
+        this.piercing = piercing;
     }
+
+
 }

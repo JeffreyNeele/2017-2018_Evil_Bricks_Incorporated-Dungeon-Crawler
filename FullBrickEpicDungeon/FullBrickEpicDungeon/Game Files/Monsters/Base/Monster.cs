@@ -5,9 +5,9 @@ using System.Collections.Generic;
 abstract class Monster : SpriteGameObject
 {
     BaseAttributes attributes;
-    public Monster(string assetName) : base(assetName)
+    public Monster(string assetName, string type) : base(assetName)
     {
-        attributes = new BaseAttributes();
+        attributes = new BaseAttributes(type);
     }
 
     public BaseAttributes Attributes

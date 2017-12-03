@@ -2,9 +2,9 @@
 {
     BaseAttributes equipmentstatistic;
     string ID;
-    protected Equipment(string assetName, string id, int sheetIndex, int layer = 0) : base(assetName, layer, id, sheetIndex)
+    protected Equipment(string type, string assetName, string id, int sheetIndex, int layer = 0) : base(assetName, layer, id, sheetIndex)
     {
-        equipmentstatistic = new BaseAttributes();
+        equipmentstatistic = new BaseAttributes(type);
     }
 
     public BaseAttributes Statistics

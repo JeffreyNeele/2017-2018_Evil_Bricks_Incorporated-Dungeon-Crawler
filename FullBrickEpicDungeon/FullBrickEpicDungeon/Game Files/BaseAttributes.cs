@@ -1,7 +1,12 @@
 ﻿
 class BaseAttributes
 {
-    private int hitpoints, armour, gold, movementspeed;
+    public BaseAttributes(string id)
+    {
+        type = id;
+    }
+    private int hitpoints, armour, attack, gold, movementspeed;
+    private string type;
     public int HP
     {
         get { return hitpoints; }
@@ -21,5 +26,14 @@ class BaseAttributes
     {
         get { return movementspeed; }
         set { movementspeed = value; }
+    }
+    public int Attack
+    {
+        get { return attack; }
+        set { attack = value; }
+    }
+    public string Type
+    {
+        get { return type; }
     }
 }
