@@ -7,10 +7,11 @@ namespace FullBrickEpicDungeon
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class DungeonCrawler : Game
+    public class DungeonCrawler : GameEnvironment
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        /*GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;*/
+
 
         public DungeonCrawler()
         {
@@ -40,6 +41,15 @@ namespace FullBrickEpicDungeon
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            gameStateManager.AddGameState("titleMenu", new TitleMenuState());
+ /*           gameStateManager.AddGameState("helpState", new HelpState());
+            gameStateManager.AddGameState("playingState", new PlayingState(Content));
+            gameStateManager.AddGameState("levelMenu", new LevelMenuState());
+            gameStateManager.AddGameState("gameOverState", new GameOverState());
+            gameStateManager.AddGameState("levelFinishedState", new LevelFinishedState());*/
+            gameStateManager.SwitchTo("titleMenu");
+
+            AssetManager.PlayMusic("Sounds/snd_music");
         }
 
         /// <summary>
