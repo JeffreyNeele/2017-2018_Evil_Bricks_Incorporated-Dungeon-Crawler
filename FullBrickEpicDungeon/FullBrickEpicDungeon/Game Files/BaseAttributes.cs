@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-abstract partial class Character : AnimatedGameObject
+﻿
+class BaseAttributes
 {
-    // Main attributes of the character
+    private int hitpoints, armour, gold, movementspeed;
     public int HP
     {
         get { return hitpoints; }
@@ -21,5 +16,10 @@ abstract partial class Character : AnimatedGameObject
     {
         get { return gold; }
         set { gold = value; }
+    }
+    public int MovementSpeed
+    {
+        get { return movementspeed; }
+        set { movementspeed = value; }
     }
 }

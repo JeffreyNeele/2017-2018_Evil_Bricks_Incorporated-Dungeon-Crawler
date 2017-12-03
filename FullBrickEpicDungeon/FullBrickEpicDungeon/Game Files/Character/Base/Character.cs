@@ -3,26 +3,27 @@ using System;
 
 abstract partial class Character : AnimatedGameObject
 {
-    protected int hitpoints, armour, gold;
+    BaseAttributes attributes;
     Weapon weapon;
     List<Equipment> inventory;
     protected Character(Weapon weapon)
     {
         this.weapon = weapon;
         inventory = new List<Equipment>();
+        attributes = new BaseAttributes();
     }
 
     // Transfers money to another character
-    public void TransferMoney(int amount, Character target)
+    public void TransferGold(int amount, Character target)
     {
         if (target == this)
         {
-            this.gold += amount;
+            this.attributes.Gold += amount;
         }
         else
         {
-            this.gold -= amount;
-            target.gold += amount;
+            this.attributes.Gold -= amount;
+            target.attributes.Gold += amount;
         }
     }
 
@@ -63,12 +64,14 @@ abstract partial class Character : AnimatedGameObject
         return inventory.Contains(item);
     }
 
-
-    public void PassiveAbility()
+    public void TakeDamage(int damage)
     {
-
+        this.attributes.HP -= this.attributes.HP - (damage - (int)(0.3F * this.attributes.Armour));
     }
 
-
-
+    public BaseAttributes Attributes
+    {
+        get { return attributes; }
+        set { attributes = value; }
+    }
 }
