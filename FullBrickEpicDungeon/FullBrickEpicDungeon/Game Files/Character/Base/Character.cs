@@ -43,7 +43,7 @@ abstract partial class Character : AnimatedGameObject
         if(!IsDowned)
         {
             base.HandleInput(inputHelper);
-
+            
             //Input keys for basic AA and abilities
             if (inputHelper.KeyPressed(Keys.Q))
                 this.weapon.Attack();
@@ -153,11 +153,12 @@ abstract partial class Character : AnimatedGameObject
         }
     }
 
-    //Will need additional information from subclasses
-    //Method that respawns a character when the reviveTimer is expired
+    //TO DISCUSS: Amount of gold lost on death when not revived, maybe a sound plays when someone respawns
+    //Method that respawns a character when the reviveTimer is expired. When respawning the character will lose a portion of its gold.
     public void Die()
     {
-        
+        this.attributes.HP = this.baseattributes.HP;
+        this.attributes.Gold = this.attributes.Gold - (this.attributes.Gold / 10);
         this.position = StartPosition;
     }
 
