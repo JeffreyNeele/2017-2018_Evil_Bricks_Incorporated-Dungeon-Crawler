@@ -6,6 +6,7 @@ class Projectile : SpriteGameObject
 {
     protected bool piercing;
     protected int damage;
+    protected Vector2 speed;
     protected Projectile(int damage, string assetName, bool piercing = false) : base (assetName)
     {
         this.damage = damage;

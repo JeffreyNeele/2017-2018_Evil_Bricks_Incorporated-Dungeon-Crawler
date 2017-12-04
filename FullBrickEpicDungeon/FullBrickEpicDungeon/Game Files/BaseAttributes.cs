@@ -9,7 +9,6 @@ class BaseAttributes
         type = id;
     }
     private int hitpoints, armour, attack, gold;
-    private Vector2 movementspeed;
     private string type;
     public int HP
     {
@@ -26,11 +25,7 @@ class BaseAttributes
         get { return gold; }
         set { gold = value; }
     }
-    public Vector2 MovementSpeed
-    {
-        get { return movementspeed; }
-        set { movementspeed = value; }
-    }
+
     public int Attack
     {
         get { return attack; }
