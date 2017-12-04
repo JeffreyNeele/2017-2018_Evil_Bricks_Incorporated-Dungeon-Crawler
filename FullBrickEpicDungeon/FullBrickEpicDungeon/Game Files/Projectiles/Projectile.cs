@@ -7,11 +7,15 @@ class Projectile : SpriteGameObject
     protected bool piercing;
     protected int damage;
     protected Vector2 speed;
-    protected Projectile(int damage, Vector2 speed, string assetName, bool piercing = false) : base (assetName)
+    protected Projectile(int damage, string assetName, bool piercing = false, bool facingLeft, Vector2 travellingSpeed) : base (assetName)
     {
-        this.speed = speed;
         this.damage = damage;
         this.piercing = piercing;
+
+        if (facingLeft)
+            this.velocity -= travellingSpeed;
+        else
+            this.velocity += travellingSpeed;
     }
 
     public override void Update(GameTime gameTime)

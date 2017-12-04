@@ -13,6 +13,7 @@ abstract partial class Character : AnimatedGameObject
     protected Timer reviveTimer;
     string type;
     bool playerControlled;
+    bool facingLeft;
     Vector2 startPosition;
     protected Character(ClassType classType, string id = "") : base(0, id)
     {
@@ -56,15 +57,20 @@ abstract partial class Character : AnimatedGameObject
                 this.weapon.UseSpecialAbility();
 
             //Input keys for character movement, nog te bepalen of movementspeed vector2 of int is
-
             if (inputHelper.KeyPressed(Keys.W))
                 this.position.Y -= this.velocity.Y;
             if (inputHelper.KeyPressed(Keys.S))
                 this.position.Y += this.velocity.Y;
             if (inputHelper.KeyPressed(Keys.A))
+            {
                 this.position.X -= this.velocity.X;
+                facingLeft = true;
+            }
             if (inputHelper.KeyPressed(Keys.D))
+            {
                 this.position.X += this.velocity.X;
+                facingLeft = false;
+            }
             
         }
 
@@ -200,5 +206,10 @@ abstract partial class Character : AnimatedGameObject
     public ClassType Type
     {
         get { return classType; }
+    }
+    // returns the facing direction of the character
+    public bool FacingLeft
+    {
+        get { return facingLeft; }
     }
 }
