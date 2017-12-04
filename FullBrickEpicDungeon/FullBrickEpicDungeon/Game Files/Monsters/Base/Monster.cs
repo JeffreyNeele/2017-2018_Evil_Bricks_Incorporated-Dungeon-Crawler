@@ -25,15 +25,13 @@ abstract partial class Monster : SpriteGameObject
     public override void Reset()
     {
         base.Reset();
-        this.attributes
     }
-    public void TakeDamage(int damage, Character damagesource)
+    public void TakeDamage(int damage)
     {
         this.attributes.HP -= (damage - (int)(0.3F * this.attributes.Armour));
         if(this.attributes.HP <= 0)
         {
             this.attributes.HP = 0;
-            damagesource.Attributes.Gold += this.attributes.Gold;
         }
     }
 

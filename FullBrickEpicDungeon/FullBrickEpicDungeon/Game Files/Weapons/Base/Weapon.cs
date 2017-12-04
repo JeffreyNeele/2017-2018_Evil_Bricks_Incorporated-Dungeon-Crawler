@@ -47,10 +47,20 @@ abstract class Weapon : AnimatedGameObject
             {
                 if (monsterobj.CollidesWith(this))
                 {
-                    monsterobj.TakeDamage(attack);
+                    monsterobj.TakeDamage(owner.Attributes.Attack + this.weaponAttributes.Attack);
+                    if (monsterobj.IsDead)
+                    {
+                        owner.Attributes.Gold += monsterobj.Attributes.Gold;
+                    }
                 }
             }
         }
+    }
+
+    public BaseAttributes WeaponAttributes
+    {
+        get { return weaponAttributes; }
+        set { weaponAttributes = value; }
     }
 
     public int AttackDamage
