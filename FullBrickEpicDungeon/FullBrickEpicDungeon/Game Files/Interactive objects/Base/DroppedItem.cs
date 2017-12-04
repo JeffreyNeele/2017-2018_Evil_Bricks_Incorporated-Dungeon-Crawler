@@ -18,6 +18,7 @@ class DroppedItem : InteractiveObject
         }
         base.Update(gameTime);
     }
+
     public void PickUp(Character character)
     {
         if(item is Equipment)

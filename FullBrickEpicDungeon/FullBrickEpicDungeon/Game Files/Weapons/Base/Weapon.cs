@@ -3,14 +3,16 @@ using System;
 using System.Collections.Generic;
 abstract class Weapon : AnimatedGameObject
 {
+    Character owner;
     Ability BasicAttack;
     TimedAbility mainAbility;
     SpecialAbility specialAbility;
     BaseAttributes weaponAttributes;
     protected int attack, goldCost;
     protected string animationID;
-    protected Weapon(int attack, int goldCost, string id, string assetName, string animationID): base(1, id)
+    protected Weapon(int attack, int goldCost, Character owner, string id, string assetName, string animationID): base(1, id)
     {
+        this.owner = owner;
         this.attack = attack;
         this.goldCost = goldCost;
         this.animationID = animationID;
@@ -58,6 +60,11 @@ abstract class Weapon : AnimatedGameObject
     public int GoldWorth
     {
         get { return goldCost; }
+    }
+
+    public Character Owner
+    {
+        get { return owner; }
     }
 
 }

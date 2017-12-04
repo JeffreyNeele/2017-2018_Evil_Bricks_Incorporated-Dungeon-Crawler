@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 abstract partial class Character : AnimatedGameObject
 {
-    protected BaseAttributes attributes;
+    protected BaseAttributes attributes, baseattributes;
     protected Weapon weapon;
     protected List<Equipment> inventory;
     protected Timer reviveTimer;
@@ -13,6 +13,7 @@ abstract partial class Character : AnimatedGameObject
     protected Character(Weapon weapon, string type, string id = "") : base(0, id)
     {
         this.weapon = weapon;
+        baseattributes = new BaseAttributes(type + " base");
         inventory = new List<Equipment>();
         attributes = new BaseAttributes(type);
         reviveTimer = new Timer(10);
@@ -72,10 +73,10 @@ abstract partial class Character : AnimatedGameObject
     }
 
     // Changes the weapon of a Character and drops the weapon on the ground
-    public void ChangeWeapon(Weapon weapon)
+    public void ChangeWeapon(Weapon newweapon)
     {
-        this.weapon = weapon;
-        // Drop the weapon on the floor after it changes
+        DroppedItem droppedWeapon = new DroppedItem(this.weapon, "DROPPED" + weapon.Id);
+        this.weapon = newweapon;
     }
  
     // Changes items in the characters inventory, also allows to remove it
