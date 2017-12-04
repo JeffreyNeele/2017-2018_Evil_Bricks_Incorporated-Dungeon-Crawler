@@ -8,7 +8,6 @@ public class SpriteGameObject : GameObject
     protected bool affectedByCamera;
     protected string assetName;
     public bool PerPixelCollisionDetection = true;
-    CameraHelper cameraHelper;
     public SpriteGameObject(string assetName, int layer = 0, string id = "", int sheetIndex = 0, bool affectedByCamera = true)
         : base(layer, id)
     {

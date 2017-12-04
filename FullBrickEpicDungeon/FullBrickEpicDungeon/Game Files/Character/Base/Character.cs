@@ -18,8 +18,8 @@ abstract partial class Character : AnimatedGameObject
 
     public override void Update(GameTime gameTime)
     {
-        CollisionChecker();
         base.Update(gameTime);
+        CollisionChecker();
     }
 
     // Transfers money to another character

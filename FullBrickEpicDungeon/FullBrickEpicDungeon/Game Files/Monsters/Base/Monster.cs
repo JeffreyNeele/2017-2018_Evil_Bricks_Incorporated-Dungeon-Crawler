@@ -12,6 +12,11 @@ abstract class Monster : SpriteGameObject
         attributes = new BaseAttributes(type);
     }
 
+    public void TakeDamage(int damage)
+    {
+        this.attributes.HP -= this.attributes.HP - (damage - (int)(0.3F * this.attributes.Armour));
+    }
+
     public BaseAttributes Attributes
     {
         get { return attributes; }

@@ -60,10 +60,8 @@
     <Compile Include="Engine\ScrollingTextBox.cs" />
     <Compile Include="Engine\Timer.cs" />
     <Compile Include="Game Files\Abilities\Base\Ability.cs" />
-    <Compile Include="Game Files\Abilities\Types\PassiveAbility.cs" />
     <Compile Include="Game Files\Abilities\Types\SpecialAbility.cs" />
     <Compile Include="Game Files\Abilities\Base\TimedAbility.cs" />
-    <Compile Include="Game Files\Abilities\Types\ProjectileAbility.cs" />
     <Compile Include="Game Files\Character\Base\Character.cs" />
     <Compile Include="Game Files\BaseAttributes.cs" />
     <Compile Include="Game Files\Character\Types\Lightbringer.cs" />
