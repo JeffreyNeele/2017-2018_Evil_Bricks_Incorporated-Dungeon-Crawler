@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
-//Klasse houdt de conditie van de puzzel bij en kijkt of de puzzel is afgerond
+//Class will maintain the puzzle conditions and keep track of the puzzle status (cleared or not)
 class Puzzle : GameObjectList
 {
     bool puzzleCleared = false;
+    List<bool> puzzleConditions = new List<bool>();
 
     public Puzzle()
     {
