@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 
 abstract partial class Character : AnimatedGameObject
 {
+    //baseattributes contains the standard base stats and should not be changed, the values in attributes may be changes are used during the remainder of the level
     protected BaseAttributes attributes, baseattributes;
     protected Weapon weapon;
     protected List<Equipment> inventory;
@@ -156,6 +157,7 @@ abstract partial class Character : AnimatedGameObject
     //Method that respawns a character when the reviveTimer is expired
     public void Die()
     {
+        
         this.position = StartPosition;
     }
 
