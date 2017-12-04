@@ -30,7 +30,8 @@ abstract partial class Character : AnimatedGameObject
             reviveTimer.IsPaused = false;
             if (reviveTimer.IsExpired)
             {
-                this.Die();
+                this.Reset();
+                this.attributes.Gold = this.attributes.Gold - (this.attributes.Gold / 10);
             }
         }
     }
@@ -65,6 +66,12 @@ abstract partial class Character : AnimatedGameObject
         }
 
     }
+    public override void Reset()
+    {
+        this.attributes.HP = this.baseattributes.HP;
+        this.position = StartPosition;
+    }
+
 
     // Transfers money to another character
     public void TransferGold(int amount, Character target)
@@ -150,7 +157,7 @@ abstract partial class Character : AnimatedGameObject
         int totalitemdefense = 0;
         foreach(Equipment item in inventory)
         {
-            totalitemdefense += item.Statistics.Armour;
+            totalitemdefense += item.Armour;
         }
         this.attributes.HP -= (damage - (int)(0.3F * (this.attributes.Armour + totalitemdefense)));
         if (this.attributes.HP < 0)
@@ -161,12 +168,7 @@ abstract partial class Character : AnimatedGameObject
 
     //TO DISCUSS: Amount of gold lost on death when not revived, maybe a sound plays when someone respawns
     //Method that respawns a character when the reviveTimer is expired. When respawning the character will lose a portion of its gold.
-    public void Die()
-    {
-        this.attributes.HP = this.baseattributes.HP;
-        this.attributes.Gold = this.attributes.Gold - (this.attributes.Gold / 10);
-        this.position = StartPosition;
-    }
+   
 
     public bool IsDowned
     {
