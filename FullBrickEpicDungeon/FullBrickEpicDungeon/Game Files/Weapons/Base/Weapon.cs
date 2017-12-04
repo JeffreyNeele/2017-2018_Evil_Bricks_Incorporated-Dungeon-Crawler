@@ -69,7 +69,7 @@ abstract class Weapon : AnimatedGameObject
         get { return owner; }
     }
 
-    public ClassType ClassType
+    public ClassType Type
     {
         get { return classType; }
     }

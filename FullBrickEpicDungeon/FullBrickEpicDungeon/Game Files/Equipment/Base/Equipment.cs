@@ -3,6 +3,7 @@ abstract class Equipment : SpriteGameObject
 {
     protected ClassType classType;
     private int movementspeedincrease, armour, goldworth; 
+
     protected Equipment(ClassType classType, string assetName, string id, int layer = 0) : base(assetName, layer, id)
     {
         this.classType = classType;
@@ -26,7 +27,7 @@ abstract class Equipment : SpriteGameObject
         protected set { goldworth = value; }
     }
 
-    public ClassType ClassType
+    public ClassType Type
     {
         get { return classType; }
     }

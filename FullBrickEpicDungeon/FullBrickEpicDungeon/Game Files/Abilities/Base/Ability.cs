@@ -7,10 +7,10 @@ using Microsoft.Xna.Framework.Graphics;
 abstract class Ability
 {
     protected bool isProjectileAbility;
-    protected string type;
-    protected Ability(string type)
+    protected ClassType classType;
+    protected Ability(ClassType classType)
     {
-        this.type = type;
+        this.classType = classType;
     }
 
     public virtual void Update(GameTime gameTime)
@@ -29,8 +29,8 @@ abstract class Ability
         protected set { isProjectileAbility = value;}
     }
 
-    public string AbilityType
+    public ClassType Type
     {
-        get { return type; }
+        get { return classType; }
     }
 }
