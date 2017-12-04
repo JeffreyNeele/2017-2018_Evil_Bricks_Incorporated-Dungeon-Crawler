@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 abstract partial class Character : AnimatedGameObject
 {
@@ -10,6 +11,7 @@ abstract partial class Character : AnimatedGameObject
     protected Timer reviveTimer;
     string type;
     bool playerControlled;
+    Vector2 startPosition;
     protected Character(Weapon weapon, string type, string id = "") : base(0, id)
     {
         this.weapon = weapon;
@@ -31,6 +33,35 @@ abstract partial class Character : AnimatedGameObject
                 this.Die();
             }
         }
+    }
+
+    //Method for character input (both xbox controller and keyboard), for now dummy keys for 1 controller are inserted, but the idea should be clear
+    //TO DO: a way to distinguish characters / players from each other.
+    public override void HandleInput(InputHelper inputHelper)
+    {
+        if(!IsDowned)
+        {
+            base.HandleInput(inputHelper);
+
+            //Input keys for basic AA and abilities
+            if (inputHelper.KeyPressed(Keys.Q))
+                this.weapon.Attack();
+            if (inputHelper.KeyPressed(Keys.E))
+                this.weapon.UseMainAbility();
+            if (inputHelper.KeyPressed(Keys.R))
+                this.weapon.UseSpecialAbility();
+
+            //Input keys for character movement, nog te bepalen of movementspeed vector2 of int is
+            if (inputHelper.KeyPressed(Keys.W))
+                this.position.Y -= this.attributes.MovementSpeed.Y;
+            if (inputHelper.KeyPressed(Keys.S))
+                this.position.Y += this.attributes.MovementSpeed.Y;
+            if (inputHelper.KeyPressed(Keys.A))
+                this.position.X -= this.attributes.MovementSpeed.X;
+            if (inputHelper.KeyPressed(Keys.D))
+                this.position.X += this.attributes.MovementSpeed.X;
+        }
+
     }
 
     // Transfers money to another character
@@ -121,14 +152,23 @@ abstract partial class Character : AnimatedGameObject
         }
     }
 
+    //Will need additional information from subclasses
+    //Method that respawns a character when the reviveTimer is expired
     public void Die()
     {
-
+        this.position = StartPosition;
     }
 
     public bool IsDowned
     {
         get { return this.attributes.HP == 0; }
+    }
+
+    // returns the startPosition of the character. Will be newly set when entering a level
+    public Vector2 StartPosition
+    {
+        get { return startPosition; }
+        set { startPosition = value; }
     }
 
     // returns the weapon of the character
