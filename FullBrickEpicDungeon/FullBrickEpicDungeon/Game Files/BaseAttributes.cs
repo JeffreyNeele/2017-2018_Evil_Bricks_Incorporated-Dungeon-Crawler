@@ -1,5 +1,6 @@
-﻿//Contains all base attributes of equipment, monsters or character
+﻿// Contains all base attributes of equipment, monsters or character
 // this class is initialized in one of those classes themselves.
+using Microsoft.Xna.Framework;
 
 class BaseAttributes
 {
@@ -7,7 +8,8 @@ class BaseAttributes
     {
         type = id;
     }
-    private int hitpoints, armour, attack, gold, movementspeed;
+    private int hitpoints, armour, attack, gold;
+    private Vector2 movementspeed;
     private string type;
     public int HP
     {
@@ -24,7 +26,7 @@ class BaseAttributes
         get { return gold; }
         set { gold = value; }
     }
-    public int MovementSpeed
+    public Vector2 MovementSpeed
     {
         get { return movementspeed; }
         set { movementspeed = value; }

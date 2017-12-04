@@ -117,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Game Files\HUD\" />
+    <Folder Include="Game Files\Monsters\Type\" />
     <Folder Include="Game Files\Shop\" />
     <Folder Include="Game Files\Weapons\Side Grades\" />
     <Folder Include="Game Files\Weapons\Starter Weapons\" />
