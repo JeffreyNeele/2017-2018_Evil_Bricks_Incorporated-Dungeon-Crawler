@@ -7,22 +7,17 @@ abstract class Weapon : AnimatedGameObject
     Ability BasicAttack;
     TimedAbility mainAbility;
     SpecialAbility specialAbility;
-    BaseAttributes weaponAttributes;
     protected int attack, goldCost;
-    protected string animationID;
-    protected Weapon(int attack, int goldCost, Character owner, string id, string assetName, string animationID): base(1, id)
+    protected string classType;
+    protected Weapon(Character owner, string classType, string id, string assetName): base(1, id)
     {
         this.owner = owner;
-        this.attack = attack;
-        this.goldCost = goldCost;
-        this.animationID = animationID;
-        LoadAnimation(assetName, animationID, false);
+        this.classType = classType;
     }
 
     public virtual void Attack()
     {
         BasicAttack.Use();
-        PlayAnimation(animationID);
         CollisionChecker(this.CurrentAnimation);
     }
 
@@ -47,7 +42,7 @@ abstract class Weapon : AnimatedGameObject
             {
                 if (monsterobj.CollidesWith(this))
                 {
-                    monsterobj.TakeDamage(owner.Attributes.Attack + this.weaponAttributes.Attack);
+                    monsterobj.TakeDamage(owner.Attributes.Attack + this.AttackDamage);
                     if (monsterobj.IsDead)
                     {
                         owner.Attributes.Gold += monsterobj.Attributes.Gold;
@@ -57,19 +52,16 @@ abstract class Weapon : AnimatedGameObject
         }
     }
 
-    public BaseAttributes WeaponAttributes
-    {
-        get { return weaponAttributes; }
-        set { weaponAttributes = value; }
-    }
 
     public int AttackDamage
     {
         get { return attack; }
+        protected set { attack = value; }
     }
     public int GoldWorth
     {
         get { return goldCost; }
+        protected set { goldCost = value; }
     }
 
     public Character Owner
@@ -77,5 +69,9 @@ abstract class Weapon : AnimatedGameObject
         get { return owner; }
     }
 
+    public string ClassType
+    {
+        get { return classType; }
+    }
 }
 
