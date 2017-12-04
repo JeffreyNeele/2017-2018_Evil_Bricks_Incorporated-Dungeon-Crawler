@@ -7,12 +7,12 @@ enum TileType
     Wall
 }
 
-class Tile
+class Tile : SpriteGameObject
 {
     TileType type;
-    public Tile(TileType type)
+    public Tile(TileType type, string assetname, int layer = 0, string id = "") : base(assetname, layer, id)
     {
-        type = type;
+        this.type = type;
     }
 
     public TileType Type
@@ -22,7 +22,4 @@ class Tile
 }
 
 // Hieronder specifiekere Tiles definiëren bv wall op zo'n manier:
-class Wall_Tile
-{
-
-}
+// class Wall_Tile : Tile
