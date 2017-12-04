@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Input;
 abstract partial class Character : AnimatedGameObject
 {
     //baseattributes contains the standard base stats and should not be changed, the values in attributes may be changes are used during the remainder of the level
+    protected ClassType classType;
     protected BaseAttributes attributes, baseattributes;
     protected Weapon weapon;
     protected List<Equipment> inventory;
@@ -14,11 +15,12 @@ abstract partial class Character : AnimatedGameObject
     bool playerControlled;
     bool facingLeft;
     Vector2 startPosition;
-    protected Character(string type, string id = "") : base(0, id)
+    protected Character(ClassType classType, string id = "") : base(0, id)
     {
-        baseattributes = new BaseAttributes(type + " base");
+        this.classType = classType;
+        baseattributes = new BaseAttributes();
         inventory = new List<Equipment>();
-        attributes = new BaseAttributes(type);
+        attributes = new BaseAttributes();
         reviveTimer = new Timer(10);
         this.velocity = new Vector2(200, 200);
     }
@@ -142,7 +144,7 @@ abstract partial class Character : AnimatedGameObject
             }
             catch
             {
-                throw new ArgumentOutOfRangeException("No such item was found in " + this.attributes.Type + "'s inventory!");
+                throw new ArgumentOutOfRangeException("No such item was found in " + this.classType + "'s inventory!");
             }
         }
         else
@@ -201,6 +203,10 @@ abstract partial class Character : AnimatedGameObject
         set { attributes = value; }
     }
 
+    public ClassType Type
+    {
+        get { return classType; }
+    }
     // returns the facing direction of the character
     public bool FacingLeft
     {

@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 class ShieldMaiden : Character
 {
-    public ShieldMaiden(Weapon weapon) : base(weapon, "Shieldmaiden")
+    public ShieldMaiden() : base(ClassType.ShieldMaiden, "ShieldMaiden")
     {
         // baseattributes worden gebruikt om de super basic stats permanent te storen in het geheugen zodat ze gereset kunnen worden
         // pas op: attack is de attack ZONDER een wapen vast te hebben (dat je dit weet)

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 interface IBaseAI
 {
-
+    GameObject FindRandomTarget(int sightrange);
+    void AttackTarget(GameObject target);
+    void Movement();
 }
 
