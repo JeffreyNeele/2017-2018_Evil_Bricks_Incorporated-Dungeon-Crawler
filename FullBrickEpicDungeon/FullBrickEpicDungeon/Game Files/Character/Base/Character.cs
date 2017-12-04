@@ -13,9 +13,8 @@ abstract partial class Character : AnimatedGameObject
     string type;
     bool playerControlled;
     Vector2 startPosition;
-    protected Character(Weapon weapon, string type, string id = "") : base(0, id)
+    protected Character(string type, string id = "") : base(0, id)
     {
-        this.weapon = weapon;
         baseattributes = new BaseAttributes(type + " base");
         inventory = new List<Equipment>();
         attributes = new BaseAttributes(type);
@@ -53,14 +52,15 @@ abstract partial class Character : AnimatedGameObject
                 this.weapon.UseSpecialAbility();
 
             //Input keys for character movement, nog te bepalen of movementspeed vector2 of int is
+            /*
             if (inputHelper.KeyPressed(Keys.W))
-                this.position.Y -= this.attributes.MovementSpeed.Y;
+
             if (inputHelper.KeyPressed(Keys.S))
-                this.position.Y += this.attributes.MovementSpeed.Y;
+
             if (inputHelper.KeyPressed(Keys.A))
-                this.position.X -= this.attributes.MovementSpeed.X;
+
             if (inputHelper.KeyPressed(Keys.D))
-                this.position.X += this.attributes.MovementSpeed.X;
+            */
         }
 
     }

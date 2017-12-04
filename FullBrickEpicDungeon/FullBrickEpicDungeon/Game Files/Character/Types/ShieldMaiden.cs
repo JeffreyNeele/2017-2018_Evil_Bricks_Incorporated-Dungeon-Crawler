@@ -11,7 +11,6 @@ class ShieldMaiden : Character
         this.baseattributes.HP = 500;
         this.baseattributes.Armour = 50;
         this.baseattributes.Attack = 10;
-        this.baseattributes.MovementSpeed = new Vector2(30, 30);
     }
 }
 
