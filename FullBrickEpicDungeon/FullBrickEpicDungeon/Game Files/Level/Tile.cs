@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-// Add more tiletypes here as more get added!
-enum TileType
-{
-    Wall
-}
+// Add more tiletypes in the Enumerators class!
 
 class Tile : SpriteGameObject
 {
