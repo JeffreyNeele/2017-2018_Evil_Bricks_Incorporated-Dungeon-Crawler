@@ -52,15 +52,16 @@ abstract partial class Character : AnimatedGameObject
                 this.weapon.UseSpecialAbility();
 
             //Input keys for character movement, nog te bepalen of movementspeed vector2 of int is
-            /*
+
             if (inputHelper.KeyPressed(Keys.W))
-
+                this.position.Y -= this.velocity.Y;
             if (inputHelper.KeyPressed(Keys.S))
-
+                this.position.Y += this.velocity.Y;
             if (inputHelper.KeyPressed(Keys.A))
-
+                this.position.X -= this.velocity.X;
             if (inputHelper.KeyPressed(Keys.D))
-            */
+                this.position.X += this.velocity.X;
+            
         }
 
     }
