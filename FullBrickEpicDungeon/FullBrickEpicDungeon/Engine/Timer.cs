@@ -21,11 +21,6 @@ class Timer
         }
     }
 
-    // returns a bool that is true if the timer expired
-    public bool IsExpired()
-    {
-        return currentime >= targettime;
-    }
 
     //Resets the timer
     public void Reset()
@@ -48,4 +43,9 @@ class Timer
     {
         get { return currentime; }
     }
+    public bool IsExpired
+    {
+        get { return currentime >= targettime; }
+    }
+
 }

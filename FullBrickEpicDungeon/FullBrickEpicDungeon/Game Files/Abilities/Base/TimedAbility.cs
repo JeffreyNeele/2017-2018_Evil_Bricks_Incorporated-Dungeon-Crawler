@@ -17,7 +17,7 @@ abstract class TimedAbility : Ability
 
     public bool isOnCooldown
     {
-        get { return !(abilityTimer.IsExpired()); }
+        get { return !(abilityTimer.IsExpired); }
     }
     public int TimeLeftUntilUse
     {

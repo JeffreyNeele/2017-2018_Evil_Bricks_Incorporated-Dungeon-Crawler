@@ -7,6 +7,7 @@ abstract partial class Character : AnimatedGameObject
     protected BaseAttributes attributes;
     protected Weapon weapon;
     protected List<Equipment> inventory;
+    protected Timer reviveTimer;
     string type;
     bool playerControlled;
     protected Character(Weapon weapon, string type, string id = "") : base(0, id)
@@ -14,12 +15,21 @@ abstract partial class Character : AnimatedGameObject
         this.weapon = weapon;
         inventory = new List<Equipment>();
         attributes = new BaseAttributes(type);
+        reviveTimer = new Timer(10);
     }
 
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
         CollisionChecker();
+        if (IsDowned)
+        {
+            reviveTimer.IsPaused = false;
+            if (reviveTimer.IsExpired)
+            {
+                this.Die();
+            }
+        }
     }
 
     // Transfers money to another character
@@ -103,7 +113,21 @@ abstract partial class Character : AnimatedGameObject
 
     public void TakeDamage(int damage)
     {
-        this.attributes.HP -= this.attributes.HP - (damage - (int)(0.3F * this.attributes.Armour));
+        this.attributes.HP -= (damage - (int)(0.3F * this.attributes.Armour));
+        if (this.attributes.HP < 0)
+        {
+            this.attributes.HP = 0;
+        }
+    }
+
+    public void Die()
+    {
+
+    }
+
+    public bool IsDowned
+    {
+        get { return this.attributes.HP == 0; }
     }
 
     // returns the weapon of the character
