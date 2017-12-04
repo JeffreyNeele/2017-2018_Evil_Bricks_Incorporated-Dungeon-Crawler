@@ -9,7 +9,7 @@ class SpecialAbility : Ability
         this.cost = cost;
     }
 
-    protected override void Update(GameTime gameTime)
+    public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
     }
