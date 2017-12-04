@@ -4,9 +4,9 @@ using Microsoft.Xna.Framework;
 
 class BaseAttributes
 {
-    public BaseAttributes(string id)
+    public BaseAttributes()
     {
-        type = id;
+
     }
     private int hitpoints, armour, attack, gold;
     private string type;
@@ -30,9 +30,5 @@ class BaseAttributes
     {
         get { return attack; }
         set { attack = value; }
-    }
-    public string Type
-    {
-        get { return type; }
     }
 }

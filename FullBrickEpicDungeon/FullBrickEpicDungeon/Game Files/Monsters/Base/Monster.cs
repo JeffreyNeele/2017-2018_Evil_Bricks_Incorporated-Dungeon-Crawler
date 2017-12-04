@@ -9,8 +9,8 @@ abstract partial class Monster : SpriteGameObject
     //type staat hier voor het type monster (zie mapje type voor de typen monsters)
     public Monster(string assetName, string type) : base(assetName)
     {
-        attributes = new BaseAttributes(type);
-        baseattributes = new BaseAttributes(type + " base");
+        attributes = new BaseAttributes();
+        baseattributes = new BaseAttributes();
     }
 
     public override void Update(GameTime gameTime)

@@ -1,18 +1,17 @@
 ﻿// Class for defining equipment
 abstract class Equipment : SpriteGameObject
 {
-    protected string classType;
-    protected int movementspeed, armour, goldcost; 
-    string ID;
-    protected Equipment(string classType, string assetName, string id, int layer = 0) : base(assetName, layer, id)
+    protected ClassType classType;
+    private int movementspeedincrease, armour, goldworth; 
+    protected Equipment(ClassType classType, string assetName, string id, int layer = 0) : base(assetName, layer, id)
     {
         this.classType = classType;
     }
 
-    public int MovementSpeed
+    public int MovementSpeedIncrease
     {
-        get { return movementspeed; }
-        protected set { movementspeed = value; }
+        get { return movementspeedincrease; }
+        protected set { movementspeedincrease = value; }
     }
 
     public int Armour
@@ -21,13 +20,13 @@ abstract class Equipment : SpriteGameObject
         protected set { armour = value; }
     }
 
-    public int GoldCost
+    public int GoldWorth
     {
-        get { return goldcost; }
-        protected set { goldcost = value; }
+        get { return goldworth; }
+        protected set { goldworth = value; }
     }
 
-    public string ClassType
+    public ClassType ClassType
     {
         get { return classType; }
     }
