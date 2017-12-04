@@ -1,4 +1,6 @@
-﻿
+﻿//Bevat alle basis attributen van de characters en monsters.
+//Hierbij is te denken aan hitpoints, armour, attack, gold en movement.
+
 class BaseAttributes
 {
     public BaseAttributes(string id)

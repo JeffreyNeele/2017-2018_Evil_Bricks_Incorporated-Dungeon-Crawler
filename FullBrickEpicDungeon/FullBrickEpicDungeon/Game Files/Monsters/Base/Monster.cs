@@ -5,6 +5,8 @@ using System.Collections.Generic;
 abstract class Monster : SpriteGameObject
 {
     BaseAttributes attributes;
+
+    //type staat hier voor het type monster (zie mapje type voor de typen monsters)
     public Monster(string assetName, string type) : base(assetName)
     {
         attributes = new BaseAttributes(type);
