@@ -1,15 +1,34 @@
-﻿class Equipment : SpriteGameObject
+﻿// Class for defining equipment
+abstract class Equipment : SpriteGameObject
 {
-    BaseAttributes equipmentstatistic;
+    protected string classType;
+    protected int movementspeed, armour, goldcost; 
     string ID;
-    protected Equipment(string assetName, string id, int sheetIndex, int layer = 0) : base(assetName, layer, id, sheetIndex)
+    protected Equipment(string classType, string assetName, string id, int layer = 0) : base(assetName, layer, id)
     {
-        equipmentstatistic = new BaseAttributes();
+        this.classType = classType;
     }
 
-    public BaseAttributes Statistics
+    public int MovementSpeed
     {
-        get { return equipmentstatistic; }
-        protected set { equipmentstatistic = value; }
+        get { return movementspeed; }
+        protected set { movementspeed = value; }
+    }
+
+    public int Armour
+    {
+        get { return armour; }
+        protected set { armour = value; }
+    }
+
+    public int GoldCost
+    {
+        get { return goldcost; }
+        protected set { goldcost = value; }
+    }
+
+    public string ClassType
+    {
+        get { return classType; }
     }
 }

@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
-namespace FullBrickEpicDungeon.Game_Files.Abilities.Types
+class Shadowhunter : Character
 {
-    class ProjectileAbility
+    public Shadowhunter(Weapon weapon) : base(weapon, "Shadowhunter")
     {
+
     }
 }
+

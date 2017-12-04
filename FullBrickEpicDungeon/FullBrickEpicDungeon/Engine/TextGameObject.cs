@@ -8,7 +8,6 @@ public class TextGameObject : GameObject
     protected string text;
     protected Vector2 cameraOffset;
     protected bool affectedByCamera;
-    CameraHelper cameraHelper;
     public TextGameObject(string assetname, int layer = 0, string id = "")
         : base(layer, id)
     {

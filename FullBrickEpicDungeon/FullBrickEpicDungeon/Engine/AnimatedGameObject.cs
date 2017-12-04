@@ -39,11 +39,11 @@ public class AnimatedGameObject : SpriteGameObject
         {
             return;
         }
-        Current.Update(gameTime);
+        CurrentAnimation.Update(gameTime);
         base.Update(gameTime);
     }
 
-    public Animation Current
+    public Animation CurrentAnimation
     {
         get { return sprite as Animation; }
     }

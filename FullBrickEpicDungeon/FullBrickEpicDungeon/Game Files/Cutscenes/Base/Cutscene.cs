@@ -4,24 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
+// NOTE: this is a cutscene manager, not an inheritance class for all cutscenes
     class Cutscene
     {
     Cutscene playing;
-    Cutscene[] allCutscenes; //array van alle cutscenes op de juiste volgorde
-
-
+    List<Cutscene> cutsceneList;
     public Cutscene()
     {
-        allCutscenes = new Cutscene[5]; //Pas de lengte van de array aan als er een Cutscene bij komt boven de 4!
+        cutsceneList = new List<Cutscene>();
         Cutscene larryShits = new _1LarryShits();
-        allCutscenes[0] = larryShits;
+        cutsceneList.Add(larryShits);
         
     }
 
     public void Play_Cutscene(int sceneNumber)
     {
-        playing = allCutscenes[sceneNumber];
+        playing = cutsceneList[sceneNumber];
     }
 
     }

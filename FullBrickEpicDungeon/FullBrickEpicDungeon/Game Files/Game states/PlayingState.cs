@@ -1,5 +1,5 @@
 ﻿
-
+//In comments gezet want deze state heeft de level klasse/files nodig
 
 /*class PlayingState : IGameLoopObject
 {
