@@ -146,7 +146,12 @@ abstract partial class Character : AnimatedGameObject
 
     public void TakeDamage(int damage)
     {
-        this.attributes.HP -= (damage - (int)(0.3F * this.attributes.Armour));
+        int totalitemdefense = 0;
+        foreach(Equipment item in inventory)
+        {
+            totalitemdefense += item.Statistics.Armour;
+        }
+        this.attributes.HP -= (damage - (int)(0.3F * (this.attributes.Armour + totalitemdefense)));
         if (this.attributes.HP < 0)
         {
             this.attributes.HP = 0;
