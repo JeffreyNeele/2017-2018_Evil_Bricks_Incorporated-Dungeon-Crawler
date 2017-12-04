@@ -19,6 +19,7 @@ abstract partial class Character : AnimatedGameObject
         inventory = new List<Equipment>();
         attributes = new BaseAttributes(type);
         reviveTimer = new Timer(10);
+        this.velocity = new Vector2(200, 200);
     }
 
     public override void Update(GameTime gameTime)
