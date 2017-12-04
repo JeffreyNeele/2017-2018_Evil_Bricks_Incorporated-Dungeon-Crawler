@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.Xna.Framework;
 
+// This is ka timed ability that maintains a timer.
 abstract class TimedAbility : Ability
 {
     Timer abilityTimer;

@@ -18,6 +18,7 @@ abstract partial class Character : AnimatedGameObject
 
     public override void Update(GameTime gameTime)
     {
+        CollisionChecker();
         base.Update(gameTime);
     }
 
@@ -35,6 +36,7 @@ abstract partial class Character : AnimatedGameObject
         }
     }
 
+    // Checks if the Character collides with monsters, objects or tiles
     public void CollisionChecker()
     {
         GameObjectList monsterList = GameWorld.Find("monsterLIST") as GameObjectList;
@@ -47,6 +49,8 @@ abstract partial class Character : AnimatedGameObject
                 this.TakeDamage(monsterobj.Attributes.Attack);
             }
         }
+
+        // If a character collides with an interactive object, set the target character to this instance and tell the interactive object that it is currently interacting
         foreach(InteractiveObject intObj in objectList.Children)
         {
             if (intObj.CollidesWith(this))
@@ -56,12 +60,15 @@ abstract partial class Character : AnimatedGameObject
             }
         }
     }
+
+    // Changes the weapon of a Character and drops the weapon on the ground
     public void ChangeWeapon(Weapon weapon)
     {
         this.weapon = weapon;
         // Drop the weapon on the floor after it changes
     }
  
+    // Changes items in the characters inventory, also allows to remove it
     public void ChangeItems(Equipment item, bool remove = false)
     {
         if(item == null)
@@ -87,16 +94,24 @@ abstract partial class Character : AnimatedGameObject
 
     }
 
+    // Checks if a character owns an item (only for equipment)
     public bool OwnsItem(Equipment item)
     {
         return inventory.Contains(item);
     }
+
 
     public void TakeDamage(int damage)
     {
         this.attributes.HP -= this.attributes.HP - (damage - (int)(0.3F * this.attributes.Armour));
     }
 
+    // returns the weapon of the character
+    public Weapon CurrentWeapon
+    {
+        get { return weapon; }
+    }
+    // returns the attributes of the character
     public BaseAttributes Attributes
     {
         get { return attributes; }

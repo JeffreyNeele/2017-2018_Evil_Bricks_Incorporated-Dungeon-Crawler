@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-abstract class DroppedItem : InteractiveObject
+class DroppedItem : InteractiveObject
 {
     GameObject item;
     public DroppedItem(GameObject item, string assetName, string id, int sheetIndex, int layer = 2) : base(assetName, id, sheetIndex, layer)

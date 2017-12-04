@@ -1,5 +1,5 @@
-﻿//Bevat alle basis attributen van de characters en monsters.
-//Hierbij is te denken aan hitpoints, armour, attack, gold en movement.
+﻿//Contains all base attributes of equipment, monsters or character
+// this class is initialized in one of those classes themselves.
 
 class BaseAttributes
 {

@@ -1,4 +1,5 @@
-﻿class Equipment : SpriteGameObject
+﻿// Class for defining equipment
+class Equipment : SpriteGameObject
 {
     BaseAttributes equipmentstatistic;
     string ID;

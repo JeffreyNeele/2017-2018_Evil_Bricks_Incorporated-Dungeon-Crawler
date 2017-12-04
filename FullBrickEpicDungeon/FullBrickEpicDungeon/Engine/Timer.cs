@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
+// A class that maintains a timer
 class Timer
 {
     private float targettime, currentime;
@@ -8,9 +9,10 @@ class Timer
     {
         this.targettime = targettime;
         currentime = 0;
-        paused = false;
+        paused = true;
     }
 
+    // Increases the time
     private void Update(GameTime gameTime)
     {
         if (!paused)
@@ -19,16 +21,19 @@ class Timer
         }
     }
 
+    // returns a bool that is true if the timer expired
     public bool IsExpired()
     {
         return currentime >= targettime;
     }
 
+    //Resets the timer
     public void Reset()
     {
         currentime = 0;
     }
 
+    // Properties for the timer
     public bool IsPaused
     {
         get { return paused; }
