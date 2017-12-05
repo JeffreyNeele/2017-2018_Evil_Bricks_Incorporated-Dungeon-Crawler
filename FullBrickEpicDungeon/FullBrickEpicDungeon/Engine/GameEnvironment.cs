@@ -83,7 +83,7 @@ public class GameEnvironment : Game
             graphics.IsFullScreen = true;
             graphics.ApplyChanges();
         }
-
+        // TODO: Check if it is 16:9 or 4:3 and otherwise reject the setting
         float targetAspectRatio = (float)screen.X / (float)screen.Y;
         int width = graphics.PreferredBackBufferWidth;
         int height = (int)(width / targetAspectRatio);
