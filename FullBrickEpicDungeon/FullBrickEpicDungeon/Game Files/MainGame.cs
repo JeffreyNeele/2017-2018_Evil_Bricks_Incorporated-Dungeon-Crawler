@@ -15,7 +15,6 @@ namespace FullBrickEpicDungeon
 
         public DungeonCrawler()
         {
-            graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
@@ -46,10 +45,9 @@ namespace FullBrickEpicDungeon
             gameStateManager.AddGameState("playingState", new PlayingState(Content));
             gameStateManager.AddGameState("levelMenu", new LevelMenuState());
             gameStateManager.AddGameState("gameOverState", new GameOverState());
-            gameStateManager.AddGameState("levelFinishedState", new LevelFinishedState());*/
+            gameStateManager.AddGameState("levelFinishedState", new LevelFinishedState()); */
             gameStateManager.SwitchTo("titleMenu");
-
-            AssetManager.PlayMusic("Sounds/snd_music");
+       
         }
 
         /// <summary>

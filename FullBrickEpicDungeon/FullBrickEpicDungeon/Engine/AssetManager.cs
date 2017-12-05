@@ -20,7 +20,6 @@ public class AssetManager
         }
         return contentManager.Load<Texture2D>(assetName);
     }
-
     public void PlaySound(string assetName)
     {
         SoundEffect snd = contentManager.Load<SoundEffect>(assetName);

@@ -11,6 +11,7 @@ class SettingsState : GameObjectList
 
     public SettingsState()
     {
+        /*
         // load the title screen
         SpriteGameObject titleScreen = new SpriteGameObject("Backgrounds/spr_title", 0, "background");
         Add(titleScreen);
@@ -32,7 +33,7 @@ class SettingsState : GameObjectList
         quitButton = new Button("Sprites/spr_button_quit", 1);
         quitButton.Position = new Vector2((GameEnvironment.Screen.X - quitButton.Width / 2), 640);
         Add(quitButton);
-
+        */
     }
 
     public override void HandleInput(InputHelper inputHelper)

@@ -6,6 +6,7 @@ class TitleMenuState: GameObjectList
 
     public TitleMenuState()
     {
+        /*
         // load the title screen
         SpriteGameObject titleScreen = new SpriteGameObject("Backgrounds/spr_title", 0, "background");
         Add(titleScreen);
@@ -27,11 +28,12 @@ class TitleMenuState: GameObjectList
         quitButton = new Button("Sprites/spr_button_quit", 1);
         quitButton.Position = new Vector2((GameEnvironment.Screen.X - quitButton.Width / 2), 700);
         Add(quitButton);
-
+        */
     }
 
     public override void HandleInput(InputHelper inputHelper)
     {
+        /*
         base.HandleInput(inputHelper);
         if (playButton.Pressed)
         {
@@ -49,6 +51,7 @@ class TitleMenuState: GameObjectList
         {
            //TO DO
         }
+        */
     }
 }
 

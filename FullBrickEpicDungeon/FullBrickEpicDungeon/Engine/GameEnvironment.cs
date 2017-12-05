@@ -26,7 +26,7 @@ public class GameEnvironment : Game
         random = new Random();
         assetManager = new AssetManager(Content);
         gameSettingsManager = new GameSettingsManager();
-        cameraHelper = new CameraHelper(new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height));
+        cameraHelper = new CameraHelper(new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight));
     }
 
     public static Point Screen
