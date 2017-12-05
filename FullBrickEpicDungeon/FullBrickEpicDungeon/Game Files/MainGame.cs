@@ -35,7 +35,7 @@ namespace FullBrickEpicDungeon
         {
             base.LoadContent();
             // TODO 
-            screen = new Point(1280, 720);
+            screen = new Point(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width); 
             windowSize = new Point(1280, 720);
             // CHANGE WHEN YOU WANT A FULL SCREEN BASED ON NATIVE RESOLUTION ! (release of game)
             // screen = new Point(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
