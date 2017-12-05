@@ -8,8 +8,9 @@
     {
         conversation = new Conversation();
         
-        conversation.LoadConversation("Content/Conversations/conv_test.txt");
+        conversation.LoadConversation("Content/Conversations/conv_test.txt",0,1);
         conversation.ShowConversation();
+        Add(conversation);
     }
 }
 
