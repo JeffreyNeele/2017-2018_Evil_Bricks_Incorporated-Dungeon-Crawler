@@ -94,6 +94,7 @@
     <Compile Include="Game Files\Projectiles\Projectile.cs" />
     <Compile Include="Game Files\Puzzle\Base\Puzzle.cs" />
     <Compile Include="Game Files\Interactive objects\Types\Trap.cs" />
+    <Compile Include="Game Files\Shop\ShopMain.cs" />
     <Compile Include="Game Files\Weapons\Base\Weapon.cs" />
     <Compile Include="Game Files\MainGame.cs" />
     <Compile Include="Game Files\Weapons\Starter Weapons\SwordAndShield.cs" />
@@ -121,7 +122,6 @@
   <ItemGroup>
     <Folder Include="Game Files\HUD\" />
     <Folder Include="Game Files\Monsters\Type\" />
-    <Folder Include="Game Files\Shop\" />
     <Folder Include="Game Files\Weapons\Side Grades\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

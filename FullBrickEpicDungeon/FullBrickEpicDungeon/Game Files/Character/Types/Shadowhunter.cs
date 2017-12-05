@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 class Shadowhunter : Character
 {
-    public Shadowhunter(Weapon weapon) : base(weapon, "Shadowhunter")
+    public Shadowhunter() : base(ClassType.ShadowHunter, "Shadowhunter")
     {
 
     }
