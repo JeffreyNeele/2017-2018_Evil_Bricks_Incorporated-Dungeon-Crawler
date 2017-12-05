@@ -9,6 +9,7 @@
         conversation = new Conversation();
         
         conversation.LoadConversation("Content/Conversations/conv_test.txt");
+        conversation.ShowConversation();
     }
 }
 
