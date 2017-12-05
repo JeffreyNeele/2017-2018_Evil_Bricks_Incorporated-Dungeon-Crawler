@@ -40,7 +40,7 @@ class Conversation:GameObjectList
 
         //Laadt de sprite in van het frame eromheen
         SpriteGameObject conversationFrame = new SpriteGameObject("Conversations/ConversationBox3", 99,"",0,false);
-        conversationField.Position = new Vector2(600, 300);
+        conversationField.Position = new Vector2(0, 0);
         conversationField.Add(conversationFrame);
 
         //Laadt het font in
@@ -50,5 +50,11 @@ class Conversation:GameObjectList
         currentText.Color = Color.White;
         conversationField.Add(currentText);
         conversationField.Visible = true;
+    }
+
+    public override void Update(GameTime gameTime)
+    {
+        ShowConversation();
+        base.Update(gameTime);
     }
 }

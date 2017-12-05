@@ -9,6 +9,7 @@ namespace FullBrickEpicDungeon
     /// </summary>
     public class DungeonCrawler : GameEnvironment
     {
+        SpriteGameObject conversationFrame;
         public DungeonCrawler()
         {
             Content.RootDirectory = "Content";
@@ -33,7 +34,12 @@ namespace FullBrickEpicDungeon
         protected override void LoadContent()
         {
             base.LoadContent();
+            // TODO 
+            screen = new Point(1280, 720);
             windowSize = new Point(1280, 720);
+            // CHANGE WHEN YOU WANT A FULL SCREEN BASED ON NATIVE RESOLUTION ! (release of game)
+            // screen = new Point(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
+            // windowSize = new Point(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
             ApplyResolutionSettings();
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
