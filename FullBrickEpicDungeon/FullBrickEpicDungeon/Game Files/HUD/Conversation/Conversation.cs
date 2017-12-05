@@ -12,7 +12,7 @@ class Conversation:GameObjectList
 
     //Laadt de conversatie in uit een text bestand als LoadConversation aangeroepen wordt op locatie path. Deze komt in een List te staan.
     //Kan als Load Level af is daar ook in worden gezet. In de input wordt de eerste en laatste line aangegeven die uitgelezen moet worden.
-    //lastLine staat standaard op de maximale value die de int kan hebben, dus genoeg regels voor elk txt bestand.
+    //lastLine staat standaard op de maximale value die de int kan hebben, dus meer dan genoeg regels voor elk txt bestand.
     public void LoadConversation(string path, int startingLine = 0, int lastLine = Int32.MaxValue)
     {
         textLines = new List<string>();
@@ -54,7 +54,6 @@ class Conversation:GameObjectList
 
     public override void Update(GameTime gameTime)
     {
-        ShowConversation();
         base.Update(gameTime);
     }
 }
