@@ -26,7 +26,7 @@ public class GameEnvironment : Game
         random = new Random();
         assetManager = new AssetManager(Content);
         gameSettingsManager = new GameSettingsManager();
-        cameraHelper = new CameraHelper(new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight));
+        cameraHelper = new CameraHelper(new Point(0,0));
     }
 
     public static Point Screen
@@ -83,7 +83,7 @@ public class GameEnvironment : Game
             graphics.IsFullScreen = true;
             graphics.ApplyChanges();
         }
-
+        // TODO: Check if it is 16:9 or 4:3 and otherwise reject the setting
         float targetAspectRatio = (float)screen.X / (float)screen.Y;
         int width = graphics.PreferredBackBufferWidth;
         int height = (int)(width / targetAspectRatio);
@@ -98,8 +98,8 @@ public class GameEnvironment : Game
         viewport.Y = (graphics.PreferredBackBufferHeight / 2) - (height / 2);
         viewport.Width = width;
         viewport.Height = height;
-        GraphicsDevice.Viewport = viewport;
-        cameraHelper.WindowSize = new Vector2(viewport.X, viewport.Y);
+        graphics.GraphicsDevice.Viewport = viewport;
+        cameraHelper.CameraWindowSize = new Point(width, height);
         inputHelper.Scale = new Vector2((float)GraphicsDevice.Viewport.Width / screen.X,
                                         (float)GraphicsDevice.Viewport.Height / screen.Y);
         inputHelper.Offset = new Vector2(viewport.X, viewport.Y);

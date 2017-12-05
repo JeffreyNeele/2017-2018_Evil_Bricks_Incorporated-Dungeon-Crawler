@@ -3,8 +3,9 @@
 // Class that mantains an internal offset for the actual camera for easy camera adjustment
 public class CameraHelper
 {
-    Vector2 windowSize, position;
-    public CameraHelper(Vector2 windowSize)
+    Vector2 position;
+    Point windowSize;
+    public CameraHelper(Point windowSize)
     {
         this.position = Vector2.Zero;
     }
@@ -22,7 +23,7 @@ public class CameraHelper
         get { return position; }
         set { position = value; }
     }
-    public Vector2 WindowSize
+    public Point CameraWindowSize
     {
         get { return windowSize; }
         set { windowSize = value; }

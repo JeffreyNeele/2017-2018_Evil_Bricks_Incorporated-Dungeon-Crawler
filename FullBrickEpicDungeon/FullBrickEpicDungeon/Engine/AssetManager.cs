@@ -15,7 +15,6 @@ public class AssetManager
 
     public Texture2D GetSprite(string assetName)
     {
-      
         if (assetName == "")
         {
             return null;
