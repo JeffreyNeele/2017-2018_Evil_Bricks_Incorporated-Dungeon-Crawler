@@ -2,7 +2,7 @@
 
 class TitleMenuState: GameObjectList
     {
-    protected Button playButton, loadButton, settingsButton, quitButton;
+   // protected Button playButton, loadButton, settingsButton, quitButton;
 
     public TitleMenuState()
     {

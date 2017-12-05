@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 class SettingsState : GameObjectList
     {
-    protected Button playButton, loadButton, settingsButton, quitButton;
+    // protected Button playButton, loadButton, settingsButton, quitButton;
 
     public SettingsState()
     {
@@ -38,6 +38,7 @@ class SettingsState : GameObjectList
 
     public override void HandleInput(InputHelper inputHelper)
     {
+        /*
         base.HandleInput(inputHelper);
         if (playButton.Pressed)
         {
@@ -55,6 +56,7 @@ class SettingsState : GameObjectList
         {
             //TO DO
         }
+        */
     }
 }
 
