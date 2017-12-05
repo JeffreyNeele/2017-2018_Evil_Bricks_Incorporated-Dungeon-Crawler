@@ -42,14 +42,14 @@ namespace FullBrickEpicDungeon
 
             // TODO: use this.Content to load your game content here
             gameStateManager.AddGameState("titleMenu", new TitleMenuState());
- /*           gameStateManager.AddGameState("helpState", new HelpState());
+            gameStateManager.AddGameState("test", new TestState());
+ /*         gameStateManager.AddGameState("helpState", new HelpState());
             gameStateManager.AddGameState("playingState", new PlayingState(Content));
             gameStateManager.AddGameState("levelMenu", new LevelMenuState());
             gameStateManager.AddGameState("gameOverState", new GameOverState());
             gameStateManager.AddGameState("levelFinishedState", new LevelFinishedState()); */
-            gameStateManager.SwitchTo("titleMenu");
-
-            // assetManager.GetSprite("Conversations/ConversationBox3.png");
+            gameStateManager.SwitchTo("test");
+       
         }
 
         /// <summary>

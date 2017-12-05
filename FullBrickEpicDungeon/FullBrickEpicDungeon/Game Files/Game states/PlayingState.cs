@@ -1,7 +1,11 @@
-﻿
-//In comments gezet want deze state heeft de level klasse/files nodig
+﻿using System.Collections.Generic;
+using System.IO;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
-/*class PlayingState : IGameLoopObject
+/*
+class PlayingState : IGameLoopObject
 {
     
     protected List<Level> levels;
@@ -15,7 +19,7 @@
         currentLevelIndex = -1;
         levels = new List<Level>();
         LoadLevels();
-        LoadLevelsStatus(content.RootDirectory + "/Levels/levels_status.txt");
+       // LoadLevelsStatus(content.RootDirectory + "/Levels/levels_status.txt");
 
     }
 
@@ -126,6 +130,7 @@
         fileWriter.Close();
     }
    
+   
 
 }
- */
+  */
