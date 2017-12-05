@@ -36,6 +36,7 @@ namespace FullBrickEpicDungeon
         /// </summary>
         protected override void LoadContent()
         {
+            base.LoadContent();
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -47,7 +48,8 @@ namespace FullBrickEpicDungeon
             gameStateManager.AddGameState("gameOverState", new GameOverState());
             gameStateManager.AddGameState("levelFinishedState", new LevelFinishedState()); */
             gameStateManager.SwitchTo("titleMenu");
-       
+
+            // assetManager.GetSprite("Conversations/ConversationBox3.png");
         }
 
         /// <summary>
