@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 class Talismaniac : Character
 {
-    public Talismaniac(Weapon weapon) : base(ClassType.TalisManiac, "Talismaniac")
+    public Talismaniac() : base(ClassType.TalisManiac, "Talismaniac")
     {
 
     }
