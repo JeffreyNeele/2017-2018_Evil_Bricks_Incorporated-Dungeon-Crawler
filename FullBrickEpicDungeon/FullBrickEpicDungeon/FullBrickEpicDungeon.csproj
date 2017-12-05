@@ -68,7 +68,7 @@
     <Compile Include="Game Files\Character\Types\ShieldMaiden.cs" />
     <Compile Include="Game Files\Character\Types\Talismaniac.cs" />
     <Compile Include="Game Files\Enumerators.cs" />
-    <Compile Include="Game Files\Cutscenes\Type\1LarryShits.cs" />
+    <Compile Include="Game Files\Equipment\Base\Type\1LarryShits.cs" />
     <Compile Include="Game Files\Cutscenes\Base\Cutscene.cs" />
     <Compile Include="Game Files\Equipment\Base\Equipment.cs" />
     <Compile Include="Game Files\Equipment\ShieldMaiden\IronArmour.cs" />

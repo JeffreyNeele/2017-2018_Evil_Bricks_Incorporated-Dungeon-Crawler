@@ -9,14 +9,9 @@ namespace FullBrickEpicDungeon
     /// </summary>
     public class DungeonCrawler : GameEnvironment
     {
-        /*GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;*/
-
-
         public DungeonCrawler()
         {
             Content.RootDirectory = "Content";
-            //FullScreen = !FullScreen;
         }
 
         /// <summary>
@@ -38,16 +33,14 @@ namespace FullBrickEpicDungeon
         protected override void LoadContent()
         {
             base.LoadContent();
-            windowSize = new Point(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
+            windowSize = new Point(1280, 720);
             ApplyResolutionSettings();
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            windowSize.X = GraphicsDevice.Viewport.Width;
-            windowSize.Y = GraphicsDevice.Viewport.Height;
             // TODO: use this.Content to load your game content here
             gameStateManager.AddGameState("titleMenu", new TitleMenuState());
             gameStateManager.AddGameState("test", new TestState());
- /*         gameStateManager.AddGameState("helpState", new HelpState());
+           /* gameStateManager.AddGameState("helpState", new HelpState());
             gameStateManager.AddGameState("playingState", new PlayingState(Content));
             gameStateManager.AddGameState("levelMenu", new LevelMenuState());
             gameStateManager.AddGameState("gameOverState", new GameOverState());
@@ -83,10 +76,6 @@ namespace FullBrickEpicDungeon
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-
             base.Draw(gameTime);
         }
     }
