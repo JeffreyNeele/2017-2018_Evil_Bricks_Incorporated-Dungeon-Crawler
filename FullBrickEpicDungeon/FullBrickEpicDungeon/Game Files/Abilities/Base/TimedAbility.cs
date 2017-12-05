@@ -24,16 +24,19 @@ abstract class TimedAbility : Ability
         base.Update(gameTime);
     }
 
+    // Uses the ability (resets the timer to 0)
     public override void Use()
     {
         this.abilityTimer.Reset();
         base.Use();
     }
+    // Sets the IsExpired value in ability so it is either in cooldown or not
     public bool isOnCooldown
     {
         get { return !(abilityTimer.IsExpired); }
         set { abilityTimer.IsExpired = !value; }
     }
+    // returns time left until use (usefful for the hud programmers ;) )
     public int TimeLeftUntilUse
     {
         get { return (int)(abilityTimer.MaxTime - abilityTimer.SecondsElapsed); }

@@ -35,7 +35,8 @@ abstract partial class Character : AnimatedGameObject
             if (reviveTimer.IsExpired)
             {
                 this.Reset();
-                this.attributes.Gold = this.attributes.Gold - (this.attributes.Gold / 10);
+                // when the revivetimer expires, the character dies :( sadly he will lose some of his gold after dying (currently 25% might be higher in later versions)
+                this.attributes.Gold = this.attributes.Gold - (this.attributes.Gold / 4);
             }
         }
     }
@@ -174,11 +175,8 @@ abstract partial class Character : AnimatedGameObject
             this.attributes.HP = 0;
         }
     }
-
-    //TO DISCUSS: Amount of gold lost on death when not revived, maybe a sound plays when someone respawns
-    //Method that respawns a character when the reviveTimer is expired. When respawning the character will lose a portion of its gold.
    
-
+    // returns if the character has gone into the "downed" state
     public bool IsDowned
     {
         get { return this.attributes.HP == 0; }

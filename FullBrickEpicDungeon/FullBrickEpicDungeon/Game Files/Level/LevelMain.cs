@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 partial class Level
 {
-    // Lists for items
+    // Lists for items NOTE TO LEVEL PROGRAMMERS: do not remove these and make sure they are initialized before the monsters, players, objects etc.
     protected GameObjectList playerList, monsterList, objectList, projectileList;
 
     public Level()

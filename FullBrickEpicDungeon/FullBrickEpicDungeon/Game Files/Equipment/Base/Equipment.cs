@@ -1,4 +1,6 @@
 ﻿// Class for defining equipment
+using Microsoft.Xna.Framework;
+
 abstract class Equipment : SpriteGameObject
 {
     protected ClassType classType;
@@ -9,6 +11,11 @@ abstract class Equipment : SpriteGameObject
         this.classType = classType;
     }
 
+    public override void Update(GameTime gameTime)
+    {
+
+    }
+    // Equipment has a movementspeedincrease, armour and goldworth value, furthermore it has a string but that's about it. Equipment names will derive from the id
     public int MovementSpeedIncrease
     {
         get { return movementspeedincrease; }

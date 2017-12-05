@@ -1,10 +1,15 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+
+// Base class for a weapon
 abstract class Weapon : AnimatedGameObject
 {
     protected ClassType classType;
+    // var for the owner of this weapon
     Character owner;
+    // vars for abilities that will be called in methods such as MainAbility
     Ability BasicAttack;
     TimedAbility mainAbility;
     SpecialAbility specialAbility;
@@ -15,24 +20,33 @@ abstract class Weapon : AnimatedGameObject
         this.classType = classType;
     }
 
+    public override void Update(GameTime gameTime)
+    {
+        base.Update(gameTime);
+    }
+
+    // This is the base attack method of the weapon,, which will be also defined as an ability
     public virtual void Attack()
     {
         BasicAttack.Use();
         CollisionChecker(this.CurrentAnimation);
     }
 
+    // Uses the main ability
     public virtual void UseMainAbility()
     {
         mainAbility.Use();
         CollisionChecker(this.CurrentAnimation);
     }
 
+    // uses the special ability if it is ready
     public virtual void UseSpecialAbility()
     {
         specialAbility.Use();
         CollisionChecker(this.CurrentAnimation);
     }
 
+    // Checks for collision with mosnters
     protected void CollisionChecker(Animation animation)
     {
         while (!(animation.AnimationEnded))
@@ -52,7 +66,7 @@ abstract class Weapon : AnimatedGameObject
         }
     }
 
-
+    // attributes for attackdamage and how much gold this weapon is worth 
     public int AttackDamage
     {
         get { return attack; }

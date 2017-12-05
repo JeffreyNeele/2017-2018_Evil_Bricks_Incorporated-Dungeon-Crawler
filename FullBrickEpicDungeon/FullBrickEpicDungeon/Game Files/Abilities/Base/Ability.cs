@@ -14,6 +14,7 @@ abstract class Ability
     {
         this.classType = classType;
         this.owner = owner;
+        // Ability needs the main projectile list (defined in LevelMain.cs) 
         try
         {
             projectileList = projectileList.GameWorld.Find("projectileLIST") as GameObjectList;
@@ -25,6 +26,7 @@ abstract class Ability
 
     }
 
+    // Empty methods that will be defined better in subclasses
     public virtual void Update(GameTime gameTime)
     {
 
@@ -38,6 +40,7 @@ abstract class Ability
 
     }
 
+    // Adds a projectile to the ability, only a basic one, for advanced other subclasses of projectile override this class
     public virtual void AddProjectile(string projectileAsset, bool piercing)
     {
         if (isProjectileAbility)
@@ -51,6 +54,7 @@ abstract class Ability
         }
     }
 
+    // Returns a boolean that says if this ability is a projectile ability
     public bool ProjectileAbility
     {
         get { return isProjectileAbility; }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+// A light source with a radius and a colour (more methods will be added as shaders will be done)
 abstract class LightSource : SpriteGameObject
 {
     protected float lightRadius;
