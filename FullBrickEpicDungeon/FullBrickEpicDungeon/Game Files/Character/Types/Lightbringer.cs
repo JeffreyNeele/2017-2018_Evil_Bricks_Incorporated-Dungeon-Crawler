@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 class Lightbringer : Character
 {
-    public Lightbringer(Weapon weapon) : base(weapon, "Lightbringer")
+    public Lightbringer(Weapon weapon) : base(ClassType.Lightbringer, "Lightbringer")
     {
 
     }
