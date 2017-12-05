@@ -54,7 +54,6 @@ class Conversation:GameObjectList
 
     public override void Update(GameTime gameTime)
     {
-        ShowConversation();
         base.Update(gameTime);
     }
 }
