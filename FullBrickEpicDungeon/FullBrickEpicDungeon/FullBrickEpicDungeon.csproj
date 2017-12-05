@@ -115,10 +115,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Conversations\ConversationBox3.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Conversations\conv_test.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Engine\Credits.txt" />
     <Content Include="Engine\Shader.fx" />
@@ -133,7 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\Fonts\ConversationFont.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

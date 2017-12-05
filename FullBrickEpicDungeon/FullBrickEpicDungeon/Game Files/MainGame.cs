@@ -16,6 +16,7 @@ namespace FullBrickEpicDungeon
         public DungeonCrawler()
         {
             Content.RootDirectory = "Content";
+            //FullScreen = !FullScreen;
         }
 
         /// <summary>
@@ -37,9 +38,12 @@ namespace FullBrickEpicDungeon
         protected override void LoadContent()
         {
             base.LoadContent();
+            windowSize = new Point(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
+            ApplyResolutionSettings();
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            windowSize.X = GraphicsDevice.Viewport.Width;
+            windowSize.Y = GraphicsDevice.Viewport.Height;
             // TODO: use this.Content to load your game content here
             gameStateManager.AddGameState("titleMenu", new TitleMenuState());
             gameStateManager.AddGameState("test", new TestState());
@@ -49,7 +53,6 @@ namespace FullBrickEpicDungeon
             gameStateManager.AddGameState("gameOverState", new GameOverState());
             gameStateManager.AddGameState("levelFinishedState", new LevelFinishedState()); */
             gameStateManager.SwitchTo("test");
-       
         }
 
         /// <summary>
@@ -70,7 +73,6 @@ namespace FullBrickEpicDungeon
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
             // TODO: Add your update logic here
             base.Update(gameTime);
         }
