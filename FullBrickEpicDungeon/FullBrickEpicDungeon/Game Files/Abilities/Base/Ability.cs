@@ -25,6 +25,14 @@ abstract class Ability
 
     }
 
+    public virtual void Update(GameTime gameTime)
+    {
+
+    }
+    public virtual void Reset()
+    {
+
+    }
     public virtual void Use()
     {
 
@@ -41,10 +49,6 @@ abstract class Ability
         {
             throw new ArgumentException("this is not a projectile ability and this method can therefore not be used");
         }
-    }
-    public virtual void Update(GameTime gameTime)
-    {
-        
     }
 
     public bool ProjectileAbility
