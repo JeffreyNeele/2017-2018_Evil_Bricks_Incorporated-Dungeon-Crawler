@@ -9,7 +9,6 @@ class BaseAttributes
 
     }
     private int hitpoints, armour, attack, gold;
-    private string type;
     public int HP
     {
         get { return hitpoints; }

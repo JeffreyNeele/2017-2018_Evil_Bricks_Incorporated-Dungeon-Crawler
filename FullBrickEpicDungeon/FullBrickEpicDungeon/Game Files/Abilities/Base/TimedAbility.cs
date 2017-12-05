@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 abstract class TimedAbility : Ability
 {
     Timer abilityTimer;
-    protected TimedAbility(ClassType type, int targetTime) : base(type)
+    protected TimedAbility(Character owner, ClassType type, int targetTime) : base(owner, type)
     {
         abilityTimer = new Timer(targetTime);
     }

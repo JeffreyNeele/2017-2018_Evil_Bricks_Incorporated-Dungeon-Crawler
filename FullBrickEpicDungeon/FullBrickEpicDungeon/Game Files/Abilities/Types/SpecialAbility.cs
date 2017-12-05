@@ -3,7 +3,7 @@
 class SpecialAbility : Ability
 {
     protected int specialMeter, treshold, cost;
-    protected SpecialAbility(ClassType type, int treshold = 100, int cost = 100) : base(type)
+    protected SpecialAbility(Character owner, ClassType type, int treshold = 100, int cost = 100) : base(owner, type)
     {
         this.treshold = treshold;
         this.cost = cost;
