@@ -81,6 +81,7 @@
     <Compile Include="Game Files\Game states\SavedGameState.cs" />
     <Compile Include="Game Files\Game states\SettingsState.cs" />
     <Compile Include="Game Files\Game states\TitleMenu.cs" />
+    <Compile Include="Game Files\HUD\Conversation\Conversation.cs" />
     <Compile Include="Game Files\IBaseAI.cs" />
     <Compile Include="Game Files\Interactive objects\Base\DroppedItem.cs" />
     <Compile Include="Game Files\Interactive objects\Base\InteractiveObject.cs" />
@@ -112,6 +113,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Conversations\ConversationBox3.png" />
     <Content Include="Engine\Credits.txt" />
     <Content Include="Engine\Shader.fx" />
     <Content Include="Icon.ico" />
@@ -120,9 +122,11 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Game Files\HUD\" />
     <Folder Include="Game Files\Monsters\Type\" />
     <Folder Include="Game Files\Weapons\Side Grades\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\Fonts\ConversationFont.xnb" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
