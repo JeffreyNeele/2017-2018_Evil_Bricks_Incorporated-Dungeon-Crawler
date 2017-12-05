@@ -15,11 +15,11 @@ public class AssetManager
 
     public Texture2D GetSprite(string assetName)
     {
-        assetName = Path.GetFullPath(assetName);
         if (assetName == "")
-        { 
+        {
             return null;
         }
+        assetName = Path.GetFullPath(assetName);
         return contentManager.Load<Texture2D>(assetName);
     }
     public void PlaySound(string assetName)
