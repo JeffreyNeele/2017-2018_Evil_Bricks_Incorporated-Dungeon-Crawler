@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
+using System.IO;
 
 public class AssetManager
 {
@@ -14,6 +15,7 @@ public class AssetManager
 
     public Texture2D GetSprite(string assetName)
     {
+        assetName = Path.GetFullPath(assetName);
         if (assetName == "")
         { 
             return null;
@@ -22,12 +24,14 @@ public class AssetManager
     }
     public void PlaySound(string assetName)
     {
+        assetName = Path.GetFullPath(assetName);
         SoundEffect snd = contentManager.Load<SoundEffect>(assetName);
         snd.Play();
     }
 
     public void PlayMusic(string assetName, bool repeat = true)
     {
+        assetName = Path.GetFullPath(assetName);
         MediaPlayer.IsRepeating = repeat;
         MediaPlayer.Play(contentManager.Load<Song>(assetName));
     }
