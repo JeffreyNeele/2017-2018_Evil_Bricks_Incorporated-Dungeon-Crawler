@@ -3,7 +3,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-abstract partial class Character : AnimatedGameObject
+abstract class Character : AnimatedGameObject
 {
     //baseattributes contains the standard base stats and should not be changed, the values in attributes may be changes are used during the remainder of the level
     protected ClassType classType;
