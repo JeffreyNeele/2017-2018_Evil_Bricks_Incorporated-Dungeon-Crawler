@@ -175,7 +175,18 @@ abstract partial class Character : AnimatedGameObject
             this.attributes.HP = 0;
         }
     }
-   
+
+    // Calculates the new movementVector for a character (movementVector outcome may differ between xbox controllers and keyboard controllers)
+    public Vector2 MovementVector(Vector2 movementSpeed, float angle)
+    {
+        float hypotenuse = (float)Math.Sqrt(movementSpeed.X * movementSpeed.X + movementSpeed.Y * movementSpeed.Y);
+
+        float opposite = (float)Math.Sin(angle) * hypotenuse;
+        float adjacent = (float)Math.Cos(angle) * hypotenuse;
+
+        return new Vector2(adjacent, opposite);
+    }
+
     // returns if the character has gone into the "downed" state
     public bool IsDowned
     {
