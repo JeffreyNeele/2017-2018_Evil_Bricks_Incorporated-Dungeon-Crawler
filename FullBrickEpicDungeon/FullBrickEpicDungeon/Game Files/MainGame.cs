@@ -35,10 +35,10 @@ namespace FullBrickEpicDungeon
         {
             base.LoadContent();
             // TODO 
-            screen = new Point(1280, 720);
+            //screen = new Point(1280, 720);
             windowSize = new Point(1280, 720);
             // CHANGE WHEN YOU WANT A FULL SCREEN BASED ON NATIVE RESOLUTION ! (release of game)
-            // screen = new Point(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
+             screen = new Point(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
             // windowSize = new Point(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
             ApplyResolutionSettings();
             // Create a new SpriteBatch, which can be used to draw textures.

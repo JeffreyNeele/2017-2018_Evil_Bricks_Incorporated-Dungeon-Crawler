@@ -46,6 +46,7 @@ class Conversation:GameObjectList
         //Laadt het font in
         TextGameObject currentText = new TextGameObject("Fonts/ConversationFont", 100);
         currentText.Text = textLines[1];
+        //
         currentText.Position = new Vector2(100, conversationFrame.Height / 2);
         currentText.Color = Color.White;
         conversationField.Add(currentText);
