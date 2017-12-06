@@ -9,9 +9,9 @@ class TestState : GameObjectList
     {
         conversation = new Conversation();
         
-        conversation.LoadConversation("Content/Conversations/conv_test.txt",0,1);
+        conversation.LoadConversation("Content/Conversations/conv_test.txt",0,100);
         Add(conversation);
-        conversation.ShowConversation();
+        conversation.ShowConversationBox();
     }
 
     public override void Update(GameTime gameTime)
