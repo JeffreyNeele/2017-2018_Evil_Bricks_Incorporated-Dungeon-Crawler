@@ -11,12 +11,14 @@ abstract partial class Character : AnimatedGameObject
     protected Weapon weapon;
     protected List<Equipment> inventory;
     protected Timer reviveTimer;
-    string type;
+    protected string baseAsset;
     bool playerControlled;
     bool facingLeft;
     Vector2 startPosition;
-    protected Character(ClassType classType, string id = "") : base(0, id)
+    protected Character(ClassType classType, string baseAsset, string id = "") : base(0, id)
     {
+        this.baseAsset = baseAsset;
+        this.assetName = baseAsset;
         this.classType = classType;
         baseattributes = new BaseAttributes();
         inventory = new List<Equipment>();
