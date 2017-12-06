@@ -9,7 +9,9 @@ class BaseAttributes
 
     }
     private int hitpoints, armour, attack, gold;
-    public int HP
+    Vector2 startposition;
+
+   public int HP
     {
         get { return hitpoints; }
         set { hitpoints = value; }
@@ -29,5 +31,10 @@ class BaseAttributes
     {
         get { return attack; }
         set { attack = value; }
+    }
+    public Vector2 StartPosition
+    {
+        get { return startposition; }
+        set { startposition = value; }
     }
 }
