@@ -11,6 +11,7 @@ class TestState : GameObjectList
         
         conversation.LoadConversation("Content/Conversations/conv_test.txt",0,1);
         Add(conversation);
+        conversation.ShowConversation();
     }
 
     public override void Update(GameTime gameTime)
