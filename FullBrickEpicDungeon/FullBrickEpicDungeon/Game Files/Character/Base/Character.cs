@@ -11,12 +11,14 @@ abstract partial class Character : AnimatedGameObject
     protected Weapon weapon;
     protected List<Equipment> inventory;
     protected Timer reviveTimer;
-    string type;
+    protected string baseAsset;
     bool playerControlled;
     bool facingLeft;
     Vector2 startPosition;
-    protected Character(ClassType classType, string id = "") : base(0, id)
+    protected Character(ClassType classType, string baseAsset, string id = "") : base(0, id)
     {
+        this.baseAsset = baseAsset;
+        this.assetName = baseAsset;
         this.classType = classType;
         baseattributes = new BaseAttributes();
         inventory = new List<Equipment>();
@@ -175,7 +177,18 @@ abstract partial class Character : AnimatedGameObject
             this.attributes.HP = 0;
         }
     }
-   
+
+    // Calculates the new movementVector for a character (movementVector outcome may differ between xbox controllers and keyboard controllers)
+    public Vector2 MovementVector(Vector2 movementSpeed, float angle)
+    {
+        float hypotenuse = (float)Math.Sqrt(movementSpeed.X * movementSpeed.X + movementSpeed.Y * movementSpeed.Y);
+
+        float opposite = (float)Math.Sin(angle) * hypotenuse;
+        float adjacent = (float)Math.Cos(angle) * hypotenuse;
+
+        return new Vector2(adjacent, opposite);
+    }
+
     // returns if the character has gone into the "downed" state
     public bool IsDowned
     {
