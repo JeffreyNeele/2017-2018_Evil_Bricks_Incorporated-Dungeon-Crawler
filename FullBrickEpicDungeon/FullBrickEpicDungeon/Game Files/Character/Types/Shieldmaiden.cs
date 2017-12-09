@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 class Shieldmaiden : Character
 {
-    public Shieldmaiden() : base(ClassType.Lightbringer, "Sprites/Lightbringer/lightbringer_default", "Lightbringer")
+    public Shieldmaiden() : base(ClassType.ShieldMaiden, "Sprites/Lightbringer/lightbringer_default", "Lightbringer")
     {
         // Loads the idle animation
         LoadAnimation("Sprites/Lightbringer/lightbringer_idle@3", "lightbringer_idle", true, 0.33F);
