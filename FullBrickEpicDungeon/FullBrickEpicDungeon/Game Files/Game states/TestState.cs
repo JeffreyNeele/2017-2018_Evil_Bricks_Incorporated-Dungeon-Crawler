@@ -12,7 +12,9 @@ class TestState : GameObjectList
         animationTester = new AnimationTester();
         conversation.LoadConversation("Content/Conversations/conv_test.txt",0,100);
         Add(conversation);
+        Add(animationTester);
         conversation.ShowConversationBox();
+
     }
 
     public override void Update(GameTime gameTime)
