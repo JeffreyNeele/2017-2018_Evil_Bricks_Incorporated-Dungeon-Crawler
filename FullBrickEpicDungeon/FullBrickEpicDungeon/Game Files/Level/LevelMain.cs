@@ -19,9 +19,9 @@ partial class Level : GameObjectList
         Add(objectList);
         Add(projectileList);
 
-
-        //Character Lightbringer = new Lightbringer();
-        //Lightbringer.Position = new Vector2(100, 100);
+        // dit moet waarschijnlijk ergens anders gezet worden.
+        Character Lightbringer = new Lightbringer();
+        Lightbringer.Position = new Vector2(100, 100);
     }
 
 }
