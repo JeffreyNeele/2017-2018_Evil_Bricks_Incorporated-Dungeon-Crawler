@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Microsoft.Xna.Framework;
 
 class AnimationTester : AnimatedGameObject
 {
@@ -14,4 +14,6 @@ class AnimationTester : AnimatedGameObject
     {
         PlayAnimation("lightbringer_idle");;
     }
+
+
 }

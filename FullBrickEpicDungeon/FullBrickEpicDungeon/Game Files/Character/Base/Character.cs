@@ -25,7 +25,7 @@ abstract partial class Character : AnimatedGameObject
         inventory = new List<Equipment>();
         attributes = new BaseAttributes();
         reviveTimer = new Timer(10);
-        this.velocity = new Vector2(200, 200);
+        this.velocity = new Vector2(5, 5);
     }
 
     public override void Update(GameTime gameTime)
@@ -60,22 +60,22 @@ abstract partial class Character : AnimatedGameObject
                 this.weapon.UseMainAbility();
             if (inputHelper.KeyPressed(Keys.R))
                 this.weapon.UseSpecialAbility();
-
-            //Input keys for character movement, nog te bepalen of movementspeed vector2 of int is
-            if (inputHelper.KeyPressed(Keys.W))
+            //Input keys for movement
+            if (inputHelper.IsKeyDown(Keys.W))
                 this.position.Y -= this.velocity.Y;
-            if (inputHelper.KeyPressed(Keys.S))
+            if (inputHelper.IsKeyDown(Keys.S))
                 this.position.Y += this.velocity.Y;
-            if (inputHelper.KeyPressed(Keys.A))
+            if (inputHelper.IsKeyDown(Keys.A))
             {
                 this.position.X -= this.velocity.X;
                 facingLeft = true;
             }
-            if (inputHelper.KeyPressed(Keys.D))
+            if (inputHelper.IsKeyDown(Keys.D))
             {
                 this.position.X += this.velocity.X;
                 facingLeft = false;
             }
+            
             
         }
 

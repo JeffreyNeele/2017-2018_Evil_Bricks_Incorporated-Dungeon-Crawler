@@ -12,10 +12,15 @@ class ShadowHunter : Character
         // Loads the idle animation
         LoadAnimation("Sprites/Lightbringer/lightbringer_idle@3", "lightbringer_idle", true, 0.33F);
         // sets this characters base attributes, might be set in level later but for now it is in this constructors example.
-        this.attributes.HP = 0;
-        this.attributes.Armour = 0;
-        this.attributes.Attack = 0;
+        this.attributes.HP = 100;
+        this.attributes.Armour = 10;
+        this.attributes.Attack = 20;
         this.attributes.Gold = 0;
+    }
+
+    public override void Update(GameTime gameTime)
+    {
+        PlayAnimation("lightbringer_idle");
     }
 }
 
