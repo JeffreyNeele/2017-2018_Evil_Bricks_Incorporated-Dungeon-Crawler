@@ -13,3 +13,21 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Conversations/ConversationBox3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Conversations/ConversationBox3.png
+
+#begin Conversations/conv_test.txt
+/copy:Conversations/conv_test.txt
+
+#begin Fonts/ConversationFont.xnb
+/copy:Fonts/ConversationFont.xnb
+
