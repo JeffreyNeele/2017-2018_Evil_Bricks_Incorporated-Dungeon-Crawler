@@ -59,16 +59,14 @@
     <Compile Include="Engine\ParticleEffects\ParticleEffect.cs" />
     <Compile Include="Engine\Timer.cs" />
     <Compile Include="Game Files\Abilities\Base\Ability.cs" />
-    <Compile Include="Game Files\Abilities\Types\SpecialAbility.cs" />
+    <Compile Include="Game Files\Abilities\Base\SpecialAbility.cs" />
     <Compile Include="Game Files\Abilities\Base\TimedAbility.cs" />
+    <Compile Include="Game Files\AnimationTester.cs" />
     <Compile Include="Game Files\Character\Base\Character.cs" />
     <Compile Include="Game Files\BaseAttributes.cs" />
     <Compile Include="Game Files\Character\Types\Lightbringer.cs" />
-    <Compile Include="Game Files\Character\Types\Shadowhunter.cs" />
-    <Compile Include="Game Files\Character\Types\ShieldMaiden.cs" />
-    <Compile Include="Game Files\Character\Types\Talismaniac.cs" />
     <Compile Include="Game Files\Enumerators.cs" />
-    <Compile Include="Game Files\Equipment\Base\Type\1LarryShits.cs" />
+    <Compile Include="Game Files\Cutscenes\Type\1LarryShits.cs" />
     <Compile Include="Game Files\Cutscenes\Base\Cutscene.cs" />
     <Compile Include="Game Files\Equipment\Base\Equipment.cs" />
     <Compile Include="Game Files\Equipment\ShieldMaiden\IronArmour.cs" />
@@ -120,6 +118,12 @@
     <Content Include="Content\Conversations\conv_test.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Sprites\Lightbringer\lightbringer_default.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Lightbringer\lightbringer_idle%403.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Engine\Credits.txt" />
     <Content Include="Engine\Shader.fx" />
     <Content Include="Icon.ico" />
@@ -130,6 +134,7 @@
     </MonoGameContentReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Game Files\Abilities\Types\" />
     <Folder Include="Game Files\Monsters\Type\" />
     <Folder Include="Game Files\Weapons\Side Grades\" />
   </ItemGroup>
