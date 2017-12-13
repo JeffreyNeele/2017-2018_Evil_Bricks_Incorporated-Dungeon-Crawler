@@ -9,7 +9,7 @@ namespace FullBrickEpicDungeon
     /// </summary>
     public class DungeonCrawler : GameEnvironment
     {
-        SpriteGameObject conversationFrame;
+        //SpriteGameObject conversationFrame;
         public DungeonCrawler()
         {
             Content.RootDirectory = "Content";
