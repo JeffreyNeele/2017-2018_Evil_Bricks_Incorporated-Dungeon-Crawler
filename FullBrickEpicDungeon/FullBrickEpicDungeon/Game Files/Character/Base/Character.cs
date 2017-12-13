@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 
-abstract partial class Character : AnimatedGameObject
+abstract class Character : AnimatedGameObject
 {
     //baseattributes contains the standard base stats and should not be changed, the values in attributes may be changes are used during the remainder of the level
     protected ClassType classType;
@@ -49,10 +49,10 @@ abstract partial class Character : AnimatedGameObject
     //TO DO: a way to distinguish characters / players from each other.
     public override void HandleInput(InputHelper inputHelper)
     {
-        if(!IsDowned)
+        if (!IsDowned)
         {
             base.HandleInput(inputHelper);
-            
+
             //Input keys for basic AA and abilities
             if (inputHelper.KeyPressed(Keys.Q))
                 this.weapon.Attack();
@@ -60,25 +60,38 @@ abstract partial class Character : AnimatedGameObject
                 this.weapon.UseMainAbility();
             if (inputHelper.KeyPressed(Keys.R))
                 this.weapon.UseSpecialAbility();
-            //Input keys for movement
-            if (inputHelper.IsKeyDown(Keys.W))
-                this.position.Y -= this.velocity.Y;
-            if (inputHelper.IsKeyDown(Keys.S))
-                this.position.Y += this.velocity.Y;
-            if (inputHelper.IsKeyDown(Keys.A))
-            {
-                this.position.X -= this.velocity.X;
-                facingLeft = true;
-            }
-            if (inputHelper.IsKeyDown(Keys.D))
-            {
-                this.position.X += this.velocity.X;
-                facingLeft = false;
-            }
-            
-            
-        }
 
+            //Input keys for character movement
+            if (inputHelper.IsKeyDown(Keys.W) || inputHelper.IsKeyDown(Keys.S))
+            {
+                if (inputHelper.IsKeyDown(Keys.W))
+                {
+                    if (inputHelper.IsKeyDown(Keys.A))
+                        this.position += MovementVector(this.velocity, 225);
+                    else if (inputHelper.IsKeyDown(Keys.D))
+                        this.position += MovementVector(this.velocity, 315);
+                    else
+                        this.position += MovementVector(this.velocity, 270);
+
+                }
+                else if (inputHelper.IsKeyDown(Keys.S))
+                {
+                    if (inputHelper.IsKeyDown(Keys.A))
+                        this.position += MovementVector(this.velocity, 135);
+                    else if (inputHelper.IsKeyDown(Keys.D))
+                        this.position += MovementVector(this.velocity, 45);
+                    else
+                        this.position += MovementVector(this.velocity, 90);
+
+                }
+            }
+            else if (inputHelper.IsKeyDown(Keys.A))
+                this.position += MovementVector(this.velocity, 180);
+            else if (inputHelper.IsKeyDown(Keys.D))
+                this.position += MovementVector(this.velocity, 0);
+
+
+        }
     }
     public override void Reset()
     {
@@ -183,10 +196,12 @@ abstract partial class Character : AnimatedGameObject
     // Calculates the new movementVector for a character (movementVector outcome may differ between xbox controllers and keyboard controllers)
     public Vector2 MovementVector(Vector2 movementSpeed, float angle)
     {
-        float hypotenuse = (float)Math.Sqrt(movementSpeed.X * movementSpeed.X + movementSpeed.Y * movementSpeed.Y);
+        float adjacent = movementSpeed.X;
+        float opposite = movementSpeed.Y;
 
-        float opposite = (float)Math.Sin(angle) * hypotenuse;
-        float adjacent = (float)Math.Cos(angle) * hypotenuse;
+        float hypotenuse = (float)Math.Sqrt(adjacent * adjacent + opposite * opposite);
+        adjacent = (float)Math.Cos(angle * (Math.PI / 180)) * hypotenuse;
+        opposite = (float)Math.Sin(angle * (Math.PI / 180)) * hypotenuse;
 
         return new Vector2(adjacent, opposite);
     }
