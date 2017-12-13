@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Microsoft.Xna.Framework;
 
 class AnimationTester : AnimatedGameObject
 {
@@ -12,6 +12,17 @@ class AnimationTester : AnimatedGameObject
 
     public void TestAnimation()
     {
-        PlayAnimation("testanimator");;
+        PlayAnimation("testanimator");
+    }
+
+    public override void Update(GameTime gameTime)
+    {
+        base.Update(gameTime);
+        PlayAnimation("testanimator");
+    }
+
+    public override void HandleInput(InputHelper inputHelper)
+    {
+        base.HandleInput(inputHelper);
     }
 }
