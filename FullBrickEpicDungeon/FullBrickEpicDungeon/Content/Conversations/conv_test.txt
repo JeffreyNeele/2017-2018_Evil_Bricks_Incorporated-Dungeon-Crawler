@@ -1,6 +1,0 @@
-﻿Hi, this is a test
-This is the next test
-#Choice 1
-#Choice 2
-#Choice 3
-Next line
