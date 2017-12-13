@@ -4,28 +4,36 @@ using Microsoft.Xna.Framework.Graphics;
 
 class TestState : GameObjectList
 {
-    Conversation conversation;
     AnimationTester animationTester;
+
     public TestState()
     {
-        conversation = new Conversation();
+        //conversation = new Conversation();
         animationTester = new AnimationTester();
-        conversation.LoadConversation("Assets/Conversations/conv_test.txt",0,100);
-        Add(conversation);
+        //conversation.LoadConversation("Content/Conversations/conv_test.txt", 0, 100);
+        //Add(conversation);
         Add(animationTester);
-        conversation.ShowConversationBox();
+        //conversation.ShowConversationBox();
+
+        // dit moet waarschijnlijk ergens anders gezet worden.
+        Character Lightbringer = new Lightbringer();
+        Lightbringer.Position = new Vector2(500, 500);
+        Add(Lightbringer);
+
+        Character shieldmaiden = new Shieldmaiden();
+        shieldmaiden.Position = new Vector2(300, 300);
+        Add(shieldmaiden);
 
     }
 
     public override void Update(GameTime gameTime)
     {
-        animationTester.Update(gameTime);
         base.Update(gameTime);
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
-        animationTester.Draw(gameTime, spriteBatch);
         base.Draw(gameTime, spriteBatch);
+        
     }
 }

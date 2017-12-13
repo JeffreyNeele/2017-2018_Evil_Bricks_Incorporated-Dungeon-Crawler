@@ -2,6 +2,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Graphics;
 
 abstract class Character : AnimatedGameObject
 {
@@ -24,7 +25,7 @@ abstract class Character : AnimatedGameObject
         inventory = new List<Equipment>();
         attributes = new BaseAttributes();
         reviveTimer = new Timer(10);
-        this.velocity = new Vector2(200, 200);
+        this.velocity = new Vector2(5, 5);
     }
 
     public override void Update(GameTime gameTime)
@@ -42,6 +43,7 @@ abstract class Character : AnimatedGameObject
             }
         }
     }
+
 
     //Method for character input (both xbox controller and keyboard), for now dummy keys for 1 controller are inserted, but the idea should be clear
     //TO DO: a way to distinguish characters / players from each other.

@@ -25,4 +25,6 @@ class AnimationTester : AnimatedGameObject
     {
         base.HandleInput(inputHelper);
     }
+
+
 }
