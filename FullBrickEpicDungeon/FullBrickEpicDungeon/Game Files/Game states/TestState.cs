@@ -10,7 +10,7 @@ class TestState : GameObjectList
     {
         conversation = new Conversation();
         animationTester = new AnimationTester();
-        conversation.LoadConversation("Content/Conversations/conv_test.txt",0,100);
+        conversation.LoadConversation("Assets/Conversations/conv_test.txt",0,100);
         Add(conversation);
         conversation.ShowConversationBox();
     }
