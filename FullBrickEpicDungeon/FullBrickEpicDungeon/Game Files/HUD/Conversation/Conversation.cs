@@ -18,7 +18,8 @@ class Conversation:GameObjectList
     //Kan als Load Level af is daar ook in worden gezet. In de input wordt de eerste en laatste line aangegeven die uitgelezen moet worden.
     //lastLine staat standaard op de maximale value die de int kan hebben, dus meer dan genoeg regels voor elk txt bestand.
     public void LoadConversation(string path, int startingLine = 0, int lastLine = Int32.MaxValue)
-    {    
+    {
+        path = "Content/" + path;
         textLines = new List<string>();
         choiceLines = new List<string>();
         StreamReader fileReader = new StreamReader(path);
@@ -53,12 +54,12 @@ class Conversation:GameObjectList
         Add(conversationField);
 
         //Laadt de sprite in van het frame eromheen
-        SpriteGameObject conversationFrame = new SpriteGameObject("Conversations/ConversationBox3", 99,"",0,false);
+        SpriteGameObject conversationFrame = new SpriteGameObject("Assets/Sprites/Conversation Boxes/conversationbox1", 99,"",0,false);
         conversationField.Position = new Vector2(0, 0);
         conversationField.Add(conversationFrame);
 
         //Laadt het font in
-        currentText = new TextGameObject("Fonts/ConversationFont", 100);
+        currentText = new TextGameObject("Assets/Fonts/ConversationFont", 100);
 
         currentText.Text = textLines[convIndex];
         currentText.Position = new Vector2(100, conversationFrame.Height / 2);

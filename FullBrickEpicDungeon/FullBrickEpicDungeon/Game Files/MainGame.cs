@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
-
-
 
 namespace FullBrickEpicDungeon
 {
@@ -12,7 +9,7 @@ namespace FullBrickEpicDungeon
     /// </summary>
     public class DungeonCrawler : GameEnvironment
     {
-       
+        //SpriteGameObject conversationFrame;
         public DungeonCrawler()
         {
             Content.RootDirectory = "Content";
@@ -28,11 +25,8 @@ namespace FullBrickEpicDungeon
         {
             // TODO: Add your initialization logic here
             base.Initialize();
-
         }
 
-      
-        
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
@@ -85,7 +79,6 @@ namespace FullBrickEpicDungeon
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-         
             base.Draw(gameTime);
         }
     }
