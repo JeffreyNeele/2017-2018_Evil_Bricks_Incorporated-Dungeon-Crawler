@@ -1,9 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 
+// Abillity that maintains a cost and a treshold, specialmeter will be increased by monsters in the weapon class
 class SpecialAbility : Ability
 {
     protected int specialMeter, treshold, cost;
-    protected SpecialAbility(string type, int treshold = 100, int cost = 100) : base(type)
+    protected SpecialAbility(Character owner, ClassType type, int treshold = 100, int cost = 100) : base(owner, type)
     {
         this.treshold = treshold;
         this.cost = cost;
@@ -15,13 +16,22 @@ class SpecialAbility : Ability
     }
     protected virtual void UseSpecial()
     {
-        specialMeter -= cost;
+        if (specialMeter >= cost)
+        {
+            specialMeter -= cost;
+        }
+        else
+        {
+            // TODO: add a not usable sound effect
+            return;
+        }
     }
 
     public bool Usable
     {
         get { return specialMeter >= cost; }
     }
+    // Makes it so that the specialmeter can be set but can never go above the treshold value
     public int SpecialMeter
     {
         get { return specialMeter; }

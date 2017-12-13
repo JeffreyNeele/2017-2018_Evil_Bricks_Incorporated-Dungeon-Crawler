@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
+// Class for defining a dropped item that is on the ground, takes the item itself as a property.
 class DroppedItem : InteractiveObject
 {
     GameObject item;
@@ -12,14 +13,11 @@ class DroppedItem : InteractiveObject
 
     public override void Update(GameTime gameTime)
     {
-        if (interacting)
-        {
-            this.PickUp(TargetCharacter);
-        }
         base.Update(gameTime);
     }
 
-    public void PickUp(Character character)
+    // Method for picking this item up
+    protected override void Interact(Character character)
     {
         if(item is Equipment)
         {

@@ -3,7 +3,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-abstract partial class Character : AnimatedGameObject
+abstract class Character : AnimatedGameObject
 {
     //baseattributes contains the standard base stats and should not be changed, the values in attributes may be changes are used during the remainder of the level
     protected ClassType classType;
@@ -11,12 +11,14 @@ abstract partial class Character : AnimatedGameObject
     protected Weapon weapon;
     protected List<Equipment> inventory;
     protected Timer reviveTimer;
-    string type;
+    protected string baseAsset;
     bool playerControlled;
     bool facingLeft;
     Vector2 startPosition;
-    protected Character(ClassType classType, string id = "") : base(0, id)
+    protected Character(ClassType classType, string baseAsset, string id = "") : base(0, id)
     {
+        this.baseAsset = baseAsset;
+        this.assetName = baseAsset;
         this.classType = classType;
         baseattributes = new BaseAttributes();
         inventory = new List<Equipment>();
@@ -35,7 +37,8 @@ abstract partial class Character : AnimatedGameObject
             if (reviveTimer.IsExpired)
             {
                 this.Reset();
-                this.attributes.Gold = this.attributes.Gold - (this.attributes.Gold / 10);
+                // when the revivetimer expires, the character dies :( sadly he will lose some of his gold after dying (currently 25% might be higher in later versions)
+                this.attributes.Gold = this.attributes.Gold - (this.attributes.Gold / 4);
             }
         }
     }
@@ -44,10 +47,10 @@ abstract partial class Character : AnimatedGameObject
     //TO DO: a way to distinguish characters / players from each other.
     public override void HandleInput(InputHelper inputHelper)
     {
-        if(!IsDowned)
+        if (!IsDowned)
         {
             base.HandleInput(inputHelper);
-            
+
             //Input keys for basic AA and abilities
             if (inputHelper.KeyPressed(Keys.Q))
                 this.weapon.Attack();
@@ -56,24 +59,37 @@ abstract partial class Character : AnimatedGameObject
             if (inputHelper.KeyPressed(Keys.R))
                 this.weapon.UseSpecialAbility();
 
-            //Input keys for character movement, nog te bepalen of movementspeed vector2 of int is
-            if (inputHelper.KeyPressed(Keys.W))
-                this.position.Y -= this.velocity.Y;
-            if (inputHelper.KeyPressed(Keys.S))
-                this.position.Y += this.velocity.Y;
-            if (inputHelper.KeyPressed(Keys.A))
+            //Input keys for character movement
+            if (inputHelper.IsKeyDown(Keys.W) || inputHelper.IsKeyDown(Keys.S))
             {
-                this.position.X -= this.velocity.X;
-                facingLeft = true;
-            }
-            if (inputHelper.KeyPressed(Keys.D))
-            {
-                this.position.X += this.velocity.X;
-                facingLeft = false;
-            }
-            
-        }
+                if (inputHelper.IsKeyDown(Keys.W))
+                {
+                    if (inputHelper.IsKeyDown(Keys.A))
+                        this.position += MovementVector(this.velocity, 225);
+                    else if (inputHelper.IsKeyDown(Keys.D))
+                        this.position += MovementVector(this.velocity, 315);
+                    else
+                        this.position += MovementVector(this.velocity, 270);
 
+                }
+                else if (inputHelper.IsKeyDown(Keys.S))
+                {
+                    if (inputHelper.IsKeyDown(Keys.A))
+                        this.position += MovementVector(this.velocity, 135);
+                    else if (inputHelper.IsKeyDown(Keys.D))
+                        this.position += MovementVector(this.velocity, 45);
+                    else
+                        this.position += MovementVector(this.velocity, 90);
+
+                }
+            }
+            else if (inputHelper.IsKeyDown(Keys.A))
+                this.position += MovementVector(this.velocity, 180);
+            else if (inputHelper.IsKeyDown(Keys.D))
+                this.position += MovementVector(this.velocity, 0);
+
+
+        }
     }
     public override void Reset()
     {
@@ -175,10 +191,20 @@ abstract partial class Character : AnimatedGameObject
         }
     }
 
-    //TO DISCUSS: Amount of gold lost on death when not revived, maybe a sound plays when someone respawns
-    //Method that respawns a character when the reviveTimer is expired. When respawning the character will lose a portion of its gold.
-   
+    // Calculates the new movementVector for a character (movementVector outcome may differ between xbox controllers and keyboard controllers)
+    public Vector2 MovementVector(Vector2 movementSpeed, float angle)
+    {
+        float adjacent = movementSpeed.X;
+        float opposite = movementSpeed.Y;
 
+        float hypotenuse = (float)Math.Sqrt(adjacent * adjacent + opposite * opposite);
+        adjacent = (float)Math.Cos(angle * (Math.PI / 180)) * hypotenuse;
+        opposite = (float)Math.Sin(angle * (Math.PI / 180)) * hypotenuse;
+
+        return new Vector2(adjacent, opposite);
+    }
+
+    // returns if the character has gone into the "downed" state
     public bool IsDowned
     {
         get { return this.attributes.HP == 0; }

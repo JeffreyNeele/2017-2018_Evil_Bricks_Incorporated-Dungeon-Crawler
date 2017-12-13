@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
+using System.IO;
 
 public class AssetManager
 {
@@ -15,12 +16,11 @@ public class AssetManager
     public Texture2D GetSprite(string assetName)
     {
         if (assetName == "")
-        { 
+        {
             return null;
         }
         return contentManager.Load<Texture2D>(assetName);
     }
-
     public void PlaySound(string assetName)
     {
         SoundEffect snd = contentManager.Load<SoundEffect>(assetName);

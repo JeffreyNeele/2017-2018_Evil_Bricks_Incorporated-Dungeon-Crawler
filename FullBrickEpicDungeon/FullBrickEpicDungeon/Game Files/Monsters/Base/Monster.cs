@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 abstract partial class Monster : SpriteGameObject
 {
     protected BaseAttributes attributes, baseattributes;
-    //type staat hier voor het type monster (zie mapje type voor de typen monsters)
     public Monster(string assetName, string type) : base(assetName)
     {
         attributes = new BaseAttributes();
@@ -26,6 +25,7 @@ abstract partial class Monster : SpriteGameObject
     {
         base.Reset();
     }
+    //Takes damage, HP can never be below 0 because of health bars
     public void TakeDamage(int damage)
     {
         this.attributes.HP -= (damage - (int)(0.3F * this.attributes.Armour));
@@ -35,6 +35,7 @@ abstract partial class Monster : SpriteGameObject
         }
     }
 
+    // returns the base attributes of a monster
     public BaseAttributes Attributes
     {
         get { return attributes; }

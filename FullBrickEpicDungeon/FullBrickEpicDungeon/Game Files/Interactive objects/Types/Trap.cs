@@ -8,4 +8,9 @@ class Trap : InteractiveObject
     {
 
     }
+
+    protected override void Interact(Character targetCharacter)
+    {
+
+    }
 }

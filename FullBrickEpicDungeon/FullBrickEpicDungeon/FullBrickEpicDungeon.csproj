@@ -59,15 +59,13 @@
     <Compile Include="Engine\ParticleEffects\ParticleEffect.cs" />
     <Compile Include="Engine\Timer.cs" />
     <Compile Include="Game Files\Abilities\Base\Ability.cs" />
-    <Compile Include="Game Files\Abilities\Types\SpecialAbility.cs" />
+    <Compile Include="Game Files\Abilities\Base\SpecialAbility.cs" />
     <Compile Include="Game Files\Abilities\Base\TimedAbility.cs" />
+    <Compile Include="Game Files\AnimationTester.cs" />
     <Compile Include="Game Files\Character\Base\Character.cs" />
     <Compile Include="Game Files\BaseAttributes.cs" />
     <Compile Include="Game Files\Character\Types\Lightbringer.cs" />
-    <Compile Include="Game Files\Character\Types\Shadowhunter.cs" />
-    <Compile Include="Game Files\Character\Types\ShieldMaiden.cs" />
-    <Compile Include="Game Files\Character\Types\Talismaniac.cs" />
-    <Compile Include="Game Files\ClassType.cs" />
+    <Compile Include="Game Files\Enumerators.cs" />
     <Compile Include="Game Files\Cutscenes\Type\1LarryShits.cs" />
     <Compile Include="Game Files\Cutscenes\Base\Cutscene.cs" />
     <Compile Include="Game Files\Equipment\Base\Equipment.cs" />
@@ -80,7 +78,9 @@
     <Compile Include="Game Files\Game states\PlayingState.cs" />
     <Compile Include="Game Files\Game states\SavedGameState.cs" />
     <Compile Include="Game Files\Game states\SettingsState.cs" />
+    <Compile Include="Game Files\Game states\TestState.cs" />
     <Compile Include="Game Files\Game states\TitleMenu.cs" />
+    <Compile Include="Game Files\HUD\Conversation\Conversation.cs" />
     <Compile Include="Game Files\IBaseAI.cs" />
     <Compile Include="Game Files\Interactive objects\Base\DroppedItem.cs" />
     <Compile Include="Game Files\Interactive objects\Base\InteractiveObject.cs" />
@@ -94,6 +94,7 @@
     <Compile Include="Game Files\Projectiles\Projectile.cs" />
     <Compile Include="Game Files\Puzzle\Base\Puzzle.cs" />
     <Compile Include="Game Files\Interactive objects\Types\Trap.cs" />
+    <Compile Include="Game Files\Shop\ShopMain.cs" />
     <Compile Include="Game Files\Weapons\Base\Weapon.cs" />
     <Compile Include="Game Files\MainGame.cs" />
     <Compile Include="Game Files\Weapons\Starter Weapons\SwordAndShield.cs" />
@@ -116,12 +117,13 @@
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <MonoGameContentReference Include="Content\Content.mgcb" />
+    <MonoGameContentReference Include="Content\Content.mgcb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </MonoGameContentReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Game Files\HUD\" />
+    <Folder Include="Game Files\Abilities\Types\" />
     <Folder Include="Game Files\Monsters\Type\" />
-    <Folder Include="Game Files\Shop\" />
     <Folder Include="Game Files\Weapons\Side Grades\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

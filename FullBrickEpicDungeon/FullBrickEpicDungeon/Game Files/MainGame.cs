@@ -9,13 +9,9 @@ namespace FullBrickEpicDungeon
     /// </summary>
     public class DungeonCrawler : GameEnvironment
     {
-        /*GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;*/
-
-
+        SpriteGameObject conversationFrame;
         public DungeonCrawler()
         {
-            graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
@@ -37,19 +33,22 @@ namespace FullBrickEpicDungeon
         /// </summary>
         protected override void LoadContent()
         {
+            base.LoadContent();
+            // TODO 
+            screen = new Point(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height); 
+            windowSize = new Point(1280, 720);
+            ApplyResolutionSettings();
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
             // TODO: use this.Content to load your game content here
             gameStateManager.AddGameState("titleMenu", new TitleMenuState());
- /*           gameStateManager.AddGameState("helpState", new HelpState());
+            gameStateManager.AddGameState("test", new TestState());
+           /* gameStateManager.AddGameState("helpState", new HelpState());
             gameStateManager.AddGameState("playingState", new PlayingState(Content));
             gameStateManager.AddGameState("levelMenu", new LevelMenuState());
             gameStateManager.AddGameState("gameOverState", new GameOverState());
-            gameStateManager.AddGameState("levelFinishedState", new LevelFinishedState());*/
-            gameStateManager.SwitchTo("titleMenu");
-
-            AssetManager.PlayMusic("Sounds/snd_music");
+            gameStateManager.AddGameState("levelFinishedState", new LevelFinishedState()); */
+            gameStateManager.SwitchTo("test");
         }
 
         /// <summary>
@@ -70,7 +69,6 @@ namespace FullBrickEpicDungeon
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
             // TODO: Add your update logic here
             base.Update(gameTime);
         }
@@ -81,10 +79,6 @@ namespace FullBrickEpicDungeon
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-
             base.Draw(gameTime);
         }
     }

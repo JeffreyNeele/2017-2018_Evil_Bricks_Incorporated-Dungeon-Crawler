@@ -1,4 +1,7 @@
-﻿abstract class InteractiveObject : SpriteGameObject
+﻿// Class for an object that interacts with the player when it touches the object
+using Microsoft.Xna.Framework;
+
+abstract class InteractiveObject : SpriteGameObject
 {
     protected bool interacting;
     Character targetCharacter;
@@ -7,7 +10,18 @@
         interacting = false;
         targetCharacter = null;
     }
+    public override void Update(GameTime gameTime)
+    {
+        if (IsInteracting)
+        {
+            this.Interact(targetCharacter);
+        }
+        base.Update(gameTime);
+    }
 
+    protected abstract void Interact(Character character);
+    
+    // Properties that say if the object is currently interacting and the target character for this interaction
     public Character TargetCharacter
     {
         get { return targetCharacter; }

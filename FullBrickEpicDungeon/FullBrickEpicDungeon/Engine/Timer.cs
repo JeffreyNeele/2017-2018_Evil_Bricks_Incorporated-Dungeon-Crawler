@@ -8,7 +8,6 @@ class Timer
     public Timer(float targettime)
     {
         this.targettime = targettime;
-        currentime = 0;
         paused = true;
     }
 
@@ -19,6 +18,11 @@ class Timer
         {
             currentime += (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
+
+        if (IsExpired)
+        {
+            IsPaused = true;
+        }
     }
 
 
@@ -26,6 +30,7 @@ class Timer
     public void Reset()
     {
         currentime = 0;
+        IsPaused = false;
     }
 
     // Properties for the timer
@@ -37,7 +42,6 @@ class Timer
     public float MaxTime
     {
         get { return targettime; }
-        set { targettime = value; }
     }
     public float SecondsElapsed
     {
@@ -46,6 +50,7 @@ class Timer
     public bool IsExpired
     {
         get { return currentime >= targettime; }
+        set { IsExpired = value; }
     }
 
 }
