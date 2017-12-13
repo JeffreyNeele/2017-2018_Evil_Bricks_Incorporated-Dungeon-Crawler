@@ -112,18 +112,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Conversations\ConversationBox3.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Conversations\conv_test.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Sprites\Lightbringer\lightbringer_default.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Sprites\Lightbringer\lightbringer_idle%403.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Engine\Credits.txt" />
     <Content Include="Engine\Shader.fx" />
     <Content Include="Icon.ico" />
@@ -137,11 +125,6 @@
     <Folder Include="Game Files\Abilities\Types\" />
     <Folder Include="Game Files\Monsters\Type\" />
     <Folder Include="Game Files\Weapons\Side Grades\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Content\Fonts\ConversationFont.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
