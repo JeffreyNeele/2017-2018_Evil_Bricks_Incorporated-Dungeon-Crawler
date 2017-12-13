@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 // Add more tiletypes in the Enumerators class!
 
@@ -17,5 +18,10 @@ class Tile : SpriteGameObject
     }
 }
 
-// Hieronder specifiekere Tiles definiëren bv wall op zo'n manier:
-// class Wall_Tile : Tile
+class Wall_Tile : Tile
+{
+    Wall_Tile(string assetname, int layer = 0, string id = "") : base(TileType.Wall, assetname, layer, id)
+    {
+
+    }
+}
