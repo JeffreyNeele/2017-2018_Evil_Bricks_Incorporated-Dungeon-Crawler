@@ -64,6 +64,9 @@
     <Compile Include="Game Files\AnimationTester.cs" />
     <Compile Include="Game Files\Character\Base\Character.cs" />
     <Compile Include="Game Files\BaseAttributes.cs" />
+    <Compile Include="Game Files\Character\Types\ShadowHunter.cs" />
+    <Compile Include="Game Files\Character\Types\Talismaniac.cs" />
+    <Compile Include="Game Files\Character\Types\Shieldmaiden.cs" />
     <Compile Include="Game Files\Character\Types\Lightbringer.cs" />
     <Compile Include="Game Files\Enumerators.cs" />
     <Compile Include="Game Files\Cutscenes\Type\1LarryShits.cs" />
@@ -112,34 +115,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Conversations\ConversationBox3.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Conversations\conv_test.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Sprites\Lightbringer\lightbringer_default.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Sprites\Lightbringer\lightbringer_idle%403.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Engine\Credits.txt" />
     <Content Include="Engine\Shader.fx" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <MonoGameContentReference Include="Content\Content.mgcb" />
+    <MonoGameContentReference Include="Content\Content.mgcb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </MonoGameContentReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Game Files\Abilities\Types\" />
     <Folder Include="Game Files\Monsters\Type\" />
     <Folder Include="Game Files\Weapons\Side Grades\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Content\Fonts\ConversationFont.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

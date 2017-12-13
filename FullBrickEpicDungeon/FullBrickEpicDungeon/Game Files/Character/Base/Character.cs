@@ -2,6 +2,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Graphics;
 
 abstract class Character : AnimatedGameObject
 {
@@ -24,7 +25,7 @@ abstract class Character : AnimatedGameObject
         inventory = new List<Equipment>();
         attributes = new BaseAttributes();
         reviveTimer = new Timer(10);
-        this.velocity = new Vector2(200, 200);
+        this.velocity = new Vector2(5, 5);
     }
 
     public override void Update(GameTime gameTime)
@@ -43,14 +44,15 @@ abstract class Character : AnimatedGameObject
         }
     }
 
+
     //Method for character input (both xbox controller and keyboard), for now dummy keys for 1 controller are inserted, but the idea should be clear
     //TO DO: a way to distinguish characters / players from each other.
     public override void HandleInput(InputHelper inputHelper)
     {
-        if(!IsDowned)
+        if (!IsDowned)
         {
             base.HandleInput(inputHelper);
-            
+
             //Input keys for basic AA and abilities
             if (inputHelper.KeyPressed(Keys.Q))
                 this.weapon.Attack();
@@ -59,24 +61,37 @@ abstract class Character : AnimatedGameObject
             if (inputHelper.KeyPressed(Keys.R))
                 this.weapon.UseSpecialAbility();
 
-            //Input keys for character movement, nog te bepalen of movementspeed vector2 of int is
-            if (inputHelper.KeyPressed(Keys.W))
-                this.position.Y -= this.velocity.Y;
-            if (inputHelper.KeyPressed(Keys.S))
-                this.position.Y += this.velocity.Y;
-            if (inputHelper.KeyPressed(Keys.A))
+            //Input keys for character movement
+            if (inputHelper.IsKeyDown(Keys.W) || inputHelper.IsKeyDown(Keys.S))
             {
-                this.position.X -= this.velocity.X;
-                facingLeft = true;
-            }
-            if (inputHelper.KeyPressed(Keys.D))
-            {
-                this.position.X += this.velocity.X;
-                facingLeft = false;
-            }
-            
-        }
+                if (inputHelper.IsKeyDown(Keys.W))
+                {
+                    if (inputHelper.IsKeyDown(Keys.A))
+                        this.position += MovementVector(this.velocity, 225);
+                    else if (inputHelper.IsKeyDown(Keys.D))
+                        this.position += MovementVector(this.velocity, 315);
+                    else
+                        this.position += MovementVector(this.velocity, 270);
 
+                }
+                else if (inputHelper.IsKeyDown(Keys.S))
+                {
+                    if (inputHelper.IsKeyDown(Keys.A))
+                        this.position += MovementVector(this.velocity, 135);
+                    else if (inputHelper.IsKeyDown(Keys.D))
+                        this.position += MovementVector(this.velocity, 45);
+                    else
+                        this.position += MovementVector(this.velocity, 90);
+
+                }
+            }
+            else if (inputHelper.IsKeyDown(Keys.A))
+                this.position += MovementVector(this.velocity, 180);
+            else if (inputHelper.IsKeyDown(Keys.D))
+                this.position += MovementVector(this.velocity, 0);
+
+
+        }
     }
     public override void Reset()
     {
@@ -181,10 +196,12 @@ abstract class Character : AnimatedGameObject
     // Calculates the new movementVector for a character (movementVector outcome may differ between xbox controllers and keyboard controllers)
     public Vector2 MovementVector(Vector2 movementSpeed, float angle)
     {
-        float hypotenuse = (float)Math.Sqrt(movementSpeed.X * movementSpeed.X + movementSpeed.Y * movementSpeed.Y);
+        float adjacent = movementSpeed.X;
+        float opposite = movementSpeed.Y;
 
-        float opposite = (float)Math.Sin(angle) * hypotenuse;
-        float adjacent = (float)Math.Cos(angle) * hypotenuse;
+        float hypotenuse = (float)Math.Sqrt(adjacent * adjacent + opposite * opposite);
+        adjacent = (float)Math.Cos(angle * (Math.PI / 180)) * hypotenuse;
+        opposite = (float)Math.Sin(angle * (Math.PI / 180)) * hypotenuse;
 
         return new Vector2(adjacent, opposite);
     }

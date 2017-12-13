@@ -5,7 +5,7 @@ enum ClassType
     ShieldMaiden,
     TalisManiac,
     ShadowHunter,
-    Lightbringer,
+    LightBringer,
 }
 
 // enum for tiletypes
