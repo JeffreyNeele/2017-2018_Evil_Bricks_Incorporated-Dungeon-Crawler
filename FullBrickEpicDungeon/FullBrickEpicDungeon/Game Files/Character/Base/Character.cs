@@ -59,21 +59,6 @@ abstract class Character : AnimatedGameObject
             if (inputHelper.KeyPressed(Keys.R))
                 this.weapon.UseSpecialAbility();
 
-            /*if (inputHelper.KeyPressed(Keys.W))
-                this.position.Y -= this.velocity.Y;
-            if (inputHelper.KeyPressed(Keys.S))
-                this.position.Y += this.velocity.Y;
-            if (inputHelper.KeyPressed(Keys.A))
-            {
-                this.position.X -= this.velocity.X;
-                facingLeft = true;
-            }
-            if (inputHelper.KeyPressed(Keys.D))
-            {
-                this.position.X += this.velocity.X;
-                facingLeft = false;
-            }*/
-
             //Input keys for character movement
             if (inputHelper.IsKeyDown(Keys.W) || inputHelper.IsKeyDown(Keys.S))
             {
