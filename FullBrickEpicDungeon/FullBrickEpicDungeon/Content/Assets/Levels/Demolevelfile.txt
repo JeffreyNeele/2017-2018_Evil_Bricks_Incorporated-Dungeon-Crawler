@@ -1,0 +1,28 @@
+[SAVEFILE]
+Shadowhunter, Weapon: Cool weapon, Equipment: Steel Helmet|Meme Chainmail
+etc.
+[LEVEL_INFORMATION]
+Number: 1
+ID: Tutorial_beginning
+etc.
+[TILES]
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+2,5,5,5,1,1,1,1,1,1,1,1,1,1,1,4,4,4,2,
+2,5,5,5,1,1,1,1,1,1,1,1,1,1,1,3,3,3,2,
+2,5,5,5,1,1,1,1,1,1,1,1,1,1,1,3,3,3,2,
+2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
+2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
+2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
+2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
+2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
+[POSITION]
+-PLAYER-
+Shadowhunter: 90, 32
+Shieldmaiden: 12, 45
+Talismaniac: 12, 90
+Lightbringer: 14, 23
+-ENEMY-
+Angryspookymonster: 12, 320
+Butterfly, 300, 243
+etc.
