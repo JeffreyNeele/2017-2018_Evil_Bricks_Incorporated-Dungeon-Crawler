@@ -78,25 +78,18 @@ class Conversation : GameObjectList
             
 
             if (textLines[convIndex].StartsWith("#")) //een eerste teken # geeft aan dat het om een choice gaat hier. Daar zijn er altijd 3 van achter elkaar
-            {
-                TextGameObject choiceTekst1 = new TextGameObject("Assets/Fonts/ConversationFont", 100);
-                TextGameObject choiceTekst2 = new TextGameObject("Assets/Fonts/ConversationFont", 100);
-                TextGameObject choiceTekst3 = new TextGameObject("Assets/Fonts/ConversationFont", 100);
-                choiceTekst1.Position = new Vector2(100, 80);
-                choiceTekst2.Position = new Vector2(100, 100);
-                choiceTekst3.Position = new Vector2(100, 120);
+            {              
+                for (int i = 0; i < 3; i++)
+                {                 
+                    currentText = new TextGameObject("Assets/Fonts/ConversationFont", 100); //maakt elke keer een nieuwe currentText aan zodat hij er meerdere weergeeft.
+                    currentText.Position = new Vector2(100, i * 20 + 80); //voor y coordinaat: i*spacing + offset
 
-                    choiceTekst1.Text = textLines[convIndex];
-                    choiceTekst2.Text = textLines[convIndex +1];
-                    choiceTekst3.Text = textLines[convIndex +2];
-                    convIndex += 2;
-                    
+                    currentText.Text = textLines[convIndex];
+                    conversationField.Add(currentText);
 
-                    
-                conversationField.Add(choiceTekst1);
-                conversationField.Add(choiceTekst2);
-                conversationField.Add(choiceTekst3);
-
+                    if (convIndex < textLines.Count - 1)
+                        convIndex += 1;
+                }
                 
                // currentText.Visible = false; //hiermee maak ik alleen de laatste optie invisible
             }
