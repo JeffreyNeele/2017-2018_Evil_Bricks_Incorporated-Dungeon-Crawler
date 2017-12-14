@@ -94,15 +94,16 @@ class Conversation:GameObjectList
 
             if (textLines[convIndex].StartsWith("#")) //een eerste teken # geeft aan dat het om een choice gaat hier. Daar zijn er altijd 3 van achter elkaar
             {
-                currentChoices.Add(currentText.Text); 
+                
+               currentChoices.Add(currentText.Text); 
 
                 if(currentChoices.Count == 3)
                 {
                     UpdateToChoices();
-                    //currentChoices.Clear();
+                    currentChoices.Clear(); //cleart het voor de volgende ronde
+
                 }
             }
-
             else
             {
                 //Tenzij de convIndex bij de laatste ingelezen regel is gekomen, geeft hij de volgende regel tekst als er op spatie wordt gedrukt.
