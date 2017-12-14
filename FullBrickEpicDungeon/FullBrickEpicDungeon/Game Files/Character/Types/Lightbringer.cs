@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
+/*
 class Lightbringer : Character
 {
+    
     public Lightbringer() : base(ClassType.LightBringer, "Sprites/Lightbringer/lightbringer_default", "Lightbringer")
     {
         // Loads the idle animation
@@ -23,5 +25,7 @@ class Lightbringer : Character
     {
         PlayAnimation("lightbringer_idle");
     }
+    
 }
+*/
 

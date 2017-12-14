@@ -212,7 +212,5 @@
 /build:Assets/Sprites/Talismaniac/talismaniac_default.png
 
 #begin Assets/Levels/Demolevelfile.txt
-/importer:
-/processor:
-/build:Assets/Levels/Demolevelfile.txt
+/copy:Assets/Levels/Demolevelfile.txt
 

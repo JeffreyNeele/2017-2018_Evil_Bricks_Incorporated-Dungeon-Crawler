@@ -18,9 +18,9 @@ class Tile : SpriteGameObject
     }
 }
 
-class Wall_Tile : Tile
+class Basic_Tile : Tile
 {
-    Wall_Tile(string assetname, int layer = 0, string id = "") : base(TileType.Wall, assetname, layer, id)
+    Basic_Tile(string assetname, int layer = 0, string id = "") : base(TileType.BasicTile, assetname, layer, id)
     {
 
     }

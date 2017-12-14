@@ -5,6 +5,7 @@ using System.Xml.Linq;
 
 class TestState : GameObjectList
 {
+    /*
     public Tile[,] getTileset()
     {
         XDocument xDoc = XDocument.Load("Content/Level/TileMapTest2.tmx");
@@ -16,7 +17,7 @@ class TestState : GameObjectList
 
         int tilecount = 10; //int.Parse(xDoc.Root.Element("Tilemaptest").Attribute("tilecount").Value);
         int columns = 19; //int.Parse(xDoc.Root.Element("Tilemaptest").Attribute("columns").Value);
-        
+
         string IDArray = xDoc.Root.Element("layer").Element("data").Value;
         string[] splitArray = IDArray.Split(',');
 
@@ -41,29 +42,17 @@ class TestState : GameObjectList
             }
 
         }
+    }
+    */
+    Level gay;
+    public TestState()
+    {
+        gay = new Level();
+    }
 
-        Tile[,] tiles = new Tile[mapWidth, mapHeight];
-        for (int x = 0; x < mapWidth; x++)
-        {
-            for (int y = 0; y < mapHeight; y++)
-            {
-                // change default values later such as id
-                Tile newtile = new Tile(TileType.Wall, "");
-                newtile.pos
-                tiles[x, y]
-                   // new Vector2(x * 16, y * 16)
-                   // new Rectangle((int)sourcePos[intIDs[x, y] - 1].X, (int)sourcePos[intIDs[x, y] - 1].Y, 16, 16)
-
-            }
-        }
-        int id;
-        Tile newtile;
-        switch (id)
-        {
-            case 1: newtile(TileType.Wall, assetname)
-        }
-        // optional statements for all tiles
-        tilesgrid.Add(newtile)
-        return tiles;
+    public override void Update(GameTime gameTime)
+    {
+        gay.LoadFromFile("Assets/Levels/Demolevelfile.txt");
+        base.Update(gameTime);
     }
 }
