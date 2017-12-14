@@ -9,7 +9,6 @@ class Conversation:GameObjectList
     char[] lineChars;
     List<string> textLines;
     List<string> choiceLines;
-
     TextGameObject currentText;
 
     int convIndex = 0;
