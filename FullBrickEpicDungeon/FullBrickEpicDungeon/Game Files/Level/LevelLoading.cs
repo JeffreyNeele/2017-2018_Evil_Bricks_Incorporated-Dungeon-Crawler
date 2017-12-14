@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 
 partial class Level : GameObjectList
 {
@@ -9,24 +10,42 @@ partial class Level : GameObjectList
     {
         // TODO: go through the document and find the things you want to find height, width etc.
 
-        tileField = new GameObjectGrid(); // TODO: add the height and width to initialize the grid here
-        tileField.CellWidth = 0; // TO DO set correct cell height and width, should either be hardcoded or be received from the file
-        tileField.CellHeight = 0;
+        tileField = new GameObjectGrid(10, 19, 0,); // TODO: add the height and width to initialize the grid here
+        tileField.CellWidth = 100; // TO DO set correct cell height and width, should either be hardcoded or be received from the file
+        tileField.CellHeight = 100;
 
-        // TODO: add a method that generates an array with all IDs  from the file given
+        // TODO: add a method that generates an array with all IDs from the file given
         int[,] IDlist;
+        
+        
 
         // TODO: add a method that goes through all the IDs in the IDlist and associates a correct value with a switch statement
         // Add the tile to the tileField at x,y in the double for loop
-        for(int x = 0; x < tileField.Columns; x++)
+        for (int x = 0; x < tileField.Columns; x++)
         {
-            for(int y = 0; y < tileField.Rows; y++)
+            for (int y = 0; y < tileField.Rows; y++)
             {
                 Tile newtile;
                 switch (IDlist[x, y])
                 {
-                    case 1: newtile = new Tile(TileType.Wall, "" // add the correct id here later this is just an example
+                    case 1:
+                        newtile = new Tile(TileType.BasicTile, "Assets/Sprites/Tiles/BasicTile1"); // add the correct id here later this is just an example
+                        break;
+                    case 2:
+                        newtile = new Tile(TileType.Brick, "Assets/Sprites/Tiles/TileBrick");
+                        break;
+                    case 3:
+                        newtile = new Tile(TileType.Ice, "Assets/Sprites/Tiles/TileIce1");
+                        break;
+                    case 4:
+                        newtile = new Tile(TileType.RockIce, "Assets/Sprites/Tiles/TileRockIce");
+                        break;
+                    case 5:
+                        newtile = new Tile(TileType.Water, "Assets/Sprites/Tiles/TileWater1");
+                        break;
+                    default: throw new NullReferenceException("the given ID " + IDlist[x, y] + " was not found in the preprogrammed IDs");
                 }
+                tileField.Add(newtile);
             }
         }
 
