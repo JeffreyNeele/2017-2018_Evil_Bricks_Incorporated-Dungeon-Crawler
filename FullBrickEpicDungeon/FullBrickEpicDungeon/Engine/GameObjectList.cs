@@ -94,4 +94,10 @@ public class GameObjectList : GameObject
             obj.Reset();
         }
     }
+
+    public void Clear()
+    {
+        children.Clear();
+    }
+
 }
