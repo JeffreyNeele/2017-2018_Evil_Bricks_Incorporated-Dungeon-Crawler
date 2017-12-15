@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 using System.IO;
 
 partial class Level : GameObjectList
@@ -20,23 +20,79 @@ partial class Level : GameObjectList
             fileLines.Add(line);
             line = fileReader.ReadLine();
         }
+        int previousline = 0;
+        // a list for the currently stored lines in a for loop
+        List<string> storedLines = new List<string>();
+        // list that loads the level information
+        for (int i = previousline + 1; i < fileLines.Count; i++)
+        {
+            // if we reach TILES this means that the qualification for the next for loop has been reached and we dont need any more information for this loop
+            if (fileLines[i] == "TILES")
+            {
+                // Loads the level information
+                LevelInformationLoader(storedLines);
+                // clear the stored lines for the next for loop in our list
+                storedLines.Clear();
+                // set the previousline to what this for loop ended on so that the next for loop doesn't receive information it doesn't need
+                previousline = i;
+                break;
+            }
+            storedLines.Add(fileLines[i]);
+        }
 
-        int previousline;
-        previousline = 8;
-
-        List<string> tileLines = new List<string>();
+        // Load the tile field from the file
         for (int i = previousline + 1; i < fileLines.Count; i++)
         {
             if(fileLines[i] == "POSITION")
             {
-                levelTileField = LoadTiles(tileLines);
+                // set the levels tileField to the LoadTiles method returned tileField
+                levelTileField = LoadTiles(storedLines);
                 Add(levelTileField);
-                tileLines.Clear();
+                storedLines.Clear();
+                previousline = i;
                 break;
             }
-            tileLines.Add(fileLines[i]);
+            storedLines.Add(fileLines[i]);
+        }
+
+        // Loads position and characters etc.
+        for (int i = previousline + 1; i < fileLines.Count; i++)
+        {
+            if (fileLines[i] == "ENDOFFILE")
+            {
+                LevelPositionLoader(storedLines);
+                storedLines.Clear();
+                break;
+            }
+            storedLines.Add(fileLines[i]);
+        }
+
+    }
+
+    //Loads level information
+    protected void LevelInformationLoader(List<string> informationStringList)
+    {
+        this.id = "LEVEL_" + informationStringList[0];
+    }
+
+    // Loads Characters at their appropiate position, as well as interactive objects
+    protected void LevelPositionLoader(List<string> positionStringList)
+    {
+        for (int i = 0; i < positionStringList.Count; i++)
+        {
+            // Split the current line
+            string[] splitArray = positionStringList[i].Split(' ');
+            if(splitArray[0] == "SHIELDMAIDEN")
+            {
+                Shieldmaiden shieldmaiden = new Shieldmaiden();
+                shieldmaiden.StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
+                shieldmaiden.CurrentWeapon = new SwordAndShield(shieldmaiden);
+                shieldmaiden.Reset();
+                playerList.Add(shieldmaiden);
+            }
         }
     }
+
     // Method that loads tiles based on an ID list seperated by commas e.g. 3,4,4,5,3,4
     protected GameObjectGrid LoadTiles(List<string> tileStringList)
     {
