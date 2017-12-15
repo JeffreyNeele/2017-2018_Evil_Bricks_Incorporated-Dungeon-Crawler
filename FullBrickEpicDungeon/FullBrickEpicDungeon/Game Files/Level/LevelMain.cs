@@ -9,16 +9,15 @@ partial class Level : GameObjectList
     protected GameObjectGrid levelTileField;
     public Level(/* int levelindex*/)
     {
-        playerList = new GameObjectList(0, "playerLIST");
-        monsterList = new GameObjectList(1, "monsterLIST");
-        objectList = new GameObjectList(2, "objectLIST");
-        projectileList = new GameObjectList(1, "projectileLIST");
+        playerList = new GameObjectList(5, "playerLIST");
+        monsterList = new GameObjectList(3, "monsterLIST");
+        objectList = new GameObjectList(4, "objectLIST");
+        projectileList = new GameObjectList(2, "projectileLIST");
 
         Add(playerList);
         Add(monsterList);
         Add(objectList);
         Add(projectileList);
-
         // dit moet waarschijnlijk ergens anders gezet worden.
     }
 

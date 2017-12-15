@@ -1,11 +1,5 @@
-SAVEFILE
-true
-Shadowhunter, Weapon: Cool weapon, Equipment: Steel Helmet|Meme Chainmail
-etc.
 LEVEL_INFORMATION
-Number: 1
-ID: Tutorial_beginning
-etc.
+Tutorial_Beginning
 TILES
 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 2,5,5,5,1,1,1,1,1,1,1,1,1,1,1,4,4,4,2,
@@ -18,12 +12,8 @@ TILES
 2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
 POSITION
--PLAYER-
-Shadowhunter: 90, 32
-Shieldmaiden: 12, 45
-Talismaniac: 12, 90
-Lightbringer: 14, 23
--ENEMY-
-Angryspookymonster: 12, 320
-Butterfly, 300, 243
-etc.
+SHADOWHUNTER 90 32
+SHIELDMAIDEN 300 300
+TALISMANIAC 12 90
+LIGHTBRINGER 14 23
+ENDOFFILE

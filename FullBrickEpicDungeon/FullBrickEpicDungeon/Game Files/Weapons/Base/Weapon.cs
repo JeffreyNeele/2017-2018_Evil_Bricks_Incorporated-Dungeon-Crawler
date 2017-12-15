@@ -10,9 +10,9 @@ abstract class Weapon : AnimatedGameObject
     // var for the owner of this weapon
     Character owner;
     // vars for abilities that will be called in methods such as MainAbility
-    Ability BasicAttack;
-    TimedAbility mainAbility;
-    SpecialAbility specialAbility;
+    protected Ability BasicAttack;
+    protected TimedAbility mainAbility;
+    protected SpecialAbility specialAbility;
     private int attack, goldCost;
     protected Weapon(Character owner, ClassType classType, string id, string assetName): base(1, id)
     {
