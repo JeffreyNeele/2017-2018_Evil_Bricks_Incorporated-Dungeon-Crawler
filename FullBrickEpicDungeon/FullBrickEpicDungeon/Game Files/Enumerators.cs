@@ -11,5 +11,11 @@ enum ClassType
 // enum for tiletypes
 enum TileType
 {
-    Wall
+    BasicTile,
+    Brick,
+    Ice,
+    RockIce,
+    Water,
+
+    
 }

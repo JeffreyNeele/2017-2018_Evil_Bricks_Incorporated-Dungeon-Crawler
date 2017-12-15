@@ -32,9 +32,4 @@ class BaseAttributes
         get { return attack; }
         set { attack = value; }
     }
-    public Vector2 StartPosition
-    {
-        get { return startposition; }
-        set { startposition = value; }
-    }
 }

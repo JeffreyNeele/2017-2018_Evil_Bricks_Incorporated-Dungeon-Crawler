@@ -12,20 +12,16 @@ abstract class Character : AnimatedGameObject
     protected Weapon weapon;
     protected List<Equipment> inventory;
     protected Timer reviveTimer;
-    protected string baseAsset;
-    bool playerControlled;
-    bool facingLeft;
-    Vector2 startPosition;
+    protected Vector2 startPosition, movementSpeed;
     protected Character(ClassType classType, string baseAsset, string id = "") : base(0, id)
     {
-        this.baseAsset = baseAsset;
-        this.assetName = baseAsset;
         this.classType = classType;
         baseattributes = new BaseAttributes();
         inventory = new List<Equipment>();
         attributes = new BaseAttributes();
         reviveTimer = new Timer(10);
-        this.velocity = new Vector2(5, 5);
+        this.velocity = Vector2.Zero;
+        this.movementSpeed = new Vector2(3, 3);
     }
 
     public override void Update(GameTime gameTime)
@@ -51,8 +47,6 @@ abstract class Character : AnimatedGameObject
     {
         if (!IsDowned)
         {
-            base.HandleInput(inputHelper);
-
             //Input keys for basic AA and abilities
             if (inputHelper.KeyPressed(Keys.Q))
                 this.weapon.Attack();
@@ -60,38 +54,37 @@ abstract class Character : AnimatedGameObject
                 this.weapon.UseMainAbility();
             if (inputHelper.KeyPressed(Keys.R))
                 this.weapon.UseSpecialAbility();
-
+            Console.WriteLine("I made it here");
             //Input keys for character movement
             if (inputHelper.IsKeyDown(Keys.W) || inputHelper.IsKeyDown(Keys.S))
             {
                 if (inputHelper.IsKeyDown(Keys.W))
                 {
                     if (inputHelper.IsKeyDown(Keys.A))
-                        this.position += MovementVector(this.velocity, 225);
+                        this.position += MovementVector(this.movementSpeed, 225);
                     else if (inputHelper.IsKeyDown(Keys.D))
-                        this.position += MovementVector(this.velocity, 315);
+                        this.position += MovementVector(this.movementSpeed, 315);
                     else
-                        this.position += MovementVector(this.velocity, 270);
+                        this.position += MovementVector(this.movementSpeed, 270);
 
                 }
                 else if (inputHelper.IsKeyDown(Keys.S))
                 {
                     if (inputHelper.IsKeyDown(Keys.A))
-                        this.position += MovementVector(this.velocity, 135);
+                        this.position += MovementVector(this.movementSpeed, 135);
                     else if (inputHelper.IsKeyDown(Keys.D))
-                        this.position += MovementVector(this.velocity, 45);
+                        this.position += MovementVector(this.movementSpeed, 45);
                     else
-                        this.position += MovementVector(this.velocity, 90);
+                        this.position += MovementVector(this.movementSpeed, 90);
 
                 }
             }
             else if (inputHelper.IsKeyDown(Keys.A))
-                this.position += MovementVector(this.velocity, 180);
+                this.position += MovementVector(this.movementSpeed, 180);
             else if (inputHelper.IsKeyDown(Keys.D))
-                this.position += MovementVector(this.velocity, 0);
-
-
+                this.position += MovementVector(this.movementSpeed, 0);
         }
+        base.HandleInput(inputHelper);
     }
     public override void Reset()
     {
@@ -218,11 +211,16 @@ abstract class Character : AnimatedGameObject
         get { return startPosition; }
         set { startPosition = value; }
     }
-
+    public Vector2 MovementSpeed
+    {
+        get { return movementSpeed; }
+        set { movementSpeed = value; }
+    }
     // returns the weapon of the character
     public Weapon CurrentWeapon
     {
         get { return weapon; }
+        set { weapon = value; }
     }
     // returns the attributes of the character
     public BaseAttributes Attributes
@@ -236,8 +234,4 @@ abstract class Character : AnimatedGameObject
         get { return classType; }
     }
     // returns the facing direction of the character
-    public bool FacingLeft
-    {
-        get { return facingLeft; }
-    }
 }
