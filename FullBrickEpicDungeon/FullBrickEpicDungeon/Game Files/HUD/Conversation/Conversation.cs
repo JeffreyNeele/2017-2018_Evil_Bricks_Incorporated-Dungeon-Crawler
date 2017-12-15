@@ -4,16 +4,18 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-class Conversation:GameObjectList
+class Conversation : GameObjectList
 {
-    char[] lineChars;
-    List<string> textLines;
-    List<string> choiceLines;
-
-    TextGameObject currentText;
-
+    List<string> textLines; //alle regels uit de txt komen hierin
+    GameObjectList displayedText; //huidig weergegeven tekst
+    List<string> currentChoices = new List<string>(); //dit is de list met de huidige choices pure strings.
     int convIndex = 0;
 
+    public Conversation(): base()
+    {
+        displayedText = new GameObjectList(1, "displayedtext");
+        Add(displayedText);
+    }
     //Laadt de conversatie in uit een text bestand als LoadConversation aangeroepen wordt op locatie path. Deze komt in een List te staan.
     //Kan als Load Level af is daar ook in worden gezet. In de input wordt de eerste en laatste line aangegeven die uitgelezen moet worden.
     //lastLine staat standaard op de maximale value die de int kan hebben, dus meer dan genoeg regels voor elk txt bestand.
@@ -21,27 +23,18 @@ class Conversation:GameObjectList
     {
         path = "Content/" + path;
         textLines = new List<string>();
-        choiceLines = new List<string>();
         StreamReader fileReader = new StreamReader(path);
         string line = fileReader.ReadLine();
-        string choiceLine = "";
         int width = line.Length;
         for (int l = startingLine; l <= lastLine; l++)
         {
-            // Als # op de eerste plek van een regel staat, komen daarna drie keuzeopties in beeld. Die gaan in een choiceLines List en niet in de textLines List.
-           /* if(lineChars[0] == '#')
-            {
-                    choiceLine = fileReader.ReadLine();
-                    choiceLines.Add(choiceLine);
-
-            }*/
-            if(line != null)
+            if (line != null)
             {
                 textLines.Add(line);
                 line = fileReader.ReadLine();
             }
         }
-       // lineChars = line.ToCharArray();
+        // lineChars = line.ToCharArray();
     }
 
 
@@ -50,22 +43,20 @@ class Conversation:GameObjectList
     //Laat als aangeroepen de sprite met text zien op het scherm met momenteel de eerste regel van de test txt file.
     public void ShowConversationBox()
     {
-        GameObjectList conversationField = new GameObjectList(100, "conversation_total");
-        Add(conversationField);
 
         //Laadt de sprite in van het frame eromheen
-        SpriteGameObject conversationFrame = new SpriteGameObject("Assets/Sprites/Conversation Boxes/conversationbox1", 99,"",0,false);
-        conversationField.Position = new Vector2(0, 0);
-        conversationField.Add(conversationFrame);
+        SpriteGameObject conversationFrame = new SpriteGameObject("Assets/Sprites/Conversation Boxes/conversationbox1", 0, "", 10, false);
+        Position = new Vector2(0, 0);
+        Add(conversationFrame);
 
         //Laadt het font in
-        currentText = new TextGameObject("Assets/Fonts/ConversationFont", 100);
-
+        TextGameObject currentText = new TextGameObject("Assets/Fonts/ConversationFont", 0, "currentlydisplayedtext");
+        currentText.Color = Color.White;
         currentText.Text = textLines[convIndex];
         currentText.Position = new Vector2(100, conversationFrame.Height / 2);
-        currentText.Color = Color.White;
-        conversationField.Add(currentText);
+        displayedText.Add(currentText);
     }
+
 
 
     public override void Update(GameTime gameTime)
@@ -73,19 +64,49 @@ class Conversation:GameObjectList
         base.Update(gameTime);
     }
 
+
+
+
     public override void HandleInput(InputHelper inputHelper)
     {
         base.HandleInput(inputHelper);
         if (inputHelper.KeyPressed(Keys.Space))
         {
-            //Tenzij de convIndex bij de laatste ingelezen regel is gekomen, geeft hij de volgende regel tekst als er op spatie wordt gedrukt.
-            if (convIndex < textLines.Count -1)
+            if (convIndex < textLines.Count - 1)
+            {
                 convIndex += 1;
+                displayedText.Clear();
 
-            currentText.Text = textLines[convIndex];
+                if (textLines[convIndex].StartsWith("#")) //een eerste teken # geeft aan dat het om een choice gaat hier. Daar zijn er altijd 3 van achter elkaar
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        TextGameObject currentText = new TextGameObject("Assets/Fonts/ConversationFont", 0, "currentlydisplayedtext"); //maakt elke keer een nieuwe currentText aan zodat hij er meerdere weergeeft.
+                        currentText.Position = new Vector2(100, i * 20 + 80); //voor y coordinaat: i*spacing + offset
+                        currentText.Text = textLines[convIndex];
+                        displayedText.Add(currentText);
 
+                        if (convIndex < textLines.Count - 1 && i < 2)
+                        {
+                            convIndex += 1;
+                        }
+                    }
+
+                    // currentText.Visible = false; //hiermee maak ik alleen de laatste optie invisible
+                }
+                else
+                {
+                    TextGameObject currentText = new TextGameObject("Assets/Fonts/ConversationFont", 0, "currentlydisplayedtext");
+                    currentText.Text = textLines[convIndex];
+                    currentText.Position = new Vector2(100, 114);
+                    displayedText.Add(currentText);
+                }
+            }
         }
     }
-
-
 }
+
+
+
+
+
