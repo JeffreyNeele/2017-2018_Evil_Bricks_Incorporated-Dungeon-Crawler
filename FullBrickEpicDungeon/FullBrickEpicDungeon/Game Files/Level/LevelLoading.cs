@@ -30,6 +30,7 @@ partial class Level : GameObjectList
             if(fileLines[i] == "POSITION")
             {
                 levelTileField = LoadTiles(tileLines);
+                Add(levelTileField);
                 tileLines.Clear();
                 break;
             }
@@ -46,7 +47,7 @@ partial class Level : GameObjectList
         }
 
         // Make a new tile field with x being the length of a line (the length) and the amount of lines the y direction
-        GameObjectGrid tileField = new GameObjectGrid(tileStringList[0].Length / 2, tileStringList.Count, 0, "TileField"); 
+        GameObjectGrid tileField = new GameObjectGrid(tileStringList.Count, tileStringList[0].Length / 2, 3, "TileField"); 
 
         //values for the cell width and height, these are predetermined in the Tiled Map Editor, so are constants.
         tileField.CellWidth = 100; 
@@ -55,10 +56,10 @@ partial class Level : GameObjectList
         // Go through all given lines in the file, it is assumed here that it is in the correct form. 
         int[,] IDlist = new int[tileField.Columns, tileField.Rows];
 
-        for(int y = 0; y < tileField.Columns; y++)
+        for(int y = 0; y < tileField.Rows; y++)
         {
             string[] lineArray = tileStringList[y].Split(',');
-            for(int x = 0; x < tileField.Rows; x++)
+            for(int x = 0; x < tileField.Columns; x++)
             {
                 IDlist[x, y] = int.Parse(lineArray[x]); 
             }

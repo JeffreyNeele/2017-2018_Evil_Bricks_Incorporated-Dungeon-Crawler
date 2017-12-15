@@ -48,11 +48,17 @@ class TestState : GameObjectList
     public TestState()
     {
         gay = new Level();
+        gay.LoadFromFile("Assets/Levels/Demolevelfile.txt");
+        Add(gay);
     }
 
     public override void Update(GameTime gameTime)
     {
-        gay.LoadFromFile("Assets/Levels/Demolevelfile.txt");
         base.Update(gameTime);
+    }
+
+    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    {
+        base.Draw(gameTime, spriteBatch);
     }
 }
