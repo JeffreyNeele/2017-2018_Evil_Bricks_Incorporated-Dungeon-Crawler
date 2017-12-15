@@ -7,8 +7,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 class PlayingState : IGameLoopObject
 {
+    protected Button pauseButton;
     protected List<Level> levelList;
     protected int currentLevelIndex;
+
     public PlayingState()
     {
         currentLevelIndex = 0;
@@ -19,6 +21,11 @@ class PlayingState : IGameLoopObject
     public void HandleInput(InputHelper inputHelper)
     {
         CurrentLevel.HandleInput(inputHelper);
+
+        if (pauseButton.Pressed)
+        {
+            GameEnvironment.GameStateManager.SwitchTo("playingState");
+        }
     }
 
     public void Reset()
