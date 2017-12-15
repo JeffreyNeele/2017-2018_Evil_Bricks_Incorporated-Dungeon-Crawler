@@ -36,19 +36,19 @@ namespace FullBrickEpicDungeon
             base.LoadContent();
             // TODO 
             screen = new Point(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height); 
-            windowSize = new Point(1920, 1080);
+            windowSize = new Point(1280, 720);
             ApplyResolutionSettings();
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             // TODO: use this.Content to load your game content here
             gameStateManager.AddGameState("titleMenu", new TitleMenuState());
-            gameStateManager.AddGameState("test", new TestState());
-           /* gameStateManager.AddGameState("helpState", new HelpState());
-            gameStateManager.AddGameState("playingState", new PlayingState(Content));
+            gameStateManager.AddGameState("test", new TestState());       
+            gameStateManager.AddGameState("playingState", new PlayingState());
+            /* gameStateManager.AddGameState("helpState", new HelpState());
             gameStateManager.AddGameState("levelMenu", new LevelMenuState());
             gameStateManager.AddGameState("gameOverState", new GameOverState());
             gameStateManager.AddGameState("levelFinishedState", new LevelFinishedState()); */
-            gameStateManager.SwitchTo("test");
+            gameStateManager.SwitchTo("playingState");
         }
 
         /// <summary>

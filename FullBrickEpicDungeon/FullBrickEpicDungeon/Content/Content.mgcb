@@ -211,6 +211,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Talismaniac/talismaniac_default.png
 
-#begin Assets/Levels/Demolevelfile.txt
-/copy:Assets/Levels/Demolevelfile.txt
+#begin Assets/Levels/level1.txt
+/copy:Assets/Levels/level1.txt
 

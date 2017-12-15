@@ -4,133 +4,62 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-/*
+
 class PlayingState : IGameLoopObject
 {
-    
-    protected List<Level> levels;
+    protected List<Level> levelList;
     protected int currentLevelIndex;
-    protected ContentManager content;
-
-
-    public PlayingState(ContentManager content)
+    public PlayingState()
     {
-        this.content = content;
-        currentLevelIndex = -1;
-        levels = new List<Level>();
-        LoadLevels();
-       // LoadLevelsStatus(content.RootDirectory + "/Levels/levels_status.txt");
-
+        currentLevelIndex = 0;
+        levelList = new List<Level>();
+        LoadLevels(1);
     }
 
-    public Level CurrentLevel
-    {
-        get { return levels[currentLevelIndex]; }
-    }
-
-
-
-    public int CurrentLevelIndex
-    {
-        get { return currentLevelIndex; }
-        set
-        {
-            if (value >= 0 && value < levels.Count)
-            {
-                currentLevelIndex = value;
-                CurrentLevel.Reset();
-            }
-        }
-    }
-
-    public List<Level> Levels
-    {
-        get { return levels; }
-    }
-
-    public virtual void HandleInput(InputHelper inputHelper)
+    public void HandleInput(InputHelper inputHelper)
     {
         CurrentLevel.HandleInput(inputHelper);
     }
 
-    public virtual void Update(GameTime gameTime)
+    public void Reset()
     {
-        CurrentLevel.Update(gameTime);
-        if (CurrentLevel.GameOver)
-        {
-            GameEnvironment.GameStateManager.SwitchTo("gameOverState");
-        }
-        else if (CurrentLevel.Completed)
-        {
-            CurrentLevel.Solved = true;
-            GameEnvironment.GameStateManager.SwitchTo("levelFinishedState");
-        }
+        CurrentLevel.Reset();
     }
 
-    public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    public void Update(GameTime gameTime)
+    {
+
+    }
+
+    public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         CurrentLevel.Draw(gameTime, spriteBatch);
     }
 
-    public virtual void Reset()
+    public void LoadLevels(int levelAmount)
     {
-        CurrentLevel.Reset();
+        for(int x = 1; x <= levelAmount; x++)
+        {
+            Level newlevel = new Level(x);
+            levelList.Add(newlevel);
+        }
     }
 
-    public void NextLevel()
+    public void GoToNextLevel()
     {
         CurrentLevel.Reset();
-        if (currentLevelIndex >= levels.Count - 1)
+        if (currentLevelIndex >= levelList.Count - 1)
         {
-            GameEnvironment.GameStateManager.SwitchTo("levelMenu");
+            // GameEnvironment.GameStateManager.SwitchTo aka switch to another state if all levels are finished
         }
         else
         {
-            CurrentLevelIndex++;
-            levels[currentLevelIndex].Locked = false;
+            currentLevelIndex++;
         }
-        WriteLevelsStatus(content.RootDirectory + "/Levels/levels_status.txt");
     }
 
-    public void LoadLevels()
+    public Level CurrentLevel
     {
-        for (int currLevel = 1; currLevel <= 10; currLevel++)
-        {
-            levels.Add(new Level(currLevel));
-        }
+        get { return levelList[currentLevelIndex]; }
     }
-
-    public void LoadLevelsStatus(string path)
-    {
-        List<string> textlines = new List<string>();
-        StreamReader fileReader = new StreamReader(path);
-        for (int i = 0; i < levels.Count; i++)
-        {
-            string line = fileReader.ReadLine();
-            string[] elems = line.Split(',');
-            if (elems.Length == 2)
-            {
-                levels[i].Locked = bool.Parse(elems[0]);
-                levels[i].Solved = bool.Parse(elems[1]);
-            }
-        }
-        fileReader.Close();
-    }
-
-    public void WriteLevelsStatus(string path)
-    {
-        // read the lines
-        List<string> textlines = new List<string>();
-        StreamWriter fileWriter = new StreamWriter(path, false);
-        for (int i = 0; i < levels.Count; i++)
-        {
-            string line = levels[i].Locked.ToString() + "," + levels[i].Solved.ToString();
-            fileWriter.WriteLine(line);
-        }
-        fileWriter.Close();
-    }
-   
-   
-
 }
-  */
