@@ -112,8 +112,9 @@ abstract class Character : AnimatedGameObject
     {
         GameObjectList monsterList = GameWorld.Find("monsterLIST") as GameObjectList;
         GameObjectList objectList = GameWorld.Find("objectLIST") as GameObjectList;
+ 
         // TODO: Add Tilefield collision with walls puzzles etc, (not doable atm as it isn't programmed as of writing this)
-        foreach(Monster monsterobj in monsterList.Children)
+        foreach (Monster monsterobj in monsterList.Children)
         {
             if (monsterobj.CollidesWith(this))
             {
@@ -128,6 +129,23 @@ abstract class Character : AnimatedGameObject
             {
                 intObj.IsInteracting = true;
                 intObj.TargetCharacter = this;
+            }
+        }
+    }
+
+    public void SolidCollisionChecker()
+    {
+        GameObjectList solidList = GameWorld.Find("solidLIST") as GameObjectList;
+        // Dikke collision met muren/andere solid objects moet ervoor zorgen dat de player niet verder kan bewegen.
+        foreach (Tile solidObj in solidList.Children)
+        {
+            if (solidObj.CollidesWith(this))
+            {
+                movementSpeed = new Vector2(0, 0);
+            }
+            else
+            {
+                movementSpeed = new Vector2(3, 3);
             }
         }
     }

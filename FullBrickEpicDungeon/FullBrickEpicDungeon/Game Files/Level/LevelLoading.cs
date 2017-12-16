@@ -135,12 +135,14 @@ partial class Level : GameObjectList
                         break;
                     case 2:
                         newtile = new Tile(TileType.Brick, "Assets/Sprites/Tiles/TileBrick");
+                        solidList.Add(newtile);
                         break;
                     case 3:
                         newtile = new Tile(TileType.Ice, "Assets/Sprites/Tiles/TileIce1");
                         break;
                     case 4:
                         newtile = new Tile(TileType.RockIce, "Assets/Sprites/Tiles/RockIce");
+                        solidList.Add(newtile);
                         break;
                     case 5:
                         newtile = new Tile(TileType.Water, "Assets/Sprites/Tiles/TileWater1");
