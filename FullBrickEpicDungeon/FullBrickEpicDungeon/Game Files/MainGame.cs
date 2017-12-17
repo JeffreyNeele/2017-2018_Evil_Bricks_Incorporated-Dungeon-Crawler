@@ -44,6 +44,7 @@ namespace FullBrickEpicDungeon
             gameStateManager.AddGameState("titleMenu", new TitleMenuState());
             gameStateManager.AddGameState("test", new TestState());       
             gameStateManager.AddGameState("playingState", new PlayingState());
+            gameStateManager.AddGameState("conversation", new ConversationState());
             /* gameStateManager.AddGameState("helpState", new HelpState());
             gameStateManager.AddGameState("levelMenu", new LevelMenuState());
             gameStateManager.AddGameState("gameOverState", new GameOverState());
