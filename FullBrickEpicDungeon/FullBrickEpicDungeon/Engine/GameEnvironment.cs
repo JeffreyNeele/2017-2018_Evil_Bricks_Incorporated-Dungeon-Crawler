@@ -123,10 +123,7 @@ public class GameEnvironment : Game
         {
             FullScreen = !FullScreen;
         }
-        if (inputHelper.KeyPressed(Keys.C))
-        {
-            gameStateManager.SwitchTo("conversation");
-        }
+
         gameStateManager.HandleInput(inputHelper);
     }
 
