@@ -7,7 +7,6 @@ class SwordAndShield : Weapon
     {
         this.AttackDamage = 50;
         this.GoldWorth = 100;
-        BasicAttack = null;
     }
 
 }
