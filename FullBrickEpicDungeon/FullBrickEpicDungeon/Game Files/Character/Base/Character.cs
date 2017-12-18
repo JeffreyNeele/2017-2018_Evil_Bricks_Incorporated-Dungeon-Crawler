@@ -12,7 +12,7 @@ abstract class Character : AnimatedGameObject
     protected Weapon weapon;
     protected List<Equipment> inventory;
     protected Timer reviveTimer;
-    protected Vector2 startPosition, movementSpeed, collisionSpeed;
+    protected Vector2 startPosition, movementSpeed;
     protected Character(ClassType classType, string baseAsset, string id = "") : base(0, id)
     {
         this.classType = classType;
@@ -22,7 +22,6 @@ abstract class Character : AnimatedGameObject
         reviveTimer = new Timer(10);
         this.velocity = Vector2.Zero;
         this.movementSpeed = new Vector2(3, 3);
-        this.collisionSpeed = new Vector2(3, 3);
     }
 
     public override void Update(GameTime gameTime)
@@ -57,7 +56,7 @@ abstract class Character : AnimatedGameObject
                 this.weapon.UseSpecialAbility();
             Console.WriteLine("I made it here");
             //Input keys for character movement
-            Vector2 nextSpot;
+            Vector2 nextSpot1, nextSpot2;
             bool allowed;
             if (inputHelper.IsKeyDown(Keys.W) || inputHelper.IsKeyDown(Keys.S))
             {
@@ -65,8 +64,9 @@ abstract class Character : AnimatedGameObject
                 {
                     if (inputHelper.IsKeyDown(Keys.A))
                     {
-                        nextSpot = position + new Vector2(-(Width / 2), -(Height-10)) + MovementVector(collisionSpeed, 225);
-                        allowed = SolidCollisionChecker(nextSpot);
+                        nextSpot1 = position + new Vector2(-(Width / 2), -(Height / 4)) + MovementVector(movementSpeed, 225);
+                        nextSpot2 = position + new Vector2(-(Width / 2), -(Height / 4)) + MovementVector(movementSpeed, 225);
+                        allowed = SolidCollisionChecker(nextSpot1, nextSpot2);
                         if (allowed)
                         {
                             this.position += MovementVector(this.movementSpeed, 225);
@@ -74,8 +74,9 @@ abstract class Character : AnimatedGameObject
                     }
                     else if (inputHelper.IsKeyDown(Keys.D))
                     {
-                        nextSpot = position + new Vector2((Width / 2), -(Height-10)) + MovementVector(collisionSpeed, 315);
-                        allowed = SolidCollisionChecker(nextSpot);
+                        nextSpot1 = position + new Vector2((Width / 2), -(Height / 4)) + MovementVector(movementSpeed, 315);
+                        nextSpot2 = position + new Vector2((Width / 2), -(Height / 4)) + MovementVector(movementSpeed, 315);
+                        allowed = SolidCollisionChecker(nextSpot1, nextSpot2);
                         if (allowed)
                         {
                             this.position += MovementVector(this.movementSpeed, 315);
@@ -83,8 +84,9 @@ abstract class Character : AnimatedGameObject
                     }
                     else
                     {
-                        nextSpot = position + new Vector2(0, -(Height-10)) + MovementVector(collisionSpeed, 270);
-                        allowed = SolidCollisionChecker(nextSpot);
+                        nextSpot1 = position + new Vector2(-(Width / 2), -(Height / 4)) + MovementVector(movementSpeed, 270);
+                        nextSpot2 = position + new Vector2((Width / 2), -(Height / 4)) + MovementVector(movementSpeed, 270);
+                        allowed = SolidCollisionChecker(nextSpot1,nextSpot2);
                         if (allowed)
                         {
                             this.position += MovementVector(this.movementSpeed, 270);
@@ -96,8 +98,9 @@ abstract class Character : AnimatedGameObject
                 {
                     if (inputHelper.IsKeyDown(Keys.A))
                     {
-                        nextSpot = position + new Vector2(-(Width / 2), 0) + MovementVector(collisionSpeed, 135);
-                        allowed = SolidCollisionChecker(nextSpot);
+                        nextSpot1 = position + new Vector2(-(Width / 2), 0) + MovementVector(movementSpeed, 135);
+                        nextSpot2 = position + new Vector2(-(Width / 2), 0) + MovementVector(movementSpeed, 135);
+                        allowed = SolidCollisionChecker(nextSpot1, nextSpot2);
                         if (allowed)
                         {
                             this.position += MovementVector(this.movementSpeed, 135);
@@ -105,8 +108,9 @@ abstract class Character : AnimatedGameObject
                     }
                     else if (inputHelper.IsKeyDown(Keys.D))
                     {
-                        nextSpot = position + new Vector2((Width / 2), 0) + MovementVector(collisionSpeed, 45);
-                        allowed = SolidCollisionChecker(nextSpot);
+                        nextSpot1 = position + new Vector2((Width / 2), 0) + MovementVector(movementSpeed, 45);
+                        nextSpot2 = position + new Vector2((Width / 2), 0) + MovementVector(movementSpeed, 45);
+                        allowed = SolidCollisionChecker(nextSpot1, nextSpot2);
                         if (allowed)
                         {
                             this.position += MovementVector(this.movementSpeed, 45);
@@ -114,8 +118,9 @@ abstract class Character : AnimatedGameObject
                     }
                     else
                     {
-                        nextSpot = position + new Vector2(0, 0) + MovementVector(collisionSpeed, 90);
-                        allowed = SolidCollisionChecker(nextSpot);
+                        nextSpot1 = position + new Vector2((Width / 2), 0) + MovementVector(movementSpeed, 90);
+                        nextSpot2 = position + new Vector2(-(Width / 2), 0) + MovementVector(movementSpeed, 90);
+                        allowed = SolidCollisionChecker(nextSpot1, nextSpot2);
                         if (allowed)
                         {
                             this.position += MovementVector(this.movementSpeed, 90);
@@ -127,8 +132,9 @@ abstract class Character : AnimatedGameObject
             }
             else if (inputHelper.IsKeyDown(Keys.A))
             {
-                nextSpot = position + new Vector2(-(Width/2), 0) + MovementVector(collisionSpeed, 180);
-                allowed = SolidCollisionChecker(nextSpot);
+                nextSpot1 = position + new Vector2(-(Width/2), 0) + MovementVector(movementSpeed, 180);
+                nextSpot2 = position + new Vector2(-(Width / 2), -(Height / 4)) + MovementVector(movementSpeed, 180);
+                allowed = SolidCollisionChecker(nextSpot1, nextSpot2);
                 if (allowed)
                 {
                     this.position += MovementVector(this.movementSpeed, 180);
@@ -137,8 +143,9 @@ abstract class Character : AnimatedGameObject
             }
             else if (inputHelper.IsKeyDown(Keys.D))
             {
-                nextSpot = position + new Vector2((Width / 2), 0) + MovementVector(collisionSpeed, 0);
-                allowed = SolidCollisionChecker(nextSpot);
+                nextSpot1 = position + new Vector2((Width / 2), 0) + MovementVector(movementSpeed, 0);
+                nextSpot2 = position + new Vector2((Width / 2), -(Height / 4)) + MovementVector(movementSpeed, 0);
+                allowed = SolidCollisionChecker(nextSpot1, nextSpot2);
                 if (allowed)
                 {
                     this.position += MovementVector(this.movementSpeed, 0);
@@ -196,7 +203,7 @@ abstract class Character : AnimatedGameObject
     }
 
         //Dikke collision met muren/andere solid objects moet ervoor zorgen dat de player niet verder kan bewegen.
-    public bool SolidCollisionChecker(Vector2 location)
+    public bool SolidCollisionChecker(Vector2 location1, Vector2 location2)
     {
         //int x = (int)(location.X / 100);
         //int y = (int)(location.Y / 100);
@@ -206,7 +213,7 @@ abstract class Character : AnimatedGameObject
 
         foreach (Tile solidObj in solidList.Children)
         {
-            if (solidObj.BoundingBox.Contains(location.X,location.Y))
+            if (solidObj.BoundingBox.Contains(location1.X,location1.Y) || (solidObj.BoundingBox.Contains(location2.X, location2.Y)))
             {
                 return false;
             }            

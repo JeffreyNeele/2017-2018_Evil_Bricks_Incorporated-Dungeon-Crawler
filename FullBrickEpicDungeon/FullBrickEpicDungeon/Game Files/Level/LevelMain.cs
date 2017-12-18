@@ -10,10 +10,10 @@ partial class Level : GameObjectList
     public Level(/* int levelindex*/)
     {
         playerList = new GameObjectList(5, "playerLIST");
-        monsterList = new GameObjectList(3, "monsterLIST");
+        monsterList = new GameObjectList(5, "monsterLIST");
         objectList = new GameObjectList(4, "objectLIST");
         projectileList = new GameObjectList(2, "projectileLIST");
-        solidList = new GameObjectList(6, "solidLIST");
+        solidList = new GameObjectList(3, "solidLIST");
 
 
         Add(playerList);

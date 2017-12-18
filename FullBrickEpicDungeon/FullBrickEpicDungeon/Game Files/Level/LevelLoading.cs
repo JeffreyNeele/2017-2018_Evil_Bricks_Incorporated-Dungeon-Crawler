@@ -146,6 +146,7 @@ partial class Level : GameObjectList
                         break;
                     case 5:
                         newtile = new Tile(TileType.Water, "Assets/Sprites/Tiles/TileWater1");
+                        solidList.Add(newtile);
                         break;
                     default: throw new NullReferenceException("the given ID " + IDlist[x, y] + " was not found in the preprogrammed IDs");
                 }
