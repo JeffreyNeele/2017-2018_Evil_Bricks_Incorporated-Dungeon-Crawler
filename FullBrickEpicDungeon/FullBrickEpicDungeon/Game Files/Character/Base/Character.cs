@@ -47,6 +47,8 @@ abstract class Character : AnimatedGameObject
     {
         if (!IsDowned)
         {
+            bool movingDiagonally = false;
+            Vector2 previousPosition = this.position;
             //Input keys for basic AA and abilities
             if (inputHelper.KeyPressed(Keys.Q))
                 this.weapon.Attack();
@@ -54,104 +56,64 @@ abstract class Character : AnimatedGameObject
                 this.weapon.UseMainAbility();
             if (inputHelper.KeyPressed(Keys.R))
                 this.weapon.UseSpecialAbility();
-            Console.WriteLine("I made it here");
-            //Input keys for character movement
-            Vector2 nextSpot1, nextSpot2;
-            bool allowed;
+
             if (inputHelper.IsKeyDown(Keys.W) || inputHelper.IsKeyDown(Keys.S))
             {
+
                 if (inputHelper.IsKeyDown(Keys.W))
                 {
                     if (inputHelper.IsKeyDown(Keys.A))
                     {
-                        nextSpot1 = position + new Vector2(-(Width / 2), -(Height / 4)) + MovementVector(movementSpeed, 225);
-                        nextSpot2 = position + new Vector2((Width / 2), -(Height / 4)) + MovementVector(movementSpeed, 225);
-                        allowed = SolidCollisionChecker(nextSpot1, nextSpot2);
-                        if (allowed)
-                        {
-                            this.position += MovementVector(this.movementSpeed, 225);
-                        }
+                        this.position += MovementVector(this.movementSpeed, 225);
+                        movingDiagonally = true;
                     }
                     else if (inputHelper.IsKeyDown(Keys.D))
                     {
-                        nextSpot1 = position + new Vector2((Width / 2), -(Height / 4)) + MovementVector(movementSpeed, 315);
-                        nextSpot2 = position + new Vector2(-(Width / 2), -(Height / 4)) + MovementVector(movementSpeed, 315);
-                        allowed = SolidCollisionChecker(nextSpot1, nextSpot2);
-                        if (allowed)
-                        {
-                            this.position += MovementVector(this.movementSpeed, 315);
-                        }
+                        this.position += MovementVector(this.movementSpeed, 315);
+                        movingDiagonally = true;
                     }
                     else
                     {
-                        nextSpot1 = position + new Vector2(-(Width / 2), -(Height / 4)) + MovementVector(movementSpeed, 270);
-                        nextSpot2 = position + new Vector2((Width / 2), -(Height / 4)) + MovementVector(movementSpeed, 270);
-                        allowed = SolidCollisionChecker(nextSpot1,nextSpot2);
-                        if (allowed)
-                        {
-                            this.position += MovementVector(this.movementSpeed, 270);
-                        }
+                        this.position += MovementVector(this.movementSpeed, 270);
                     }
 
                 }
+
                 else if (inputHelper.IsKeyDown(Keys.S))
                 {
                     if (inputHelper.IsKeyDown(Keys.A))
                     {
-                        nextSpot1 = position + new Vector2(-(Width / 2), 0) + MovementVector(movementSpeed, 135);
-                        nextSpot2 = position + new Vector2((Width / 2), 0) + MovementVector(movementSpeed, 135);
-                        allowed = SolidCollisionChecker(nextSpot1, nextSpot2);
-                        if (allowed)
-                        {
-                            this.position += MovementVector(this.movementSpeed, 135);
-                        }
+                        this.position += MovementVector(this.movementSpeed, 135);
+                        movingDiagonally = true;
                     }
                     else if (inputHelper.IsKeyDown(Keys.D))
                     {
-                        nextSpot1 = position + new Vector2((Width / 2), 0) + MovementVector(movementSpeed, 45);
-                        nextSpot2 = position + new Vector2(-(Width / 2), 0) + MovementVector(movementSpeed, 45);
-                        allowed = SolidCollisionChecker(nextSpot1, nextSpot2);
-                        if (allowed)
-                        {
-                            this.position += MovementVector(this.movementSpeed, 45);
-                        }
+                        this.position += MovementVector(this.movementSpeed, 45);
+                        movingDiagonally = true;
                     }
                     else
                     {
-                        nextSpot1 = position + new Vector2((Width / 2), 0) + MovementVector(movementSpeed, 90);
-                        nextSpot2 = position + new Vector2(-(Width / 2), 0) + MovementVector(movementSpeed, 90);
-                        allowed = SolidCollisionChecker(nextSpot1, nextSpot2);
-                        if (allowed)
-                        {
-                            this.position += MovementVector(this.movementSpeed, 90);
-                        }
+                        this.position += MovementVector(this.movementSpeed, 90);
                     }
-
-
                 }
             }
+
             else if (inputHelper.IsKeyDown(Keys.A))
             {
-                nextSpot1 = position + new Vector2(-(Width/2), 0) + MovementVector(movementSpeed, 180);
-                nextSpot2 = position + new Vector2(-(Width / 2), -(Height / 4)) + MovementVector(movementSpeed, 180);
-                allowed = SolidCollisionChecker(nextSpot1, nextSpot2);
-                if (allowed)
-                {
-                    this.position += MovementVector(this.movementSpeed, 180);
-                }
-                
+                this.position += MovementVector(this.movementSpeed, 180);
+
             }
+
             else if (inputHelper.IsKeyDown(Keys.D))
             {
-                nextSpot1 = position + new Vector2((Width / 2), 0) + MovementVector(movementSpeed, 0);
-                nextSpot2 = position + new Vector2((Width / 2), -(Height / 4)) + MovementVector(movementSpeed, 0);
-                allowed = SolidCollisionChecker(nextSpot1, nextSpot2);
-                if (allowed)
-                {
-                    this.position += MovementVector(this.movementSpeed, 0);
-                }
+                this.position += MovementVector(this.movementSpeed, 0);
             }
-               
+            bool goingUp = previousPosition.Y > this.position.Y;
+            if (!SolidCollisionChecker(movingDiagonally, goingUp))
+            {
+                this.position = previousPosition;
+                Console.WriteLine(goingUp.ToString());
+            }
         }
         base.HandleInput(inputHelper);
     }
@@ -203,13 +165,21 @@ abstract class Character : AnimatedGameObject
     }
 
         //Dikke collision met muren/andere solid objects moet ervoor zorgen dat de player niet verder kan bewegen.
-    public bool SolidCollisionChecker(Vector2 location1, Vector2 location2)
+    public bool SolidCollisionChecker(bool diagonal, bool goingUp)
     {
         GameObjectGrid Field = GameWorld.Find("TileField") as GameObjectGrid;
 
         foreach (Tile tile in Field.Objects)
         {
-            if ((tile.Type == TileType.Brick || tile.Type == TileType.RockIce) && (tile.BoundingBox.Contains(location1.X, location1.Y) || (tile.BoundingBox.Contains(location2.X, location2.Y))))
+            if (goingUp & !diagonal || !(this.position.Y - this.sprite.Height < tile.BoundingBox.Top))
+            {
+                if ((tile.Type == TileType.Brick || tile.Type == TileType.RockIce) && (tile.BoundingBox.Contains(this.position.X, this.position.Y - 25)))
+                {
+                   return false;
+                }
+            }
+
+            else if ((tile.Type == TileType.Brick || tile.Type == TileType.RockIce) && this.CollidesWith(tile))
             {
                 return false;
             }
