@@ -108,11 +108,11 @@ abstract class Character : AnimatedGameObject
             {
                 this.position += MovementVector(this.movementSpeed, 0);
             }
+
             bool goingUp = previousPosition.Y > this.position.Y;
             if (!SolidCollisionChecker(movingDiagonally, goingUp))
             {
                 this.position = previousPosition;
-                Console.WriteLine(goingUp.ToString());
             }
         }
         base.HandleInput(inputHelper);
@@ -171,7 +171,7 @@ abstract class Character : AnimatedGameObject
 
         foreach (Tile tile in Field.Objects)
         {
-            if (goingUp & !diagonal || !(this.position.Y - this.sprite.Height < tile.BoundingBox.Top))
+            if (goingUp && !diagonal || !(this.position.Y - this.sprite.Height < tile.BoundingBox.Top))
             {
                 if ((tile.Type == TileType.Brick || tile.Type == TileType.RockIce) && (tile.BoundingBox.Contains(this.position.X, this.position.Y - 25)))
                 {
