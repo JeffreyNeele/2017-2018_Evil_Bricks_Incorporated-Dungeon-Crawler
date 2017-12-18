@@ -78,6 +78,7 @@ partial class Level : GameObjectList
     // Loads Characters at their appropiate position, as well as interactive objects
     protected void LevelPositionLoader(List<string> positionStringList)
     {
+        int handlecounter = 0;
         for (int i = 0; i < positionStringList.Count; i++)
         {
             // Split the current line
@@ -90,6 +91,13 @@ partial class Level : GameObjectList
                 shieldmaiden.Reset();
                 playerList.Add(shieldmaiden);
             }
+            if (splitArray[0] == "HANDLE")
+            {
+                Handle handle = new Handle("Assets/Sprites/InteractiveObjects/handle1", "Handle", handlecounter);
+                handle.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
+                objectList.Add(handle);
+            }
+
         }
     }
 

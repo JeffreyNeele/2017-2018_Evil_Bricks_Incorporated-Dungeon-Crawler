@@ -7,11 +7,13 @@ public class SpriteGameObject : GameObject
     protected Vector2 origin, cameraOffset;
     protected bool affectedByCamera;
     protected string assetName;
+    protected int sheetIndex;
     public bool PerPixelCollisionDetection = true;
     public SpriteGameObject(string assetName, int layer = 0, string id = "", int sheetIndex = 0, bool affectedByCamera = true)
         : base(layer, id)
     {
         this.assetName = assetName;
+        this.sheetIndex = sheetIndex;
         this.affectedByCamera = affectedByCamera;
         if (assetName != "")
         {
@@ -43,6 +45,10 @@ public class SpriteGameObject : GameObject
     public void ChangeSpriteIndex(int index)
     {
         sprite = new SpriteSheet(assetName, index);
+    }
+    public void ChangeSpriteImage(string assetname)
+    {
+        sprite = new SpriteSheet(assetname, sheetIndex);
     }
     public SpriteSheet Sprite
     {
