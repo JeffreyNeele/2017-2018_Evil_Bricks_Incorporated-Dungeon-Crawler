@@ -13,6 +13,7 @@ abstract class Character : AnimatedGameObject
     protected List<Equipment> inventory;
     protected Timer reviveTimer;
     protected Vector2 startPosition, movementSpeed;
+    protected InteractiveObject lastInteracted;
     protected Character(ClassType classType, string baseAsset, string id = "") : base(0, id)
     {
         this.classType = classType;
@@ -27,7 +28,7 @@ abstract class Character : AnimatedGameObject
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        CollisionChecker();
+        MonsterCollisionChecker();
         if (IsDowned)
         {
             reviveTimer.IsPaused = false;
@@ -50,11 +51,11 @@ abstract class Character : AnimatedGameObject
             bool movingDiagonally = false;
             Vector2 previousPosition = this.position;
             //Input keys for basic AA and abilities
-            if (inputHelper.KeyPressed(Keys.Q))
+            if (inputHelper.KeyPressed(Keys.D1))
                 this.weapon.Attack();
-            if (inputHelper.KeyPressed(Keys.E))
+            if (inputHelper.KeyPressed(Keys.D2))
                 this.weapon.UseMainAbility();
-            if (inputHelper.KeyPressed(Keys.R))
+            if (inputHelper.KeyPressed(Keys.D3))
                 this.weapon.UseSpecialAbility();
 
             if (inputHelper.IsKeyDown(Keys.W) || inputHelper.IsKeyDown(Keys.S))
@@ -114,6 +115,19 @@ abstract class Character : AnimatedGameObject
             {
                 this.position = previousPosition;
             }
+
+            bool interacting = false;
+            if (inputHelper.IsKeyDown(Keys.E)) //Interact key
+            {
+                interacting = true;
+                ObjectCollisionChecker();
+            }
+            if (interacting == true)
+            {
+                interacting = false;
+                lastInteracted.Reset();
+            }
+
         }
         base.HandleInput(inputHelper);
     }
@@ -138,11 +152,11 @@ abstract class Character : AnimatedGameObject
         }
     }
 
-    // Checks if the Character collides with monsters, objects or tiles
-    public void CollisionChecker()
+    // Checks if the Character collides with monsters
+    public void MonsterCollisionChecker()
     {
         GameObjectList monsterList = GameWorld.Find("monsterLIST") as GameObjectList;
-        GameObjectList objectList = GameWorld.Find("objectLIST") as GameObjectList;
+      
  
         // TODO: Add Tilefield collision with walls puzzles etc, (not doable atm as it isn't programmed as of writing this)
         foreach (Monster monsterobj in monsterList.Children)
@@ -152,14 +166,20 @@ abstract class Character : AnimatedGameObject
                 this.TakeDamage(monsterobj.Attributes.Attack);
             }
         }
+    }
 
+    //Checks if the character collides with interactive objects
+    public void ObjectCollisionChecker()
+    {
+        GameObjectList objectList = GameWorld.Find("objectLIST") as GameObjectList;
         // If a character collides with an interactive object, set the target character to this instance and tell the interactive object that it is currently interacting
-        foreach(InteractiveObject intObj in objectList.Children)
+        foreach (InteractiveObject intObj in objectList.Children)
         {
             if (intObj.CollidesWith(this))
             {
                 intObj.IsInteracting = true;
                 intObj.TargetCharacter = this;
+                lastInteracted = intObj;
             }
         }
     }
