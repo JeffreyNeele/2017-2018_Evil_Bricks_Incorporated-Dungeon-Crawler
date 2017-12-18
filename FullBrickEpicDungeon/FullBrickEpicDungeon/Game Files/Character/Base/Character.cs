@@ -65,7 +65,7 @@ abstract class Character : AnimatedGameObject
                     if (inputHelper.IsKeyDown(Keys.A))
                     {
                         nextSpot1 = position + new Vector2(-(Width / 2), -(Height / 4)) + MovementVector(movementSpeed, 225);
-                        nextSpot2 = position + new Vector2(-(Width / 2), -(Height / 4)) + MovementVector(movementSpeed, 225);
+                        nextSpot2 = position + new Vector2((Width / 2), -(Height / 4)) + MovementVector(movementSpeed, 225);
                         allowed = SolidCollisionChecker(nextSpot1, nextSpot2);
                         if (allowed)
                         {
@@ -75,7 +75,7 @@ abstract class Character : AnimatedGameObject
                     else if (inputHelper.IsKeyDown(Keys.D))
                     {
                         nextSpot1 = position + new Vector2((Width / 2), -(Height / 4)) + MovementVector(movementSpeed, 315);
-                        nextSpot2 = position + new Vector2((Width / 2), -(Height / 4)) + MovementVector(movementSpeed, 315);
+                        nextSpot2 = position + new Vector2(-(Width / 2), -(Height / 4)) + MovementVector(movementSpeed, 315);
                         allowed = SolidCollisionChecker(nextSpot1, nextSpot2);
                         if (allowed)
                         {
@@ -99,7 +99,7 @@ abstract class Character : AnimatedGameObject
                     if (inputHelper.IsKeyDown(Keys.A))
                     {
                         nextSpot1 = position + new Vector2(-(Width / 2), 0) + MovementVector(movementSpeed, 135);
-                        nextSpot2 = position + new Vector2(-(Width / 2), 0) + MovementVector(movementSpeed, 135);
+                        nextSpot2 = position + new Vector2((Width / 2), 0) + MovementVector(movementSpeed, 135);
                         allowed = SolidCollisionChecker(nextSpot1, nextSpot2);
                         if (allowed)
                         {
@@ -109,7 +109,7 @@ abstract class Character : AnimatedGameObject
                     else if (inputHelper.IsKeyDown(Keys.D))
                     {
                         nextSpot1 = position + new Vector2((Width / 2), 0) + MovementVector(movementSpeed, 45);
-                        nextSpot2 = position + new Vector2((Width / 2), 0) + MovementVector(movementSpeed, 45);
+                        nextSpot2 = position + new Vector2(-(Width / 2), 0) + MovementVector(movementSpeed, 45);
                         allowed = SolidCollisionChecker(nextSpot1, nextSpot2);
                         if (allowed)
                         {
