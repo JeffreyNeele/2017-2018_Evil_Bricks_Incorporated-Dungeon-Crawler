@@ -9,12 +9,12 @@ class TitleMenuState: GameObjectList
     {
             
         // load the title screen
-        SpriteGameObject titleScreen = new SpriteGameObject("Assets/Sprites/Menu/placeholderbackground", 0, "background");
+        SpriteGameObject titleScreen = new SpriteGameObject("Assets/Sprites/Menu/LarrySketch", 0, "background");
         Add(titleScreen);
 
         // add a play button
         startButton = new Button("Assets/Sprites/Menu/StartButton", 1);
-        startButton.Position = new Vector2((GameEnvironment.Screen.X /2 - startButton.Width/ 2),(GameEnvironment.Screen.Y / 2 - startButton.Height /2));
+        startButton.Position = new Vector2((GameEnvironment.Screen.X /2 - startButton.Width/ 2),(GameEnvironment.Screen.Y*3/4 - startButton.Height /2));
         Add(startButton);
 
     }
