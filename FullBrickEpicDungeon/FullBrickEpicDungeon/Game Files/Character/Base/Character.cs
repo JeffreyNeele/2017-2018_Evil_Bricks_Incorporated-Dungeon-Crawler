@@ -205,19 +205,16 @@ abstract class Character : AnimatedGameObject
         //Dikke collision met muren/andere solid objects moet ervoor zorgen dat de player niet verder kan bewegen.
     public bool SolidCollisionChecker(Vector2 location1, Vector2 location2)
     {
-        //int x = (int)(location.X / 100);
-        //int y = (int)(location.Y / 100);
+        GameObjectGrid Field = GameWorld.Find("TileField") as GameObjectGrid;
 
-        //GameObjectGrid Field = GameWorld.Find("TileField") as GameObjectGrid;
-        GameObjectList solidList = GameWorld.Find("solidLIST") as GameObjectList;
-
-        foreach (Tile solidObj in solidList.Children)
+        foreach (Tile tile in Field.Objects)
         {
-            if (solidObj.BoundingBox.Contains(location1.X,location1.Y) || (solidObj.BoundingBox.Contains(location2.X, location2.Y)))
+            if ((tile.Type == TileType.Brick || tile.Type == TileType.RockIce) && (tile.BoundingBox.Contains(location1.X, location1.Y) || (tile.BoundingBox.Contains(location2.X, location2.Y))))
             {
                 return false;
-            }            
+            }
         }
+
         return true;
     }
 
