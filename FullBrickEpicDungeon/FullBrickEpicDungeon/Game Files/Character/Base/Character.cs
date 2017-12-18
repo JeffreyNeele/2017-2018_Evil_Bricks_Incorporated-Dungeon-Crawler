@@ -12,7 +12,7 @@ abstract class Character : AnimatedGameObject
     protected Weapon weapon;
     protected List<Equipment> inventory;
     protected Timer reviveTimer;
-    protected Vector2 startPosition, movementSpeed;
+    protected Vector2 startPosition, movementSpeed, collisionSpeed;
     protected Character(ClassType classType, string baseAsset, string id = "") : base(0, id)
     {
         this.classType = classType;
@@ -22,6 +22,7 @@ abstract class Character : AnimatedGameObject
         reviveTimer = new Timer(10);
         this.velocity = Vector2.Zero;
         this.movementSpeed = new Vector2(3, 3);
+        this.collisionSpeed = new Vector2(3, 3);
     }
 
     public override void Update(GameTime gameTime)
@@ -56,33 +57,94 @@ abstract class Character : AnimatedGameObject
                 this.weapon.UseSpecialAbility();
             Console.WriteLine("I made it here");
             //Input keys for character movement
+            Vector2 nextSpot;
+            bool allowed;
             if (inputHelper.IsKeyDown(Keys.W) || inputHelper.IsKeyDown(Keys.S))
             {
                 if (inputHelper.IsKeyDown(Keys.W))
                 {
                     if (inputHelper.IsKeyDown(Keys.A))
-                        this.position += MovementVector(this.movementSpeed, 225);
+                    {
+                        nextSpot = position + new Vector2(-(Width / 2), -(Height-10)) + MovementVector(collisionSpeed, 225);
+                        allowed = SolidCollisionChecker(nextSpot);
+                        if (allowed)
+                        {
+                            this.position += MovementVector(this.movementSpeed, 225);
+                        }
+                    }
                     else if (inputHelper.IsKeyDown(Keys.D))
-                        this.position += MovementVector(this.movementSpeed, 315);
+                    {
+                        nextSpot = position + new Vector2((Width / 2), -(Height-10)) + MovementVector(collisionSpeed, 315);
+                        allowed = SolidCollisionChecker(nextSpot);
+                        if (allowed)
+                        {
+                            this.position += MovementVector(this.movementSpeed, 315);
+                        }
+                    }
                     else
-                        this.position += MovementVector(this.movementSpeed, 270);
+                    {
+                        nextSpot = position + new Vector2(0, -(Height-10)) + MovementVector(collisionSpeed, 270);
+                        allowed = SolidCollisionChecker(nextSpot);
+                        if (allowed)
+                        {
+                            this.position += MovementVector(this.movementSpeed, 270);
+                        }
+                    }
 
                 }
                 else if (inputHelper.IsKeyDown(Keys.S))
                 {
                     if (inputHelper.IsKeyDown(Keys.A))
-                        this.position += MovementVector(this.movementSpeed, 135);
+                    {
+                        nextSpot = position + new Vector2(-(Width / 2), 0) + MovementVector(collisionSpeed, 135);
+                        allowed = SolidCollisionChecker(nextSpot);
+                        if (allowed)
+                        {
+                            this.position += MovementVector(this.movementSpeed, 135);
+                        }
+                    }
                     else if (inputHelper.IsKeyDown(Keys.D))
-                        this.position += MovementVector(this.movementSpeed, 45);
+                    {
+                        nextSpot = position + new Vector2((Width / 2), 0) + MovementVector(collisionSpeed, 45);
+                        allowed = SolidCollisionChecker(nextSpot);
+                        if (allowed)
+                        {
+                            this.position += MovementVector(this.movementSpeed, 45);
+                        }
+                    }
                     else
-                        this.position += MovementVector(this.movementSpeed, 90);
+                    {
+                        nextSpot = position + new Vector2(0, 0) + MovementVector(collisionSpeed, 90);
+                        allowed = SolidCollisionChecker(nextSpot);
+                        if (allowed)
+                        {
+                            this.position += MovementVector(this.movementSpeed, 90);
+                        }
+                    }
+
 
                 }
             }
             else if (inputHelper.IsKeyDown(Keys.A))
-                this.position += MovementVector(this.movementSpeed, 180);
+            {
+                nextSpot = position + new Vector2(-(Width/2), 0) + MovementVector(collisionSpeed, 180);
+                allowed = SolidCollisionChecker(nextSpot);
+                if (allowed)
+                {
+                    this.position += MovementVector(this.movementSpeed, 180);
+                }
+                
+            }
             else if (inputHelper.IsKeyDown(Keys.D))
-                this.position += MovementVector(this.movementSpeed, 0);
+            {
+                nextSpot = position + new Vector2((Width / 2), 0) + MovementVector(collisionSpeed, 0);
+                allowed = SolidCollisionChecker(nextSpot);
+                if (allowed)
+                {
+                    this.position += MovementVector(this.movementSpeed, 0);
+                }
+            }
+               
         }
         base.HandleInput(inputHelper);
     }
@@ -133,21 +195,23 @@ abstract class Character : AnimatedGameObject
         }
     }
 
-    public void SolidCollisionChecker()
+        //Dikke collision met muren/andere solid objects moet ervoor zorgen dat de player niet verder kan bewegen.
+    public bool SolidCollisionChecker(Vector2 location)
     {
+        //int x = (int)(location.X / 100);
+        //int y = (int)(location.Y / 100);
+
+        //GameObjectGrid Field = GameWorld.Find("TileField") as GameObjectGrid;
         GameObjectList solidList = GameWorld.Find("solidLIST") as GameObjectList;
-        // Dikke collision met muren/andere solid objects moet ervoor zorgen dat de player niet verder kan bewegen.
+
         foreach (Tile solidObj in solidList.Children)
         {
-            if (solidObj.CollidesWith(this))
+            if (solidObj.BoundingBox.Contains(location.X,location.Y))
             {
-                movementSpeed = new Vector2(0, 0);
-            }
-            else
-            {
-                movementSpeed = new Vector2(3, 3);
-            }
+                return false;
+            }            
         }
+        return true;
     }
 
     // Changes the weapon of a Character and drops the weapon on the ground
