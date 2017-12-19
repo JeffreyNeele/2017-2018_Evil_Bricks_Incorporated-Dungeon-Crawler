@@ -304,7 +304,7 @@ abstract class Character : AnimatedGameObject
         set { attributes = value; }
     }
 
-    public Dictionary<string, Keys> KeyboardControlScheme
+    public Dictionary<Keys, Keys> KeyboardControlScheme
     {
         get { return keyboardControls; }
         set { keyboardControls = value; }

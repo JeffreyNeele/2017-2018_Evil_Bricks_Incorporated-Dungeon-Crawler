@@ -10,6 +10,7 @@ class SettingsState : GameObjectList
     {
         GenerateKeyboardControls("Assets/KeyboardControls/player2controls");
     }
+
     protected Dictionary<Keys, Keys> GenerateKeyboardControls(string path)
     {
         path = "Content/" + path;
