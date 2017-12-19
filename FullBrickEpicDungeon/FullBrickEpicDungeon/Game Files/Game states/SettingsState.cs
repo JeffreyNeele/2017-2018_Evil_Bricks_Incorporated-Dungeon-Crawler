@@ -5,9 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 
 class SettingsState : GameObjectList
-    {
-    // protected Button playButton, loadButton, settingsButton, quitButton;
-
+{
     public SettingsState()
     {
         GenerateKeyboardControls("Assets/KeyboardControls/player2controls");
@@ -50,30 +48,4 @@ class SettingsState : GameObjectList
 
         return controlScheme;
     }
-
-
-
-    public override void HandleInput(InputHelper inputHelper)
-    {
-        /*
-        base.HandleInput(inputHelper);
-        if (playButton.Pressed)
-        {
-            GameEnvironment.GameStateManager.SwitchTo("characterSelection");
-        }
-        else if (loadButton.Pressed)
-        {
-            GameEnvironment.GameStateManager.SwitchTo("loading");
-        }
-        else if (settingsButton.Pressed)
-        {
-            GameEnvironment.GameStateManager.SwitchTo("settings");
-        }
-        else if (quitButton.Pressed)
-        {
-            //TO DO
-        }
-        */
-    }
 }
-
