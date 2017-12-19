@@ -13,7 +13,7 @@ abstract class Character : AnimatedGameObject
     protected List<Equipment> inventory;
     protected Timer reviveTimer;
     protected Vector2 startPosition, movementSpeed;
-    protected Dictionary<string, Keys> keyboardControls;
+    protected Dictionary<Keys, Keys> keyboardControls;
     protected bool keyboardControlled;
     protected InteractiveObject lastInteracted;
     protected Character(ClassType classType, string baseAsset, string id = "") : base(0, id)
@@ -112,12 +112,6 @@ abstract class Character : AnimatedGameObject
                 this.position += MovementVector(this.movementSpeed, 0);
             }
 
-            bool goingUp = previousPosition.Y > this.position.Y;
-            if (!SolidCollisionChecker(movingDiagonally, goingUp))
-            {
-                this.position = previousPosition;
-            }
-
             bool interacting = false;
             if (inputHelper.IsKeyDown(Keys.E)) //Interact key
             {
@@ -130,8 +124,13 @@ abstract class Character : AnimatedGameObject
                 lastInteracted.Reset();
             }
 
+            bool goingUp = previousPosition.Y > this.position.Y;
+            if (!SolidCollisionChecker(movingDiagonally, goingUp))
+            {
+                this.position = previousPosition;
+            }
+            base.HandleInput(inputHelper);
         }
-        base.HandleInput(inputHelper);
     }
     public override void Reset()
     {
@@ -158,7 +157,6 @@ abstract class Character : AnimatedGameObject
     public void MonsterCollisionChecker()
     {
         GameObjectList monsterList = GameWorld.Find("monsterLIST") as GameObjectList;
-        GameObjectList objectList = GameWorld.Find("objectLIST") as GameObjectList;
         // TODO: Add Tilefield collision with walls puzzles etc, (not doable atm as it isn't programmed as of writing this)
         foreach (Monster monsterobj in monsterList.Children)
         {
