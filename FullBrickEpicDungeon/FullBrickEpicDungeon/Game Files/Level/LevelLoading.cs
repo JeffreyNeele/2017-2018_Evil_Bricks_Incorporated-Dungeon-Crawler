@@ -20,6 +20,7 @@ partial class Level : GameObjectList
             fileLines.Add(line);
             line = fileReader.ReadLine();
         }
+        fileReader.Close();
         int previousline = 0;
         // a list for the currently stored lines in a for loop
         List<string> storedLines = new List<string>();
