@@ -4,12 +4,14 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 
 class PlayingState : IGameLoopObject
 {
     protected List<Level> levelList;
     protected int currentLevelIndex;
+
     public PlayingState()
     {
         currentLevelIndex = 0;
@@ -20,6 +22,11 @@ class PlayingState : IGameLoopObject
     public void HandleInput(InputHelper inputHelper)
     {
         CurrentLevel.HandleInput(inputHelper);
+
+        if (inputHelper.KeyPressed(Keys.C)) //test key to start a conversation
+        {
+            GameEnvironment.GameStateManager.SwitchTo("conversation");
+        }
     }
 
     public void Reset()

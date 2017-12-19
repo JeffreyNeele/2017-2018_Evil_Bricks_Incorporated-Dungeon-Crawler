@@ -13,6 +13,7 @@ namespace FullBrickEpicDungeon
         public DungeonCrawler()
         {
             Content.RootDirectory = "Content";
+            IsMouseVisible = true;
         }
 
         /// <summary>
@@ -44,11 +45,12 @@ namespace FullBrickEpicDungeon
             gameStateManager.AddGameState("titleMenu", new TitleMenuState());
             gameStateManager.AddGameState("test", new TestState());       
             gameStateManager.AddGameState("playingState", new PlayingState());
+            gameStateManager.AddGameState("conversation", new ConversationState());
             /* gameStateManager.AddGameState("helpState", new HelpState());
             gameStateManager.AddGameState("levelMenu", new LevelMenuState());
             gameStateManager.AddGameState("gameOverState", new GameOverState());
             gameStateManager.AddGameState("levelFinishedState", new LevelFinishedState()); */
-            gameStateManager.SwitchTo("playingState");
+            gameStateManager.SwitchTo("titleMenu");
         }
 
         /// <summary>

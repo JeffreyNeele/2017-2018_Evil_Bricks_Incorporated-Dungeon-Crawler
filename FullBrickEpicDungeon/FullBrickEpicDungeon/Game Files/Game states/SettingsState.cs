@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework;
 
 class SettingsState : GameObjectList
     {
+    // protected Button playButton, loadButton, settingsButton, quitButton;
+
     public SettingsState()
     {
         GenerateKeyboardControls("Assets/KeyboardControls/player2controls");

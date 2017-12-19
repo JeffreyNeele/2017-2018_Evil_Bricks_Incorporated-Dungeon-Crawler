@@ -11,10 +11,12 @@ class Conversation : GameObjectList
     List<string> currentChoices = new List<string>(); //dit is de list met de huidige choices pure strings.
     int convIndex = 0;
 
-    public Conversation(): base()
+    public Conversation(string path, int startingLine, int lastLine = Int32.MaxValue): base()
     {
         displayedText = new GameObjectList(1, "displayedtext");
         Add(displayedText);
+        LoadConversation(path, startingLine, lastLine);
+        ShowConversationBox();
     }
     //Laadt de conversatie in uit een text bestand als LoadConversation aangeroepen wordt op locatie path. Deze komt in een List te staan.
     //Kan als Load Level af is daar ook in worden gezet. In de input wordt de eerste en laatste line aangegeven die uitgelezen moet worden.
@@ -46,7 +48,7 @@ class Conversation : GameObjectList
 
         //Laadt de sprite in van het frame eromheen
         SpriteGameObject conversationFrame = new SpriteGameObject("Assets/Sprites/Conversation Boxes/conversationbox1", 0, "", 10, false);
-        Position = new Vector2(0, 0);
+        Position = new Vector2(GameEnvironment.Screen.X/2 - conversationFrame.Width/2, GameEnvironment.Screen.Y*3/4);
         Add(conversationFrame);
 
         //Laadt het font in
@@ -101,6 +103,12 @@ class Conversation : GameObjectList
                     currentText.Position = new Vector2(100, 114);
                     displayedText.Add(currentText);
                 }
+            }
+            else
+            {
+                //ends the conversation box
+                convIndex = 0;
+                GameEnvironment.GameStateManager.SwitchTo("playingState");
             }
         }
     }
