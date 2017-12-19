@@ -211,8 +211,44 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Talismaniac/talismaniac_default.png
 
-#begin Assets/Levels/Demolevelfile.txt
-/copy:Assets/Levels/Demolevelfile.txt
+#begin Assets/Levels/level1.txt
+/copy:Assets/Levels/level1.txt
+
+#begin Assets/Sprites/Menu/placeholderbackground.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Menu/placeholderbackground.jpg
+
+#begin Assets/Sprites/Menu/StartButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Menu/StartButton.png
+
+#begin Assets/Sprites/Menu/LarrySketch.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Menu/LarrySketch.png
 
 #begin Assets/Sprites/InteractiveObjects/handle1.png
 /importer:TextureImporter

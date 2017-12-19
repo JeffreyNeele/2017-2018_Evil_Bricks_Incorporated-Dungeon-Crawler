@@ -61,7 +61,6 @@
     <Compile Include="Game Files\Abilities\Base\Ability.cs" />
     <Compile Include="Game Files\Abilities\Base\SpecialAbility.cs" />
     <Compile Include="Game Files\Abilities\Base\TimedAbility.cs" />
-    <Compile Include="Game Files\AnimationTester.cs" />
     <Compile Include="Game Files\Character\Base\Character.cs" />
     <Compile Include="Game Files\BaseAttributes.cs" />
     <Compile Include="Game Files\Character\Types\ShadowHunter.cs" />

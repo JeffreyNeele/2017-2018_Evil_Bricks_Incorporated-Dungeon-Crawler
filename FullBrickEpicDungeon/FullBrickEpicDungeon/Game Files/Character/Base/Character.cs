@@ -13,6 +13,8 @@ abstract class Character : AnimatedGameObject
     protected List<Equipment> inventory;
     protected Timer reviveTimer;
     protected Vector2 startPosition, movementSpeed;
+    protected Dictionary<string, Keys> keyboardControls;
+    protected bool keyboardControlled;
     protected InteractiveObject lastInteracted;
     protected Character(ClassType classType, string baseAsset, string id = "") : base(0, id)
     {
@@ -156,8 +158,7 @@ abstract class Character : AnimatedGameObject
     public void MonsterCollisionChecker()
     {
         GameObjectList monsterList = GameWorld.Find("monsterLIST") as GameObjectList;
-      
- 
+        GameObjectList objectList = GameWorld.Find("objectLIST") as GameObjectList;
         // TODO: Add Tilefield collision with walls puzzles etc, (not doable atm as it isn't programmed as of writing this)
         foreach (Monster monsterobj in monsterList.Children)
         {
@@ -305,6 +306,11 @@ abstract class Character : AnimatedGameObject
         set { attributes = value; }
     }
 
+    public Dictionary<string, Keys> KeyboardControlScheme
+    {
+        get { return keyboardControls; }
+        set { keyboardControls = value; }
+    }
     public ClassType Type
     {
         get { return classType; }

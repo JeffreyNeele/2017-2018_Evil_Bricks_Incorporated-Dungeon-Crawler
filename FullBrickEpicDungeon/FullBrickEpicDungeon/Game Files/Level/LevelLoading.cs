@@ -6,12 +6,12 @@ using System.IO;
 partial class Level : GameObjectList
 {
     // Method that glues all other load methods together and checks which parts of the files it should pass to these methods
-    public void LoadFromFile(string path)
+    public void LoadFromFile()
     {
         // Define a list for all information in the file
         List<string> fileLines = new List<string>();
         // Edit the path so it is set correctly for the stream reader
-        path = "Content/" + path;
+        string path = "Content/Assets/Levels/level" + levelIndex + ".txt";
         StreamReader fileReader = new StreamReader(path);
         string line = fileReader.ReadLine();
         // Reads the file
@@ -20,6 +20,7 @@ partial class Level : GameObjectList
             fileLines.Add(line);
             line = fileReader.ReadLine();
         }
+        fileReader.Close();
         int previousline = 0;
         // a list for the currently stored lines in a for loop
         List<string> storedLines = new List<string>();

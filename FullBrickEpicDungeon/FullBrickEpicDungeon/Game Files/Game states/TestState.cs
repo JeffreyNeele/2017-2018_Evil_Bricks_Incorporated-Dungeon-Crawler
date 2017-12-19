@@ -8,8 +8,7 @@ class TestState : GameObjectList
     Level testlevel;
     public TestState()
     {
-        testlevel = new Level();
-        testlevel.LoadFromFile("Assets/Levels/Demolevelfile.txt");
+        testlevel = new Level(1);
         Add(testlevel);
     }
 
