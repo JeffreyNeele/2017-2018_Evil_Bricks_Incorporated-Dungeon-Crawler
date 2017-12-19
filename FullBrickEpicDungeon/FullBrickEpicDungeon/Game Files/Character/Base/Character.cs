@@ -121,7 +121,7 @@ abstract class Character : AnimatedGameObject
             if (interacting == true)
             {
                 interacting = false;
-                lastInteracted.Reset();
+                // lastInteracted.Reset();
             }
 
             bool goingUp = previousPosition.Y > this.position.Y;

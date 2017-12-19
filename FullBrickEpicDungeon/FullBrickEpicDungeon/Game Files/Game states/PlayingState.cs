@@ -4,8 +4,6 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-
 
 class PlayingState : IGameLoopObject
 {
@@ -36,7 +34,7 @@ class PlayingState : IGameLoopObject
 
     public void Update(GameTime gameTime)
     {
-
+        CurrentLevel.Update(gameTime);
     }
 
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
