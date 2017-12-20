@@ -6,10 +6,12 @@ using Microsoft.Xna.Framework;
 abstract partial class Monster : SpriteGameObject
 {
     protected BaseAttributes attributes, baseattributes;
+    protected PathFinder pathFinder;
     public Monster(string assetName, string type) : base(assetName)
     {
         attributes = new BaseAttributes();
         baseattributes = new BaseAttributes();
+        pathFinder = new PathFinder(GameWorld.Find("levelTileField") as GameObjectGrid);
     }
 
     public override void Update(GameTime gameTime)
@@ -33,20 +35,6 @@ abstract partial class Monster : SpriteGameObject
         {
             this.attributes.HP = 0;
         }
-    }
-
-    public bool CollisionChecker()
-    {
-        GameObjectGrid Field = GameWorld.Find("TileField") as GameObjectGrid;
-        Rectangle quarterBoundingBox = new Rectangle((int)this.BoundingBox.X, (int)(this.BoundingBox.Y + 0.75 * Height), this.Width, (int)(this.Height / 4));
-        foreach (Tile tile in Field.Objects)
-        {
-            if ((tile.Type == TileType.Brick || tile.Type == TileType.RockIce) && quarterBoundingBox.Intersects(tile.BoundingBox))
-            {
-                return false;
-            }
-        }
-        return true;
     }
 
     // returns the base attributes of a monster

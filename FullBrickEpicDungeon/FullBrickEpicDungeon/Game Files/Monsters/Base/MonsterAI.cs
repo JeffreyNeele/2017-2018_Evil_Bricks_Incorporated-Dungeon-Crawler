@@ -31,9 +31,10 @@ abstract partial class Monster : SpriteGameObject
         }
     }
 
-    public void AttackPlayer()
+    public void MoveToPlayer(Vector2 playerPosition)
     {
-        
+        Point[] path = pathFinder.FindPath(this.position, playerPosition);
+
     }
 
     public Character TargetCharacter

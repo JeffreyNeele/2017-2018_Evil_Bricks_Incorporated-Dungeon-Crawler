@@ -181,7 +181,7 @@ abstract class Character : AnimatedGameObject
         Rectangle quarterBoundingBox = new Rectangle((int)this.BoundingBox.X, (int)(this.BoundingBox.Y + 0.75 * Height), this.Width, (int)(this.Height / 4));
         foreach (Tile tile in Field.Objects)
         {
-            if ((tile.Type == TileType.Brick || tile.Type == TileType.RockIce)&& quarterBoundingBox.Intersects(tile.BoundingBox))
+            if (tile.isSolid && quarterBoundingBox.Intersects(tile.BoundingBox))
             {
                 return false;
             }
