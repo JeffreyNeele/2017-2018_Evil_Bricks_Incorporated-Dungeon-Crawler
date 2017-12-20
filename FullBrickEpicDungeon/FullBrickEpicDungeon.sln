@@ -7,6 +7,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullBrickEpicDungeon", "Ful
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame.Penumbra.WindowsDX", "FullBrickEpicDungeon\Libraries\Penumbra\Source\MonoGame.Penumbra.WindowsDX.csproj", "{B021F95C-38BC-493A-BB92-C3C575E4B50F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roy-T.AStar", "FullBrickEpicDungeon\Libraries\AStar-master\Roy-T.AStar\Roy-T.AStar.csproj", "{B9C572AD-526E-48C0-9B64-582CD83515EB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7484E05D-3E03-498B-AA98-A49AE2D9D488}"
+	ProjectSection(SolutionItems) = preProject
+		FullBrickEpicDungeon\Libraries\AStar-master\LICENSE = FullBrickEpicDungeon\Libraries\AStar-master\LICENSE
+		FullBrickEpicDungeon\Libraries\AStar-master\README.md = FullBrickEpicDungeon\Libraries\AStar-master\README.md
+		FullBrickEpicDungeon\Libraries\AStar-master\versions.md = FullBrickEpicDungeon\Libraries\AStar-master\versions.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +38,14 @@ Global
 		{B021F95C-38BC-493A-BB92-C3C575E4B50F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B021F95C-38BC-493A-BB92-C3C575E4B50F}.Release|x86.ActiveCfg = Release|Any CPU
 		{B021F95C-38BC-493A-BB92-C3C575E4B50F}.Release|x86.Build.0 = Release|Any CPU
+		{B9C572AD-526E-48C0-9B64-582CD83515EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9C572AD-526E-48C0-9B64-582CD83515EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9C572AD-526E-48C0-9B64-582CD83515EB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B9C572AD-526E-48C0-9B64-582CD83515EB}.Debug|x86.Build.0 = Debug|Any CPU
+		{B9C572AD-526E-48C0-9B64-582CD83515EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9C572AD-526E-48C0-9B64-582CD83515EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9C572AD-526E-48C0-9B64-582CD83515EB}.Release|x86.ActiveCfg = Release|Any CPU
+		{B9C572AD-526E-48C0-9B64-582CD83515EB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
