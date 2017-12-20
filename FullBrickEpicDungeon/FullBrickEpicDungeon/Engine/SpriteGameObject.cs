@@ -46,10 +46,7 @@ public class SpriteGameObject : GameObject
     {
         sprite = new SpriteSheet(assetName, index);
     }
-    public void ChangeSpriteImage(string assetname)
-    {
-        sprite = new SpriteSheet(assetname, sheetIndex);
-    }
+
     public SpriteSheet Sprite
     {
         get { return sprite; }

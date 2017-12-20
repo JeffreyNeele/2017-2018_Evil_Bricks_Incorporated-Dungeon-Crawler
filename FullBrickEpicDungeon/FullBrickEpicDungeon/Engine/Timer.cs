@@ -12,7 +12,7 @@ class Timer
     }
 
     // Increases the time
-    private void Update(GameTime gameTime)
+    public void Update(GameTime gameTime)
     {
         if (!paused)
         {

@@ -94,7 +94,7 @@ partial class Level : GameObjectList
             }
             if (splitArray[0] == "HANDLE")
             {
-                Handle handle = new Handle("Assets/Sprites/InteractiveObjects/handle1", "Handle", handlecounter);
+                Handle handle = new Handle("Assets/Sprites/InteractiveObjects/handles@2", "Handle", 0);
                 handle.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
                 objectList.Add(handle);
             }

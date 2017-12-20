@@ -19,6 +19,9 @@
 #begin Assets/Fonts/ConversationFont.xnb
 /copy:Assets/Fonts/ConversationFont.xnb
 
+#begin Assets/Levels/level1.txt
+/copy:Assets/Levels/level1.txt
+
 #begin Assets/Sprites/Lightbringer/lightbringer_default.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -211,9 +214,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Talismaniac/talismaniac_default.png
 
-#begin Assets/Levels/level1.txt
-/copy:Assets/Levels/level1.txt
-
 #begin Assets/Sprites/Menu/placeholderbackground.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -250,7 +250,7 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Menu/LarrySketch.png
 
-#begin Assets/Sprites/InteractiveObjects/handle1.png
+#begin Assets/Sprites/InteractiveObjects/handles@2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -260,17 +260,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Assets/Sprites/InteractiveObjects/handle1.png
-
-#begin Assets/Sprites/InteractiveObjects/handle2.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/InteractiveObjects/handle2.png
+/build:Assets/Sprites/InteractiveObjects/handles@2.png
 

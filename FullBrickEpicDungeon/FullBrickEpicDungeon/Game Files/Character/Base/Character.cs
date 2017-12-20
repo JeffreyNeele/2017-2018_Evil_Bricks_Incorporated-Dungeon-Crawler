@@ -15,7 +15,6 @@ abstract class Character : AnimatedGameObject
     protected Vector2 startPosition, movementSpeed;
     protected Dictionary<Keys, Keys> keyboardControls;
     protected bool keyboardControlled;
-    protected InteractiveObject lastInteracted;
     protected Character(ClassType classType, string baseAsset, string id = "") : base(0, id)
     {
         this.classType = classType;
@@ -112,16 +111,9 @@ abstract class Character : AnimatedGameObject
                 this.position += MovementVector(this.movementSpeed, 0);
             }
 
-            bool interacting = false;
             if (inputHelper.IsKeyDown(Keys.E)) //Interact key
             {
-                interacting = true;
                 ObjectCollisionChecker();
-            }
-            if (interacting == true)
-            {
-                interacting = false;
-                // lastInteracted.Reset();
             }
 
             if (!SolidCollisionChecker())
@@ -175,9 +167,8 @@ abstract class Character : AnimatedGameObject
         {
             if (intObj.CollidesWith(this))
             {
-                intObj.IsInteracting = true;
                 intObj.TargetCharacter = this;
-                lastInteracted = intObj;
+                intObj.IsInteracting = true;
             }
         }
     }
