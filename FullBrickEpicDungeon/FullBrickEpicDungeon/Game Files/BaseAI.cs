@@ -3,13 +3,22 @@ using System.Collections.Generic;
 using RoyT.AStar;
 using Microsoft.Xna.Framework;
 
-class PathFinder
+class BaseAI : GameObject
 {
     GameObjectGrid levelGrid;
-    public PathFinder(GameObjectGrid levelGrid)
+    Vector2 parentMovementSpeed;
+    public BaseAI(GameObjectGrid levelGrid)
     {
         this.levelGrid = levelGrid;
+        parentMovementSpeed = new Vector2(2.5F, 2.5F);
     }
+
+    public void FollowPath()
+    {
+
+    }
+
+    // Method that returns a list with points for the AI to follow.
     public Point[] FindPath(Vector2 endPosition, Vector2 startPosition)
     {
         Grid pathGrid = new Grid(levelGrid.Columns, levelGrid.CellWidth);
@@ -35,5 +44,23 @@ class PathFinder
             pointArray[i] = new Point(pathArray[i].X, pathArray[i].Y);
         }
         return pointArray;
+    }
+
+    public Vector2 MovementVector(Vector2 movementSpeed, float angle)
+    {
+        float adjacent = movementSpeed.X;
+        float opposite = movementSpeed.Y;
+
+        float hypotenuse = (float)Math.Sqrt(adjacent * adjacent + opposite * opposite);
+        adjacent = (float)Math.Cos(angle * (Math.PI / 180)) * hypotenuse;
+        opposite = (float)Math.Sin(angle * (Math.PI / 180)) * hypotenuse;
+
+        return new Vector2(adjacent, opposite);
+    }
+
+    public Vector2 ParentMovementSpeed
+    {
+        get { return parentMovementSpeed; }
+        set { parentMovementSpeed = value; }
     }
 }

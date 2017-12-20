@@ -84,7 +84,6 @@
     <Compile Include="Game Files\Game states\TestState.cs" />
     <Compile Include="Game Files\Game states\TitleMenu.cs" />
     <Compile Include="Game Files\HUD\Conversation\Conversation.cs" />
-    <Compile Include="Game Files\IBaseAI.cs" />
     <Compile Include="Game Files\Interactive objects\Base\DroppedItem.cs" />
     <Compile Include="Game Files\Interactive objects\Base\InteractiveObject.cs" />
     <Compile Include="Game Files\Interactive objects\Types\Handle.cs" />
@@ -95,7 +94,7 @@
     <Compile Include="Game Files\Lightsources\Base\LightSource.cs" />
     <Compile Include="Game Files\Monsters\Base\Monster.cs" />
     <Compile Include="Game Files\Monsters\Base\MonsterAI.cs" />
-    <Compile Include="Game Files\PathFinder.cs" />
+    <Compile Include="Game Files\BaseAI.cs" />
     <Compile Include="Game Files\Projectiles\Projectile.cs" />
     <Compile Include="Game Files\Puzzle\Base\Puzzle.cs" />
     <Compile Include="Game Files\Interactive objects\Types\Trap.cs" />

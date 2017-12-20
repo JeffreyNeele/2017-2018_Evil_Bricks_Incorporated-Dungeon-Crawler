@@ -6,12 +6,16 @@ using Microsoft.Xna.Framework;
 abstract partial class Monster : SpriteGameObject
 {
     protected BaseAttributes attributes, baseattributes;
-    protected PathFinder pathFinder;
-    public Monster(string assetName, string type) : base(assetName)
+    protected BaseAI baseAI;
+    public Monster(Vector2 movementSpeed, string assetName, string type) : base(assetName)
     {
         attributes = new BaseAttributes();
         baseattributes = new BaseAttributes();
-        pathFinder = new PathFinder(GameWorld.Find("levelTileField") as GameObjectGrid);
+
+        // Initialilze the AI
+        baseAI = new BaseAI(GameWorld.Find("levelTileField") as GameObjectGrid);
+        baseAI.Parent = this;
+        baseAI.ParentMovementSpeed = movementSpeed;
     }
 
     public override void Update(GameTime gameTime)
