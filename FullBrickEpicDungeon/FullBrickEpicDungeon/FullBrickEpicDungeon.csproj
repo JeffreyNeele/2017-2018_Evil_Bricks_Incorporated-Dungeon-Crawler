@@ -43,6 +43,7 @@
     <Compile Include="Engine\AssetManager.cs" />
     <Compile Include="Engine\Button.cs" />
     <Compile Include="Engine\CameraHelper.cs" />
+    <Compile Include="Engine\Circle.cs" />
     <Compile Include="Engine\Collision.cs" />
     <Compile Include="Engine\DrawingHelper.cs" />
     <Compile Include="Engine\GameEnvironment.cs" />
