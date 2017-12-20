@@ -109,10 +109,6 @@
     <Compile Include="Engine\TextGameObject.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="AStarPathFinder, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libraries\AStarPathFinder.dll</HintPath>
-    </Reference>
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
@@ -124,7 +120,6 @@
     <Content Include="Engine\Credits.txt" />
     <Content Include="Engine\Shader.fx" />
     <Content Include="Icon.ico" />
-    <Content Include="Libraries\AStarPathFinder.dll" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb">
@@ -135,8 +130,13 @@
     <Folder Include="Game Files\Abilities\Types\" />
     <Folder Include="Game Files\Monsters\Type\" />
     <Folder Include="Game Files\Weapons\Side Grades\" />
+    <Folder Include="Libraries\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Libraries\AStar-master\Roy-T.AStar\Roy-T.AStar.csproj">
+      <Project>{b9c572ad-526e-48c0-9b64-582cd83515eb}</Project>
+      <Name>Roy-T.AStar</Name>
+    </ProjectReference>
     <ProjectReference Include="Libraries\Penumbra\Source\MonoGame.Penumbra.WindowsDX.csproj">
       <Project>{b021f95c-38bc-493a-bb92-c3c575e4b50f}</Project>
       <Name>MonoGame.Penumbra.WindowsDX</Name>
