@@ -49,7 +49,6 @@ abstract class Character : AnimatedGameObject
     {
         if (!IsDowned)
         {
-            bool movingDiagonally = false;
             Vector2 previousPosition = this.position;
             //Input keys for basic AA and abilities
             if (inputHelper.KeyPressed(Keys.D1))
@@ -67,12 +66,10 @@ abstract class Character : AnimatedGameObject
                     if (inputHelper.IsKeyDown(Keys.A))
                     {
                         this.position += MovementVector(this.movementSpeed, 225);
-                        movingDiagonally = true;
                     }
                     else if (inputHelper.IsKeyDown(Keys.D))
                     {
                         this.position += MovementVector(this.movementSpeed, 315);
-                        movingDiagonally = true;
                     }
                     else
                     {
@@ -86,12 +83,10 @@ abstract class Character : AnimatedGameObject
                     if (inputHelper.IsKeyDown(Keys.A))
                     {
                         this.position += MovementVector(this.movementSpeed, 135);
-                        movingDiagonally = true;
                     }
                     else if (inputHelper.IsKeyDown(Keys.D))
                     {
                         this.position += MovementVector(this.movementSpeed, 45);
-                        movingDiagonally = true;
                     }
                     else
                     {
