@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-// Base class for a weapon
 abstract class Weapon : AnimatedGameObject
 {
+
     protected ClassType classType;
     // var for the owner of this weapon
     Character owner;

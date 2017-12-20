@@ -1,22 +1,39 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullBrickEpicDungeon", "FullBrickEpicDungeon\FullBrickEpicDungeon.csproj", "{FF3D4952-FB9C-49F9-9F49-07571EA54833}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame.Penumbra.WindowsDX", "FullBrickEpicDungeon\Libraries\Penumbra\Source\MonoGame.Penumbra.WindowsDX.csproj", "{B021F95C-38BC-493A-BB92-C3C575E4B50F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF3D4952-FB9C-49F9-9F49-07571EA54833}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{FF3D4952-FB9C-49F9-9F49-07571EA54833}.Debug|x86.ActiveCfg = Debug|x86
 		{FF3D4952-FB9C-49F9-9F49-07571EA54833}.Debug|x86.Build.0 = Debug|x86
+		{FF3D4952-FB9C-49F9-9F49-07571EA54833}.Release|Any CPU.ActiveCfg = Release|x86
 		{FF3D4952-FB9C-49F9-9F49-07571EA54833}.Release|x86.ActiveCfg = Release|x86
 		{FF3D4952-FB9C-49F9-9F49-07571EA54833}.Release|x86.Build.0 = Release|x86
+		{B021F95C-38BC-493A-BB92-C3C575E4B50F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B021F95C-38BC-493A-BB92-C3C575E4B50F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B021F95C-38BC-493A-BB92-C3C575E4B50F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B021F95C-38BC-493A-BB92-C3C575E4B50F}.Debug|x86.Build.0 = Debug|Any CPU
+		{B021F95C-38BC-493A-BB92-C3C575E4B50F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B021F95C-38BC-493A-BB92-C3C575E4B50F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B021F95C-38BC-493A-BB92-C3C575E4B50F}.Release|x86.ActiveCfg = Release|Any CPU
+		{B021F95C-38BC-493A-BB92-C3C575E4B50F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B350C9C7-EDF6-4C5F-AAA2-346A2A97FAB7}
 	EndGlobalSection
 EndGlobal

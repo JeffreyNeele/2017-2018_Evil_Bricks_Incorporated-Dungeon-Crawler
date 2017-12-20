@@ -13,6 +13,8 @@ abstract class Character : AnimatedGameObject
     protected List<Equipment> inventory;
     protected Timer reviveTimer;
     protected Vector2 startPosition, movementSpeed;
+    protected Dictionary<Keys, Keys> keyboardControls;
+    protected bool keyboardControlled;
     protected Character(ClassType classType, string baseAsset, string id = "") : base(0, id)
     {
         this.classType = classType;
@@ -27,7 +29,7 @@ abstract class Character : AnimatedGameObject
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        CollisionChecker();
+        MonsterCollisionChecker();
         if (IsDowned)
         {
             reviveTimer.IsPaused = false;
@@ -47,44 +49,79 @@ abstract class Character : AnimatedGameObject
     {
         if (!IsDowned)
         {
+            bool movingDiagonally = false;
+            Vector2 previousPosition = this.position;
             //Input keys for basic AA and abilities
-            if (inputHelper.KeyPressed(Keys.Q))
+            if (inputHelper.KeyPressed(Keys.D1))
                 this.weapon.Attack();
-            if (inputHelper.KeyPressed(Keys.E))
+            if (inputHelper.KeyPressed(Keys.D2))
                 this.weapon.UseMainAbility();
-            if (inputHelper.KeyPressed(Keys.R))
+            if (inputHelper.KeyPressed(Keys.D3))
                 this.weapon.UseSpecialAbility();
-            Console.WriteLine("I made it here");
-            //Input keys for character movement
+
             if (inputHelper.IsKeyDown(Keys.W) || inputHelper.IsKeyDown(Keys.S))
             {
+
                 if (inputHelper.IsKeyDown(Keys.W))
                 {
                     if (inputHelper.IsKeyDown(Keys.A))
+                    {
                         this.position += MovementVector(this.movementSpeed, 225);
+                        movingDiagonally = true;
+                    }
                     else if (inputHelper.IsKeyDown(Keys.D))
+                    {
                         this.position += MovementVector(this.movementSpeed, 315);
+                        movingDiagonally = true;
+                    }
                     else
+                    {
                         this.position += MovementVector(this.movementSpeed, 270);
+                    }
 
                 }
+
                 else if (inputHelper.IsKeyDown(Keys.S))
                 {
                     if (inputHelper.IsKeyDown(Keys.A))
+                    {
                         this.position += MovementVector(this.movementSpeed, 135);
+                        movingDiagonally = true;
+                    }
                     else if (inputHelper.IsKeyDown(Keys.D))
+                    {
                         this.position += MovementVector(this.movementSpeed, 45);
+                        movingDiagonally = true;
+                    }
                     else
+                    {
                         this.position += MovementVector(this.movementSpeed, 90);
-
+                    }
                 }
             }
+
             else if (inputHelper.IsKeyDown(Keys.A))
+            {
                 this.position += MovementVector(this.movementSpeed, 180);
+
+            }
+
             else if (inputHelper.IsKeyDown(Keys.D))
+            {
                 this.position += MovementVector(this.movementSpeed, 0);
+            }
+
+            if (inputHelper.IsKeyDown(Keys.E)) //Interact key
+            {
+                ObjectCollisionChecker();
+            }
+
+            if (!SolidCollisionChecker())
+            {
+                this.position = previousPosition;
+            }
+            base.HandleInput(inputHelper);
         }
-        base.HandleInput(inputHelper);
     }
     public override void Reset()
     {
@@ -107,29 +144,48 @@ abstract class Character : AnimatedGameObject
         }
     }
 
-    // Checks if the Character collides with monsters, objects or tiles
-    public void CollisionChecker()
+    // Checks if the Character collides with monsters
+    public void MonsterCollisionChecker()
     {
         GameObjectList monsterList = GameWorld.Find("monsterLIST") as GameObjectList;
-        GameObjectList objectList = GameWorld.Find("objectLIST") as GameObjectList;
         // TODO: Add Tilefield collision with walls puzzles etc, (not doable atm as it isn't programmed as of writing this)
-        foreach(Monster monsterobj in monsterList.Children)
+        foreach (Monster monsterobj in monsterList.Children)
         {
             if (monsterobj.CollidesWith(this))
             {
                 this.TakeDamage(monsterobj.Attributes.Attack);
             }
         }
+    }
 
+    //Checks if the character collides with interactive objects
+    public void ObjectCollisionChecker()
+    {
+        GameObjectList objectList = GameWorld.Find("objectLIST") as GameObjectList;
         // If a character collides with an interactive object, set the target character to this instance and tell the interactive object that it is currently interacting
-        foreach(InteractiveObject intObj in objectList.Children)
+        foreach (InteractiveObject intObj in objectList.Children)
         {
             if (intObj.CollidesWith(this))
             {
-                intObj.IsInteracting = true;
                 intObj.TargetCharacter = this;
+                intObj.IsInteracting = true;
             }
         }
+    }
+
+        //Dikke collision met muren/andere solid objects moet ervoor zorgen dat de player niet verder kan bewegen.
+    public bool SolidCollisionChecker()
+    {
+        GameObjectGrid Field = GameWorld.Find("TileField") as GameObjectGrid;
+        Rectangle quarterBoundingBox = new Rectangle((int)this.BoundingBox.X, (int)(this.BoundingBox.Y + 0.75 * Height), this.Width, (int)(this.Height / 4));
+        foreach (Tile tile in Field.Objects)
+        {
+            if ((tile.Type == TileType.Brick || tile.Type == TileType.RockIce)&& quarterBoundingBox.Intersects(tile.BoundingBox))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     // Changes the weapon of a Character and drops the weapon on the ground
@@ -229,6 +285,11 @@ abstract class Character : AnimatedGameObject
         set { attributes = value; }
     }
 
+    public Dictionary<Keys, Keys> KeyboardControlScheme
+    {
+        get { return keyboardControls; }
+        set { keyboardControls = value; }
+    }
     public ClassType Type
     {
         get { return classType; }
