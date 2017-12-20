@@ -65,10 +65,12 @@ abstract class Character : AnimatedGameObject
                 {
                     if (inputHelper.IsKeyDown(Keys.A))
                     {
+                        this.Mirror = false;
                         this.position += MovementVector(this.movementSpeed, 225);
                     }
                     else if (inputHelper.IsKeyDown(Keys.D))
                     {
+                        this.Mirror = true;
                         this.position += MovementVector(this.movementSpeed, 315);
                     }
                     else
@@ -82,10 +84,12 @@ abstract class Character : AnimatedGameObject
                 {
                     if (inputHelper.IsKeyDown(Keys.A))
                     {
+                        this.Mirror = false;
                         this.position += MovementVector(this.movementSpeed, 135);
                     }
                     else if (inputHelper.IsKeyDown(Keys.D))
                     {
+                        this.Mirror = true;
                         this.position += MovementVector(this.movementSpeed, 45);
                     }
                     else
@@ -97,12 +101,14 @@ abstract class Character : AnimatedGameObject
 
             else if (inputHelper.IsKeyDown(Keys.A))
             {
+                this.Mirror = false;
                 this.position += MovementVector(this.movementSpeed, 180);
 
             }
 
             else if (inputHelper.IsKeyDown(Keys.D))
             {
+                this.Mirror = true;
                 this.position += MovementVector(this.movementSpeed, 0);
             }
 

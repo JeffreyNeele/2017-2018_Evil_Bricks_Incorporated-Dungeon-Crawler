@@ -9,6 +9,7 @@ class Circle
     public Circle(double radius, Vector2 origin)
     {
         this.radius = radius;
+        this.origin = origin;
     }
 
     public double Diameter
