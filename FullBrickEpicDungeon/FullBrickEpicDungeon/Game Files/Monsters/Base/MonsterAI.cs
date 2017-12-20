@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using DeenGames.Utils.AStarPathFinder;
 
 // Basic AI for monsters will be defined here
 abstract partial class Monster : SpriteGameObject
