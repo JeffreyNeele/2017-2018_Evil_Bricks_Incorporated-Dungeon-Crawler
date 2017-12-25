@@ -2,8 +2,7 @@
 
 class Trapdoor : OpenableObject
 {
-    int objectnumber;
-
+    //naar volgende level moet nog geimplementeerd worden. Momenteel wordt hij alleen getekend.
     public Trapdoor(string assetname, string id, int sheetIndex) : base(assetname, id, sheetIndex)
     {
     }
@@ -11,8 +10,4 @@ class Trapdoor : OpenableObject
     {
         base.Update(gameTime);
     }
-
-
-
-
 }

@@ -17,14 +17,14 @@ class Handle : InteractiveObject
         if (countDownTimer.IsExpired)
         {
             this.Reset();
-            ActivateCorrObject("close");
+            ActivateCorrObject("close"); //sluit de bijbehorende objecten.
         }
     }
     protected override void Interact(Character targetCharacter)
     {
-        //verandert de sprite naar aan
+        //verandert de hendel sprite naar aan stand
         this.ChangeSpriteIndex(1);
-        ActivateCorrObject("open");
+        ActivateCorrObject("open"); //opent de bijbehorende objecten
         interacting = false;
         StartResetTimer();
     }
@@ -63,7 +63,7 @@ class Handle : InteractiveObject
         countDownTimer.IsPaused = false;
     }
 
-    public int DoorNumberConnected
+    public int ObjectNumberConnected
     {
         get { return this.handlenumber; }
         set { handlenumber = value; }

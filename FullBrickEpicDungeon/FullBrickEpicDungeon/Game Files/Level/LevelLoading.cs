@@ -95,7 +95,7 @@ partial class Level : GameObjectList
             {
                 Handle handle = new Handle("Assets/Sprites/InteractiveObjects/handles@2", "Handle", 0);
                 handle.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
-                handle.DoorNumberConnected = int.Parse(splitArray[3]);
+                handle.ObjectNumberConnected = int.Parse(splitArray[3]);
                 objectList.Add(handle);
             }
             if(splitArray[0] == "TRAPDOOR")
