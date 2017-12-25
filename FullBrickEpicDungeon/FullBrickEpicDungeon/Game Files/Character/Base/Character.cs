@@ -164,12 +164,16 @@ abstract class Character : AnimatedGameObject
     {
         GameObjectList objectList = GameWorld.Find("objectLIST") as GameObjectList;
         // If a character collides with an interactive object, set the target character to this instance and tell the interactive object that it is currently interacting
-        foreach (InteractiveObject intObj in objectList.Children)
+        foreach (var intObj in objectList.Children)
         {
-            if (intObj.CollidesWith(this))
+            //hierboven kun je nog niet naar InteractiveObject vragen omdat je anders een casting error krijgt bij andere objecten waar je mee interact.
+            if (intObj is InteractiveObject)
             {
-                intObj.TargetCharacter = this;
-                intObj.IsInteracting = true;
+                if (((InteractiveObject)intObj).CollidesWith(this))
+                {
+                    ((InteractiveObject)intObj).TargetCharacter = this;
+                    ((InteractiveObject)intObj).IsInteracting = true;
+                }
             }
         }
     }

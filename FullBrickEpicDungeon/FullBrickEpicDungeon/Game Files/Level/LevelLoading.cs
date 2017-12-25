@@ -79,7 +79,6 @@ partial class Level : GameObjectList
     // Loads Characters at their appropiate position, as well as interactive objects
     protected void LevelPositionLoader(List<string> positionStringList)
     {
-        int handlecounter = 0;
         for (int i = 0; i < positionStringList.Count; i++)
         {
             // Split the current line
@@ -96,7 +95,15 @@ partial class Level : GameObjectList
             {
                 Handle handle = new Handle("Assets/Sprites/InteractiveObjects/handles@2", "Handle", 0);
                 handle.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
+                handle.DoorNumberConnected = int.Parse(splitArray[3]);
                 objectList.Add(handle);
+            }
+            if(splitArray[0] == "TRAPDOOR")
+            {
+                Trapdoor trapdoor = new Trapdoor("Assets/Sprites/InteractiveObjects/NextLevelCombined@2", "Trapdoor", 0);
+                trapdoor.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
+                trapdoor.Objectnumber = int.Parse(splitArray[3]);
+                objectList.Add(trapdoor);
             }
 
         }
