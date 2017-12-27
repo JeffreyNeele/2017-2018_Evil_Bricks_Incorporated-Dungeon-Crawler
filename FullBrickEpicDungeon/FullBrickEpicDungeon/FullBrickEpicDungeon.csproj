@@ -93,7 +93,6 @@
     <Compile Include="Game Files\Level\Tile.cs" />
     <Compile Include="Game Files\Lightsources\Base\LightSource.cs" />
     <Compile Include="Game Files\Monsters\Base\Monster.cs" />
-    <Compile Include="Game Files\Monsters\Base\MonsterAI.cs" />
     <Compile Include="Game Files\BaseAI.cs" />
     <Compile Include="Game Files\Projectiles\Projectile.cs" />
     <Compile Include="Game Files\Puzzle\Base\Puzzle.cs" />
