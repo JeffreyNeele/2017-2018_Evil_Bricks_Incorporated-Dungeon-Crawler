@@ -15,6 +15,8 @@ abstract class Character : AnimatedGameObject
     protected Vector2 startPosition, movementSpeed;
     protected Dictionary<Keys, Keys> keyboardControls;
     protected bool keyboardControlled;
+    public bool HasAKey;
+
     protected Character(ClassType classType, string baseAsset, string id = "") : base(0, id)
     {
         this.classType = classType;
@@ -24,6 +26,7 @@ abstract class Character : AnimatedGameObject
         reviveTimer = new Timer(10);
         this.velocity = Vector2.Zero;
         this.movementSpeed = new Vector2(3, 3);
+        HasAKey = false;
     }
 
     public override void Update(GameTime gameTime)
@@ -39,6 +42,10 @@ abstract class Character : AnimatedGameObject
                 // when the revivetimer expires, the character dies :( sadly he will lose some of his gold after dying (currently 25% might be higher in later versions)
                 this.attributes.Gold = this.attributes.Gold - (this.attributes.Gold / 4);
             }
+        }
+        if(HasAKey == true)
+        {
+            
         }
     }
 
@@ -164,6 +171,7 @@ abstract class Character : AnimatedGameObject
     {
         GameObjectList objectList = GameWorld.Find("objectLIST") as GameObjectList;
         // If a character collides with an interactive object, set the target character to this instance and tell the interactive object that it is currently interacting
+
         foreach (var intObj in objectList.Children)
         {
             //hierboven kun je nog niet naar InteractiveObject vragen omdat je anders een casting error krijgt bij andere objecten waar je mee interact.
@@ -173,6 +181,12 @@ abstract class Character : AnimatedGameObject
                 {
                     ((InteractiveObject)intObj).TargetCharacter = this;
                     ((InteractiveObject)intObj).IsInteracting = true;
+
+                    if (intObj is KeyItem)
+                    {
+                        HasAKey = true;
+                        intObj.Position = this.Position;
+                    }
                 }
             }
         }
@@ -231,7 +245,6 @@ abstract class Character : AnimatedGameObject
     {
         return inventory.Contains(item);
     }
-
 
     public void TakeDamage(int damage)
     {

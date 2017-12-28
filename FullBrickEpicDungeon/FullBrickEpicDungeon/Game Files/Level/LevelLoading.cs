@@ -105,6 +105,12 @@ partial class Level : GameObjectList
                 trapdoor.Objectnumber = int.Parse(splitArray[3]);
                 objectList.Add(trapdoor);
             }
+            if (splitArray[0] == "REDKEY")
+            {
+                KeyItem redkey = new KeyItem("Assets/Sprites/InteractiveObjects/paladinkey1", "redkey", 0);
+                redkey.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
+                objectList.Add(redkey);
+            }
 
         }
     }
