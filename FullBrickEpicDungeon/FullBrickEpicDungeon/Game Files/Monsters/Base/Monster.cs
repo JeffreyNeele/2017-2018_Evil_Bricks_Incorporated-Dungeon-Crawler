@@ -13,9 +13,9 @@ abstract partial class Monster : SpriteGameObject
         baseattributes = new BaseAttributes();
 
         // Initialilze the AI
-        baseAI = new BaseAI(GameWorld.Find("levelTileField") as GameObjectGrid);
+        /*baseAI = new BaseAI(GameWorld.Find("levelTileField") as GameObjectGrid);
         baseAI.Parent = this;
-        baseAI.ParentMovementSpeed = movementSpeed;
+        baseAI.ParentMovementSpeed = movementSpeed;*/
     }
 
     public override void Update(GameTime gameTime)

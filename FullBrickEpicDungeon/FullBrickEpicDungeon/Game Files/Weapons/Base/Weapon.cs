@@ -14,6 +14,14 @@ abstract class Weapon : AnimatedGameObject
     protected TimedAbility mainAbility;
     protected SpecialAbility specialAbility;
     private int attack, goldCost;
+    protected string idBaseAA, idMainAbility, idSpecialAbility;
+    /// <summary>
+    /// Creates a weapon for a character
+    /// </summary>
+    /// <param name="owner">The owner of the weapon</param>
+    /// <param name="classType">The classtype the weapon belongs to</param>
+    /// <param name="id">the id of the weapon object in the gameworld</param>
+    /// <param name="assetName">Give the path where to find the asset in the content</param>
     protected Weapon(Character owner, ClassType classType, string id, string assetName): base(1, id)
     {
         this.owner = owner;
@@ -22,45 +30,46 @@ abstract class Weapon : AnimatedGameObject
 
     public override void Update(GameTime gameTime)
     {
+        if(!this.CurrentAnimation.AnimationEnded)
+            CollisionChecker(this.CurrentAnimation);
+
         base.Update(gameTime);
     }
 
     // This is the base attack method of the weapon,, which will be also defined as an ability
     public virtual void Attack()
     {
-        BasicAttack.Use();
+        BasicAttack.Use(this, this.idBaseAA);
         CollisionChecker(this.CurrentAnimation);
     }
 
     // Uses the main ability
     public virtual void UseMainAbility()
     {
-        mainAbility.Use();
+        mainAbility.Use(this, idMainAbility);
         CollisionChecker(this.CurrentAnimation);
     }
 
     // uses the special ability if it is ready
     public virtual void UseSpecialAbility()
     {
-        specialAbility.Use();
+        specialAbility.Use(this, this.idSpecialAbility);
         CollisionChecker(this.CurrentAnimation);
     }
 
     // Checks for collision with mosnters
     protected void CollisionChecker(Animation animation)
     {
-        while (!(animation.AnimationEnded))
+
+        GameObjectList monsterList = GameWorld.Find("monsterLIST") as GameObjectList;
+        foreach (Monster monsterobj in monsterList.Children)
         {
-            GameObjectList monsterList = GameWorld.Find("monsterLIST") as GameObjectList;
-            foreach (Monster monsterobj in monsterList.Children)
+            if (monsterobj.CollidesWith(this))
             {
-                if (monsterobj.CollidesWith(this))
+                monsterobj.TakeDamage(owner.Attributes.Attack + this.AttackDamage);
+                if (monsterobj.IsDead)
                 {
-                    monsterobj.TakeDamage(owner.Attributes.Attack + this.AttackDamage);
-                    if (monsterobj.IsDead)
-                    {
-                        owner.Attributes.Gold += monsterobj.Attributes.Gold;
-                    }
+                    owner.Attributes.Gold += monsterobj.Attributes.Gold;
                 }
             }
         }

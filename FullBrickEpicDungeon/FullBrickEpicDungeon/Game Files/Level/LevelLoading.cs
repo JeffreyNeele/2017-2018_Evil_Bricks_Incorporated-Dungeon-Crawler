@@ -67,7 +67,8 @@ partial class Level : GameObjectList
             }
             storedLines.Add(fileLines[i]);
         }
-
+        Monster dummy = new Dummy(new Vector2(0, 0), new Vector2(800, 600), "Assets/Sprites/Enemies/Dummy");
+        monsterList.Add(dummy);
     }
 
     //Loads level information
