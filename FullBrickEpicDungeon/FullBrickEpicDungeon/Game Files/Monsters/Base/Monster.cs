@@ -7,7 +7,7 @@ abstract partial class Monster : SpriteGameObject
 {
     protected BaseAttributes attributes, baseattributes;
     protected BaseAI baseAI;
-    public Monster(Vector2 movementSpeed, string assetName, string type) : base(assetName, 5, typea)
+    public Monster(Vector2 movementSpeed, string assetName, string type) : base(assetName, 5, type)
     {
         attributes = new BaseAttributes();
         baseattributes = new BaseAttributes();
@@ -23,6 +23,11 @@ abstract partial class Monster : SpriteGameObject
         if (!IsDead)
         {
             base.Update(gameTime);
+        }
+        else
+        {
+            GameObjectList monsterList = GameWorld.Find("monsterLIST") as GameObjectList;
+            monsterList.Remove(this);
         }
 
     }

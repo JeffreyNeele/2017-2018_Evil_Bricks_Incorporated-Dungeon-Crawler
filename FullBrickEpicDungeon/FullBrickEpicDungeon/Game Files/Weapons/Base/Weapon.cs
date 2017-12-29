@@ -15,6 +15,7 @@ abstract class Weapon : AnimatedGameObject
     protected SpecialAbility specialAbility;
     private int attack, goldCost;
     protected string idBaseAA, idMainAbility, idSpecialAbility;
+    GameObjectList monsterObjectList;
     /// <summary>
     /// Creates a weapon for a character
     /// </summary>
@@ -31,37 +32,40 @@ abstract class Weapon : AnimatedGameObject
     public override void Update(GameTime gameTime)
     {
         if(!this.CurrentAnimation.AnimationEnded)
-            CollisionChecker(this.CurrentAnimation);
-
+            CollisionChecker(this.CurrentAnimation, monsterObjectList);
+        
         base.Update(gameTime);
     }
 
     // This is the base attack method of the weapon,, which will be also defined as an ability
-    public virtual void Attack()
+    public virtual void Attack(GameObjectList monsterList)
     {
-        BasicAttack.Use(this, this.idBaseAA);
-        CollisionChecker(this.CurrentAnimation);
+        /*BasicAttack.Use(this, this.idBaseAA);
+        CollisionChecker(this.CurrentAnimation, monsterList);*/
+        monsterObjectList = monsterList;
+        foreach (Monster m in monsterObjectList.Children)
+            m.TakeDamage(10);
     }
 
     // Uses the main ability
-    public virtual void UseMainAbility()
+    public virtual void UseMainAbility(GameObjectList monsterList)
     {
+        monsterObjectList = monsterList;
         mainAbility.Use(this, idMainAbility);
-        CollisionChecker(this.CurrentAnimation);
+        CollisionChecker(this.CurrentAnimation, monsterObjectList);
     }
 
     // uses the special ability if it is ready
-    public virtual void UseSpecialAbility()
+    public virtual void UseSpecialAbility(GameObjectList monsterList)
     {
+        monsterObjectList = monsterList;
         specialAbility.Use(this, this.idSpecialAbility);
-        CollisionChecker(this.CurrentAnimation);
+        CollisionChecker(this.CurrentAnimation, monsterObjectList);
     }
 
     // Checks for collision with mosnters
-    protected void CollisionChecker(Animation animation)
+    protected void CollisionChecker(Animation animation, GameObjectList monsterList)
     {
-
-        GameObjectList monsterList = GameWorld.Find("monsterLIST") as GameObjectList;
         foreach (Monster monsterobj in monsterList.Children)
         {
             if (monsterobj.CollidesWith(this))
