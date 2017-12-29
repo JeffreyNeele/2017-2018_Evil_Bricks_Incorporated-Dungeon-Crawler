@@ -7,7 +7,8 @@ using Microsoft.Xna.Framework;
 
 class Dummy : Monster
 {
-    public Dummy(Vector2 movementSpeed, Vector2 dummyPosition, string assetName, string type = "dummy") : base(movementSpeed, assetName, type)
+    public Dummy(Vector2 movementSpeed, Vector2 dummyPosition, string assetName, GameObjectGrid field, GameObjectList monsters, string type = "dummy")
+        : base(movementSpeed, assetName, type, field, monsters)
     {
         this.position = dummyPosition;
         this.velocity = movementSpeed;

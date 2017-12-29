@@ -7,15 +7,19 @@ abstract partial class Monster : SpriteGameObject
 {
     protected BaseAttributes attributes, baseattributes;
     protected BaseAI baseAI;
-    public Monster(Vector2 movementSpeed, string assetName, string type) : base(assetName, 5, type)
+    GameObjectList monsterObjectList;
+    public Monster(Vector2 movementSpeed, string assetName, string type, GameObjectGrid field, GameObjectList monsters) : base(assetName, 5, type)
     {
         attributes = new BaseAttributes();
         baseattributes = new BaseAttributes();
 
         // Initialilze the AI
-        /*baseAI = new BaseAI(GameWorld.Find("levelTileField") as GameObjectGrid);
+        //baseAI = new BaseAI(GameWorld.Find("levelTileField") as GameObjectGrid);
+        baseAI = new BaseAI(field);
         baseAI.Parent = this;
-        baseAI.ParentMovementSpeed = movementSpeed;*/
+        baseAI.ParentMovementSpeed = movementSpeed;
+
+        monsterObjectList = monsters;
     }
 
     public override void Update(GameTime gameTime)
@@ -26,8 +30,12 @@ abstract partial class Monster : SpriteGameObject
         }
         else
         {
-            GameObjectList monsterList = GameWorld.Find("monsterLIST") as GameObjectList;
-            monsterList.Remove(this);
+            if (this.color.A - 10 < 0)
+                monsterObjectList.Remove(this);
+            else
+                this.color.A -= 10;
+            
+            
         }
 
     }
