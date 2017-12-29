@@ -67,8 +67,6 @@ partial class Level : GameObjectList
             }
             storedLines.Add(fileLines[i]);
         }
-        Monster dummy = new Dummy(new Vector2(0, 0), new Vector2(800, 600), "Assets/Sprites/Enemies/Dummy");
-        monsterList.Add(dummy);
     }
 
     //Loads level information
@@ -98,6 +96,12 @@ partial class Level : GameObjectList
                 Handle handle = new Handle("Assets/Sprites/InteractiveObjects/handles@2", "Handle", 0);
                 handle.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
                 objectList.Add(handle);
+            }
+
+            if(splitArray[0] == "DUMMY")
+            {
+                Monster dummy = new Dummy(new Vector2(0, 0), new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])), "Assets/Sprites/Enemies/Dummy");
+                monsterList.Add(dummy);
             }
 
         }

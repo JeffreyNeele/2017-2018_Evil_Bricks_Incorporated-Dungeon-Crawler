@@ -7,7 +7,7 @@ abstract partial class Monster : SpriteGameObject
 {
     protected BaseAttributes attributes, baseattributes;
     protected BaseAI baseAI;
-    public Monster(Vector2 movementSpeed, string assetName, string type) : base(assetName)
+    public Monster(Vector2 movementSpeed, string assetName, string type) : base(assetName, 5, typea)
     {
         attributes = new BaseAttributes();
         baseattributes = new BaseAttributes();
