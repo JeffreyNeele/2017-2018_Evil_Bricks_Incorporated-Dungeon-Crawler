@@ -15,14 +15,14 @@ abstract class Ability
         this.classType = classType;
         this.owner = owner;
         // Ability needs the main projectile list (defined in LevelMain.cs) 
-        try
+        /*try
         {
             projectileList = projectileList.GameWorld.Find("projectileLIST") as GameObjectList;
         }
         catch
         {
             throw new ArgumentNullException("the projectile list was not found, most of the times this is because you tried to make the Ability before the Level was initialized");
-        }
+        }*/
 
     }
 
@@ -35,9 +35,9 @@ abstract class Ability
     {
 
     }
-    public virtual void Use()
+    public virtual void Use(Weapon weapon, string id)
     {
-
+        weapon.PlayAnimation(id);
     }
 
     // Adds a projectile to the ability, only a basic one, for advanced other subclasses of projectile override this class

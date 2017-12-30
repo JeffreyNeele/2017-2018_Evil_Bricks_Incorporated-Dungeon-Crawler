@@ -67,7 +67,6 @@ partial class Level : GameObjectList
             }
             storedLines.Add(fileLines[i]);
         }
-
     }
 
     //Loads level information
@@ -110,6 +109,12 @@ partial class Level : GameObjectList
                 KeyItem redkey = new KeyItem("Assets/Sprites/InteractiveObjects/paladinkey1", "redkey", 0);
                 redkey.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
                 objectList.Add(redkey);
+            }
+
+            if(splitArray[0] == "DUMMY")
+            {
+                Monster dummy = new Dummy(new Vector2(0, 0), new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])), "Assets/Sprites/Enemies/Dummy", levelTileField, monsterList);
+                monsterList.Add(dummy);
             }
 
         }

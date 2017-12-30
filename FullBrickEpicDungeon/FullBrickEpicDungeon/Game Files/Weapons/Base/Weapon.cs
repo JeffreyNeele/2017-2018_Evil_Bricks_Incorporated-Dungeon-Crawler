@@ -14,6 +14,15 @@ abstract class Weapon : AnimatedGameObject
     protected TimedAbility mainAbility;
     protected SpecialAbility specialAbility;
     private int attack, goldCost;
+    protected string idBaseAA, idMainAbility, idSpecialAbility;
+    GameObjectList monsterObjectList;
+    /// <summary>
+    /// Creates a weapon for a character
+    /// </summary>
+    /// <param name="owner">The owner of the weapon</param>
+    /// <param name="classType">The classtype the weapon belongs to</param>
+    /// <param name="id">the id of the weapon object in the gameworld</param>
+    /// <param name="assetName">Give the path where to find the asset in the content</param>
     protected Weapon(Character owner, ClassType classType, string id, string assetName): base(1, id)
     {
         this.owner = owner;
@@ -22,45 +31,49 @@ abstract class Weapon : AnimatedGameObject
 
     public override void Update(GameTime gameTime)
     {
+        if(!this.CurrentAnimation.AnimationEnded)
+            CollisionChecker(this.CurrentAnimation, monsterObjectList);
+        
         base.Update(gameTime);
     }
 
     // This is the base attack method of the weapon,, which will be also defined as an ability
-    public virtual void Attack()
+    public virtual void Attack(GameObjectList monsterList)
     {
-        BasicAttack.Use();
-        CollisionChecker(this.CurrentAnimation);
+        /*BasicAttack.Use(this, this.idBaseAA);
+        CollisionChecker(this.CurrentAnimation, monsterList);*/
+        monsterObjectList = monsterList;
+        foreach (Monster m in monsterObjectList.Children)
+            m.TakeDamage(10);
     }
 
     // Uses the main ability
-    public virtual void UseMainAbility()
+    public virtual void UseMainAbility(GameObjectList monsterList)
     {
-        mainAbility.Use();
-        CollisionChecker(this.CurrentAnimation);
+        monsterObjectList = monsterList;
+        mainAbility.Use(this, idMainAbility);
+        CollisionChecker(this.CurrentAnimation, monsterObjectList);
     }
 
     // uses the special ability if it is ready
-    public virtual void UseSpecialAbility()
+    public virtual void UseSpecialAbility(GameObjectList monsterList)
     {
-        specialAbility.Use();
-        CollisionChecker(this.CurrentAnimation);
+        monsterObjectList = monsterList;
+        specialAbility.Use(this, this.idSpecialAbility);
+        CollisionChecker(this.CurrentAnimation, monsterObjectList);
     }
 
     // Checks for collision with mosnters
-    protected void CollisionChecker(Animation animation)
+    protected void CollisionChecker(Animation animation, GameObjectList monsterList)
     {
-        while (!(animation.AnimationEnded))
+        foreach (Monster monsterobj in monsterList.Children)
         {
-            GameObjectList monsterList = GameWorld.Find("monsterLIST") as GameObjectList;
-            foreach (Monster monsterobj in monsterList.Children)
+            if (monsterobj.CollidesWith(this))
             {
-                if (monsterobj.CollidesWith(this))
+                monsterobj.TakeDamage(owner.Attributes.Attack + this.AttackDamage);
+                if (monsterobj.IsDead)
                 {
-                    monsterobj.TakeDamage(owner.Attributes.Attack + this.AttackDamage);
-                    if (monsterobj.IsDead)
-                    {
-                        owner.Attributes.Gold += monsterobj.Attributes.Gold;
-                    }
+                    owner.Attributes.Gold += monsterobj.Attributes.Gold;
                 }
             }
         }
