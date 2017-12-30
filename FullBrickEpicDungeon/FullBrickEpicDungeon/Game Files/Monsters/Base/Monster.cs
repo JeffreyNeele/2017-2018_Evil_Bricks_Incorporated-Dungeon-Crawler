@@ -6,10 +6,20 @@ using Microsoft.Xna.Framework;
 abstract partial class Monster : SpriteGameObject
 {
     protected BaseAttributes attributes, baseattributes;
-    public Monster(string assetName, string type) : base(assetName)
+    protected BaseAI baseAI;
+    GameObjectList monsterObjectList;
+    public Monster(Vector2 movementSpeed, string assetName, string type, GameObjectGrid field, GameObjectList monsters) : base(assetName, 5, type)
     {
         attributes = new BaseAttributes();
         baseattributes = new BaseAttributes();
+
+        // Initialilze the AI
+        //baseAI = new BaseAI(GameWorld.Find("levelTileField") as GameObjectGrid);
+        baseAI = new BaseAI(field);
+        baseAI.Parent = this;
+        baseAI.ParentMovementSpeed = movementSpeed;
+
+        monsterObjectList = monsters;
     }
 
     public override void Update(GameTime gameTime)
@@ -17,6 +27,15 @@ abstract partial class Monster : SpriteGameObject
         if (!IsDead)
         {
             base.Update(gameTime);
+        }
+        else
+        {
+            if (this.color.A - 10 < 0)
+                monsterObjectList.Remove(this);
+            else
+                this.color.A -= 10;
+            
+            
         }
 
     }
@@ -33,20 +52,6 @@ abstract partial class Monster : SpriteGameObject
         {
             this.attributes.HP = 0;
         }
-    }
-
-    public bool CollisionChecker()
-    {
-        GameObjectGrid Field = GameWorld.Find("TileField") as GameObjectGrid;
-        Rectangle quarterBoundingBox = new Rectangle((int)this.BoundingBox.X, (int)(this.BoundingBox.Y + 0.75 * Height), this.Width, (int)(this.Height / 4));
-        foreach (Tile tile in Field.Objects)
-        {
-            if ((tile.Type == TileType.Brick || tile.Type == TileType.RockIce) && quarterBoundingBox.Intersects(tile.BoundingBox))
-            {
-                return false;
-            }
-        }
-        return true;
     }
 
     // returns the base attributes of a monster

@@ -17,6 +17,8 @@ class Shieldmaiden : Character
         this.baseattributes.Gold = 0;
         attributes = baseattributes;
         LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_default", "test", true);
+        //LoadAnimation();      Gereserveerd voor base AA animation van de shieldMaiden
+        weapon = new SwordAndShield(this);
         PlayAnimation("test");
     }
 

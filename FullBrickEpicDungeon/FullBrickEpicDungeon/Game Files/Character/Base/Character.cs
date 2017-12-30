@@ -51,12 +51,12 @@ abstract class Character : AnimatedGameObject
         {
             Vector2 previousPosition = this.position;
             //Input keys for basic AA and abilities
-            if (inputHelper.KeyPressed(Keys.D1))
-                this.weapon.Attack();
+            if (inputHelper.KeyPressed(Keys.E))
+                this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList);
             if (inputHelper.KeyPressed(Keys.D2))
-                this.weapon.UseMainAbility();
+                this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList);
             if (inputHelper.KeyPressed(Keys.D3))
-                this.weapon.UseSpecialAbility();
+                this.weapon.UseSpecialAbility(GameWorld.Find("monsterLIST") as GameObjectList);
 
             if (inputHelper.IsKeyDown(Keys.W) || inputHelper.IsKeyDown(Keys.S))
             {
@@ -181,7 +181,7 @@ abstract class Character : AnimatedGameObject
         Rectangle quarterBoundingBox = new Rectangle((int)this.BoundingBox.X, (int)(this.BoundingBox.Y + 0.75 * Height), this.Width, (int)(this.Height / 4));
         foreach (Tile tile in Field.Objects)
         {
-            if ((tile.Type == TileType.Brick || tile.Type == TileType.RockIce)&& quarterBoundingBox.Intersects(tile.BoundingBox))
+            if (tile.isSolid && quarterBoundingBox.Intersects(tile.BoundingBox))
             {
                 return false;
             }
