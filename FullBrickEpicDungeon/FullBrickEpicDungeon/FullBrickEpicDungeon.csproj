@@ -88,8 +88,10 @@
     <Compile Include="Game Files\Objects\Interactive objects\Base\DroppedItem.cs" />
     <Compile Include="Game Files\Objects\Interactive objects\Base\InteractiveObject.cs" />
     <Compile Include="Game Files\Objects\Interactive objects\Types\KeyItem.cs" />
+    <Compile Include="Game Files\Objects\Interactive objects\Types\Lock.cs" />
     <Compile Include="Game Files\Objects\Openable objects\Base\OpenableObject.cs" />
     <Compile Include="Game Files\Objects\Interactive objects\Types\Handle.cs" />
+    <Compile Include="Game Files\Objects\Openable objects\Types\Door.cs" />
     <Compile Include="Game Files\Objects\Openable objects\Types\Trapdoor.cs" />
     <Compile Include="Game Files\Level\LevelGameLoop.cs" />
     <Compile Include="Game Files\Level\LevelLoading.cs" />

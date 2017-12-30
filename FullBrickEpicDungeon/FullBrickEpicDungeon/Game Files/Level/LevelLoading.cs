@@ -111,6 +111,18 @@ partial class Level : GameObjectList
                 redkey.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
                 objectList.Add(redkey);
             }
+            if (splitArray[0] == "DOOR")
+            {
+                Door door = new Door("Assets/Sprites/InteractiveObjects/Doorcombined@2", "door", 0);
+                door.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
+                objectList.Add(door);
+            }
+            if (splitArray[0] == "REDLOCK")
+            {
+                Lock redlock = new Lock("Assets/Sprites/InteractiveObjects/PaladinLock", "redlock", 0);
+                redlock.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
+                objectList.Add(redlock);
+            }
 
         }
     }

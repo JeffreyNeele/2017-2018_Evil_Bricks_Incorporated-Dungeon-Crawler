@@ -1,6 +1,6 @@
 ﻿
-    abstract class OpenableObject: SpriteGameObject
-    {
+abstract class OpenableObject: SpriteGameObject
+{
     //this is an abstract class for for instance doors, trapdoors, chests, etc.
 
     int objectnumber;
