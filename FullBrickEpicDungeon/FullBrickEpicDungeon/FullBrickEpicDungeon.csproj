@@ -85,10 +85,6 @@
     <Compile Include="Game Files\Game states\TestState.cs" />
     <Compile Include="Game Files\Game states\TitleMenu.cs" />
     <Compile Include="Game Files\HUD\Conversation\Conversation.cs" />
-    <Compile Include="Game Files\Interactive objects\Base\DroppedItem.cs" />
-    <Compile Include="Game Files\Interactive objects\Base\InteractiveObject.cs" />
-    <Compile Include="Game Files\Interactive objects\Types\Handle.cs" />
-    <Compile Include="Game Files\IBaseAI.cs" />
     <Compile Include="Game Files\Objects\Interactive objects\Base\DroppedItem.cs" />
     <Compile Include="Game Files\Objects\Interactive objects\Base\InteractiveObject.cs" />
     <Compile Include="Game Files\Objects\Interactive objects\Types\KeyItem.cs" />
@@ -148,9 +144,6 @@
       <Project>{b021f95c-38bc-493a-bb92-c3c575e4b50f}</Project>
       <Name>MonoGame.Penumbra.WindowsDX</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
