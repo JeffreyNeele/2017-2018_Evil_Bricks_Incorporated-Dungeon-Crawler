@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard1.6</TargetFramework>
     <RootNamespace>RoyT.AStar</RootNamespace>
     <AssemblyName>RoyT.AStar</AssemblyName>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
