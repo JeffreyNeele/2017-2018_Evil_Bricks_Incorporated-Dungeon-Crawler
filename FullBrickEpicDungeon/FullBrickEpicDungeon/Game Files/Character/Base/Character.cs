@@ -51,12 +51,12 @@ abstract class Character : AnimatedGameObject
         {
             Vector2 previousPosition = this.position;
             //Input keys for basic AA and abilities
-            if (inputHelper.KeyPressed(Keys.D1))
-                this.weapon.Attack();
+            if (inputHelper.KeyPressed(Keys.E))
+                this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList);
             if (inputHelper.KeyPressed(Keys.D2))
-                this.weapon.UseMainAbility();
+                this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList);
             if (inputHelper.KeyPressed(Keys.D3))
-                this.weapon.UseSpecialAbility();
+                this.weapon.UseSpecialAbility(GameWorld.Find("monsterLIST") as GameObjectList);
 
             if (inputHelper.IsKeyDown(Keys.W) || inputHelper.IsKeyDown(Keys.S))
             {

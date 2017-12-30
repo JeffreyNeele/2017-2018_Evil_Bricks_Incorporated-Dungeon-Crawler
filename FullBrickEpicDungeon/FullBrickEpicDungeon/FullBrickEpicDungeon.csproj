@@ -95,6 +95,7 @@
     <Compile Include="Game Files\Lightsources\Base\LightSource.cs" />
     <Compile Include="Game Files\Monsters\Base\Monster.cs" />
     <Compile Include="Game Files\BaseAI.cs" />
+    <Compile Include="Game Files\Monsters\Type\Dummy.cs" />
     <Compile Include="Game Files\Projectiles\Projectile.cs" />
     <Compile Include="Game Files\Puzzle\Base\Puzzle.cs" />
     <Compile Include="Game Files\Interactive objects\Types\Trap.cs" />
@@ -128,7 +129,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Game Files\Abilities\Types\" />
-    <Folder Include="Game Files\Monsters\Type\" />
     <Folder Include="Game Files\Weapons\Side Grades\" />
     <Folder Include="Libraries\" />
   </ItemGroup>
