@@ -16,6 +16,8 @@ enum TileType
     Ice,
     RockIce,
     Water,
+    DoorTile,
+    Trapdoor,
 
     
 }

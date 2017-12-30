@@ -1,10 +1,11 @@
 ﻿
-    abstract class OpenableObject: SpriteGameObject
+    abstract class OpenableObject: Tile
     {
     //this is an abstract class for for instance doors, trapdoors, chests, etc.
 
     int objectnumber;
-    protected OpenableObject(string assetName, string id, int sheetIndex, int layer = 2) : base(assetName, layer, id, sheetIndex)
+    //TileType type, string assetname, int layer = 0, string id = ""
+    protected OpenableObject(TileType type, string assetName, string id, int sheetIndex, int layer = 2) : base(type, assetName, layer, id, sheetIndex)
     {
     }
     public void Open()

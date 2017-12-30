@@ -5,6 +5,7 @@ using System.IO;
 
 partial class Level : GameObjectList
 {
+    GameObjectGrid tileField;
     // Method that glues all other load methods together and checks which parts of the files it should pass to these methods
     public void LoadFromFile()
     {
@@ -99,10 +100,17 @@ partial class Level : GameObjectList
             }
             if(splitArray[0] == "TRAPDOOR")
             {
-                Trapdoor trapdoor = new Trapdoor("Assets/Sprites/InteractiveObjects/NextLevelCombined@2", "Trapdoor", 0);
+                Trapdoor trapdoor = new Trapdoor(TileType.Trapdoor, "Assets/Sprites/InteractiveObjects/NextLevelCombined@2", "Trapdoor", 0);
                 trapdoor.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
                 trapdoor.Objectnumber = int.Parse(splitArray[3]);
                 objectList.Add(trapdoor);
+            }
+            if(splitArray[0] == "DOOR")
+            {
+                Door door = new Door(TileType.DoorTile, "Assets/Sprites/Tiles/TileDoorFront@2", "Door", 0);
+                door.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
+                door.Objectnumber = int.Parse(splitArray[3]);
+                tileField.Add(door, (int)door.Position.X/100, (int)door.Position.Y/100);
             }
             if (splitArray[0] == "REDKEY")
             {
@@ -130,7 +138,7 @@ partial class Level : GameObjectList
         }
 
         // Make a new tile field with x being the length of a line (the length) and the amount of lines the y direction
-        GameObjectGrid tileField = new GameObjectGrid(tileStringList.Count, tileStringList[0].Length / 2, 3, "TileField"); 
+        tileField = new GameObjectGrid(tileStringList.Count, tileStringList[0].Length / 2, 3, "TileField"); 
 
         //values for the cell width and height, these are predetermined in the Tiled Map Editor, so are constants.
         tileField.CellWidth = 100; 
@@ -155,6 +163,7 @@ partial class Level : GameObjectList
             {
                 
                 Tile newtile;
+                newtile = null; //moet, anders error bij case 999 tileField.Add(newtile, x, y)
                 switch (IDlist[x, y])
                 {
                     case 1:
@@ -172,8 +181,12 @@ partial class Level : GameObjectList
                     case 5:
                         newtile = new Tile(TileType.Water, "Assets/Sprites/Tiles/TileWater1");
                         break;
+                    case 99:
+                        newtile = new Tile(TileType.BasicTile, "Assets/Sprites/Tiles/BasicTile1");
+                        break;
                     default: throw new NullReferenceException("the given ID " + IDlist[x, y] + " was not found in the preprogrammed IDs");
                 }
+              
                 tileField.Add(newtile, x, y);
             }
         }
