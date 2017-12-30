@@ -67,7 +67,6 @@ partial class Level : GameObjectList
             }
             storedLines.Add(fileLines[i]);
         }
-
     }
 
     //Loads level information
@@ -122,6 +121,12 @@ partial class Level : GameObjectList
                 Lock redlock = new Lock("Assets/Sprites/InteractiveObjects/PaladinLock", "redlock", 0);
                 redlock.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
                 objectList.Add(redlock);
+            }
+
+            if(splitArray[0] == "DUMMY")
+            {
+                Monster dummy = new Dummy(new Vector2(0, 0), new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])), "Assets/Sprites/Enemies/Dummy", levelTileField, monsterList);
+                monsterList.Add(dummy);
             }
 
         }

@@ -16,12 +16,9 @@ class Tile : SpriteGameObject
     {
         get { return this.type; }
     }
-}
 
-class Basic_Tile : Tile
-{
-    Basic_Tile(string assetname, int layer = 0, string id = "") : base(TileType.BasicTile, assetname, layer, id)
+    public bool isSolid
     {
-
+        get { return type == TileType.Brick || type == TileType.RockIce; }
     }
 }

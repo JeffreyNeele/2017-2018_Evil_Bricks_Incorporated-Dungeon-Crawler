@@ -5,6 +5,7 @@ public class SpriteGameObject : GameObject
 {
     protected SpriteSheet sprite;
     protected Vector2 origin, cameraOffset;
+    protected Color color = Color.White;
     protected bool affectedByCamera;
     protected string assetName;
     protected int sheetIndex;
@@ -40,7 +41,7 @@ public class SpriteGameObject : GameObject
             return;
         }
         
-        sprite.Draw(spriteBatch, this.GlobalPosition + cameraOffset, origin);
+        sprite.Draw(spriteBatch, this.GlobalPosition + cameraOffset, origin, color);
     }
     public void ChangeSpriteIndex(int index)
     {
