@@ -310,3 +310,51 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/InteractiveObjects/PaladinLock.png
 
+#begin Assets/Sprites/Shieldmaiden/ShieldMaiden-Animation-Walk-Back@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Shieldmaiden/ShieldMaiden-Animation-Walk-Back@4.png
+
+#begin Assets/Sprites/Shieldmaiden/ShieldMaiden-Side-Left-Walk@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Shieldmaiden/ShieldMaiden-Side-Left-Walk@4.png
+
+#begin Assets/Sprites/Shieldmaiden/ShieldMaiden-Side-Right-Walk@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Shieldmaiden/ShieldMaiden-Side-Right-Walk@4.png
+
+#begin Assets/Sprites/Shieldmaiden/ShieldMaiden-Animation-Walk-Front@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Shieldmaiden/ShieldMaiden-Animation-Walk-Front@4.png
+

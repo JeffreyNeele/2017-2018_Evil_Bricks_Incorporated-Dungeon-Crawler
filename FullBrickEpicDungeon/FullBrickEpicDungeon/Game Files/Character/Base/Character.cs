@@ -43,10 +43,6 @@ abstract class Character : AnimatedGameObject
                 this.attributes.Gold = this.attributes.Gold - (this.attributes.Gold / 4);
             }
         }
-        if(HasAKey == true)
-        {
-            
-        }
     }
 
 
