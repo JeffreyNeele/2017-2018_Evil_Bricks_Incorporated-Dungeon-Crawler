@@ -5,24 +5,29 @@ class Timer
 {
     private float targettime, currentime;
     private bool paused;
+    protected bool expired;
     public Timer(float targettime)
     {
         this.targettime = targettime;
         paused = true;
+        expired = false;
     }
 
     // Increases the time
     public void Update(GameTime gameTime)
     {
+        expired = currentime >= targettime;
+
+        if (expired)
+        {
+            IsPaused = true;
+        }
+
         if (!paused)
         {
             currentime += (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
-        if (IsExpired)
-        {
-            IsPaused = true;
-        }
     }
 
 
@@ -31,6 +36,7 @@ class Timer
     {
         currentime = 0;
         IsPaused = false;
+        expired = false;
     }
 
     // Properties for the timer
@@ -49,8 +55,8 @@ class Timer
     }
     public bool IsExpired
     {
-        get { return currentime >= targettime; }
-        set { IsExpired = value; }
+        get { return expired; }
+        set { expired = value; }
     }
 
 }
