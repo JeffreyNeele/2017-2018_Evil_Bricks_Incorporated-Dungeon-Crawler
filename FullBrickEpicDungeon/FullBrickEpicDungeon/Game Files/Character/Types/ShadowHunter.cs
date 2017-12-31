@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 class ShadowHunter : Character
 {
-    public ShadowHunter() : base(ClassType.ShadowHunter, "Sprites/Lightbringer/lightbringer_default", "Lightbringer")
+    public ShadowHunter(int playerNumber) : base(playerNumber, ClassType.ShadowHunter, "Sprites/Lightbringer/lightbringer_default", "Lightbringer")
     {
         // Loads the idle animation
         LoadAnimation("Sprites/Lightbringer/lightbringer_idle@3", "lightbringer_idle", true, 0.33F);

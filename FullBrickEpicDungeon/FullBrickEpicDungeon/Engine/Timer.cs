@@ -22,8 +22,7 @@ class Timer
         {
             IsPaused = true;
         }
-
-        if (!paused)
+        else if (!paused)
         {
             currentime += (float)gameTime.ElapsedGameTime.TotalSeconds;
         }

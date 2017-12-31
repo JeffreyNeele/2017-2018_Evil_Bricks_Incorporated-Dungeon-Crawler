@@ -59,6 +59,7 @@
     <Compile Include="Engine\ParticleEffects\DropParticleEffect.cs" />
     <Compile Include="Engine\ParticleEffects\FadeParticleEffect.cs" />
     <Compile Include="Engine\ParticleEffects\ParticleEffect.cs" />
+    <Compile Include="Engine\SettingsHelper.cs" />
     <Compile Include="Engine\Timer.cs" />
     <Compile Include="Game Files\Abilities\Base\Ability.cs" />
     <Compile Include="Game Files\Abilities\Base\SpecialAbility.cs" />

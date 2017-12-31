@@ -274,3 +274,63 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Enemies/Dummy.png
 
+#begin Assets/Sprites/Shieldmaiden/shieldmaiden_walk_back_default@2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Shieldmaiden/shieldmaiden_walk_back_default@2.png
+
+#begin Assets/Sprites/Shieldmaiden/shieldmaiden_walk_front_default@2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Shieldmaiden/shieldmaiden_walk_front_default@2.png
+
+#begin Assets/Sprites/Shieldmaiden/shieldmaiden_walk_left_default@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Shieldmaiden/shieldmaiden_walk_left_default@4.png
+
+#begin Assets/Sprites/Shieldmaiden/shieldmaiden_walk_right_default@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Shieldmaiden/shieldmaiden_walk_right_default@4.png
+
+#begin Assets/KeyboardControls/defaultcontrols.txt
+/copy:Assets/KeyboardControls/defaultcontrols.txt
+
+#begin Assets/KeyboardControls/player1controls.txt
+/copy:Assets/KeyboardControls/player1controls.txt
+
+#begin Assets/KeyboardControls/player2controls.txt
+/copy:Assets/KeyboardControls/player2controls.txt
+
+#begin Assets/KeyboardControls/player2default.txt
+/copy:Assets/KeyboardControls/player2default.txt
+

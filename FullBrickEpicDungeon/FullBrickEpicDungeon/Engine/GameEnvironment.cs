@@ -16,6 +16,7 @@ public class GameEnvironment : Game
     protected static AssetManager assetManager;
     protected static GameSettingsManager gameSettingsManager;
     protected static CameraHelper cameraHelper;
+    protected static SettingsHelper settingsHelper;
 
     public GameEnvironment()
     {
@@ -27,6 +28,7 @@ public class GameEnvironment : Game
         assetManager = new AssetManager(Content);
         gameSettingsManager = new GameSettingsManager();
         cameraHelper = new CameraHelper(new Point(0,0));
+        settingsHelper = new SettingsHelper();
     }
 
     public static Point Screen
@@ -57,6 +59,11 @@ public class GameEnvironment : Game
     public static CameraHelper CameraHelper
     {
         get { return cameraHelper; }
+    }
+
+    public static SettingsHelper SettingsHelper
+    {
+        get { return settingsHelper; }
     }
     public bool FullScreen
     {
