@@ -15,8 +15,11 @@ abstract class Character : AnimatedGameObject
     protected Vector2 startPosition, movementSpeed;
     protected Dictionary<Keys, Keys> keyboardControls;
     protected bool keyboardControlled;
-    protected Character(ClassType classType, string baseAsset, string id = "") : base(0, id)
+    protected int playerNumber;
+    protected Character(int playerNumber, ClassType classType, string baseAsset, string id = "", bool keyboardControlled = true) : base(0, id)
     {
+        this.keyboardControlled = keyboardControlled;
+        this.playerNumber = playerNumber;
         this.classType = classType;
         baseattributes = new BaseAttributes();
         inventory = new List<Equipment>();
@@ -24,6 +27,19 @@ abstract class Character : AnimatedGameObject
         reviveTimer = new Timer(10);
         this.velocity = Vector2.Zero;
         this.movementSpeed = new Vector2(3, 3);
+
+        if (this.keyboardControlled)
+        {
+            if (playerNumber == 1)
+            {
+                keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player1controls.txt");
+            }
+            else if (playerNumber == 2)
+            {
+                keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player2controls.txt");
+            }
+        }
+
     }
 
     public override void Update(GameTime gameTime)
@@ -51,68 +67,74 @@ abstract class Character : AnimatedGameObject
         {
             Vector2 previousPosition = this.position;
             //Input keys for basic AA and abilities
-            if (inputHelper.KeyPressed(Keys.E))
+            if (inputHelper.KeyPressed(keyboardControls[Keys.Q]))
                 this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList);
-            if (inputHelper.KeyPressed(Keys.D2))
+            if (inputHelper.KeyPressed(keyboardControls[Keys.R]))
                 this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList);
-            if (inputHelper.KeyPressed(Keys.D3))
+            if (inputHelper.KeyPressed(keyboardControls[Keys.T]))
                 this.weapon.UseSpecialAbility(GameWorld.Find("monsterLIST") as GameObjectList);
 
-            if (inputHelper.IsKeyDown(Keys.W) || inputHelper.IsKeyDown(Keys.S))
+            if (inputHelper.IsKeyDown(keyboardControls[Keys.W]) || inputHelper.IsKeyDown(keyboardControls[Keys.S]))
             {
 
-                if (inputHelper.IsKeyDown(Keys.W))
+                if (inputHelper.IsKeyDown(keyboardControls[Keys.W]))
                 {
-                    if (inputHelper.IsKeyDown(Keys.A))
+                    if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
                     {
-                        this.Mirror = false;
                         this.position += MovementVector(this.movementSpeed, 225);
+                        this.PlayAnimation("leftcycle");
                     }
-                    else if (inputHelper.IsKeyDown(Keys.D))
+                    else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
                     {
-                        this.Mirror = true;
                         this.position += MovementVector(this.movementSpeed, 315);
+                        this.PlayAnimation("rightcycle");
                     }
                     else
                     {
                         this.position += MovementVector(this.movementSpeed, 270);
+                        this.PlayAnimation("backcycle");
                     }
 
                 }
 
-                else if (inputHelper.IsKeyDown(Keys.S))
+                else if (inputHelper.IsKeyDown(keyboardControls[Keys.S]))
                 {
-                    if (inputHelper.IsKeyDown(Keys.A))
+                    if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
                     {
-                        this.Mirror = false;
                         this.position += MovementVector(this.movementSpeed, 135);
+                        this.PlayAnimation("leftcycle");
                     }
-                    else if (inputHelper.IsKeyDown(Keys.D))
+                    else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
                     {
-                        this.Mirror = true;
                         this.position += MovementVector(this.movementSpeed, 45);
+                        this.PlayAnimation("rightcycle");
                     }
                     else
                     {
                         this.position += MovementVector(this.movementSpeed, 90);
+                        this.PlayAnimation("frontcycle");
                     }
                 }
             }
 
-            else if (inputHelper.IsKeyDown(Keys.A))
+            else if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
             {
-                this.Mirror = false;
                 this.position += MovementVector(this.movementSpeed, 180);
-
+                this.PlayAnimation("leftcycle");
             }
 
-            else if (inputHelper.IsKeyDown(Keys.D))
+            else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
             {
-                this.Mirror = true;
                 this.position += MovementVector(this.movementSpeed, 0);
+                this.PlayAnimation("rightcycle");
             }
 
-            if (inputHelper.IsKeyDown(Keys.E)) //Interact key
+            else
+            {
+                PlayAnimation("idle");
+            }
+
+            if (inputHelper.IsKeyDown(keyboardControls[Keys.E])) //Interact key
             {
                 ObjectCollisionChecker();
             }
@@ -294,6 +316,11 @@ abstract class Character : AnimatedGameObject
     public ClassType Type
     {
         get { return classType; }
+    }
+
+    public int PlayerNumber
+    {
+        get { return playerNumber; }
     }
     // returns the facing direction of the character
 }

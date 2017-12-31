@@ -17,5 +17,4 @@ enum TileType
     RockIce,
     Water,
 
-    
 }
