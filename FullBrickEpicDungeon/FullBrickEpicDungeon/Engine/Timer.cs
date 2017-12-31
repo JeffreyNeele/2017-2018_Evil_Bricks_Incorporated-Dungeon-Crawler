@@ -20,10 +20,9 @@ class Timer
 
         if (expired)
         {
-            IsPaused = true;
+            paused = true;
         }
-
-        if (!paused)
+        else
         {
             currentime += (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
