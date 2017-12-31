@@ -5,7 +5,8 @@ using System.IO;
 
 partial class Level : GameObjectList
 {
-    GameObjectGrid tileField;
+    GameObjectGrid tileField; //door wordt hier ook aan toegevoegd, daarom moet hij voor de volledige klasse beschikbaar zijn
+
     // Method that glues all other load methods together and checks which parts of the files it should pass to these methods
     public void LoadFromFile()
     {
@@ -117,12 +118,6 @@ partial class Level : GameObjectList
                 KeyItem redkey = new KeyItem("Assets/Sprites/InteractiveObjects/paladinkey1", "redkey", 0);
                 redkey.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
                 objectList.Add(redkey);
-            }
-            if (splitArray[0] == "DOOR")
-            {
-                Door door = new Door("Assets/Sprites/InteractiveObjects/Doorcombined@2", "door", 0);
-                door.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
-                objectList.Add(door);
             }
             if (splitArray[0] == "REDLOCK")
             {

@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 class Door : OpenableObject
 {
     public bool DoorOpen = false;
-    public Door(string assetname, string id, int sheetIndex) : base(assetname, id, sheetIndex)
+    public Door(TileType door, string assetname, string id, int sheetIndex) : base(door, assetname, id, sheetIndex)
     {
     }
 
