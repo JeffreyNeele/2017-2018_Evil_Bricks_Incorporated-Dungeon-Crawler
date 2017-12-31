@@ -15,6 +15,7 @@ class KeyItem : InteractiveObject
     {
         this.position.X = targetCharacter.Position.X - 12;
         this.position.Y = targetCharacter.Position.Y -115 ;
+
     }
 }
 
