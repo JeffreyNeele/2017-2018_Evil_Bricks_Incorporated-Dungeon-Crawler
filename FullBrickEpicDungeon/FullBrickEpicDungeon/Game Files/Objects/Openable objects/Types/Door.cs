@@ -14,19 +14,19 @@ class Door : OpenableObject
 
     public override void Update(GameTime gameTime)
     {
-        IsDoorLocked();
+        DoorLockedChecker();
         if (DoorOpen == true)
             this.ChangeSpriteIndex(1);
     }
 
-    public void IsDoorLocked()
+    public void DoorLockedChecker()
     {
         GameObjectList objectList = GameWorld.Find("objectLIST") as GameObjectList;
         foreach (var keylock in objectList.Children)
         {
             if (keylock is Lock)
             {
-                if (keylock.Visible == false)
+                if (keylock.Visible == false && this.BoundingBox.Intersects(keylock.BoundingBox))
                 {
                     DoorOpen = true;
                 }
