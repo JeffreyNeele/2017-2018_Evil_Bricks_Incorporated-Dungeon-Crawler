@@ -27,7 +27,6 @@ abstract class Character : AnimatedGameObject
         reviveTimer = new Timer(10);
         this.velocity = Vector2.Zero;
         this.movementSpeed = new Vector2(3, 3);
-
         if (this.keyboardControlled)
         {
             if (playerNumber == 1)

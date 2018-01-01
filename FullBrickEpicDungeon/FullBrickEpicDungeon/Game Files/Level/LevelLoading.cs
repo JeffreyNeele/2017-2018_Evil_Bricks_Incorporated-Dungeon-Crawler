@@ -99,7 +99,7 @@ partial class Level : GameObjectList
 
             if(splitArray[0] == "DUMMY")
             {
-                Monster dummy = new Dummy(new Vector2(0, 0), new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])), "Assets/Sprites/Enemies/Dummy", levelTileField, monsterList);
+                Monster dummy = new Dummy(new Vector2(0, 0), new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])), "Assets/Sprites/Enemies/Dummy", this);
                 monsterList.Add(dummy);
             }
 
