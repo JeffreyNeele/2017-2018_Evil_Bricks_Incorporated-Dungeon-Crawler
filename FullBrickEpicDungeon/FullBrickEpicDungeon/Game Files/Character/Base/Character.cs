@@ -55,7 +55,7 @@ abstract class Character : AnimatedGameObject
                 this.attributes.Gold = this.attributes.Gold - (this.attributes.Gold / 4);
             }
         }
-    }
+    } 
 
 
     //Method for character input (both xbox controller and keyboard), for now dummy keys for 1 controller are inserted, but the idea should be clear
