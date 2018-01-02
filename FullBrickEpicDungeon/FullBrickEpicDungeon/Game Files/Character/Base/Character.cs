@@ -12,7 +12,7 @@ abstract class Character : AnimatedGameObject
     protected Weapon weapon;
     protected List<Equipment> inventory;
     protected Timer reviveTimer;
-    protected Vector2 startPosition, movementSpeed;
+    protected Vector2 startPosition, movementSpeed, iceSpeed;
     protected Dictionary<Keys, Keys> keyboardControls;
     protected bool keyboardControlled;
     protected bool isOnIce = false;
@@ -30,6 +30,7 @@ abstract class Character : AnimatedGameObject
         reviveTimer = new Timer(10);
         this.velocity = Vector2.Zero;
         this.movementSpeed = new Vector2(3, 3);
+        this.iceSpeed = new Vector2(0, 0);
         if (this.keyboardControlled)
         {
             if (playerNumber == 1)
@@ -153,37 +154,52 @@ abstract class Character : AnimatedGameObject
 
 
         }
-        else if (!IsDowned && isOnIce && !blockinput)
+        else if (!IsDowned && isOnIce)
         {
-            if (inputHelper.IsKeyDown(keyboardControls[Keys.W]))
+            if(blockinput)
             {
-                blockinput = true;
-                velocity = new Vector2(0, -400);
-                this.PlayAnimation("backcycle");
+                if (this.iceSpeed != new Vector2(0, 0))
+                    this.position += iceSpeed;
             }
-            else if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
+            else
             {
-                blockinput = true;
-                velocity = new Vector2(-400, 0);
-                this.PlayAnimation("leftcycle");
+                if (inputHelper.IsKeyDown(keyboardControls[Keys.W]))
+                {
+                    blockinput = true;
+                    iceSpeed = MovementVector(this.movementSpeed * 3, 270);
+                    //velocity = new Vector2(0, -400);
+                    PlayAnimation("backcycle");
+                }
+                else if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
+                {
+                    blockinput = true;
+                    iceSpeed = MovementVector(this.movementSpeed * 3, 180);
+                    //velocity = new Vector2(-400, 0);
+                    PlayAnimation("leftcycle");
+                }
+                else if (inputHelper.IsKeyDown(keyboardControls[Keys.S]))
+                {
+                    blockinput = true;
+                    iceSpeed = MovementVector(this.movementSpeed * 3, 90);
+                    //velocity = new Vector2(0, 400);
+                    PlayAnimation("frontcycle");
+                }
+                else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
+                {
+                    blockinput = true;
+                    iceSpeed = MovementVector(this.movementSpeed * 3, 0);
+                    //velocity = new Vector2(400, 0);
+                    PlayAnimation("rightcycle");
+                }
             }
-            else if (inputHelper.IsKeyDown(keyboardControls[Keys.S]))
-            {
-                blockinput = true;
-                velocity = new Vector2(0, 400);
-                this.PlayAnimation("frontcycle");
-            }
-            else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
-            {
-                blockinput = true;
-                velocity = new Vector2(400, 0);
-                this.PlayAnimation("rightcycle");
-            }
+
+            
         }
 
         if (!SolidCollisionChecker())
         {
-            velocity = Vector2.Zero;
+            //velocity = Vector2.Zero;
+            this.iceSpeed = new Vector2(0, 0);
             this.position = previousPosition;
             PlayAnimation("idle");
             blockinput = false;
