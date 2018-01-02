@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
 
-namespace FullBrickEpicDungeon.Game_Files.Monsters.Type
+class Bunny : AImonster
 {
-    class Bunny
+    public Bunny(Level currentLevel) : base(new Vector2(3, 3), currentLevel, "Bunny")
     {
+
     }
 }

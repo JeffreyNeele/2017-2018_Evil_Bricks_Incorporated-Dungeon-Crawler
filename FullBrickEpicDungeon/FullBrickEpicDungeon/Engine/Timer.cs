@@ -18,7 +18,6 @@ class Timer
     public void Update(GameTime gameTime)
     {
         expired = currentime >= targettime;
-
         if (expired)
         {
             IsPaused = true;
@@ -52,6 +51,7 @@ class Timer
     public float SecondsElapsed
     {
         get { return currentime; }
+        set { currentime = value; }
     }
     public bool IsExpired
     {

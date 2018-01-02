@@ -16,13 +16,11 @@ partial class Level : GameObjectList
         objectList = new GameObjectList(4, "objectLIST");
         icetileList = new GameObjectList(3, "icetileLIST");
         projectileList = new GameObjectList(2, "projectileLIST");
-        AItracker = new GameObjectList(0, "AItracker");
 
         Add(playerList);
         Add(monsterList);
         Add(objectList);
         Add(projectileList);
-        Add(AItracker);
 
         LoadFromFile();
     }
