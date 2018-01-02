@@ -29,6 +29,7 @@ abstract class Character : AnimatedGameObject
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
+        this.weapon.Update(gameTime);
         MonsterCollisionChecker();
         if (IsDowned)
         {
@@ -51,9 +52,9 @@ abstract class Character : AnimatedGameObject
         {
             Vector2 previousPosition = this.position;
             //Input keys for basic AA and abilities
-            if (inputHelper.KeyPressed(Keys.E))
+            if (inputHelper.KeyPressed(Keys.Space))
                 this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList);
-            if (inputHelper.KeyPressed(Keys.D2))
+            if (inputHelper.KeyPressed(Keys.E))
                 this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList);
             if (inputHelper.KeyPressed(Keys.D3))
                 this.weapon.UseSpecialAbility(GameWorld.Find("monsterLIST") as GameObjectList);

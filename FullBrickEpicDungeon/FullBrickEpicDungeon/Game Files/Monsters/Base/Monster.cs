@@ -34,8 +34,6 @@ abstract partial class Monster : SpriteGameObject
                 monsterObjectList.Remove(this);
             else
                 this.color.A -= 10;
-            
-            
         }
 
     }

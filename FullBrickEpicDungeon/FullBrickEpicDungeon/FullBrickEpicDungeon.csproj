@@ -62,6 +62,8 @@
     <Compile Include="Game Files\Abilities\Base\Ability.cs" />
     <Compile Include="Game Files\Abilities\Base\SpecialAbility.cs" />
     <Compile Include="Game Files\Abilities\Base\TimedAbility.cs" />
+    <Compile Include="Game Files\Abilities\Types\Abilities_Shieldmaiden\BasicAttack.cs" />
+    <Compile Include="Game Files\Abilities\Types\Abilities_Shieldmaiden\ShieldBashAbility.cs" />
     <Compile Include="Game Files\Character\Base\Character.cs" />
     <Compile Include="Game Files\BaseAttributes.cs" />
     <Compile Include="Game Files\Character\Types\ShadowHunter.cs" />
@@ -127,7 +129,6 @@
     </MonoGameContentReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Game Files\Abilities\Types\" />
     <Folder Include="Game Files\Weapons\Side Grades\" />
     <Folder Include="Libraries\" />
   </ItemGroup>

@@ -10,6 +10,9 @@ abstract class Ability
     protected ClassType classType;
     protected bool isProjectileAbility; 
     protected GameObjectList projectileList;
+    protected int damage;
+    protected Vector2 pushVector;
+    protected List<Monster> monstersHitList;
     protected Ability(Character owner, ClassType classType)
     {
         this.classType = classType;
@@ -37,7 +40,8 @@ abstract class Ability
     }
     public virtual void Use(Weapon weapon, string id)
     {
-        weapon.PlayAnimation(id);
+        monstersHitList = new List<Monster>();
+        //weapon.PlayAnimation(id);
     }
 
     // Adds a projectile to the ability, only a basic one, for advanced other subclasses of projectile override this class
@@ -52,6 +56,11 @@ abstract class Ability
         {
             throw new ArgumentException("this is not a projectile ability and this method can therefore not be used");
         }
+    }
+
+    public virtual void attackHit(Monster monster)
+    {
+
     }
 
     // Returns a boolean that says if this ability is a projectile ability
@@ -69,5 +78,27 @@ abstract class Ability
     public Character Owner
     {
         get { return owner; }
+    }
+
+    public int damageAA
+    {
+        get { return damage; }
+        set { damage = value; }
+    }
+
+        public Vector2 pushBackVector
+    {
+        get { return pushVector; }
+        set { pushVector = value; }
+    }
+
+    public List<Monster> monsterHit
+    {
+        get { return monstersHitList; }
+    }
+
+    public void monsterAdd(Monster monster)
+    {
+        monsterHit.Add(monster);
     }
 }

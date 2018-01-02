@@ -1,4 +1,4 @@
-﻿
+﻿using System;
 using Microsoft.Xna.Framework;
 
 // This is ka timed ability that maintains a timer.
@@ -9,7 +9,8 @@ abstract class TimedAbility : Ability
     protected TimedAbility(Character owner, ClassType type, float targetTime) : base(owner, type)
     {
         this.targetTime = targetTime;
-        abilityTimer = new Timer(targetTime);
+        this.abilityTimer = new Timer(targetTime);
+        abilityTimer.SecondsElapsed = targetTime;
         this.isOnCooldown = false;
     }
 
@@ -22,13 +23,14 @@ abstract class TimedAbility : Ability
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
+        abilityTimer.Update(gameTime);
     }
 
     // Uses the ability (resets the timer to 0)
     public override void Use(Weapon weapon, string idAbility)
     {
         this.abilityTimer.Reset();
-        base.Use(weapon, idAbility);
+        //base.Use(weapon, idAbility);
     }
     // Sets the IsExpired value in ability so it is either in cooldown or not
     public bool isOnCooldown
