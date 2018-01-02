@@ -7,11 +7,12 @@ using Microsoft.Xna.Framework;
 
 class Dummy : Monster
 {
+    Vector2 speed;
     public Dummy(Vector2 movementSpeed, Vector2 dummyPosition, string assetName, Level level, string type = "dummy")
         : base(movementSpeed, assetName, type, level)
     {
         this.position = dummyPosition;
-        this.velocity = movementSpeed;
+        speed = movementSpeed;
         this.baseattributes.HP = 50;
         this.baseattributes.Armour = 0;
         this.baseattributes.Gold = 0;

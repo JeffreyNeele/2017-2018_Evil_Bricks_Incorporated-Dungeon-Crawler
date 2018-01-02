@@ -10,12 +10,12 @@ abstract class Weapon : AnimatedGameObject
     // var for the owner of this weapon
     Character owner;
     // vars for abilities that will be called in methods such as MainAbility
-    protected Ability BasicAttack;
+    protected BasicAttackAbility BasicAttack;
     protected TimedAbility mainAbility;
     protected SpecialAbility specialAbility;
     private int attack, goldCost;
-    protected string idBaseAA, idMainAbility, idSpecialAbility;
-    GameObjectList monsterObjectList;
+    protected string idBaseAA, idMainAbility, idSpecialAbility, idAnimation;
+    protected GameObjectList monsterObjectList;
     /// <summary>
     /// Creates a weapon for a character
     /// </summary>
@@ -31,8 +31,8 @@ abstract class Weapon : AnimatedGameObject
 
     public override void Update(GameTime gameTime)
     {
-        if(!this.CurrentAnimation.AnimationEnded)
-            CollisionChecker(this.CurrentAnimation, monsterObjectList);
+        /*if(!this.CurrentAnimation.AnimationEnded)
+            CollisionChecker(this.CurrentAnimation, monsterObjectList);*/
         
         base.Update(gameTime);
     }
@@ -44,7 +44,9 @@ abstract class Weapon : AnimatedGameObject
         CollisionChecker(this.CurrentAnimation, monsterList);*/
         monsterObjectList = monsterList;
         foreach (Monster m in monsterObjectList.Children)
+        {
             m.TakeDamage(10);
+        }
     }
 
     // Uses the main ability
@@ -63,7 +65,7 @@ abstract class Weapon : AnimatedGameObject
         CollisionChecker(this.CurrentAnimation, monsterObjectList);
     }
 
-    // Checks for collision with mosnters
+    // Checks for collision with monsters
     protected void CollisionChecker(Animation animation, GameObjectList monsterList)
     {
         foreach (Monster monsterobj in monsterList.Children)

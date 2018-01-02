@@ -44,6 +44,7 @@ abstract class Character : AnimatedGameObject
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
+        this.weapon.Update(gameTime);
         MonsterCollisionChecker();
         if (IsDowned)
         {
