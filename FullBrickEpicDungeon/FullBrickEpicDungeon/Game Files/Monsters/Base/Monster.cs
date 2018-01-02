@@ -43,8 +43,13 @@ abstract partial class Monster : AnimatedGameObject
     //Takes damage, HP can never be below 0 because of health bars
     public void TakeDamage(int damage)
     {
-        this.attributes.HP -= (damage - (int)(0.3F * this.attributes.Armour));
-        if(this.attributes.HP <= 0)
+        int takendamage = (damage - (int)(0.3F * this.attributes.Armour));
+        if (takendamage < 5)
+        {
+            takendamage = 5;
+        }
+        this.attributes.HP -= takendamage;
+        if (this.attributes.HP <= 0)
         {
             this.attributes.HP = 0;
         }
