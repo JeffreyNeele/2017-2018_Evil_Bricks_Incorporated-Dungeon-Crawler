@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 
-abstract class Character : AnimatedGameObject
+abstract partial class Character : AnimatedGameObject
 {
     //baseattributes contains the standard base stats and should not be changed, the values in attributes may be changes are used during the remainder of the level
     protected ClassType classType;
@@ -13,11 +13,6 @@ abstract class Character : AnimatedGameObject
     protected List<Equipment> inventory;
     protected Timer reviveTimer;
     protected Vector2 startPosition, movementSpeed, iceSpeed;
-    protected Dictionary<Keys, Keys> keyboardControls;
-    protected bool keyboardControlled;
-    protected bool isOnIce = false;
-    protected bool isGliding = false;
-    protected bool blockinput = false;
     protected int playerNumber;
     protected Character(int playerNumber, ClassType classType, string baseAsset, string id = "", bool keyboardControlled = true) : base(0, id)
     {
@@ -64,149 +59,7 @@ abstract class Character : AnimatedGameObject
     }
 
 
-    //Method for character input (both xbox controller and keyboard), for now dummy keys for 1 controller are inserted, but the idea should be clear
-    //TO DO: a way to distinguish characters / players from each other.
-    public override void HandleInput(InputHelper inputHelper)
-    {
-        Vector2 previousPosition = this.position;
-
-        if (!IsDowned && !isOnIce && !blockinput)
-        {
-            velocity = Vector2.Zero;
-            //Input keys for basic AA and abilities
-            if (inputHelper.KeyPressed(keyboardControls[Keys.Q]))
-                this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList);
-            if (inputHelper.KeyPressed(keyboardControls[Keys.R]))
-                this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList);
-            if (inputHelper.KeyPressed(keyboardControls[Keys.T]))
-                this.weapon.UseSpecialAbility(GameWorld.Find("monsterLIST") as GameObjectList);
-
-            if (inputHelper.IsKeyDown(keyboardControls[Keys.W]) || inputHelper.IsKeyDown(keyboardControls[Keys.S]))
-            {
-
-                if (inputHelper.IsKeyDown(keyboardControls[Keys.W]))
-                {
-                    if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
-                    {
-                        this.position += MovementVector(this.movementSpeed, 225);
-                        this.PlayAnimation("leftcycle");
-                        this.Mirror = false;
-                    }
-                    else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
-                    {
-                        this.position += MovementVector(this.movementSpeed, 315);
-                        this.PlayAnimation("rightcycle");
-                        this.Mirror = true;
-                    }
-                    else
-                    {
-                        this.position += MovementVector(this.movementSpeed, 270);
-                        this.PlayAnimation("backcycle");
-                    }
-
-                }
-
-                else if (inputHelper.IsKeyDown(keyboardControls[Keys.S]))
-                {
-                    if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
-                    {
-                        this.position += MovementVector(this.movementSpeed, 135);
-                        this.PlayAnimation("leftcycle");
-                        this.Mirror = false;
-                    }
-                    else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
-                    {
-                        this.position += MovementVector(this.movementSpeed, 45);
-                        this.PlayAnimation("rightcycle");
-                        this.Mirror = true;
-                    }
-                    else
-                    {
-                        this.position += MovementVector(this.movementSpeed, 90);
-                        this.PlayAnimation("frontcycle");
-                    }
-                }
-            }
-
-            else if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
-            {
-                this.position += MovementVector(this.movementSpeed, 180);
-                this.PlayAnimation("leftcycle");
-                this.Mirror = false;
-            }
-
-            else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
-            {
-                this.position += MovementVector(this.movementSpeed, 0);
-                this.PlayAnimation("rightcycle");
-                this.Mirror = true;
-            }
-
-            else
-            {
-                PlayAnimation("idle");
-            }
-
-            if (inputHelper.IsKeyDown(keyboardControls[Keys.E])) //Interact key
-            {
-                ObjectCollisionChecker();
-            }
-
-
-        }
-        else if (!IsDowned && isOnIce)
-        {
-            if(blockinput)
-            {
-                if (this.iceSpeed != new Vector2(0, 0))
-                    this.position += iceSpeed;
-            }
-            else
-            {
-                if (inputHelper.IsKeyDown(keyboardControls[Keys.W]))
-                {
-                    blockinput = true;
-                    iceSpeed = MovementVector(this.movementSpeed * 3, 270);
-                    //velocity = new Vector2(0, -400);
-                    PlayAnimation("backcycle");
-                }
-                else if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
-                {
-                    blockinput = true;
-                    iceSpeed = MovementVector(this.movementSpeed * 3, 180);
-                    //velocity = new Vector2(-400, 0);
-                    PlayAnimation("leftcycle");
-                }
-                else if (inputHelper.IsKeyDown(keyboardControls[Keys.S]))
-                {
-                    blockinput = true;
-                    iceSpeed = MovementVector(this.movementSpeed * 3, 90);
-                    //velocity = new Vector2(0, 400);
-                    PlayAnimation("frontcycle");
-                }
-                else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
-                {
-                    blockinput = true;
-                    iceSpeed = MovementVector(this.movementSpeed * 3, 0);
-                    //velocity = new Vector2(400, 0);
-                    PlayAnimation("rightcycle");
-                }
-            }
-
-            
-        }
-
-        if (!SolidCollisionChecker())
-        {
-            //velocity = Vector2.Zero;
-            this.iceSpeed = new Vector2(0, 0);
-            this.position = previousPosition;
-            PlayAnimation("idle");
-            blockinput = false;
-        }
-        base.HandleInput(inputHelper);
-
-    }
+   
     
     public override void Reset()
     {

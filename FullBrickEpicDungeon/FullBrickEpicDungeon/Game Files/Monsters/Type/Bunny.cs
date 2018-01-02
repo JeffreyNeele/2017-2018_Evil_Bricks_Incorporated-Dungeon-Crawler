@@ -6,8 +6,9 @@ class Bunny : AImonster
     {
         this.baseattributes.HP = 50;
         this.baseattributes.Armour = 5;
-        this.baseattributes.Attack = 10;
-        this.baseattributes.Gold = 0;
+        this.baseattributes.Attack = 20;
+        this.baseattributes.Gold = 50;
         attributes = baseattributes;
+
     }
 }
