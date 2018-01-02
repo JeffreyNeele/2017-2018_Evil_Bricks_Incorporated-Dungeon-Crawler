@@ -7,9 +7,10 @@ using Microsoft.Xna.Framework;
 
 class Dummy : Monster
 {
+
     Vector2 speed;
-    public Dummy(Vector2 movementSpeed, Vector2 dummyPosition, string assetName, Level level, string type = "dummy")
-        : base(movementSpeed, assetName, type, level)
+    public Dummy(Vector2 movementSpeed, Vector2 dummyPosition, string assetName, Level currentLevel, string type = "dummy")
+        : base(movementSpeed, type, currentLevel)
     {
         this.position = dummyPosition;
         speed = movementSpeed;
@@ -18,11 +19,14 @@ class Dummy : Monster
         this.baseattributes.Gold = 0;
         this.baseattributes.Attack = 0;
         attributes = baseattributes;
+        LoadAnimation(assetName, "base", false);
+        PlayAnimation("base");
     }
 
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
     }
+
 }
 

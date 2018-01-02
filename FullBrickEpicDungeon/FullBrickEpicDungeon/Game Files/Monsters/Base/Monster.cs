@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 // NOTE: the gold attribute for the monster is seen as the amount of gold the player gets when it is defeated.
-abstract partial class Monster : SpriteGameObject
+abstract partial class Monster : AnimatedGameObject
 {
     protected BaseAttributes attributes, baseattributes;
     protected BaseAI baseAI;
     protected Vector2 movementSpeed;
-    public Monster(Vector2 movementSpeed, string assetName, string type, Level currentLevel) : base(assetName, 5, type)
+    public Monster(Vector2 movementSpeed, string id, Level currentLevel) : base(0, id)
     {
         attributes = new BaseAttributes();
         baseattributes = new BaseAttributes();
         this.movementSpeed = movementSpeed;
-        baseAI = new BaseAI(this, movementSpeed, currentLevel);
-        GameObjectList AItracker = currentLevel.Find("AItracker") as GameObjectList;
-        AItracker.Add(baseAI);
+        
     }
 
 
@@ -23,7 +21,6 @@ abstract partial class Monster : SpriteGameObject
     {
         if (!IsDead)
         {
-            baseAI.Update(gameTime);
             base.Update(gameTime);
         }
         else

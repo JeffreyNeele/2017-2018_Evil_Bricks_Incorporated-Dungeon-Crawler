@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using RoyT.AStar;
 using Microsoft.Xna.Framework;
 
-class BaseAI : GameObject
+class BaseAI
 {
     protected GameObjectGrid levelGrid;
     protected SpriteGameObject targetedObject, owner;
@@ -11,6 +11,9 @@ class BaseAI : GameObject
     protected float sightRange;
     protected bool isMonster;
     protected Level currentLevel;
+    protected int currentWaypoint;
+    protected Point targetWaypoint;
+    protected Point[] waypointList;
     public BaseAI(SpriteGameObject owner, Vector2 movementSpeed, Level currentLevel, bool isMonster = true, float sightRange = 50)
     {
         this.currentLevel = currentLevel;
@@ -21,9 +24,31 @@ class BaseAI : GameObject
         levelGrid = currentLevel.TileField;
     }
 
-    public override void Update(GameTime gameTime)
+    public void Update(GameTime gameTime)
     {
         LineOfSightChecker(sightRange);
+        if (targetedObject != null)
+        {
+            waypointList = FindPath(targetedObject.Position, owner.Position);
+        }
+
+        if (currentWaypoint < waypointList.Length && waypointList != null)
+        {
+            if (targetWaypoint == null)
+            {
+                targetWaypoint = waypointList[currentWaypoint];
+                MoveToPosition(targetWaypoint);
+            }
+        }
+    }
+
+    public void MoveToPosition(Point targetGridPosition)
+    {
+        Vector2 realTargetPosition = new Vector2(targetGridPosition.X * levelGrid.CellWidth, targetGridPosition.Y * levelGrid.CellHeight);
+        while (owner.Position != realTargetPosition)
+        {
+            owner.Position = realTargetPosition;
+        }
     }
 
     // Method that returns a list with points for the AI to follow.
@@ -45,7 +70,7 @@ class BaseAI : GameObject
                 }
             }
         }
-        Position[] pathArray = pathGrid.GetSmoothPath(new Position((int)startPosition.X, (int)startPosition.Y), new Position((int)endPosition.X, (int)endPosition.Y));
+        Position[] pathArray = pathGrid.GetSmoothPath(new Position((int)startPosition.X / levelGrid.CellWidth, (int)startPosition.Y / levelGrid.CellHeight), new Position((int)endPosition.X / levelGrid.CellWidth, (int)endPosition.Y / levelGrid.CellHeight));
         Point[] pointArray = new Point[pathArray.Length];
         for (int i = 0; i < pathArray.Length; i++)
         {
@@ -56,7 +81,7 @@ class BaseAI : GameObject
 
     public void MoveToTarget()
     {
-        Point[] path = FindPath(this.position, targetedObject.Position);
+        Point[] path = FindPath(owner.Position, targetedObject.Position);
         
     }
 
@@ -66,7 +91,7 @@ class BaseAI : GameObject
         if (isMonster)
             targetList = currentLevel.GameWorld.Find("playerLIST") as GameObjectList;
         else
-            targetList = GameWorld.Find("monsterLIST") as GameObjectList;
+            targetList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList;
 
         Circle lineOfSight = new Circle(sightRange + owner.Sprite.Width / 2, owner.Origin);
         foreach(SpriteGameObject obj in targetList.Children)
