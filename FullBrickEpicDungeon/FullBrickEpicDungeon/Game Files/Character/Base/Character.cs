@@ -82,11 +82,13 @@ abstract class Character : AnimatedGameObject
                     {
                         this.position += MovementVector(this.movementSpeed, 225);
                         this.PlayAnimation("leftcycle");
+                        this.Mirror = false;
                     }
                     else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
                     {
                         this.position += MovementVector(this.movementSpeed, 315);
                         this.PlayAnimation("rightcycle");
+                        this.Mirror = true;
                     }
                     else
                     {
@@ -102,11 +104,13 @@ abstract class Character : AnimatedGameObject
                     {
                         this.position += MovementVector(this.movementSpeed, 135);
                         this.PlayAnimation("leftcycle");
+                        this.Mirror = false;
                     }
                     else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
                     {
                         this.position += MovementVector(this.movementSpeed, 45);
                         this.PlayAnimation("rightcycle");
+                        this.Mirror = true;
                     }
                     else
                     {
@@ -120,12 +124,14 @@ abstract class Character : AnimatedGameObject
             {
                 this.position += MovementVector(this.movementSpeed, 180);
                 this.PlayAnimation("leftcycle");
+                this.Mirror = false;
             }
 
             else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
             {
                 this.position += MovementVector(this.movementSpeed, 0);
                 this.PlayAnimation("rightcycle");
+                this.Mirror = true;
             }
 
             else

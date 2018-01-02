@@ -382,6 +382,18 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Shieldmaiden/shieldmaiden_walk_back_blue@4.png
 
+#begin Assets/Sprites/Shieldmaiden/shieldmaiden_walk_back_green@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Shieldmaiden/shieldmaiden_walk_back_green@4.png
+
 #begin Assets/Sprites/Shieldmaiden/shieldmaiden_walk_back_orange@4.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -501,16 +513,4 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Shieldmaiden/shieldmaiden_walk_right_orange@4.png
-
-#begin Assets/Sprites/Shieldmaiden/shieldmaiden_walk_back_green@4.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/Shieldmaiden/shieldmaiden_walk_back_green@4.png
 
