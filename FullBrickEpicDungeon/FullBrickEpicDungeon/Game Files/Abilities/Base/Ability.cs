@@ -32,7 +32,7 @@ abstract class Ability
     // Empty methods that will be defined better in subclasses
     public virtual void Update(GameTime gameTime)
     {
-        projectileList.Update(gameTime);
+        //projectileList.Update(gameTime);
     }
     public virtual void Reset()
     {
