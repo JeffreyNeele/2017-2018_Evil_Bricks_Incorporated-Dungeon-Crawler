@@ -264,7 +264,12 @@ abstract class Character : AnimatedGameObject
         {
             totalitemdefense += item.Armour;
         }
-        this.attributes.HP -= (damage - (int)(0.3F * (this.attributes.Armour + totalitemdefense)));
+        int takendamage = (damage - (int)(0.3F * this.attributes.Armour + totalitemdefense));
+        if (takendamage < 5)
+        {
+            takendamage = 5;
+        }
+        this.attributes.HP -= takendamage;
         if (this.attributes.HP < 0)
         {
             this.attributes.HP = 0;
