@@ -26,8 +26,11 @@ class BaseAI
 
     public void Update(GameTime gameTime)
     {
-        LineOfSightChecker(sightRange);
-        if (targetedObject != null)
+        if (targetedObject == null)
+        {
+            LineOfSightChecker(sightRange);
+        }
+        else
         {
             waypointList = FindPath(targetedObject.Position, owner.Position);
         }
@@ -48,6 +51,7 @@ class BaseAI
         while (owner.Position != realTargetPosition)
         {
             owner.Position = realTargetPosition;
+            currentWaypoint++;
         }
     }
 
