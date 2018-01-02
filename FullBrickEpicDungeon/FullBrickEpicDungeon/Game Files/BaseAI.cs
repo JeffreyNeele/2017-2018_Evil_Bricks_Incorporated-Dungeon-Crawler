@@ -64,7 +64,7 @@ class BaseAI
             for (int y = 0; y < levelGrid.Rows; y++)
             {
                 Tile currenttile = levelGrid.Objects[x, y] as Tile;
-                if (currenttile.isSolid)
+                if (currenttile.IsSolid)
                 {
                     pathGrid.BlockCell(new Position(x, y));
                 }
