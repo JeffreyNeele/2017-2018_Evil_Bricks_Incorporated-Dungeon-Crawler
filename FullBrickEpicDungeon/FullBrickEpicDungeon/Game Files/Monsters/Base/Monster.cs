@@ -23,6 +23,7 @@ abstract partial class Monster : SpriteGameObject
     {
         if (!IsDead)
         {
+            baseAI.Update(gameTime);
             base.Update(gameTime);
         }
         else

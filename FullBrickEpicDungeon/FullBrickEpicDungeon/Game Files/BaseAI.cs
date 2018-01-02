@@ -5,25 +5,30 @@ using Microsoft.Xna.Framework;
 
 class BaseAI : GameObject
 {
-    GameObjectGrid levelGrid;
-    SpriteGameObject targetedObject, owner;
-    Vector2 movementSpeed;
-    public BaseAI(SpriteGameObject owner, Vector2 movementSpeed, Level currentLevel)
+    protected GameObjectGrid levelGrid;
+    protected SpriteGameObject targetedObject, owner;
+    protected Vector2 movementSpeed;
+    protected float sightRange;
+    protected bool isMonster;
+    protected Level currentLevel;
+    public BaseAI(SpriteGameObject owner, Vector2 movementSpeed, Level currentLevel, bool isMonster = true, float sightRange = 50)
     {
+        this.currentLevel = currentLevel;
+        this.isMonster = isMonster;
         this.owner = owner;
         this.movementSpeed = movementSpeed;
+        this.sightRange = sightRange;
         levelGrid = currentLevel.TileField;
     }
 
     public override void Update(GameTime gameTime)
     {
-        base.Update(gameTime);
+        LineOfSightChecker(sightRange);
     }
 
     // Method that returns a list with points for the AI to follow.
     public Point[] FindPath(Vector2 endPosition, Vector2 startPosition)
     {
-        levelGrid = GameWorld.Find("TileField") as GameObjectGrid;
         Grid pathGrid = new Grid(levelGrid.Columns, levelGrid.CellWidth);
         for (int x = 0; x < levelGrid.Columns; x++)
         {
@@ -57,25 +62,37 @@ class BaseAI : GameObject
 
     public void LineOfSightChecker(float sightRange)
     {
-        GameObjectList playerList = GameWorld.Find("playerLIST") as GameObjectList;
+        GameObjectList targetList;
+        if (isMonster)
+            targetList = currentLevel.GameWorld.Find("playerLIST") as GameObjectList;
+        else
+            targetList = GameWorld.Find("monsterLIST") as GameObjectList;
+
         Circle lineOfSight = new Circle(sightRange + owner.Sprite.Width / 2, owner.Origin);
+        foreach(SpriteGameObject obj in targetList.Children)
+        {
+            if (lineOfSight.CollidesWithRectangle(obj.BoundingBox))
+            {
+                TargetRandomObject(50, targetList);
+            }
+        }
     }
-    public void TargetRandomPlayer(float chance)
+
+    public void TargetRandomObject(float chance, GameObjectList targetList)
     {
-        GameObjectList playerList = GameWorld.Find("playerLIST") as GameObjectList;
-        foreach (Character player in playerList.Children)
+        foreach (SpriteGameObject target in targetList.Children)
         {
             int selectedNumber = GameEnvironment.Random.Next(0, 101);
             if (selectedNumber <= chance)
             {
-                this.targetedObject = player;
+                this.targetedObject = target;
                 break;
             }
         }
 
         if (targetedObject == null)
         {
-            TargetRandomPlayer(chance);
+            TargetRandomObject(chance, targetList);
         }
     }
 
