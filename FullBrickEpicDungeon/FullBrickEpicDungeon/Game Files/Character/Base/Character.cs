@@ -15,6 +15,9 @@ abstract class Character : AnimatedGameObject
     protected Vector2 startPosition, movementSpeed;
     protected Dictionary<Keys, Keys> keyboardControls;
     protected bool keyboardControlled;
+    protected bool isOnIce = false;
+    protected bool isGliding = false;
+    protected bool blockinput = false;
     protected int playerNumber;
     protected Character(int playerNumber, ClassType classType, string baseAsset, string id = "", bool keyboardControlled = true) : base(0, id)
     {
@@ -45,6 +48,7 @@ abstract class Character : AnimatedGameObject
     {
         base.Update(gameTime);
         MonsterCollisionChecker();
+        IsOnIceChecker();
         if (IsDowned)
         {
             reviveTimer.IsPaused = false;
@@ -55,16 +59,18 @@ abstract class Character : AnimatedGameObject
                 this.attributes.Gold = this.attributes.Gold - (this.attributes.Gold / 4);
             }
         }
-    } 
+    }
 
 
     //Method for character input (both xbox controller and keyboard), for now dummy keys for 1 controller are inserted, but the idea should be clear
     //TO DO: a way to distinguish characters / players from each other.
     public override void HandleInput(InputHelper inputHelper)
     {
-        if (!IsDowned)
+        Vector2 previousPosition = this.position;
+
+        if (!IsDowned && !isOnIce && !blockinput)
         {
-            Vector2 previousPosition = this.position;
+            velocity = Vector2.Zero;
             //Input keys for basic AA and abilities
             if (inputHelper.KeyPressed(keyboardControls[Keys.Q]))
                 this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList);
@@ -138,13 +144,47 @@ abstract class Character : AnimatedGameObject
                 ObjectCollisionChecker();
             }
 
-            if (!SolidCollisionChecker())
-            {
-                this.position = previousPosition;
-            }
-            base.HandleInput(inputHelper);
+
         }
+        else if (!IsDowned && isOnIce && !blockinput)
+        {
+            if (inputHelper.IsKeyDown(keyboardControls[Keys.W]))
+            {
+                blockinput = true;
+                velocity = new Vector2(0, -400);
+                this.PlayAnimation("backcycle");
+            }
+            else if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
+            {
+                blockinput = true;
+                velocity = new Vector2(-400, 0);
+                this.PlayAnimation("leftcycle");
+            }
+            else if (inputHelper.IsKeyDown(keyboardControls[Keys.S]))
+            {
+                blockinput = true;
+                velocity = new Vector2(0, 400);
+                this.PlayAnimation("frontcycle");
+            }
+            else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
+            {
+                blockinput = true;
+                velocity = new Vector2(400, 0);
+                this.PlayAnimation("rightcycle");
+            }
+        }
+
+        if (!SolidCollisionChecker())
+        {
+            velocity = Vector2.Zero;
+            this.position = previousPosition;
+            PlayAnimation("idle");
+            blockinput = false;
+        }
+        base.HandleInput(inputHelper);
+
     }
+    
     public override void Reset()
     {
         this.attributes.HP = this.baseattributes.HP;
@@ -202,12 +242,29 @@ abstract class Character : AnimatedGameObject
         Rectangle quarterBoundingBox = new Rectangle((int)this.BoundingBox.X, (int)(this.BoundingBox.Y + 0.75 * Height), this.Width, (int)(this.Height / 4));
         foreach (Tile tile in Field.Objects)
         {
-            if (tile.isSolid && quarterBoundingBox.Intersects(tile.BoundingBox))
+            if (tile.IsSolid && quarterBoundingBox.Intersects(tile.BoundingBox))
             {
                 return false;
             }
         }
         return true;
+    }
+
+    public void IsOnIceChecker()
+    {
+        GameObjectGrid Field = GameWorld.Find("TileField") as GameObjectGrid;
+        Rectangle feetBoundingBox = new Rectangle((int)(this.BoundingBox.X + 0.33 * Width), 
+            (int)(this.BoundingBox.Y + 0.9 * Height), (int)(this.Width / 3), (Height/10));
+        foreach (Tile tile in Field.Objects)
+        {
+            if (tile.IsIce && tile.BoundingBox.Intersects(feetBoundingBox))
+            {
+                isOnIce = true;
+                return;
+            }
+       }
+        isOnIce = false;
+        blockinput = false;
     }
 
     // Changes the weapon of a Character and drops the weapon on the ground

@@ -17,8 +17,13 @@ class Tile : SpriteGameObject
         get { return this.type; }
     }
 
-    public bool isSolid
+    public bool IsSolid
     {
-        get { return type == TileType.Brick || type == TileType.RockIce; }
+        get { return type == TileType.Brick || type == TileType.RockIce || type == TileType.Water ; }
+    }
+
+    public bool IsIce
+    {
+        get { return type == TileType.Ice; }
     }
 }
