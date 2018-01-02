@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-
+using System.Collections;
 
 public class InputHelper
 {
@@ -28,6 +28,11 @@ public class InputHelper
         set { scale = value; }
     }
 
+    public Keys[] PreviouslyPressedKeys
+    {
+        get { return previousKeyboardState.GetPressedKeys(); }
+    }
+
     public Vector2 Offset
     {
         get { return offset; }
@@ -36,7 +41,7 @@ public class InputHelper
 
     public Vector2 MousePosition
     {
-        get { return (new Vector2(currentMouseState.X, currentMouseState.Y) - offset ) / scale; }
+        get { return (new Vector2(currentMouseState.X, currentMouseState.Y) - offset) / scale; }
     }
 
     public bool MouseLeftButtonPressed()
@@ -63,4 +68,4 @@ public class InputHelper
     {
         get { return currentKeyboardState.GetPressedKeys().Length > 0 && previousKeyboardState.GetPressedKeys().Length == 0; }
     }
-}
+} 

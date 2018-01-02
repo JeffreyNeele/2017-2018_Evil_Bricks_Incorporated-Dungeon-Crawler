@@ -9,6 +9,7 @@ class Timer
     public Timer(float targettime)
     {
         this.targettime = targettime;
+        this.currentime = 0;
         paused = true;
         expired = false;
     }
