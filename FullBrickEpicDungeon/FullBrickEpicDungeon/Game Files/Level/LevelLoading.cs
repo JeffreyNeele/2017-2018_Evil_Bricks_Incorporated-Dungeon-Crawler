@@ -78,14 +78,13 @@ partial class Level : GameObjectList
     // Loads Characters at their appropiate position, as well as interactive objects
     protected void LevelPositionLoader(List<string> positionStringList)
     {
-        int handlecounter = 0;
         for (int i = 0; i < positionStringList.Count; i++)
         {
             // Split the current line
             string[] splitArray = positionStringList[i].Split(' ');
             if(splitArray[0] == "SHIELDMAIDEN")
             {
-                Shieldmaiden shieldmaiden = new Shieldmaiden();
+                Shieldmaiden shieldmaiden = new Shieldmaiden(int.Parse(splitArray[3]));
                 shieldmaiden.StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
                 shieldmaiden.CurrentWeapon = new SwordAndShield(shieldmaiden);
                 shieldmaiden.Reset();
@@ -100,7 +99,7 @@ partial class Level : GameObjectList
 
             if(splitArray[0] == "DUMMY")
             {
-                Monster dummy = new Dummy(new Vector2(0, 0), new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])), "Assets/Sprites/Enemies/Dummy", levelTileField, monsterList);
+                Monster dummy = new Dummy(new Vector2(0, 0), new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])), "Assets/Sprites/Enemies/Dummy", this);
                 monsterList.Add(dummy);
             }
 

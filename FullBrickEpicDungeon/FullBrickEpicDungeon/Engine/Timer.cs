@@ -18,16 +18,15 @@ class Timer
     public void Update(GameTime gameTime)
     {
         expired = currentime >= targettime;
-
-        if (!paused)
-        {
-            currentime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-        }
-
         if (expired)
         {
             IsPaused = true;
         }
+        else if (!paused)
+        {
+            currentime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
+
     }
 
 

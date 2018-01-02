@@ -5,17 +5,25 @@ using Microsoft.Xna.Framework;
 
 class BaseAI : GameObject
 {
-    GameObjectGrid levelGrid;
-    Vector2 parentMovementSpeed;
-    public BaseAI(GameObjectGrid levelGrid)
+    protected GameObjectGrid levelGrid;
+    protected SpriteGameObject targetedObject, owner;
+    protected Vector2 movementSpeed;
+    protected float sightRange;
+    protected bool isMonster;
+    protected Level currentLevel;
+    public BaseAI(SpriteGameObject owner, Vector2 movementSpeed, Level currentLevel, bool isMonster = true, float sightRange = 50)
     {
-        this.levelGrid = levelGrid;
-        parentMovementSpeed = new Vector2(2.5F, 2.5F);
+        this.currentLevel = currentLevel;
+        this.isMonster = isMonster;
+        this.owner = owner;
+        this.movementSpeed = movementSpeed;
+        this.sightRange = sightRange;
+        levelGrid = currentLevel.TileField;
     }
 
-    public void FollowPath()
+    public override void Update(GameTime gameTime)
     {
-
+        LineOfSightChecker(sightRange);
     }
 
     // Method that returns a list with points for the AI to follow.
@@ -46,6 +54,48 @@ class BaseAI : GameObject
         return pointArray;
     }
 
+    public void MoveToTarget()
+    {
+        Point[] path = FindPath(this.position, targetedObject.Position);
+        
+    }
+
+    public void LineOfSightChecker(float sightRange)
+    {
+        GameObjectList targetList;
+        if (isMonster)
+            targetList = currentLevel.GameWorld.Find("playerLIST") as GameObjectList;
+        else
+            targetList = GameWorld.Find("monsterLIST") as GameObjectList;
+
+        Circle lineOfSight = new Circle(sightRange + owner.Sprite.Width / 2, owner.Origin);
+        foreach(SpriteGameObject obj in targetList.Children)
+        {
+            if (lineOfSight.CollidesWithRectangle(obj.BoundingBox))
+            {
+                TargetRandomObject(50, targetList);
+            }
+        }
+    }
+
+    public void TargetRandomObject(float chance, GameObjectList targetList)
+    {
+        foreach (SpriteGameObject target in targetList.Children)
+        {
+            int selectedNumber = GameEnvironment.Random.Next(0, 101);
+            if (selectedNumber <= chance)
+            {
+                this.targetedObject = target;
+                break;
+            }
+        }
+
+        if (targetedObject == null)
+        {
+            TargetRandomObject(chance, targetList);
+        }
+    }
+
     public Vector2 MovementVector(Vector2 movementSpeed, float angle)
     {
         float adjacent = movementSpeed.X;
@@ -58,49 +108,13 @@ class BaseAI : GameObject
         return new Vector2(adjacent, opposite);
     }
 
-    /*
-
-    Character targetCharacter;
-
-    public void LineOfSightChecker(float sightRange)
+    public Vector2 AImovementSpeed
     {
-        GameObjectList playerList = GameWorld.Find("playerLIST") as GameObjectList;
-        Circle lineOfSight = new Circle(sightRange + sprite.Width / 2, this.origin);
+        get { return movementSpeed; }
+        set { movementSpeed = value; }
     }
-    public void TargetRandomPlayer(float chance)
+    public SpriteGameObject Owner
     {
-        GameObjectList playerList = GameWorld.Find("playerLIST") as GameObjectList;
-        foreach (Character player in playerList.Children)
-        {
-            int selectedNumber = GameEnvironment.Random.Next(0, 101);
-            if (selectedNumber <= chance)
-            {
-                this.targetCharacter = player;
-                break;
-            }
-        }
-
-        if (targetCharacter == null)
-        {
-            TargetRandomPlayer(chance);
-        }
-    }
-
-    public void MoveToPlayer(Vector2 playerPosition)
-    {
-        Point[] path = pathFinder.FindPath(this.position, playerPosition);
-
-    }
-
-    public Character TargetCharacter
-    {
-        get { return targetCharacter; }
-        set { targetCharacter = value; }
-    }
-    */
-    public Vector2 ParentMovementSpeed
-    {
-        get { return parentMovementSpeed; }
-        set { parentMovementSpeed = value; }
+        get { return owner; }
     }
 }
