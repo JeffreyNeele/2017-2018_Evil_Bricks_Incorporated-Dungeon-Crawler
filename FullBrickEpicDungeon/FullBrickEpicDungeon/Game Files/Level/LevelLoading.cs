@@ -106,7 +106,9 @@ partial class Level : GameObjectList
 
             if (splitArray[0] == "BUNNY")
             {
-                Bunny bunny = new Bunny(this)
+                // Bunny bunny = new Bunny(this);
+                // bunny.StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
+                // monsterList.Add(bunny);
             }
 
 
