@@ -23,7 +23,7 @@ abstract partial class Character : AnimatedGameObject
     protected bool blockinput = false;
     Vector2 walkingdirection;
 
-
+    //Constructor: sets up the controls given to the constructor for each player (xbox or keyboard)
     protected Character(int playerNumber, bool controllerControlled, ClassType classType, string baseAsset, string id = "") : base(0, id)
     {
 
@@ -79,7 +79,7 @@ abstract partial class Character : AnimatedGameObject
     }
  
     
-
+    //calls all handleinput methods
     public override void HandleInput(InputHelper inputHelper)
     {
         Vector2 previousPosition = this.position;
@@ -117,7 +117,7 @@ abstract partial class Character : AnimatedGameObject
 
     }
 
-    // Method that handles keyboard movement
+    // Method that handles keyboard movement and input
     public void HandleKeyboardInput(InputHelper inputHelper)
     {
         if (inputHelper.KeyPressed(keyboardControls[Keys.Q]))
@@ -184,7 +184,7 @@ abstract partial class Character : AnimatedGameObject
 
 
 
-
+    //handles xbox controller walking and input
     private void HandleInputXboxController(InputHelper inputHelper)
     {
         if (xboxControls != null) //xboxcontrols zijn niet ingeladen, dus wordt niet door xboxcontroller bestuurd.
@@ -216,7 +216,7 @@ abstract partial class Character : AnimatedGameObject
 
 
 
-    // Method that handles movement when the character is on ice
+    // Method that handles keyboard movement when the character is on ice
     public void KeyboardHandleIceMovement(InputHelper inputHelper)
     {
         if (blockinput)
@@ -250,7 +250,7 @@ abstract partial class Character : AnimatedGameObject
         }
     }
 
-    // Calculates the new movementVector for a character (movementVector outcome may differ between xbox controllers and keyboard controllers)
+    // Calculates the new movementVector for a character for keyboard
     public Vector2 MovementVector(Vector2 movementSpeed, float angle)
     {
         float adjacent = movementSpeed.X;
@@ -425,6 +425,7 @@ abstract partial class Character : AnimatedGameObject
         }
     }
 
+    //when called with the walkingdirection, it plays the correct animation with the movement.
     public void PlayAnimationDirection(Vector2 walkingdirection)
     {
         if (Math.Abs(walkingdirection.X) >= Math.Abs(walkingdirection.Y))
