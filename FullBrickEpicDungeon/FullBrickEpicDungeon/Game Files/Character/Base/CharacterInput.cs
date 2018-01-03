@@ -22,18 +22,18 @@ abstract partial class Character : AnimatedGameObject
         {
             velocity = Vector2.Zero;
             //Input keys for basic AA and abilities
-            if (inputHelper.KeyPressed(keyboardControls[Keys.Q]))
-                this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList);
-            if (inputHelper.KeyPressed(keyboardControls[Keys.R]))
-                this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList);
-            if (inputHelper.KeyPressed(keyboardControls[Keys.T]))
-                this.weapon.UseSpecialAbility(GameWorld.Find("monsterLIST") as GameObjectList);
+            
 
             if (keyboardControlled)
             {
-                HandleKeyboardMovement(inputHelper);
+                HandleKeyboardInput(inputHelper);
+            }
+            else
+            {
+                // Add the xbox method here...
             }
         }
+        // NOTE: the Ice method has to be updated to account for XBOX controls, maybe with a ||, but this will be a problem as keyboardcontrols will be null if a controller is used
         else if (!IsDowned && isOnIce)
         {
             HandleIceMovement(inputHelper);
@@ -52,8 +52,15 @@ abstract partial class Character : AnimatedGameObject
     }
 
     // Method that handles keyboard movement
-    public void HandleKeyboardMovement(InputHelper inputHelper)
+    public void HandleKeyboardInput(InputHelper inputHelper)
     {
+        if (inputHelper.KeyPressed(keyboardControls[Keys.Q]))
+            this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList);
+        if (inputHelper.KeyPressed(keyboardControls[Keys.R]))
+            this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList);
+        if (inputHelper.KeyPressed(keyboardControls[Keys.T]))
+            this.weapon.UseSpecialAbility(GameWorld.Find("monsterLIST") as GameObjectList);
+
         if (inputHelper.IsKeyDown(keyboardControls[Keys.W]) || inputHelper.IsKeyDown(keyboardControls[Keys.S]))
         {
 
