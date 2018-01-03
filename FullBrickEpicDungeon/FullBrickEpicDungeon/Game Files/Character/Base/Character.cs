@@ -46,7 +46,7 @@ abstract partial class Character : AnimatedGameObject
         if (playerNumber == 1)
         {
             this.keyboardControlled = true; //player 1 en 2 kunnen naast xbox controls ook altijd nog op keyboard spelen
-            this.xboxControlled = true;
+            this.xboxControlled = false;
 
             if (this.keyboardControlled) //opgeslagen controls staan in de txt bestandjes
                 keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player1controls.txt");
@@ -127,9 +127,7 @@ abstract partial class Character : AnimatedGameObject
         if (inputHelper.KeyPressed(keyboardControls[Keys.T]))
             this.weapon.UseSpecialAbility(GameWorld.Find("monsterLIST") as GameObjectList);
 
-        if (inputHelper.IsKeyDown(keyboardControls[Keys.W]) || inputHelper.IsKeyDown(keyboardControls[Keys.S]))
-        {
-
+        //schuin linksboven
             if (inputHelper.IsKeyDown(keyboardControls[Keys.W]))
             {
                 if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
@@ -146,7 +144,7 @@ abstract partial class Character : AnimatedGameObject
                 }
 
             }
-
+        //schuin rechtsboven
             else if (inputHelper.IsKeyDown(keyboardControls[Keys.S]))
             {
                 if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
@@ -162,29 +160,26 @@ abstract partial class Character : AnimatedGameObject
                 {
                     walkingdirection = MovementVector(this.movementSpeed, 90);
                 }
-                
+            }      
+        //naar links
+             else if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
+            {
+                walkingdirection = MovementVector(this.movementSpeed, 180);
             }
-        }
-        
+        //naar rechts
+            else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
+            {
+                walkingdirection = MovementVector(this.movementSpeed, 0);
+            }
+        //update position and animation
+            this.position += walkingdirection;
+            PlayAnimationDirection(walkingdirection);
+            walkingdirection = Vector2.Zero;
 
-        else if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
-        {
-            walkingdirection = MovementVector(this.movementSpeed, 180);
-        }
-
-        else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
-        {
-            walkingdirection = MovementVector(this.movementSpeed, 0);
-        }
-
-        this.position += walkingdirection;
-        PlayAnimationDirection(walkingdirection);
-        walkingdirection = Vector2.Zero;
-
-        if (inputHelper.IsKeyDown(keyboardControls[Keys.E])) //Interact key
-        {
-            ObjectCollisionChecker();
-        }
+            if (inputHelper.IsKeyDown(keyboardControls[Keys.E])) //Interact key
+            {
+                ObjectCollisionChecker();
+            }
     }
 
 
@@ -234,29 +229,24 @@ abstract partial class Character : AnimatedGameObject
             if (inputHelper.IsKeyDown(keyboardControls[Keys.W]))
             {
                 blockinput = true;
-                iceSpeed = MovementVector(this.movementSpeed * 3, 270);
-                PlayAnimation("backcycle");
+                iceSpeed = MovementVector(this.movementSpeed * 2, 270);
             }
             else if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
             {
                 blockinput = true;
-                iceSpeed = MovementVector(this.movementSpeed * 3, 180);
-                PlayAnimation("leftcycle");
-                this.Mirror = false;
+                iceSpeed = MovementVector(this.movementSpeed * 2, 180);
             }
             else if (inputHelper.IsKeyDown(keyboardControls[Keys.S]))
             {
                 blockinput = true;
-                iceSpeed = MovementVector(this.movementSpeed * 3, 90);
-                PlayAnimation("frontcycle");
+                iceSpeed = MovementVector(this.movementSpeed * 2, 90);
             }
             else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
             {
                 blockinput = true;
-                iceSpeed = MovementVector(this.movementSpeed * 3, 0);
-                PlayAnimation("rightcycle");
-                this.Mirror = true;
+                iceSpeed = MovementVector(this.movementSpeed * 2, 0);
             }
+            PlayAnimationDirection(iceSpeed);
         }
     }
 
