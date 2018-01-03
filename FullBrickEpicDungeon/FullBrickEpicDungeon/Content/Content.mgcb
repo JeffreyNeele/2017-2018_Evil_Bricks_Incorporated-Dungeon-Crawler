@@ -514,3 +514,18 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Shieldmaiden/shieldmaiden_walk_right_orange@4.png
 
+#begin Assets/KeyboardControls/XboxControls/player1Xbox.txt
+/copy:Assets/KeyboardControls/XboxControls/player1Xbox.txt
+
+#begin Assets/KeyboardControls/XboxControls/defaultXboxControls.txt
+/copy:Assets/KeyboardControls/XboxControls/defaultXboxControls.txt
+
+#begin Assets/KeyboardControls/XboxControls/player2Xbox.txt
+/copy:Assets/KeyboardControls/XboxControls/player2Xbox.txt
+
+#begin Assets/KeyboardControls/XboxControls/player3Xbox.txt
+/copy:Assets/KeyboardControls/XboxControls/player3Xbox.txt
+
+#begin Assets/KeyboardControls/XboxControls/player4Xbox.txt
+/copy:Assets/KeyboardControls/XboxControls/player4Xbox.txt
+

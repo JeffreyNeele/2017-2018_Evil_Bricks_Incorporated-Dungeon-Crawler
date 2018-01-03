@@ -57,6 +57,7 @@
     <Compile Include="Engine\GameStateManager.cs" />
     <Compile Include="Engine\IGameLoopObject.cs" />
     <Compile Include="Engine\InputHelper.cs" />
+    <Compile Include="Engine\InputXboxHelper.cs" />
     <Compile Include="Engine\ParticleEffects\AnimatedParticleEffect.cs" />
     <Compile Include="Engine\ParticleEffects\DropParticleEffect.cs" />
     <Compile Include="Engine\ParticleEffects\FadeParticleEffect.cs" />
@@ -70,7 +71,6 @@
     <Compile Include="Game Files\Abilities\Types\Abilities_Shieldmaiden\ShieldBashAbility.cs" />
     <Compile Include="Game Files\Character\Base\Character.cs" />
     <Compile Include="Game Files\BaseAttributes.cs" />
-    <Compile Include="Game Files\Character\Base\CharacterInput.cs" />
     <Compile Include="Game Files\Character\Types\ShadowHunter.cs" />
     <Compile Include="Game Files\Character\Types\Talismaniac.cs" />
     <Compile Include="Game Files\Character\Types\Shieldmaiden.cs" />

@@ -16,35 +16,68 @@ abstract partial class Character : AnimatedGameObject
     protected int playerNumber;
 
     protected Dictionary<Keys, Keys> keyboardControls;
+    protected Dictionary<Buttons, Buttons> xboxControls;
     protected bool keyboardControlled;
+    protected bool xboxControlled = false;
     protected bool isOnIce = false;
     protected bool blockinput = false;
 
-    protected Character(int playerNumber, ClassType classType, string baseAsset, string id = "", bool keyboardControlled = true) : base(0, id)
+
+    protected Character(int playerNumber, bool controllerControlled, ClassType classType, string baseAsset, string id = "") : base(0, id)
     {
-        this.keyboardControlled = keyboardControlled;
-        this.playerNumber = playerNumber;
+
         this.classType = classType;
         baseattributes = new BaseAttributes();
         inventory = new List<Equipment>();
         attributes = new BaseAttributes();
         reviveTimer = new Timer(10);
         this.velocity = Vector2.Zero;
-        this.movementSpeed = new Vector2(3, 3);
-        this.iceSpeed = new Vector2(0, 0);
-        if (this.keyboardControlled)
-        {
-            if (playerNumber == 1)
-            {
-                keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player1controls.txt");
-            }
-            else if (playerNumber == 2)
-            {
-                keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player2controls.txt");
-            }
-        }
+        this.movementSpeed = new Vector2(4, 4);
 
+
+        this.playerNumber = playerNumber;
+
+        this.xboxControlled = controllerControlled;
+        this.iceSpeed = new Vector2(0, 0);
+
+
+
+        if (playerNumber == 1)
+        {
+            this.keyboardControlled = true; //player 1 en 2 kunnen naast xbox controls ook altijd nog op keyboard spelen
+            this.xboxControlled = true;
+
+            if (this.keyboardControlled)
+                keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player1controls.txt");
+            if (this.xboxControlled)
+                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/KeyboardControls/XboxControls/player1Xbox.txt");
+        }
+        else if (playerNumber == 2)
+        {
+            this.keyboardControlled = true; //player 1 en 2 kunnen naast xbox controls ook altijd nog op keyboard spelen
+            this.xboxControlled = false;
+            if (this.keyboardControlled)
+                keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player2controls.txt");
+            if (this.xboxControlled)
+                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/KeyboardControls/XboxControls/player2Xbox.txt");
+        }
+        else if (playerNumber == 3)
+        {
+            if (this.keyboardControlled)
+                throw new ArgumentOutOfRangeException("Only Player 1 and 2 can play with a keyboard");
+            if (this.xboxControlled)
+                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/KeyboardControls/XboxControls/player3Xbox.txt");
+        }
+        else if (playerNumber == 4)
+        {
+            if (this.keyboardControlled)
+                throw new ArgumentOutOfRangeException("Only Player 1 and 2 can play with a keyboard");
+            if (this.xboxControlled)
+                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/KeyboardControls/XboxControls/player4Xbox.txt");
+        }
     }
+ 
+    
 
     public override void HandleInput(InputHelper inputHelper)
     {
@@ -55,15 +88,15 @@ abstract partial class Character : AnimatedGameObject
             velocity = Vector2.Zero;
             //Input keys for basic AA and abilities
 
-
             if (keyboardControlled)
             {
                 HandleKeyboardInput(inputHelper);
             }
-            else
+            if (xboxControlled)
             {
-                // Add the xbox method here...
+                HandleInputXboxController(inputHelper);
             }
+
         }
         // NOTE: the Ice method has to be updated to account for XBOX controls, maybe with a ||, but this will be a problem as keyboardcontrols will be null if a controller is used
         else if (!IsDowned && isOnIce)
@@ -164,6 +197,54 @@ abstract partial class Character : AnimatedGameObject
             ObjectCollisionChecker();
         }
     }
+
+
+
+
+    private void HandleInputXboxController(InputHelper inputHelper)
+    {
+        if (xboxControls != null) //xboxcontrols zijn niet ingeladen, dus wordt niet door xboxcontroller bestuurd.
+        {
+            if (inputHelper.ControllerConnected(playerNumber)) //check of controller connected is
+            {
+                //Attack and Main Ability
+                if (inputHelper.ButtonPressed(playerNumber, Buttons.A))
+                    this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList);
+                if (inputHelper.ButtonPressed(playerNumber, Buttons.B))
+                    this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList);
+
+                //Interact button
+                if (inputHelper.ButtonPressed(playerNumber, Buttons.X))
+                    ObjectCollisionChecker();
+
+                //Movement
+                Vector2 walkingdirection = inputHelper.WalkingDirection(playerNumber) * this.movementSpeed;
+                this.position.X += inputHelper.WalkingDirection(playerNumber).X * this.movementSpeed.X;
+                this.position.Y -= inputHelper.WalkingDirection(playerNumber).Y * this.movementSpeed.Y;
+                Console.WriteLine(walkingdirection);
+                //Animations
+                if (walkingdirection.X > 0.5)
+                {
+                    this.PlayAnimation("rightcycle");
+                    this.Mirror = true;
+                }
+                else if (walkingdirection.X < -0.5)
+                {
+                    this.PlayAnimation("leftcycle");
+                    this.Mirror = false;
+                }
+                else if (walkingdirection.Y < -0.5)
+                    this.PlayAnimation("backcycle");
+                else if (walkingdirection.Y > 0.5)
+                    this.PlayAnimation("frontcycle");
+                else
+                    this.PlayAnimation("idle");
+
+
+            }
+        }
+    }
+
 
     // Method that handles movement when the character is on ice
     public void HandleIceMovement(InputHelper inputHelper)
@@ -288,7 +369,7 @@ abstract partial class Character : AnimatedGameObject
         }
     }
 
-        //Dikke collision met muren/andere solid objects moet ervoor zorgen dat de player niet verder kan bewegen.
+    //Dikke collision met muren/andere solid objects moet ervoor zorgen dat de player niet verder kan bewegen.
     public bool SolidCollisionChecker()
     {
         GameObjectGrid Field = GameWorld.Find("TileField") as GameObjectGrid;
@@ -326,11 +407,11 @@ abstract partial class Character : AnimatedGameObject
         DroppedItem droppedWeapon = new DroppedItem(this.weapon, "DROPPED" + weapon.Id);
         this.weapon = newweapon;
     }
- 
+
     // Changes items in the characters inventory, also allows to remove it
     public void ChangeItems(Equipment item, bool remove = false)
     {
-        if(item == null)
+        if (item == null)
         {
             return;
         }
@@ -363,7 +444,7 @@ abstract partial class Character : AnimatedGameObject
     public void TakeDamage(int damage)
     {
         int totalitemdefense = 0;
-        foreach(Equipment item in inventory)
+        foreach (Equipment item in inventory)
         {
             totalitemdefense += item.Armour;
         }
@@ -416,6 +497,7 @@ abstract partial class Character : AnimatedGameObject
         get { return keyboardControls; }
         set { keyboardControls = value; }
     }
+
     public ClassType Type
     {
         get { return classType; }
