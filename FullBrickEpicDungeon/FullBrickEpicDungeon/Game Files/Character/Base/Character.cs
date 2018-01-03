@@ -64,7 +64,7 @@ abstract partial class Character : AnimatedGameObject
     public override void Reset()
     {
         this.attributes.HP = this.baseattributes.HP;
-        this.position = StartPosition;
+        this.position = startPosition;
     }
 
 
