@@ -78,10 +78,6 @@ abstract partial class Character : AnimatedGameObject
             if (this.xboxControlled)
                 xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/KeyboardControls/XboxControls/player4Xbox.txt");
         }
-        if(HasAKey == true)
-        {
-            
-        }
     }
 
 

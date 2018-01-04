@@ -30,12 +30,12 @@ class Handle : InteractiveObject
     }
 
     public void ActivateCorrObject(string action)
-    { 
+    {
         //Checks which objects has the same objectnumber as this handlenumber and opens or closes the corresponding objects.
         //give "open" to open the corresponding object. Give "close" to close the corresponding object.
 
-        GameObjectList objectList = GameWorld.Find("objectLIST") as GameObjectList;
-        foreach (var openableObject in objectList.Children)
+        GameObjectGrid tileField = GameWorld.Find("TileField") as GameObjectGrid;
+        foreach (var openableObject in tileField.Objects)
         {
             if (openableObject is OpenableObject)
             {
