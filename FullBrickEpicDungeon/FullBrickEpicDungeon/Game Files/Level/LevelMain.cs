@@ -6,7 +6,7 @@ partial class Level : GameObjectList
 {
     // Lists for items NOTE TO LEVEL PROGRAMMERS: do not remove these and make sure they are initialized before the monsters, players, objects etc.
     protected int levelIndex;
-    protected GameObjectList playerList, monsterList, objectList, icetileList, projectileList, AItracker;
+    protected GameObjectList playerList, monsterList, objectList, icetileList, projectileList;
     protected GameObjectGrid levelTileField;
     public Level(int levelIndex) : base(1, "nigger")
     {

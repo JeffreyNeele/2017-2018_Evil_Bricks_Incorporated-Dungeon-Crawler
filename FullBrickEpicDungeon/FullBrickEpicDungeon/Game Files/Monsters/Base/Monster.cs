@@ -12,7 +12,6 @@ abstract partial class Monster : AnimatedGameObject
     {
         attributes = new BaseAttributes();
         baseattributes = new BaseAttributes();
-        
     }
 
 
@@ -40,6 +39,7 @@ abstract partial class Monster : AnimatedGameObject
         this.position = startPosition;
         base.Reset();
     }
+
     //Takes damage, HP can never be below 0 because of health bars
     public void TakeDamage(int damage)
     {

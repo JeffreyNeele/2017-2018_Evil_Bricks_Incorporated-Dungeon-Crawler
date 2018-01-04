@@ -15,8 +15,8 @@ class Dummy : Monster
         this.baseattributes.Gold = 0;
         this.baseattributes.Attack = 0;
         attributes = baseattributes;
-        LoadAnimation(assetName, "base", false);
-        PlayAnimation("base");
+        LoadAnimation(assetName, "default", false);
+        PlayAnimation("default");
     }
 
     public override void Update(GameTime gameTime)

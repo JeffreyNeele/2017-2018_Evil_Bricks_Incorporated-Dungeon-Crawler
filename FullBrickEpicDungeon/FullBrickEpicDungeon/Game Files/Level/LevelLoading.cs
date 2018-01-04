@@ -101,14 +101,16 @@ partial class Level : GameObjectList
             {
                 Monster dummy = new Dummy("Assets/Sprites/Enemies/Dummy", this);
                 dummy.StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
+                dummy.Reset();
                 monsterList.Add(dummy);
             }
 
             if (splitArray[0] == "BUNNY")
             {
-                // Bunny bunny = new Bunny(this);
-                // bunny.StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
-                // monsterList.Add(bunny);
+                Bunny bunny = new Bunny(this);
+                bunny.StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
+                bunny.Reset();
+                monsterList.Add(bunny);
             }
 
 
