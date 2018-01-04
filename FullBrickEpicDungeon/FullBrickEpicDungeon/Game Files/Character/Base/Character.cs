@@ -19,7 +19,8 @@ abstract partial class Character : AnimatedGameObject
     protected Dictionary<Buttons, Buttons> xboxControls;
     protected bool keyboardControlled;
     protected bool xboxControlled = false;
-    protected bool isOnIce = false;
+    
+    protected bool isOnIce = false, hasAKey = false;
     protected bool blockinput = false;
     Vector2 walkingdirection;
 
@@ -34,16 +35,7 @@ abstract partial class Character : AnimatedGameObject
         reviveTimer = new Timer(10);
         this.velocity = Vector2.Zero;
         this.movementSpeed = new Vector2(3, 3);
-        HasAKey = false;
-    }
-
-
         this.playerNumber = playerNumber;
-
-        this.xboxControlled = controllerControlled;
-        this.iceSpeed = new Vector2(0, 0);
-
-
 
         if (playerNumber == 1)
         {
@@ -78,8 +70,10 @@ abstract partial class Character : AnimatedGameObject
             if (this.xboxControlled)
                 xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/KeyboardControls/XboxControls/player4Xbox.txt");
         }
-    }
 
+        this.xboxControlled = controllerControlled;
+        this.iceSpeed = new Vector2(0, 0);
+    }
 
     //Method for character input (both xbox controller and keyboard), for now dummy keys for 1 controller are inserted, but the idea should be clear
     //TO DO: a way to distinguish characters / players from each other.
@@ -482,6 +476,11 @@ abstract partial class Character : AnimatedGameObject
         get { return this.attributes.HP == 0; }
     }
 
+    public bool HasAKey
+    {
+        get { return hasAKey; }
+        set { hasAKey = value; }
+    }
     // returns the startPosition of the character. Will be newly set when entering a level
     public Vector2 StartPosition
     {
