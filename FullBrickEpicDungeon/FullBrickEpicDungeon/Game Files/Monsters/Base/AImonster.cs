@@ -13,6 +13,32 @@ abstract class AImonster : Monster
     public override void Update(GameTime gameTime)
     {
         AI.Update(gameTime);
+
+        if (AI.Direction.Y > AI.Direction.X)
+        {
+            if (AI.Direction.Y > 0)
+            {
+                PlayAnimation("walk");
+            }
+            else
+                PlayAnimation("walk_back");
+        }
+        else if (AI.Direction.X > 0)
+        {
+            if (AI.Direction.X > 0)
+            {
+                this.Mirror = true;
+                PlayAnimation("walk");
+            }
+            else
+            {
+                PlayAnimation("walk");
+                this.Mirror = false;
+            }
+        }
+        else
+            PlayAnimation("idle");
+        
         base.Update(gameTime);
     }
 }
