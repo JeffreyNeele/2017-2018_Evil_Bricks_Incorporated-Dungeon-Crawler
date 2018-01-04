@@ -11,6 +11,7 @@ class BaseAI
     protected float sightRange, movementSpeed;
     protected bool isMonster;
     protected Level currentLevel;
+    protected Vector2 direction;
 
     public BaseAI(SpriteGameObject owner, float movementSpeed, Level currentLevel, bool isMonster = true, float sightRange = 50)
     {
@@ -22,7 +23,7 @@ class BaseAI
         levelGrid = currentLevel.TileField;
     }
 
-    public  void Update(GameTime gameTime)
+    public void Update(GameTime gameTime)
     {
         if (targetedObject == null)
         {
@@ -31,38 +32,31 @@ class BaseAI
         }
         else
         {
+
             List<Vector2> waypointList = FindPath(targetedObject.Position, owner.Position);
-            if(waypointList.Count > 0 && MoveToPosition(waypointList[0], (float)gameTime.ElapsedGameTime.TotalSeconds))
+            if (waypointList.Count > 0 && this.owner.Position == waypointList[0])
             {
                 waypointList.RemoveAt(0);
             }
 
-            if (waypointList.Count == 1)
+            if (waypointList.Count > 0)
             {
-
+                MoveToPosition(waypointList[0], (float)gameTime.ElapsedGameTime.TotalSeconds);
             }
         }
-        
     }
 
 
-    public bool MoveToPosition(Vector2 targetGridPosition, float elapsedGameTime)
+
+    public void MoveToPosition(Vector2 targetGridPosition, float elapsedGameTime)
     {
-        // Position given is a grid position and not a real position, so we have to add cellwidth and cellheight
-
-        if ((this.owner.Position) == targetGridPosition)
-            return true;
-
         // Find the direction we have to go in
-        Vector2 direction = Vector2.Normalize(targetGridPosition - this.owner.Position);
+        direction = Vector2.Normalize(targetGridPosition - this.owner.Position);
         // AI moves to the direction with it's movementspeed and GameTime 
         this.owner.Position += direction * movementSpeed * elapsedGameTime;
-
         // this is for if we moved past the position, in this case we want go back to that position
         if (Math.Abs(Vector2.Dot(direction, Vector2.Normalize(targetGridPosition - this.owner.Position)) + 1) < 0.1F)
             this.owner.Position = targetGridPosition;
-
-        return this.owner.Position == targetGridPosition;
     }
 
     // Method that returns a list with points for the AI to follow.
@@ -86,12 +80,13 @@ class BaseAI
         List<Vector2> pathList = new List<Vector2>();
         for (int i = 0; i < pathArray.Length; i++)
         {
-            Vector2 realWaypoint = new Vector2((pathArray[i].X * levelGrid.CellWidth) + levelGrid.CellWidth / 2, (pathArray[i].Y * levelGrid.CellHeight) + levelGrid.CellHeight / 2);
+            Vector2 realWaypoint = new Vector2((pathArray[i].X * levelGrid.CellWidth), (pathArray[i].Y * levelGrid.CellHeight));
             pathList.Add(realWaypoint);
         }
-        // The library automatically also counts the current tile the enemy is standing at, we do not want that in our method so we remove that here
-        if(pathList.Count > 0)
+        if (pathList.Count > 0)
+        {
             pathList.RemoveAt(0);
+        }
         return pathList;
     }
 
@@ -131,6 +126,10 @@ class BaseAI
         }
     }
 
+    public Vector2 Direction
+    {
+        get { return direction; }
+    }
     public float AImovementSpeed
     {
         get { return movementSpeed; }
