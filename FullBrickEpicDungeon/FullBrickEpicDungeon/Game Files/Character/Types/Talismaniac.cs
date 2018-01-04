@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 class Talismaniac : Character
 {
-    public Talismaniac() : base(ClassType.TalisManiac, "Sprites/Lightbringer/lightbringer_default", "Lightbringer")
+    public Talismaniac(int playerNumber, bool keyboardControlled) : base(playerNumber, keyboardControlled, ClassType.TalisManiac, "Sprites/Lightbringer/lightbringer_default", "Lightbringer")
     {
         // Loads the idle animation
         LoadAnimation("Sprites/Lightbringer/lightbringer_idle@3", "lightbringer_idle", true, 0.33F);

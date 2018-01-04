@@ -84,7 +84,7 @@ partial class Level : GameObjectList
             string[] splitArray = positionStringList[i].Split(' ');
             if(splitArray[0] == "SHIELDMAIDEN")
             {
-                Shieldmaiden shieldmaiden = new Shieldmaiden();
+                Shieldmaiden shieldmaiden = new Shieldmaiden(int.Parse(splitArray[3]));
                 shieldmaiden.StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
                 shieldmaiden.CurrentWeapon = new SwordAndShield(shieldmaiden);
                 shieldmaiden.Reset();
@@ -113,9 +113,20 @@ partial class Level : GameObjectList
 
             if(splitArray[0] == "DUMMY")
             {
-                Monster dummy = new Dummy(new Vector2(0, 0), new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])), "Assets/Sprites/Enemies/Dummy", levelTileField, monsterList);
+                Monster dummy = new Dummy("Assets/Sprites/Enemies/Dummy", this);
+                dummy.StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
+                dummy.Reset();
                 monsterList.Add(dummy);
             }
+
+            if (splitArray[0] == "BUNNY")
+            {
+                Bunny bunny = new Bunny(this);
+                bunny.StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
+                bunny.Reset();
+                monsterList.Add(bunny);
+            }
+
 
         }
     }
@@ -128,9 +139,9 @@ partial class Level : GameObjectList
         {
             throw new NullReferenceException("The given Tile list was null");
         }
-
+        string[] lineArray = tileStringList[0].Split(',');
         // Make a new tile field with x being the length of a line (the length) and the amount of lines the y direction
-        GameObjectGrid tileField = new GameObjectGrid(tileStringList.Count, tileStringList[0].Length / 2, 3, "TileField"); 
+        GameObjectGrid tileField = new GameObjectGrid(tileStringList.Count, lineArray.Length - 1, 3, "TileField"); 
 
         //values for the cell width and height, these are predetermined in the Tiled Map Editor, so are constants.
         tileField.CellWidth = 100; 
@@ -141,7 +152,7 @@ partial class Level : GameObjectList
 
         for(int y = 0; y < tileField.Rows; y++)
         {
-            string[] lineArray = tileStringList[y].Split(',');
+            lineArray = tileStringList[y].Split(',');
             for(int x = 0; x < tileField.Columns; x++)
             {
                 IDlist[x, y] = int.Parse(lineArray[x]); 
@@ -165,6 +176,7 @@ partial class Level : GameObjectList
                         break;
                     case 3:
                         newtile = new Tile(TileType.Ice, "Assets/Sprites/Tiles/TileIce1");
+                        icetileList.Add(newtile);
                         break;
                     case 4:
                         newtile = new Tile(TileType.RockIce, "Assets/Sprites/Tiles/RockIce");
