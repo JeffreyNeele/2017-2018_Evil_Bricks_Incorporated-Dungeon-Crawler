@@ -1,0 +1,8 @@
+Up
+Left
+Down
+Right
+O
+P
+K
+L

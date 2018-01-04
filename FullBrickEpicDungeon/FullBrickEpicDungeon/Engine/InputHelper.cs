@@ -1,8 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections;
 
-public class InputHelper
+public partial class InputHelper
 {
     protected MouseState currentMouseState, previousMouseState;
     protected KeyboardState currentKeyboardState, previousKeyboardState;
@@ -20,6 +21,7 @@ public class InputHelper
         previousKeyboardState = currentKeyboardState;
         currentMouseState = Mouse.GetState();
         currentKeyboardState = Keyboard.GetState();
+        UpdateXbox();
     }
 
     public Vector2 Scale
@@ -68,4 +70,10 @@ public class InputHelper
     {
         get { return currentKeyboardState.GetPressedKeys().Length > 0 && previousKeyboardState.GetPressedKeys().Length == 0; }
     }
-} 
+
+
+}
+
+
+
+

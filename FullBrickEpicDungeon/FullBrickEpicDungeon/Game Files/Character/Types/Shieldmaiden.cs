@@ -3,7 +3,7 @@ using System;
 
 class Shieldmaiden : Character
 {
-    public Shieldmaiden(int playerNumber) : base(playerNumber, ClassType.ShieldMaiden, "Assets/Sprites/Shieldmaiden/shieldmaiden_default", "Shieldmaiden")
+    public Shieldmaiden(int playerNumber) : base(playerNumber, true, ClassType.ShieldMaiden, "Assets/Sprites/Shieldmaiden/shieldmaiden_default", "Shieldmaiden")
     {
         // Loads the idle animation
         // sets this characters base attributes, might be set in level later but for now it is in this constructors example.

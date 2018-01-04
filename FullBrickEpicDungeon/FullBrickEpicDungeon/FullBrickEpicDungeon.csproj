@@ -57,6 +57,7 @@
     <Compile Include="Engine\GameStateManager.cs" />
     <Compile Include="Engine\IGameLoopObject.cs" />
     <Compile Include="Engine\InputHelper.cs" />
+    <Compile Include="Engine\InputXboxHelper.cs" />
     <Compile Include="Engine\ParticleEffects\AnimatedParticleEffect.cs" />
     <Compile Include="Engine\ParticleEffects\DropParticleEffect.cs" />
     <Compile Include="Engine\ParticleEffects\FadeParticleEffect.cs" />
