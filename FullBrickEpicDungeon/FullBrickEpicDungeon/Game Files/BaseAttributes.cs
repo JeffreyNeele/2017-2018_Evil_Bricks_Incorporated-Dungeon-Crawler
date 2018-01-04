@@ -9,7 +9,6 @@ class BaseAttributes
 
     }
     private int hitpoints, armour, attack, gold;
-    Vector2 startposition;
 
    public int HP
     {

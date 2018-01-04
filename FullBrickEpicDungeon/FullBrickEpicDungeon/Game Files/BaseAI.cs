@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using RoyT.AStar;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 class BaseAI
 {
@@ -21,7 +22,7 @@ class BaseAI
         levelGrid = currentLevel.TileField;
     }
 
-    public void Update(GameTime gameTime)
+    public  void Update(GameTime gameTime)
     {
         if (targetedObject == null)
         {
@@ -30,37 +31,42 @@ class BaseAI
         }
         else
         {
-            List<Point> waypointList = FindPath(targetedObject.Position, owner.Position);
+            List<Vector2> waypointList = FindPath(targetedObject.Position, owner.Position);
             if(waypointList.Count > 0 && MoveToPosition(waypointList[0], (float)gameTime.ElapsedGameTime.TotalSeconds))
             {
                 waypointList.RemoveAt(0);
             }
-        }
 
+            if (waypointList.Count == 1)
+            {
+
+            }
+        }
         
     }
 
-    public bool MoveToPosition(Point targetGridPosition, float elapsedGameTime)
+
+    public bool MoveToPosition(Vector2 targetGridPosition, float elapsedGameTime)
     {
         // Position given is a grid position and not a real position, so we have to add cellwidth and cellheight
-        Vector2 realTargetPosition = new Vector2((targetGridPosition.X * levelGrid.CellWidth), (targetGridPosition.Y * levelGrid.CellHeight));
-        if (this.owner.Position == realTargetPosition)
+
+        if ((this.owner.Position) == targetGridPosition)
             return true;
 
         // Find the direction we have to go in
-        Vector2 direction = Vector2.Normalize(realTargetPosition - this.owner.Position);
+        Vector2 direction = Vector2.Normalize(targetGridPosition - this.owner.Position);
         // AI moves to the direction with it's movementspeed and GameTime 
         this.owner.Position += direction * movementSpeed * elapsedGameTime;
 
         // this is for if we moved past the position, in this case we want go back to that position
-        if (Math.Abs(Vector2.Dot(direction, Vector2.Normalize(realTargetPosition - this.owner.Position)) + 1) < 0.1F)
-            this.owner.Position = realTargetPosition;
+        if (Math.Abs(Vector2.Dot(direction, Vector2.Normalize(targetGridPosition - this.owner.Position)) + 1) < 0.1F)
+            this.owner.Position = targetGridPosition;
 
-        return this.owner.Position == realTargetPosition;
+        return this.owner.Position == targetGridPosition;
     }
 
     // Method that returns a list with points for the AI to follow.
-    public List<Point> FindPath(Vector2 endPosition, Vector2 startPosition)
+    public List<Vector2> FindPath(Vector2 endPosition, Vector2 startPosition)
     {
         Point gridStartPosition = new Point((int)startPosition.X / levelGrid.CellWidth, (int)startPosition.Y / levelGrid.CellHeight);
         Point gridEndPosition = new Point((int)endPosition.X / levelGrid.CellWidth, (int)endPosition.Y / levelGrid.CellHeight);
@@ -74,17 +80,14 @@ class BaseAI
                 {
                     pathGrid.BlockCell(new Position(x, y));
                 }
-                if (currenttile.Type == TileType.Water)
-                {
-                    pathGrid.BlockCell(new Position(x, y));
-                }
             }
         }
-        Position[] pathArray = pathGrid.GetSmoothPath(new Position(gridStartPosition.X, gridStartPosition.Y), new Position(gridEndPosition.X, gridEndPosition.Y));
-        List<Point> pathList = new List<Point>();
+        Position[] pathArray = pathGrid.GetSmoothPath(new Position(gridStartPosition.X, gridStartPosition.Y), new Position(gridEndPosition.X, gridEndPosition.Y), MovementPatterns.LateralOnly);
+        List<Vector2> pathList = new List<Vector2>();
         for (int i = 0; i < pathArray.Length; i++)
         {
-            pathList.Add(new Point(pathArray[i].X, pathArray[i].Y));
+            Vector2 realWaypoint = new Vector2((pathArray[i].X * levelGrid.CellWidth) + levelGrid.CellWidth / 2, (pathArray[i].Y * levelGrid.CellHeight) + levelGrid.CellHeight / 2);
+            pathList.Add(realWaypoint);
         }
         // The library automatically also counts the current tile the enemy is standing at, we do not want that in our method so we remove that here
         if(pathList.Count > 0)

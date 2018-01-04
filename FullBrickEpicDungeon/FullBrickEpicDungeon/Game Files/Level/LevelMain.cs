@@ -8,7 +8,7 @@ partial class Level : GameObjectList
     protected int levelIndex;
     protected GameObjectList playerList, monsterList, objectList, icetileList, projectileList;
     protected GameObjectGrid levelTileField;
-    public Level(int levelIndex) : base(1, "nigger")
+    public Level(int levelIndex) : base(1)
     {
         this.levelIndex = levelIndex;
         playerList = new GameObjectList(5, "playerLIST");
