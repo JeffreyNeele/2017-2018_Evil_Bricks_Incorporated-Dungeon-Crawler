@@ -25,6 +25,7 @@ class TitleMenuState: GameObjectList
         if (startButton.Pressed)
         {
             GameEnvironment.GameStateManager.SwitchTo("playingState");
+            //GameEnvironment.GameStateManager.SwitchTo("characterSelection");
         }
     }
 
