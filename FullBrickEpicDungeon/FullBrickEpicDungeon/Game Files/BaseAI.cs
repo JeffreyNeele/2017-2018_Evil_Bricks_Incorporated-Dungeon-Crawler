@@ -32,7 +32,6 @@ class BaseAI
         }
         else
         {
-
             List<Vector2> waypointList = FindPath(targetedObject.Position, owner.Position);
             if (waypointList.Count > 0 && this.owner.Position == waypointList[0])
             {
@@ -50,13 +49,23 @@ class BaseAI
 
     public void MoveToPosition(Vector2 targetGridPosition, float elapsedGameTime)
     {
+        targetGridPosition = new Vector2((targetGridPosition.X + levelGrid.CellWidth / 2), (targetGridPosition.Y + levelGrid.CellHeight));
         // Find the direction we have to go in
         direction = Vector2.Normalize(targetGridPosition - this.owner.Position);
         // AI moves to the direction with it's movementspeed and GameTime 
         this.owner.Position += direction * movementSpeed * elapsedGameTime;
         // this is for if we moved past the position, in this case we want go back to that position
-        if (Math.Abs(Vector2.Dot(direction, Vector2.Normalize(targetGridPosition - this.owner.Position)) + 1) < 0.1F)
+
+
+        // NOTE: this code block currently for some reason deletes the bunny or overflow a variable without error, removing this makes the AI way less efficient
+        // but with the code block it doesn't work at all
+        /*
+        if (Vector2.Distance(direction, Vector2.Normalize(this.owner.Position - targetGridPosition)) < 0.1f)
+        {
             this.owner.Position = targetGridPosition;
+        }
+        */  
+        
     }
 
     // Method that returns a list with points for the AI to follow.
@@ -130,13 +139,20 @@ class BaseAI
     {
         get { return direction; }
     }
+
     public float AImovementSpeed
     {
         get { return movementSpeed; }
         set { movementSpeed = value; }
     }
+
     public SpriteGameObject Owner
     {
         get { return owner; }
+    }
+
+    public SpriteGameObject CurrentTarget
+    {
+        get { return targetedObject; }
     }
 }

@@ -30,7 +30,7 @@ public partial class InputHelper
             return true;
         else
         {
-            Console.WriteLine("A Controller has been disconnected!");
+            // Console.WriteLine("A Controller has been disconnected!");
             return false;
         }
     }

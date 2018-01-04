@@ -14,7 +14,11 @@ abstract class AImonster : Monster
     {
         AI.Update(gameTime);
 
-        if (AI.Direction.Y > AI.Direction.X)
+        if (AI.CurrentTarget == null)
+        {
+            PlayAnimation("idle");
+        }
+        else if (AI.Direction.Y > AI.Direction.X)
         {
             if (AI.Direction.Y > 0)
             {
@@ -36,9 +40,10 @@ abstract class AImonster : Monster
                 this.Mirror = false;
             }
         }
-        else
-            PlayAnimation("idle");
-        
+
+            
+
         base.Update(gameTime);
     }
+    
 }
