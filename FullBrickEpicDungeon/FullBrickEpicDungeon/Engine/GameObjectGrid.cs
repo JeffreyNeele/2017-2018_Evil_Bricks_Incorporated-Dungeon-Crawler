@@ -5,11 +5,9 @@ public class GameObjectGrid : GameObject
 {
     protected GameObject[,] grid;
     protected int cellWidth, cellHeight;
-    protected GameObjectList debugText;
     public GameObjectGrid(int rows, int columns, int layer = 0, string id = "")
         : base(layer, id)
     {
-        debugText = new GameObjectList(99);
         grid = new GameObject[columns, rows];
         for (int x = 0; x < columns; x++)
         {
@@ -18,7 +16,6 @@ public class GameObjectGrid : GameObject
                 grid[x, y] = null;
             }
         }
-        MakeDebugNumbers();
     }
 
     public void Add(GameObject obj, int x, int y)
@@ -99,7 +96,6 @@ public class GameObjectGrid : GameObject
         {
             obj.Update(gameTime);
         }
-        debugText.Update(gameTime);
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -108,7 +104,6 @@ public class GameObjectGrid : GameObject
         {
             obj.Draw(gameTime, spriteBatch);
         }
-        debugText.Draw(gameTime, spriteBatch);
     }
 
     public override void Reset()
@@ -120,18 +115,4 @@ public class GameObjectGrid : GameObject
         }
     }
 
-    public void MakeDebugNumbers()
-    {
-        for (int x = 0; x < Columns; x++)
-        {
-            for (int y = 0; y < Rows; y++)
-            {
-                TextGameObject numberViewer = new TextGameObject("Assets/Fonts/ConversationFont", 99);
-                numberViewer.Text = x.ToString() + " " + y.ToString();
-                numberViewer.Color = Color.Red;
-                numberViewer.Position = new Vector2(x * 100, y * 100);
-                debugText.Add(numberViewer);
-            }
-        }
-    }
 }
