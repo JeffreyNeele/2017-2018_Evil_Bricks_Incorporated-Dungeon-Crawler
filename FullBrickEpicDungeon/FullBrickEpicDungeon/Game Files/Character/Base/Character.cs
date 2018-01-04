@@ -46,7 +46,7 @@ abstract partial class Character : AnimatedGameObject
         if (playerNumber == 1)
         {
             this.keyboardControlled = true; //player 1 en 2 kunnen naast xbox controls ook altijd nog op keyboard spelen
-            this.xboxControlled = false;
+            this.xboxControlled = true;
 
             if (this.keyboardControlled) //opgeslagen controls staan in de txt bestandjes
                 keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player1controls.txt");
@@ -97,7 +97,9 @@ abstract partial class Character : AnimatedGameObject
             {
                 HandleInputXboxController(inputHelper);
             }
-
+            this.position += walkingdirection;
+            PlayAnimationDirection(walkingdirection);
+            walkingdirection = Vector2.Zero;
         }
         // NOTE: the Ice method has to be updated to account for XBOX controls, maybe with a ||, but this will be a problem as keyboardcontrols will be null if a controller is used
         else if (!IsDowned && isOnIce)
@@ -171,10 +173,6 @@ abstract partial class Character : AnimatedGameObject
             {
                 walkingdirection = MovementVector(this.movementSpeed, 0);
             }
-        //update position and animation
-            this.position += walkingdirection;
-            PlayAnimationDirection(walkingdirection);
-            walkingdirection = Vector2.Zero;
 
             if (inputHelper.IsKeyDown(keyboardControls[Keys.E])) //Interact key
             {
@@ -204,10 +202,7 @@ abstract partial class Character : AnimatedGameObject
                 //Movement
                 walkingdirection = inputHelper.WalkingDirection(playerNumber) * this.movementSpeed;
                 walkingdirection.Y = -walkingdirection.Y;
-                this.position += walkingdirection;
-
-                PlayAnimationDirection(walkingdirection);
-                walkingdirection = Vector2.Zero;
+               
 
             }
         }
