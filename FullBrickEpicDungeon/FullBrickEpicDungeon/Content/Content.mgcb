@@ -550,6 +550,69 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Character selection/fotoLijst.png
 
+#begin Assets/KeyboardControls/XboxControls/player1Xbox.txt
+/copy:Assets/KeyboardControls/XboxControls/player1Xbox.txt
+
+#begin Assets/KeyboardControls/XboxControls/defaultXboxControls.txt
+/copy:Assets/KeyboardControls/XboxControls/defaultXboxControls.txt
+
+#begin Assets/KeyboardControls/XboxControls/player2Xbox.txt
+/copy:Assets/KeyboardControls/XboxControls/player2Xbox.txt
+
+#begin Assets/KeyboardControls/XboxControls/player3Xbox.txt
+/copy:Assets/KeyboardControls/XboxControls/player3Xbox.txt
+
+#begin Assets/KeyboardControls/XboxControls/player4Xbox.txt
+/copy:Assets/KeyboardControls/XboxControls/player4Xbox.txt
+
+#begin Assets/Sprites/Enemies/bunny_attack@5.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Enemies/bunny_attack@5.png
+
+#begin Assets/Sprites/Enemies/bunny_default.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Enemies/bunny_default.png
+
+#begin Assets/Sprites/Enemies/rabbit_walk@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Enemies/rabbit_walk@4.png
+
+#begin Assets/Sprites/Enemies/rabbit_walk_back@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Enemies/rabbit_walk_back@4.png
+
 #begin Assets/Sprites/Character selection/CharacterSelectTitle.png
 /importer:TextureImporter
 /processor:TextureProcessor

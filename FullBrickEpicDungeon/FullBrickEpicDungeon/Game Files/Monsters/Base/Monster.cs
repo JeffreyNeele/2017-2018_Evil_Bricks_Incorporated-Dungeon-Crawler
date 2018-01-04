@@ -7,13 +7,11 @@ abstract partial class Monster : AnimatedGameObject
 {
     protected BaseAttributes attributes, baseattributes;
     protected BaseAI baseAI;
-    protected Vector2 movementSpeed;
-    public Monster(Vector2 movementSpeed, string id, Level currentLevel) : base(0, id)
+    protected Vector2 startPosition;
+    public Monster(string id, Level currentLevel) : base(0, id)
     {
         attributes = new BaseAttributes();
         baseattributes = new BaseAttributes();
-        this.movementSpeed = movementSpeed;
-        
     }
 
 
@@ -38,8 +36,10 @@ abstract partial class Monster : AnimatedGameObject
 
     public override void Reset()
     {
+        this.position = startPosition;
         base.Reset();
     }
+
     //Takes damage, HP can never be below 0 because of health bars
     public void TakeDamage(int damage)
     {
@@ -60,6 +60,12 @@ abstract partial class Monster : AnimatedGameObject
     {
         get { return attributes; }
         set { attributes = value; }
+    }
+
+    public Vector2 StartPosition
+    {
+        get { return startPosition; }
+        set { startPosition = value; }
     }
 
     public bool IsDead
