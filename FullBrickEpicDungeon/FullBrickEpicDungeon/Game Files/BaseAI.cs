@@ -44,7 +44,7 @@ class BaseAI
     {
         // Position given is a grid position and not a real position, so we have to add cellwidth and cellheight
         Vector2 realTargetPosition = new Vector2((targetGridPosition.X * levelGrid.CellWidth), (targetGridPosition.Y * levelGrid.CellHeight));
-        if (this.owner.Position.Y == realTargetPosition.Y)
+        if (this.owner.Position == realTargetPosition)
             return true;
 
         // Find the direction we have to go in
