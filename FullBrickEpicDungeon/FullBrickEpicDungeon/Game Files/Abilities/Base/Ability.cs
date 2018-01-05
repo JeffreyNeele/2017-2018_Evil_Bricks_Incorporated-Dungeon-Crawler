@@ -10,6 +10,7 @@ abstract class Ability
     protected ClassType classType;
     protected bool isProjectileAbility; 
     protected GameObjectList projectileList;
+    protected GameObjectGrid fieldGrid;
     protected int damage;
     protected Vector2 pushVector;
     protected int pushCounts;
@@ -44,6 +45,7 @@ abstract class Ability
     {
 
     }
+
     public virtual void Use(Weapon weapon, string id)
     {
         monstersHitList = new List<Monster>();
@@ -68,7 +70,7 @@ abstract class Ability
         }
     }
 
-    public virtual void attackHit(Monster monster)
+    public virtual void attackHit(Monster monster, GameObjectGrid field)
     {
 
     }
@@ -81,6 +83,9 @@ abstract class Ability
         //Check only for the monsters in the monstersHitList, as it should only affect these monsters
         foreach(Monster monster in monstersHitList)
         {
+            //In case with solid collision, take the previous pos.
+            Vector2 previousPos = monster.Position;
+
             //If the dictionary does not contain the monster, go to the next monster
             if (!affectedMonsters.ContainsKey(monster))
                 continue;
@@ -88,22 +93,27 @@ abstract class Ability
             //Get the pushCount of the current monster, this affects the knockback distance
             int pushCount = affectedMonsters[monster];
 
-            if (pushCount == pushCounts)
-                push = push / 2;
-            else
-                push = push / 2 - new Vector2(2, 0) * (pushCounts - pushCount);
+            push = givePushVector(pushCount, push);
+            moveMonster(monster, push);
 
-            if (push.X <= 0)
-                push.X = 0;
+            //Check of het monster niet in een muur zit, anders zorg ervoor dat het monster wordt gepusht tot het uiterste punt dat mogelijk is
+            if(knockedInWall(monster))
+            {
+                monster.Position = previousPos;
+                for(int i = pushCount; i >= 0; i--)
+                {
+                    moveMonster(monster, givePushVector(i, pushBackVector));
 
-            if (directionPush[monster])
-                monster.Position += push;
-            else
-                monster.Position -= push;
-
+                    if (knockedInWall(monster))
+                        monster.Position = previousPos;
+                    else
+                        pushCount = 0;
+                    
+                }
+            }
             affectedMonsters[monster] -= 1;
 
-            if (pushCount == 0)
+            if (pushCount <= 0)
             {
                 affectedMonsters.Remove(monster);
                 directionPush.Remove(monster);
@@ -118,6 +128,42 @@ abstract class Ability
     {
         get { return isProjectileAbility; }
         protected set { isProjectileAbility = value; }
+    }
+
+    //Calculates the push vector
+    protected Vector2 givePushVector(int pushCount, Vector2 push)
+    {
+        if (pushCount == pushCounts)
+            push = push / 2;
+        else
+            push = push / 2 - new Vector2(2, 0) * (pushCounts - pushCount);
+
+        if (push.X <= 0)
+            push.X = 0;
+        return push;
+    }
+
+    //Does the calculation of the position movement of the monster
+    protected void moveMonster(Monster monster, Vector2 push)
+    {
+        if (directionPush[monster])
+            monster.Position += push;
+        else
+            monster.Position -= push;
+    }
+
+    //Method that states if an enemy is knocked inside a wall.
+    protected bool knockedInWall(Monster monster)
+    {
+        foreach (Tile tile in fieldGrid.Objects)
+        {
+            if (tile.IsSolid && tile.BoundingBox.Intersects(monster.BoundingBox))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public ClassType Type

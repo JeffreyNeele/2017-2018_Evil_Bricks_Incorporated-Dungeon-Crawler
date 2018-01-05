@@ -16,6 +16,7 @@ abstract class Weapon : AnimatedGameObject
     private int attack, goldCost;
     protected string idBaseAA, idMainAbility, idSpecialAbility, idAnimation;
     protected GameObjectList monsterObjectList;
+    protected GameObjectGrid fieldList;
     /// <summary>
     /// Creates a weapon for a character
     /// </summary>
@@ -38,7 +39,7 @@ abstract class Weapon : AnimatedGameObject
     }
 
     // This is the base attack method of the weapon,, which will be also defined as an ability
-    public virtual void Attack(GameObjectList monsterList)
+    public virtual void Attack(GameObjectList monsterList, GameObjectGrid field)
     {
         /*BasicAttack.Use(this, this.idBaseAA);
         CollisionChecker(this.CurrentAnimation, monsterList);*/
@@ -50,7 +51,7 @@ abstract class Weapon : AnimatedGameObject
     }
 
     // Uses the main ability
-    public virtual void UseMainAbility(GameObjectList monsterList)
+    public virtual void UseMainAbility(GameObjectList monsterList, GameObjectGrid field)
     {
         monsterObjectList = monsterList;
         mainAbility.Use(this, idMainAbility);

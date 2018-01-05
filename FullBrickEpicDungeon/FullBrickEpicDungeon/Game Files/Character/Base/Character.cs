@@ -78,9 +78,9 @@ abstract partial class Character : AnimatedGameObject
     public void HandleKeyboardInput(InputHelper inputHelper)
     {
         if (inputHelper.KeyPressed(keyboardControls[Keys.Q]))
-            this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList);
+            this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
         if (inputHelper.KeyPressed(keyboardControls[Keys.R]))
-            this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList);
+            this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
         if (inputHelper.KeyPressed(keyboardControls[Keys.T]))
             this.weapon.UseSpecialAbility(GameWorld.Find("monsterLIST") as GameObjectList);
 
@@ -146,9 +146,9 @@ abstract partial class Character : AnimatedGameObject
             {
                 //Attack and Main Ability
                 if (inputHelper.ButtonPressed(playerNumber, Buttons.A))
-                    this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList);
+                    this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
                 if (inputHelper.ButtonPressed(playerNumber, Buttons.B))
-                    this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList);
+                    this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
 
                 //Interact button
                 if (inputHelper.ButtonPressed(playerNumber, Buttons.X))

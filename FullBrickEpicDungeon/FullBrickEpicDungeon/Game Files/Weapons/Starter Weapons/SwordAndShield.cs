@@ -23,12 +23,13 @@ class SwordAndShield : Weapon
     }
 
     //Method for the basic attack
-    public override void Attack(GameObjectList monsterList)
+    public override void Attack(GameObjectList monsterList, GameObjectGrid field)
     {
         BasicAttack.Use(this, idBaseAA);
         //base.Attack(monsterList);
         idAnimation = idBaseAA;
         monsterObjectList = monsterList;
+        fieldList = field;
         AnimationAttackCheck();
     }
 
@@ -37,11 +38,11 @@ class SwordAndShield : Weapon
     {
         foreach (Monster m in monsterObjectList.Children)
             if (m.CollidesWith(Owner))
-                BasicAttack.attackHit(m);
+                BasicAttack.attackHit(m, fieldList);
     }
 
     //Method for the use of the main ability
-    public override void UseMainAbility(GameObjectList monsterList)
+    public override void UseMainAbility(GameObjectList monsterList, GameObjectGrid field)
     {
         if(!mainAbility.isOnCooldown)
         {
@@ -49,6 +50,7 @@ class SwordAndShield : Weapon
             this.idAnimation = idMainAbility;
             //base.UseMainAbility(monsterList);
             monsterObjectList = monsterList;
+            fieldList = field;
             AnimationMainCheck();
         }
     }
@@ -59,7 +61,7 @@ class SwordAndShield : Weapon
         foreach (Monster m in monsterObjectList.Children)
         {
             if (mainAbility.monsterHit.Count < 1 && m.CollidesWith(Owner))
-                mainAbility.attackHit(m);
+                mainAbility.attackHit(m, fieldList);
         }
     }
 

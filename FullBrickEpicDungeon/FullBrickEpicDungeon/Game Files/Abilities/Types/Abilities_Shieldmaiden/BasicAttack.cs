@@ -21,8 +21,9 @@ class BasicAttackAbility : Ability
         base.Use(weapon, id);
     }
 
-    public override void attackHit(Monster monster)
+    public override void attackHit(Monster monster, GameObjectGrid field)
     {
+        fieldGrid = field;
         if(!monsterHit.Contains(monster) && monster.Attributes.HP > 0)
         {
             monster.TakeDamage(damageAA);

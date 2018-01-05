@@ -23,9 +23,9 @@ abstract partial class Character : AnimatedGameObject
             velocity = Vector2.Zero;
             //Input keys for basic AA and abilities
             if (inputHelper.KeyPressed(keyboardControls[Keys.Q]))
-                this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList);
+                this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
             if (inputHelper.KeyPressed(keyboardControls[Keys.R]))
-                this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList);
+                this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
             if (inputHelper.KeyPressed(keyboardControls[Keys.T]))
                 this.weapon.UseSpecialAbility(GameWorld.Find("monsterLIST") as GameObjectList);
 
