@@ -101,7 +101,7 @@ partial class Level : GameObjectList
             }
             if(splitArray[0] == "TRAPDOOR")
             {
-                Trapdoor trapdoor = new Trapdoor(TileType.Trapdoor, "Assets/Sprites/InteractiveObjects/NextLevelCombined@2", "Trapdoor", 0);
+                Trapdoor trapdoor = new Trapdoor(TileType.Trapdoor, "Assets/Sprites/InteractiveObjects/NextLevelCombined@2", "Trapdoor", 0, this);
                 trapdoor.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
                 trapdoor.Objectnumber = int.Parse(splitArray[3]);
                 objectList.Add(trapdoor);
