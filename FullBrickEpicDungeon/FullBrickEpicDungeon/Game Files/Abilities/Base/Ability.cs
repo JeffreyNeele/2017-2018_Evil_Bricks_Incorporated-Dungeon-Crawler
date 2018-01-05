@@ -12,11 +12,15 @@ abstract class Ability
     protected GameObjectList projectileList;
     protected int damage;
     protected Vector2 pushVector;
+    protected int pushCounts;
+    protected Dictionary<Monster, int> affectedMonsters;
     protected List<Monster> monstersHitList;
+    protected Dictionary<Monster, bool> directionPush;
     protected Ability(Character owner, ClassType classType)
     {
         this.classType = classType;
         this.owner = owner;
+        pushCounts = 8;
         // Ability needs the main projectile list (defined in LevelMain.cs) 
         /*try
         {
@@ -33,6 +37,8 @@ abstract class Ability
     public virtual void Update(GameTime gameTime)
     {
         //projectileList.Update(gameTime);
+        if (pushBackVector != new Vector2(0, 0) && monstersHitList != null)
+            pushBack();
     }
     public virtual void Reset()
     {
@@ -41,6 +47,10 @@ abstract class Ability
     public virtual void Use(Weapon weapon, string id)
     {
         monstersHitList = new List<Monster>();
+        if(affectedMonsters == null)
+            affectedMonsters = new Dictionary<Monster, int>();
+        if (directionPush == null)
+            directionPush = new Dictionary<Monster, bool>();
         //weapon.PlayAnimation(id);
     }
 
@@ -60,6 +70,46 @@ abstract class Ability
 
     public virtual void attackHit(Monster monster)
     {
+
+    }
+
+    public virtual void pushBack()
+    {
+        //Get the knockback vector of the ability;
+        Vector2 push = pushBackVector;
+
+        //Check only for the monsters in the monstersHitList, as it should only affect these monsters
+        foreach(Monster monster in monstersHitList)
+        {
+            //If the dictionary does not contain the monster, go to the next monster
+            if (!affectedMonsters.ContainsKey(monster))
+                continue;
+
+            //Get the pushCount of the current monster, this affects the knockback distance
+            int pushCount = affectedMonsters[monster];
+
+            if (pushCount == pushCounts)
+                push = push / 2;
+            else
+                push = push / 2 - new Vector2(2, 0) * (pushCounts - pushCount);
+
+            if (push.X <= 0)
+                push.X = 0;
+
+            if (directionPush[monster])
+                monster.Position += push;
+            else
+                monster.Position -= push;
+
+            affectedMonsters[monster] -= 1;
+
+            if (pushCount == 0)
+            {
+                affectedMonsters.Remove(monster);
+                directionPush.Remove(monster);
+            }
+        }
+
 
     }
 
@@ -86,7 +136,7 @@ abstract class Ability
         set { damage = value; }
     }
 
-        public Vector2 pushBackVector
+    public Vector2 pushBackVector
     {
         get { return pushVector; }
         set { pushVector = value; }
@@ -97,8 +147,19 @@ abstract class Ability
         get { return monstersHitList; }
     }
 
-    public void monsterAdd(Monster monster)
+    public void monsterAdd(Monster monster, bool direction)
     {
         monsterHit.Add(monster);
+        if (!affectedMonsters.ContainsKey(monster))
+        {
+            affectedMonsters.Add(monster, pushCounts);
+            directionPush.Add(monster, direction);
+        }
+        else
+            affectedMonsters[monster] = pushCounts;
+
+        if (directionPush[monster] != direction)
+            directionPush[monster] = direction;
+            
     }
 }

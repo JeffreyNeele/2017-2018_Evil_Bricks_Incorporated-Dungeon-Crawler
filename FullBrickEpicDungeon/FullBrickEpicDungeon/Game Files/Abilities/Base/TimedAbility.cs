@@ -30,7 +30,7 @@ abstract class TimedAbility : Ability
     public override void Use(Weapon weapon, string idAbility)
     {
         this.abilityTimer.Reset();
-        //base.Use(weapon, idAbility);
+        base.Use(weapon, idAbility);
     }
     // Sets the IsExpired value in ability so it is either in cooldown or not
     public bool isOnCooldown

@@ -6,7 +6,7 @@ class SwordAndShield : Weapon
     //ShieldBashAbility abilityMain;
     public SwordAndShield(Character owner) : base(owner, ClassType.ShieldMaiden, "Swordandshield", "putassetnamehere")
     {
-        this.AttackDamage = 50;
+        this.AttackDamage = 10;
         this.GoldWorth = 100;
 
         this.idBaseAA = "SwordAndShieldAA";
@@ -14,8 +14,8 @@ class SwordAndShield : Weapon
         this.idSpecialAbility = "SwordAndShieldSpecialAbility";
 
         //Basic attack of the weapon
-        BasicAttack = new BasicAttackAbility(owner, ClassType.ShieldMaiden, this, "assetName", idBaseAA, 10, true);
-        BasicAttack.pushBackVector = new Vector2(20, 0);
+        BasicAttack = new BasicAttackAbility(owner, ClassType.ShieldMaiden, this, "assetName", idBaseAA, AttackDamage);
+        BasicAttack.pushBackVector = new Vector2(30, 0);
 
         //Basic ability of the weapon: ShieldBash
         mainAbility = new ShieldBashAbility(owner, ClassType.ShieldMaiden, this, "assetName", idMainAbility, 8);
@@ -65,7 +65,8 @@ class SwordAndShield : Weapon
 
     public override void Update(GameTime gameTime)
     {
-        //Because the mainAbility has a timer, the update of the mainAbility should be called
+        //MainAbility should be updates because of timer. Both should be updates in the case of pushBack (or any other effects)
+        BasicAttack.Update(gameTime);
         mainAbility.Update(gameTime);
 
         base.Update(gameTime);

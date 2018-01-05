@@ -16,7 +16,7 @@ class CharacterSelection : GameObjectList
     int[] characterSelectIndex = new int[4];
     bool[] lockInSprite = new bool[4];
     Color[] lockInColor = new Color[8];
-    float launchCount = 2;
+    float launchCount = 1;
     public CharacterSelection()
     {
         //The colors of the background borders
