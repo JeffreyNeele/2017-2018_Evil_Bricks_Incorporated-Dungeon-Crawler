@@ -6,16 +6,18 @@ class SwordAndShield : Weapon
     //ShieldBashAbility abilityMain;
     public SwordAndShield(Character owner) : base(owner, ClassType.ShieldMaiden, "Swordandshield", "putassetnamehere")
     {
-        this.AttackDamage = 10;
-        this.GoldWorth = 100;
+        AttackDamage = 10;
+        GoldWorth = 100;
 
-        this.idBaseAA = "SwordAndShieldAA";
-        this.idMainAbility = "SwordAndShieldMainAbility";
-        this.idSpecialAbility = "SwordAndShieldSpecialAbility";
+        idBaseAA = "SwordAndShieldAA";
+        idMainAbility = "SwordAndShieldMainAbility";
+        idSpecialAbility = "SwordAndShieldSpecialAbility";
 
         //Basic attack of the weapon
         BasicAttack = new BasicAttackAbility(owner, ClassType.ShieldMaiden, this, "assetName", idBaseAA, AttackDamage);
         BasicAttack.pushBackVector = new Vector2(30, 0);
+        BasicAttack.pushFallOff = new Vector2(2, 0);
+        BasicAttack.pushTimeCount = 8;
 
         //Basic ability of the weapon: ShieldBash
         mainAbility = new ShieldBashAbility(owner, ClassType.ShieldMaiden, this, "assetName", idMainAbility, 8);

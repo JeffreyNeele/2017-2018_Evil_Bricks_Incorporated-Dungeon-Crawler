@@ -12,7 +12,7 @@ abstract class Ability
     protected GameObjectList projectileList;
     protected GameObjectGrid fieldGrid;
     protected int damage;
-    protected Vector2 pushVector;
+    protected Vector2 pushVector, fallOff;
     protected int pushCounts;
     protected Dictionary<Monster, int> affectedMonsters;
     protected List<Monster> monstersHitList;
@@ -21,7 +21,7 @@ abstract class Ability
     {
         this.classType = classType;
         this.owner = owner;
-        pushCounts = 8;
+        pushTimeCount = 8;
         // Ability needs the main projectile list (defined in LevelMain.cs) 
         /*try
         {
@@ -133,10 +133,10 @@ abstract class Ability
     //Calculates the push vector
     protected Vector2 givePushVector(int pushCount, Vector2 push)
     {
-        if (pushCount == pushCounts)
+        if (pushCount == pushTimeCount)
             push = push / 2;
         else
-            push = push / 2 - new Vector2(2, 0) * (pushCounts - pushCount);
+            push = push / 2 - fallOff * (pushTimeCount - pushCount);
 
         if (push.X <= 0)
             push.X = 0;
@@ -162,7 +162,6 @@ abstract class Ability
                 return true;
             }
         }
-
         return false;
     }
 
@@ -188,6 +187,18 @@ abstract class Ability
         set { pushVector = value; }
     }
 
+    public Vector2 pushFallOff
+    {
+        get { return fallOff; }
+        set { fallOff = value; }
+    }
+
+    public int pushTimeCount
+    {
+        get { return pushCounts; }
+        set { pushCounts = value; }
+    }
+
     public List<Monster> monsterHit
     {
         get { return monstersHitList; }
@@ -198,11 +209,11 @@ abstract class Ability
         monsterHit.Add(monster);
         if (!affectedMonsters.ContainsKey(monster))
         {
-            affectedMonsters.Add(monster, pushCounts);
+            affectedMonsters.Add(monster, pushTimeCount);
             directionPush.Add(monster, direction);
         }
         else
-            affectedMonsters[monster] = pushCounts;
+            affectedMonsters[monster] = pushTimeCount;
 
         if (directionPush[monster] != direction)
             directionPush[monster] = direction;

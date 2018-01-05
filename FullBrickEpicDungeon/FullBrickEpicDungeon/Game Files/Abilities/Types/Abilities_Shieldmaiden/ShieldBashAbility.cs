@@ -11,7 +11,9 @@ class ShieldBashAbility : TimedAbility
         : base(owner, classType, targetTime)
     {
         //weapon.LoadAnimation(assetName, id, false);
-        pushVector = new Vector2(50, 0);
+        pushVector = new Vector2(60, 0);
+        pushFallOff = new Vector2(2, 0);
+        pushTimeCount = 16;
         damageAA = 40;
     }
 

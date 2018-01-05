@@ -14,6 +14,7 @@ class BasicAttackAbility : Ability
         //weapon.LoadAnimation(assetName, id, false);
         damageAA = damage;
         pushVector = new Vector2(0, 0);
+        pushFallOff = new Vector2(0, 0);
     }
 
     public override void Use(Weapon weapon, string id)
