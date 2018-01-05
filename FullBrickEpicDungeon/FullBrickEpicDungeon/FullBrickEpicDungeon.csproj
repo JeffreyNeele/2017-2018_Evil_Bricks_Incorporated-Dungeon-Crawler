@@ -92,6 +92,7 @@
     <Compile Include="Game Files\Game states\TestState.cs" />
     <Compile Include="Game Files\Game states\TitleMenu.cs" />
     <Compile Include="Game Files\HUD\Conversation\Conversation.cs" />
+    <Compile Include="Game Files\HUD\PlayerInformation\PlayerInformation.cs" />
     <Compile Include="Game Files\Interactive objects\Base\DroppedItem.cs" />
     <Compile Include="Game Files\Interactive objects\Base\InteractiveObject.cs" />
     <Compile Include="Game Files\Interactive objects\Types\Handle.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Game Files\Monsters\Base\AImonster.cs" />
     <Compile Include="Game Files\Monsters\Type\Bunny.cs" />
     <Compile Include="Game Files\Monsters\Type\Dummy.cs" />
+    <Compile Include="Game Files\Monsters\Type\LittlePenguin.cs" />
     <Compile Include="Game Files\Projectiles\Projectile.cs" />
     <Compile Include="Game Files\Puzzle\Base\Puzzle.cs" />
     <Compile Include="Game Files\Interactive objects\Types\Trap.cs" />
