@@ -353,6 +353,9 @@ abstract partial class Character : AnimatedGameObject
             {
                 return false;
             }
+
+            if (tile.IsDoor && quarterBoundingBox.Intersects(tile.BoundingBox) && tile.Sprite.SheetIndex == 0)
+                return false;
         }
         return true;
     }

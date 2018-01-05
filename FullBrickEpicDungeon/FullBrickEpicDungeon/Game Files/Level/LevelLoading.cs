@@ -156,7 +156,7 @@ partial class Level : GameObjectList
         }
         string[] lineArray = tileStringList[0].Split(',');
         // Make a new tile field with x being the length of a line (the length) and the amount of lines the y direction
-        GameObjectGrid tileField = new GameObjectGrid(tileStringList.Count, lineArray.Length - 1, 3, "TileField"); 
+        tileField = new GameObjectGrid(tileStringList.Count, lineArray.Length - 1, 3, "TileField"); 
 
         //values for the cell width and height, these are predetermined in the Tiled Map Editor, so are constants.
         tileField.CellWidth = 100; 

@@ -34,5 +34,16 @@ class Door : OpenableObject
         }
     }
 
+    //Bounding Box voor de collisie. Als de deur open is, moet er geen collisie zijn.
+    public override Rectangle BoundingBox
+    {
+        get
+        {
+            int left = (int)(GlobalPosition.X - origin.X);
+            int top = (int)(GlobalPosition.Y - origin.Y);
+            return new Rectangle(left, top, Width, Height);
+        }
+    }
+
 }
 

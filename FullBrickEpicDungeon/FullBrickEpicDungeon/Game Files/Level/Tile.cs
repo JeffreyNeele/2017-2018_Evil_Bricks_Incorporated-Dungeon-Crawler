@@ -26,4 +26,9 @@ class Tile : SpriteGameObject
     {
         get { return type == TileType.Ice; }
     }
+
+    public bool IsDoor
+    {
+        get { return type == TileType.DoorTile; }
+    }
 }
