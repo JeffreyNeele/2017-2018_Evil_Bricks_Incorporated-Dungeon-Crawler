@@ -27,8 +27,8 @@ class BaseAI
     {
         if (targetedObject == null)
         {
-            LineOfSightChecker(sightRange);
-            // TargetRandomObject(100, levelGrid.GameWorld.Find("playerLIST") as GameObjectList);
+            //LineOfSightChecker(sightRange);
+            TargetRandomObject(70, levelGrid.GameWorld.Find("playerLIST") as GameObjectList);
         }
         else
         {
@@ -41,6 +41,11 @@ class BaseAI
             if (waypointList.Count > 0)
             {
                 MoveToPosition(waypointList[0], (float)gameTime.ElapsedGameTime.TotalSeconds);
+            }
+            else
+            {
+                MoveToPosition(this.targetedObject.Position - this.targetedObject.Origin, (float)gameTime.ElapsedGameTime.TotalSeconds);
+                Monster owner_cast = owner as Monster;
             }
         }
     }
@@ -133,6 +138,7 @@ class BaseAI
             TargetRandomObject(chance, targetList);
         }
     }
+
 
     public Vector2 Direction
     {
