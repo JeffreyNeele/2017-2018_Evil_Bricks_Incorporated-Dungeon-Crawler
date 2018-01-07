@@ -51,18 +51,15 @@ class LittlePenguin : AImonster
         GameObjectGrid field = GameWorld.Find("TileField") as GameObjectGrid;
         GameObjectList players = GameWorld.Find("playerLIST") as GameObjectList;
 
-        //Since the png is bigger than the actual sprite, make the appropriate hitbox
-        Rectangle hitBox = new Rectangle((int)GlobalPosition.X - 41, (int)GlobalPosition.Y - 91, 74, 77);
-
         //First check if monster collides with player
         foreach (Character player in players.Children)
-            if (hitBox.Intersects(player.BoundingBox) && !playersHit.Contains(player))
+            if (this.BoundingBox.Intersects(player.BoundingBox) && !playersHit.Contains(player))
                 Attack(player);
 
         //Then check if monster collides with solid tile
         foreach (Tile tile in field.Objects)
         {
-            if (tile.IsSolid && hitBox.Intersects(tile.BoundingBox))
+            if (tile.IsSolid && this.BoundingBox.Intersects(tile.BoundingBox))
             {
                 movementVector = new Vector2(0, 0);
                 Position = previousPos;

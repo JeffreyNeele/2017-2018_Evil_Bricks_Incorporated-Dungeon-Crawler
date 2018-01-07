@@ -6,12 +6,13 @@ using Microsoft.Xna.Framework;
 abstract partial class Monster : AnimatedGameObject
 {
     protected BaseAttributes attributes, baseattributes;
-    protected BaseAI baseAI;
+    protected Level currentLevel;
     protected Vector2 startPosition;
     protected List<Character> playersHit;
     protected float hitCounter;
     public Monster(string id, Level currentLevel) : base(0, id)
     {
+        this.currentLevel = currentLevel;
         attributes = new BaseAttributes();
         baseattributes = new BaseAttributes();
         hitCounter = 0;
@@ -73,7 +74,7 @@ abstract partial class Monster : AnimatedGameObject
         if (!playersHit.Contains(player))
         {
             playersHit.Add(player);
-            player.TakeDamage(baseattributes.Attack);
+            player.TakeDamage(attributes.Attack);
         }
     }
 
