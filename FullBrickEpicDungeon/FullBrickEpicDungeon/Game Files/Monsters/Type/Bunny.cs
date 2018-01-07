@@ -10,7 +10,7 @@ class Bunny : AImonster
         this.baseattributes.Gold = 50;
         attributes = baseattributes;
         LoadAnimation("Assets/Sprites/Enemies/bunny_default", "idle", false);
-        LoadAnimation("Assets/Sprites/Enemies/bunny_attack@5", "attack", true, 0.2F);
+        LoadAnimation("Assets/Sprites/Enemies/bunny_attack@5", "attack", false, 0.2F);
         LoadAnimation("Assets/Sprites/Enemies/rabbit_walk@4", "walk", true, 0.2F);
         LoadAnimation("Assets/Sprites/Enemies/rabbit_walk_back@4", "walk_back", true, 0.2F);
         PlayAnimation("idle");

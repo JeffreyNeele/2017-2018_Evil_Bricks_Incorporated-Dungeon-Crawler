@@ -8,14 +8,16 @@ using Microsoft.Xna.Framework.Graphics;
 class BaseAI
 {
     protected GameObjectGrid levelGrid;
-    protected SpriteGameObject targetedObject, owner;
+    protected AnimatedGameObject targetedObject, owner;
     protected float sightRange, movementSpeed;
     protected bool isMonster, isAttacking;
     protected Level currentLevel;
     protected Vector2 direction;
-
-    public BaseAI(SpriteGameObject owner, float movementSpeed, Level currentLevel, float sightRange = 50, bool isMonster = true)
+    protected Timer idleTimer;
+    public BaseAI(AnimatedGameObject owner, float movementSpeed, Level currentLevel, float idleTime = 1.25F, float sightRange = 200, bool isMonster = true)
     {
+        idleTimer = new Timer(idleTime);
+        idleTimer.IsExpired = true;
         this.currentLevel = currentLevel;
         this.isMonster = isMonster;
         this.owner = owner;
@@ -34,36 +36,49 @@ class BaseAI
         {
             LineOfSightChecker(sightRange);
         }
-        else
+        else if (idleTimer.IsExpired)
         {
             List<Vector2> waypointList = FindPath(targetedObject.Position, owner.Position);
             if (owner.BoundingBox.Intersects(targetedObject.BoundingBox))
             {
                 MoveToPosition(targetedObject.Position - targetedObject.Origin, (float)gameTime.ElapsedGameTime.TotalSeconds);
-                if (isMonster)
+                if (targetedObject.BoundingBox.Contains(owner.Position - owner.Origin))
                 {
-                    isAttacking = true;
-                    Monster owner_cast = owner as Monster;
-                    Character target_cast = targetedObject as Character; 
-                    owner_cast.Attack(target_cast);
-                }
-                else
-                {
-                    isAttacking = true;
-                    Character owner_cast = owner as Character;
-                    GameObjectList monsterList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList;
-                    owner_cast.CurrentWeapon.Attack(monsterList, currentLevel.TileField);
+                    if (isMonster)
+                    {
+                        isAttacking = true;
+                        Monster owner_cast = owner as Monster;
+                        Character target_cast = targetedObject as Character;
+                        owner_cast.Attack(target_cast);
+                        idleTimer.Reset();
+                    }
+                    else
+                    {
+                        isAttacking = true;
+                        Character owner_cast = owner as Character;
+                        GameObjectList monsterList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList;
+                        owner_cast.CurrentWeapon.Attack(monsterList, currentLevel.TileField);
+                        idleTimer.Reset();
+                    }
                 }
             }
             else if (waypointList.Count > 0 && this.owner.Position == waypointList[0])
             {
                 waypointList.RemoveAt(0);
-                
+
             }
             if (waypointList.Count > 0)
             {
                 MoveToPosition(waypointList[0], (float)gameTime.ElapsedGameTime.TotalSeconds);
             }
+        }
+        else
+        {
+            if (owner.CurrentAnimation.AnimationEnded)
+            {
+                isAttacking = false;
+            }
+            idleTimer.Update(gameTime);
         }
     }
 
@@ -129,18 +144,18 @@ class BaseAI
             targetList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList;
 
         Circle lineOfSight = new Circle(sightRange, owner.Origin);
-        foreach(SpriteGameObject obj in targetList.Children)
+        foreach(AnimatedGameObject obj in targetList.Children)
         {
             if (lineOfSight.CollidesWithRectangle(obj, owner))
             {
-                TargetRandomObject(50, targetList);
+                targetedObject = obj;
             }
         }
     }
 
     public void TargetRandomObject(float chance, GameObjectList targetList)
     {
-        foreach (SpriteGameObject target in targetList.Children)
+        foreach (AnimatedGameObject target in targetList.Children)
         {
             int selectedNumber = GameEnvironment.Random.Next(0, 101);
             if (selectedNumber <= chance)
