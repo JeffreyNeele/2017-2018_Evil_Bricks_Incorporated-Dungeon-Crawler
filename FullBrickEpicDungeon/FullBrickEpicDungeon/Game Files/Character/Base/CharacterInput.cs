@@ -124,7 +124,6 @@ abstract partial class Character : AnimatedGameObject
         {
             ObjectCollisionChecker();
         }
-        Console.WriteLine(MovementVector(this.movementSpeed, 90));
     }
 
     // Method that handles movement when the character is on ice

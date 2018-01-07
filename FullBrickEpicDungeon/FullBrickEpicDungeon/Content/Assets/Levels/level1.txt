@@ -17,6 +17,7 @@ SHIELDMAIDEN 600 500 2
 HANDLE 900 300
 DUMMY 950 600
 BUNNY 1200 300
+PENGUIN 1400 400
 ENDOFFILE
 
 note: this is not the actual tutorial level, more like a test level

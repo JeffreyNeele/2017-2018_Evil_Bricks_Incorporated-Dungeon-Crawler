@@ -14,6 +14,7 @@ abstract partial class Character : AnimatedGameObject
     protected Timer reviveTimer;
     protected Vector2 startPosition, movementSpeed, iceSpeed;
     protected int playerNumber;
+    protected float hitCounter;
 
     protected Dictionary<Buttons, Buttons> xboxControls;
     protected bool xboxControlled = false;
@@ -30,6 +31,7 @@ abstract partial class Character : AnimatedGameObject
         reviveTimer = new Timer(10);
         this.velocity = Vector2.Zero;
         this.movementSpeed = new Vector2(4, 4);
+        this.hitCounter = 0;
 
 
         this.playerNumber = playerNumber;
@@ -229,6 +231,14 @@ abstract partial class Character : AnimatedGameObject
                 this.attributes.Gold = this.attributes.Gold - (this.attributes.Gold / 4);
             }
         }
+
+        if (hitCounter >= 0)
+        {
+            Visible = !Visible;
+            hitCounter -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
+        else
+            Visible = true;
     }
 
 
@@ -373,6 +383,8 @@ abstract partial class Character : AnimatedGameObject
         {
             this.attributes.HP = 0;
         }
+
+        hitCounter = 1;
     }
 
     //when called with the walkingdirection, it plays the correct animation with the movement.
