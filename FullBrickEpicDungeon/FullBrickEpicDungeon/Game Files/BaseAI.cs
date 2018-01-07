@@ -137,4 +137,9 @@ class BaseAI
     {
         get { return owner; }
     }
+
+    public SpriteGameObject Target
+    {
+        get { return targetedObject; }
+    }
 }
