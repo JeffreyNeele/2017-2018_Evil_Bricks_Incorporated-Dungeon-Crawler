@@ -7,40 +7,29 @@ using Microsoft.Xna.Framework;
 
 class BasicAttackAbility : Ability
 {
-    bool knockback;
-    public BasicAttackAbility(Character owner, ClassType classType, Weapon weapon, string assetName, string id, int damage, bool knockBack) 
+
+    public BasicAttackAbility(Character owner, ClassType classType, Weapon weapon, string assetName, string id, int damage) 
         : base(owner, classType)
     {
         //weapon.LoadAnimation(assetName, id, false);
         damageAA = damage;
-        this.knockBack = knockBack;
         pushVector = new Vector2(0, 0);
+        pushFallOff = new Vector2(0, 0);
     }
 
     public override void Use(Weapon weapon, string id)
     {
-        this.monstersHitList = new List<Monster>();
         base.Use(weapon, id);
     }
 
-    public override void attackHit(Monster monster)
+    public override void attackHit(Monster monster, GameObjectGrid field)
     {
+        fieldGrid = field;
         if(!monsterHit.Contains(monster) && monster.Attributes.HP > 0)
         {
             monster.TakeDamage(damageAA);
-            if (this.knockBack)
-                if (Owner.Mirror)
-                    monster.Position += pushBackVector;
-                else
-                    monster.Position -= pushBackVector;
-            monsterAdd(monster);
+            monsterAdd(monster, Owner.Mirror);
         }
-    }
-
-    public bool knockBack
-    {
-        get { return knockback; }
-        set { knockback = value; }
     }
 }
 

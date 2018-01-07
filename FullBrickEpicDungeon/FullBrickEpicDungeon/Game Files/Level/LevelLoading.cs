@@ -113,6 +113,14 @@ partial class Level : GameObjectList
                 monsterList.Add(bunny);
             }
 
+            if (splitArray[0] == "PENGUIN")
+            {
+                Monster penguin = new LittlePenguin(this);
+                penguin.StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
+                penguin.Reset();
+                monsterList.Add(penguin);
+            }
+
 
         }
     }

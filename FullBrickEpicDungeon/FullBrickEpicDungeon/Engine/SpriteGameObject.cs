@@ -97,6 +97,12 @@ public class SpriteGameObject : GameObject
         get { return cameraOffset; }
         set { cameraOffset = value; }
     }
+
+    public Color GetColor
+    {
+        get { return color; }
+        set { color = value; }
+    }
     public override Rectangle BoundingBox
     {
         get
