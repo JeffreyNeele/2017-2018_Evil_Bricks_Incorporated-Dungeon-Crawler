@@ -9,7 +9,7 @@ class LittlePenguin : AImonster
 {
     float slideSpeed;
     Vector2 targetPos, movementVector;
-    int idleCounter;
+    float idleCounter;
     public LittlePenguin(Level currentLevel) : base(0f, currentLevel, "LittlePenguin")
     {
         this.baseattributes.HP = 80;
@@ -29,10 +29,41 @@ class LittlePenguin : AImonster
         PlayAnimation("idle");
     }
 
+    public override void Update(GameTime gameTime)
+    {
+        base.Update(gameTime);
+        if (targetPos != null && idleCounter <= 0 && movementVector == new Vector2(0, 0))
+            slideDirection();
+        else if (movementVector != new Vector2(0, 0))
+            CheckCollision();
+    }
+
+    //Method for checking if the penguin collides with a wall or player
+    public void CheckCollision()
+    {
+        //Take the grid to check for all tiles that are solid or doors
+        GameObjectGrid field = GameWorld.Find("TileField") as GameObjectGrid;
+        GameObjectList players = GameWorld.Find("playerLIST") as GameObjectList;
+
+        foreach (Character player in players.Children)
+            if (BoundingBox.Intersects(player.BoundingBox) && !playersHit.Contains(player))
+                Attack(player);
+
+
+    }
+
+    public override void Attack(Character player)
+    {
+        base.Attack(player);
+    }
+
     float totalDistance;
     //Method that defines the movementVector of the penguin.
     public void slideDirection()
     {
+        //Reset the playersHit list, players only take damage when the penguin is sliding
+        playersHit = new List<Character>();
+
         //Take the position of the target
         GameObjectList players = GameWorld.Find("playerLIST") as GameObjectList;
         foreach(Character player in players.Children)
@@ -43,15 +74,6 @@ class LittlePenguin : AImonster
 
         Vector2 differencePos = position - targetPos;
         movementVector = getMovementVector(differencePos);
-    }
-
-    //Method for checking if the penguin collides with a wall
-    public bool CheckCollision()
-    {
-        //Take the grid to check for all tiles that are solid or doors
-        GameObjectGrid field = GameWorld.Find("TileField") as GameObjectGrid;
-
-        return false;
     }
 
     //Method that calculates the movement vector of the penguin

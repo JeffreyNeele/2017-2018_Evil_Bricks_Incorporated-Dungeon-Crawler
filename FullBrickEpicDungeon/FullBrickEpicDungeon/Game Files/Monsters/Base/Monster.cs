@@ -8,10 +8,13 @@ abstract partial class Monster : AnimatedGameObject
     protected BaseAttributes attributes, baseattributes;
     protected BaseAI baseAI;
     protected Vector2 startPosition;
+    protected List<Character> playersHit;
+    protected float hitCounter;
     public Monster(string id, Level currentLevel) : base(0, id)
     {
         attributes = new BaseAttributes();
         baseattributes = new BaseAttributes();
+        hitCounter = 0;
     }
 
 
@@ -20,6 +23,13 @@ abstract partial class Monster : AnimatedGameObject
         if (!IsDead)
         {
             base.Update(gameTime);
+            if (hitCounter >= 0)
+            {
+                Visible = !Visible;
+                hitCounter -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            else
+                Visible = true;
         }
         else
         {
@@ -52,6 +62,18 @@ abstract partial class Monster : AnimatedGameObject
         if (this.attributes.HP <= 0)
         {
             this.attributes.HP = 0;
+        }
+        else
+            hitCounter = 0.5f;
+    }
+
+    //Method for the attack of the monster
+    public virtual void Attack(Character player)
+    {
+        if (!playersHit.Contains(player))
+        {
+            playersHit.Add(player);
+            player.TakeDamage(baseattributes.Attack);
         }
     }
 
