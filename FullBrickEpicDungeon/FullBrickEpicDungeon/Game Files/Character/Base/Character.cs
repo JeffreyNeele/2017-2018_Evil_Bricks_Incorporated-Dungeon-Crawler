@@ -14,13 +14,10 @@ abstract partial class Character : AnimatedGameObject
     protected Timer reviveTimer;
     protected Vector2 startPosition, movementSpeed, iceSpeed;
     protected int playerNumber;
+    protected float hitCounter;
 
-    protected Dictionary<Keys, Keys> keyboardControls;
     protected Dictionary<Buttons, Buttons> xboxControls;
-    protected bool keyboardControlled;
     protected bool xboxControlled = false;
-    protected bool isOnIce = false;
-    protected bool blockinput = false;
     Vector2 walkingdirection;
 
     //Constructor: sets up the controls given to the constructor for each player (xbox or keyboard)
@@ -34,6 +31,7 @@ abstract partial class Character : AnimatedGameObject
         reviveTimer = new Timer(10);
         this.velocity = Vector2.Zero;
         this.movementSpeed = new Vector2(4, 4);
+        this.hitCounter = 0;
 
 
         this.playerNumber = playerNumber;
@@ -77,55 +75,14 @@ abstract partial class Character : AnimatedGameObject
                 xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/KeyboardControls/XboxControls/player4Xbox.txt");
         }
     }
- 
-    
-    //calls all handleinput methods
-    public override void HandleInput(InputHelper inputHelper)
-    {
-        Vector2 previousPosition = this.position;
-
-        if (!IsDowned && !isOnIce && !blockinput)
-        {
-            velocity = Vector2.Zero;
-            //Input keys for basic AA and abilities
-
-            if (keyboardControlled)
-            {
-                HandleKeyboardInput(inputHelper);
-            }
-            if (xboxControlled)
-            {
-                HandleInputXboxController(inputHelper);
-            }
-            this.position += walkingdirection;
-            PlayAnimationDirection(walkingdirection);
-            walkingdirection = Vector2.Zero;
-        }
-        // NOTE: the Ice method has to be updated to account for XBOX controls, maybe with a ||, but this will be a problem as keyboardcontrols will be null if a controller is used
-        else if (!IsDowned && isOnIce)
-        {
-            KeyboardHandleIceMovement(inputHelper);
-        }
-
-        if (!SolidCollisionChecker())
-        {
-            this.iceSpeed = new Vector2(0, 0);
-            this.position = previousPosition;
-            PlayAnimation("idle");
-            blockinput = false;
-        }
-
-        base.HandleInput(inputHelper);
-
-    }
 
     // Method that handles keyboard movement and input
     public void HandleKeyboardInput(InputHelper inputHelper)
     {
         if (inputHelper.KeyPressed(keyboardControls[Keys.Q]))
-            this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList);
+            this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
         if (inputHelper.KeyPressed(keyboardControls[Keys.R]))
-            this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList);
+            this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
         if (inputHelper.KeyPressed(keyboardControls[Keys.T]))
             this.weapon.UseSpecialAbility(GameWorld.Find("monsterLIST") as GameObjectList);
 
@@ -191,9 +148,9 @@ abstract partial class Character : AnimatedGameObject
             {
                 //Attack and Main Ability
                 if (inputHelper.ButtonPressed(playerNumber, Buttons.A))
-                    this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList);
+                    this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
                 if (inputHelper.ButtonPressed(playerNumber, Buttons.B))
-                    this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList);
+                    this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
 
                 //Interact button
                 if (inputHelper.ButtonPressed(playerNumber, Buttons.X))
@@ -274,6 +231,14 @@ abstract partial class Character : AnimatedGameObject
                 this.attributes.Gold = this.attributes.Gold - (this.attributes.Gold / 4);
             }
         }
+
+        if (hitCounter >= 0)
+        {
+            Visible = !Visible;
+            hitCounter -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
+        else
+            Visible = true;
     }
 
 
@@ -418,6 +383,8 @@ abstract partial class Character : AnimatedGameObject
         {
             this.attributes.HP = 0;
         }
+
+        hitCounter = 1;
     }
 
     //when called with the walkingdirection, it plays the correct animation with the movement.

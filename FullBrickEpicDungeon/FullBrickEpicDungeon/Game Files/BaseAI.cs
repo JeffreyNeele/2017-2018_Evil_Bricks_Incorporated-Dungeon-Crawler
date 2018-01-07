@@ -27,8 +27,8 @@ class BaseAI
     {
         if (targetedObject == null)
         {
-            LineOfSightChecker(sightRange);
-            // TargetRandomObject(100, levelGrid.GameWorld.Find("playerLIST") as GameObjectList);
+            //LineOfSightChecker(sightRange);
+            TargetRandomObject(70, levelGrid.GameWorld.Find("playerLIST") as GameObjectList);
         }
         else
         {
@@ -106,7 +106,7 @@ class BaseAI
         else
             targetList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList;
 
-        Circle lineOfSight = new Circle(sightRange + owner.Sprite.Width / 2, owner.Origin);
+        Circle lineOfSight = new Circle(sightRange, owner.Origin);
         foreach(SpriteGameObject obj in targetList.Children)
         {
             if (lineOfSight.CollidesWithRectangle(obj, owner))
@@ -132,11 +132,6 @@ class BaseAI
         {
             TargetRandomObject(chance, targetList);
         }
-    }
-
-    public Vector2 Direction
-    {
-        get { return direction; }
     }
 
     public float AImovementSpeed

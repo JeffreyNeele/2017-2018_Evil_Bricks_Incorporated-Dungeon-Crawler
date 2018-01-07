@@ -11,26 +11,24 @@ class ShieldBashAbility : TimedAbility
         : base(owner, classType, targetTime)
     {
         //weapon.LoadAnimation(assetName, id, false);
-        pushVector = new Vector2(100, 0);
-        this.damageAA = 40;
+        pushVector = new Vector2(60, 0);
+        pushFallOff = new Vector2(2, 0);
+        pushTimeCount = 16;
+        damageAA = 40;
     }
 
     public override void Use(Weapon weapon, string idAbility)
     {
-        this.monstersHitList = new List<Monster>();
         base.Use(weapon, idAbility);
     }
 
-    public override void attackHit(Monster monster)
+    public override void attackHit(Monster monster, GameObjectGrid field)
     {
+        fieldGrid = field;
         if (!monsterHit.Contains(monster) && monster.Attributes.HP > 0 && monsterHit.Count == 0)
         {
             monster.TakeDamage(damageAA);
-            if (Owner.Mirror)
-                monster.Position += pushBackVector;
-            else
-                monster.Position -= pushBackVector;
-            monsterAdd(monster);
+            monsterAdd(monster, Owner.Mirror);
         }
     }
 

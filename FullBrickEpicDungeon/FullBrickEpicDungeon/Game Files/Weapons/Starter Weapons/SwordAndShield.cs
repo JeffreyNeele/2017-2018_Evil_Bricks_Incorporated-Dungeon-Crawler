@@ -6,16 +6,18 @@ class SwordAndShield : Weapon
     //ShieldBashAbility abilityMain;
     public SwordAndShield(Character owner) : base(owner, ClassType.ShieldMaiden, "Swordandshield", "putassetnamehere")
     {
-        this.AttackDamage = 50;
-        this.GoldWorth = 100;
+        AttackDamage = 10;
+        GoldWorth = 100;
 
-        this.idBaseAA = "SwordAndShieldAA";
-        this.idMainAbility = "SwordAndShieldMainAbility";
-        this.idSpecialAbility = "SwordAndShieldSpecialAbility";
+        idBaseAA = "SwordAndShieldAA";
+        idMainAbility = "SwordAndShieldMainAbility";
+        idSpecialAbility = "SwordAndShieldSpecialAbility";
 
         //Basic attack of the weapon
-        BasicAttack = new BasicAttackAbility(owner, ClassType.ShieldMaiden, this, "assetName", idBaseAA, 10, true);
-        BasicAttack.pushBackVector = new Vector2(20, 0);
+        BasicAttack = new BasicAttackAbility(owner, ClassType.ShieldMaiden, this, "assetName", idBaseAA, AttackDamage);
+        BasicAttack.pushBackVector = new Vector2(30, 0);
+        BasicAttack.pushFallOff = new Vector2(2, 0);
+        BasicAttack.pushTimeCount = 8;
 
         //Basic ability of the weapon: ShieldBash
         mainAbility = new ShieldBashAbility(owner, ClassType.ShieldMaiden, this, "assetName", idMainAbility, 8);
@@ -23,12 +25,13 @@ class SwordAndShield : Weapon
     }
 
     //Method for the basic attack
-    public override void Attack(GameObjectList monsterList)
+    public override void Attack(GameObjectList monsterList, GameObjectGrid field)
     {
         BasicAttack.Use(this, idBaseAA);
         //base.Attack(monsterList);
         idAnimation = idBaseAA;
         monsterObjectList = monsterList;
+        fieldList = field;
         AnimationAttackCheck();
     }
 
@@ -37,11 +40,11 @@ class SwordAndShield : Weapon
     {
         foreach (Monster m in monsterObjectList.Children)
             if (m.CollidesWith(Owner))
-                BasicAttack.attackHit(m);
+                BasicAttack.attackHit(m, fieldList);
     }
 
     //Method for the use of the main ability
-    public override void UseMainAbility(GameObjectList monsterList)
+    public override void UseMainAbility(GameObjectList monsterList, GameObjectGrid field)
     {
         if(!mainAbility.isOnCooldown)
         {
@@ -49,6 +52,7 @@ class SwordAndShield : Weapon
             this.idAnimation = idMainAbility;
             //base.UseMainAbility(monsterList);
             monsterObjectList = monsterList;
+            fieldList = field;
             AnimationMainCheck();
         }
     }
@@ -59,13 +63,14 @@ class SwordAndShield : Weapon
         foreach (Monster m in monsterObjectList.Children)
         {
             if (mainAbility.monsterHit.Count < 1 && m.CollidesWith(Owner))
-                mainAbility.attackHit(m);
+                mainAbility.attackHit(m, fieldList);
         }
     }
 
     public override void Update(GameTime gameTime)
     {
-        //Because the mainAbility has a timer, the update of the mainAbility should be called
+        //MainAbility should be updates because of timer. Both should be updates in the case of pushBack (or any other effects)
+        BasicAttack.Update(gameTime);
         mainAbility.Update(gameTime);
 
         base.Update(gameTime);

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 
 abstract class AImonster : Monster
 {
+    protected Vector2 previousPos;
     protected BaseAI AI;
     public AImonster(float movementSpeed, Level currentLevel, string type) : base(type, currentLevel)
     {
@@ -14,34 +15,20 @@ abstract class AImonster : Monster
     {
         AI.Update(gameTime);
 
-        if (AI.CurrentTarget == null)
+        if (previousPos.Y > position.Y)
+            PlayAnimation("walk_back");
+        else if (previousPos.X < position.X)
         {
+            PlayAnimation("walk");
+            this.Mirror = false;
+        }
+       else if (previousPos.X > position.X)
+        {
+            PlayAnimation("walk");
+            this.Mirror = true;
+        }
+        else
             PlayAnimation("idle");
-        }
-        else if (AI.Direction.Y > AI.Direction.X)
-        {
-            if (AI.Direction.Y > 0)
-            {
-                PlayAnimation("walk");
-            }
-            else
-                PlayAnimation("walk_back");
-        }
-        else if (AI.Direction.X > 0)
-        {
-            if (AI.Direction.X > 0)
-            {
-                this.Mirror = true;
-                PlayAnimation("walk");
-            }
-            else
-            {
-                PlayAnimation("walk");
-                this.Mirror = false;
-            }
-        }
-
-            
 
         base.Update(gameTime);
     }
