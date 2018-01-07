@@ -51,6 +51,7 @@ class LittlePenguin : AImonster
         GameObjectGrid field = GameWorld.Find("TileField") as GameObjectGrid;
         GameObjectList players = GameWorld.Find("playerLIST") as GameObjectList;
 
+        Rectangle tileBoundingBox = new Rectangle((int)this.BoundingBox.X, (int)(this.BoundingBox.Y + 0.75 * Height), this.Width, (int)(this.Height / 4));
         //First check if monster collides with player
         foreach (Character player in players.Children)
             if (this.BoundingBox.Intersects(player.BoundingBox) && !playersHit.Contains(player))
@@ -59,7 +60,7 @@ class LittlePenguin : AImonster
         //Then check if monster collides with solid tile
         foreach (Tile tile in field.Objects)
         {
-            if (tile.IsSolid && this.BoundingBox.Intersects(tile.BoundingBox))
+            if (tile.IsSolid && tileBoundingBox.Intersects(tile.BoundingBox))
             {
                 movementVector = new Vector2(0, 0);
                 Position = previousPos;
