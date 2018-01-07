@@ -20,11 +20,6 @@ class Bunny : AImonster
     {
         previousPos = position;
         base.Update(gameTime);
-        if (previousPos.Y > position.Y)
-            PlayAnimation("walk_back");
-        else if (previousPos.Y < position.Y || previousPos.X < position.X || previousPos.X > position.X)
-            PlayAnimation("walk");
-        else
-            PlayAnimation("idle");
+        
     }
 }

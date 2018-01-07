@@ -32,7 +32,7 @@ class LittlePenguin : AImonster
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        if (AI.Target != null && idleCounter <= 0 && movementVector == new Vector2(0, 0))
+        if (AI.CurrentTarget != null && idleCounter <= 0 && movementVector == new Vector2(0, 0))
             slideDirection();
         else if (movementVector != new Vector2(0, 0))
         {
@@ -85,7 +85,7 @@ class LittlePenguin : AImonster
         //Take the position of the target
         GameObjectList players = GameWorld.Find("playerLIST") as GameObjectList;
         foreach(Character player in players.Children)
-            if(player == AI.Target)
+            if(player == AI.CurrentTarget)
             {
                 targetPos = player.Position;
             }

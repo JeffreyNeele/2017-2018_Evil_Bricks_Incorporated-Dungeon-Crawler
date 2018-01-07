@@ -42,11 +42,6 @@ class BaseAI
             {
                 MoveToPosition(waypointList[0], (float)gameTime.ElapsedGameTime.TotalSeconds);
             }
-            else
-            {
-                MoveToPosition(this.targetedObject.Position - this.targetedObject.Origin, (float)gameTime.ElapsedGameTime.TotalSeconds);
-                Monster owner_cast = owner as Monster;
-            }
         }
     }
 
@@ -137,12 +132,6 @@ class BaseAI
         {
             TargetRandomObject(chance, targetList);
         }
-    }
-
-
-    public Vector2 Direction
-    {
-        get { return direction; }
     }
 
     public float AImovementSpeed
