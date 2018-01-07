@@ -40,12 +40,23 @@ class Circle
         get { return origin; }
     }
 
-    public bool CollidesWithRectangle(Rectangle rectangle)
+    //public bool CollidesWithRectangle(Rectangle rectangle)
+    //{
+    //    float closestX = MathHelper.Clamp(origin.X, rectangle.Left, rectangle.Right);
+    //    float closestY = MathHelper.Clamp(origin.Y, rectangle.Top, rectangle.Bottom);
+    //    Vector2 distance = new Vector2(this.origin.X - closestX, this.origin.Y - closestY);
+    //    double distanceSquared = (float)Math.Pow(distance.X, 2) + Math.Pow(distance.Y, 2);
+    //    return distanceSquared < Math.Pow(radius, 2);
+    //}
+
+    public bool CollidesWithRectangle(SpriteGameObject target, SpriteGameObject owner)
     {
-        float closestX = MathHelper.Clamp(origin.X, rectangle.Left, rectangle.Right);
-        float closestY = MathHelper.Clamp(origin.Y, rectangle.Top, rectangle.Bottom);
-        Vector2 distance = new Vector2(this.origin.X - closestX, this.origin.Y - closestY);
-        double distanceSquared = (float)Math.Pow(distance.X, 2) + Math.Pow(distance.Y, 2);
-        return distanceSquared < Math.Pow(radius, 2);
+        //float closestX = MathHelper.Clamp(owner.Position.X + owner.Width / 2, target.Position.X, target.Position.X + target.Width);
+        float targetCenterX = target.Position.X + target.Width / 2;
+        //float closestY = MathHelper.Clamp(owner.Position.Y + owner.Height / 2, target.Position.Y, target.Position.Y + target.Width);
+        float targetCenterY = target.Position.Y + target.Width / 2;
+        Vector2 distanceVector = new Vector2(owner.Position.X - targetCenterX, owner.Position.Y - targetCenterY);
+        double distance = (float)Math.Sqrt(distanceVector.X * distanceVector.X + distanceVector.Y + distanceVector.Y);
+        return distance < radius;
     }
 }

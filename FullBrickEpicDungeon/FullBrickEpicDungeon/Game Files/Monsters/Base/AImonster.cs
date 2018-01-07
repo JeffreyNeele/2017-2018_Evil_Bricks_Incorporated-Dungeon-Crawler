@@ -8,7 +8,7 @@ abstract class AImonster : Monster
     protected BaseAI AI;
     public AImonster(float movementSpeed, Level currentLevel, string type) : base(type, currentLevel)
     {
-        AI = new BaseAI(this, movementSpeed, currentLevel);
+        AI = new BaseAI(this, movementSpeed, currentLevel, 150);
     }
 
     public override void Update(GameTime gameTime)
