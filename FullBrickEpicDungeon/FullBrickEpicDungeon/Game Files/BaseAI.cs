@@ -27,8 +27,8 @@ class BaseAI
     {
         if (targetedObject == null)
         {
-            // LineOfSightChecker(sightRange);
-            TargetRandomObject(100, levelGrid.GameWorld.Find("playerLIST") as GameObjectList);
+            LineOfSightChecker(sightRange);
+            // TargetRandomObject(100, levelGrid.GameWorld.Find("playerLIST") as GameObjectList);
         }
         else
         {
@@ -64,8 +64,7 @@ class BaseAI
         {
             this.owner.Position = targetGridPosition;
         }
-        */  
-        
+        */
     }
 
     // Method that returns a list with points for the AI to follow.
