@@ -4,12 +4,13 @@ using RoyT.AStar;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+// Basic AI used for characters and monsters make sure to set the isMonster boolean correctly
 class BaseAI
 {
     protected GameObjectGrid levelGrid;
     protected SpriteGameObject targetedObject, owner;
     protected float sightRange, movementSpeed;
-    protected bool isMonster;
+    protected bool isMonster, isAttacking;
     protected Level currentLevel;
     protected Vector2 direction;
 
@@ -21,14 +22,17 @@ class BaseAI
         this.movementSpeed = movementSpeed;
         this.sightRange = sightRange;
         levelGrid = currentLevel.TileField;
+        if (isMonster && !(owner is Monster))
+        {
+            throw new ArgumentException("the owner of this AI is not a monster while isMonster is set to true!");
+        }
     }
 
     public void Update(GameTime gameTime)
     {
         if (targetedObject == null)
         {
-            //LineOfSightChecker(sightRange);
-            TargetRandomObject(70, levelGrid.GameWorld.Find("playerLIST") as GameObjectList);
+            LineOfSightChecker(sightRange);
         }
         else
         {
@@ -36,6 +40,20 @@ class BaseAI
             if (owner.BoundingBox.Intersects(targetedObject.BoundingBox))
             {
                 MoveToPosition(targetedObject.Position - targetedObject.Origin, (float)gameTime.ElapsedGameTime.TotalSeconds);
+                if (isMonster)
+                {
+                    isAttacking = true;
+                    Monster owner_cast = owner as Monster;
+                    Character target_cast = targetedObject as Character; 
+                    owner_cast.Attack(target_cast);
+                }
+                else
+                {
+                    isAttacking = true;
+                    Character owner_cast = owner as Character;
+                    GameObjectList monsterList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList;
+                    owner_cast.CurrentWeapon.Attack(monsterList, currentLevel.TileField);
+                }
             }
             else if (waypointList.Count > 0 && this.owner.Position == waypointList[0])
             {
@@ -138,6 +156,10 @@ class BaseAI
         }
     }
 
+    public bool IsAttacking
+    {
+        get { return isAttacking; }
+    }
     public float AImovementSpeed
     {
         get { return movementSpeed; }

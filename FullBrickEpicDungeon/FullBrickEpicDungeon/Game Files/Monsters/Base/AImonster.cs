@@ -14,8 +14,11 @@ abstract class AImonster : Monster
     public override void Update(GameTime gameTime)
     {
         AI.Update(gameTime);
-
-        if (previousPos.Y > position.Y)
+        if (AI.IsAttacking)
+        {
+            PlayAnimation("attack");
+        }
+        else if (previousPos.Y > position.Y)
             PlayAnimation("walk_back");
         else if (previousPos.X < position.X)
         {

@@ -51,9 +51,7 @@ class Circle
 
     public bool CollidesWithRectangle(SpriteGameObject target, SpriteGameObject owner)
     {
-        //float closestX = MathHelper.Clamp(owner.Position.X + owner.Width / 2, target.Position.X, target.Position.X + target.Width);
         float targetCenterX = target.Position.X + target.Width / 2;
-        //float closestY = MathHelper.Clamp(owner.Position.Y + owner.Height / 2, target.Position.Y, target.Position.Y + target.Width);
         float targetCenterY = target.Position.Y + target.Width / 2;
         Vector2 distanceVector = new Vector2(owner.Position.X - targetCenterX, owner.Position.Y - targetCenterY);
         double distance = (float)Math.Sqrt(distanceVector.X * distanceVector.X + distanceVector.Y + distanceVector.Y);

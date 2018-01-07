@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 class LittlePenguin : AImonster
 {
     float slideSpeed;
-    Vector2 targetPos, movementVector, previousPos;
+    Vector2 targetPos, movementVector;
     float idleCounter;
     public LittlePenguin(Level currentLevel) : base(0f, currentLevel, "LittlePenguin")
     {
@@ -33,7 +33,7 @@ class LittlePenguin : AImonster
     {
         base.Update(gameTime);
         if (AI.CurrentTarget != null && idleCounter <= 0 && movementVector == new Vector2(0, 0))
-            slideDirection();
+            SlideDirection();
         else if (movementVector != new Vector2(0, 0))
         {
             previousPos = Position;
@@ -77,10 +77,8 @@ class LittlePenguin : AImonster
 
     float totalDistance;
     //Method that defines the movementVector of the penguin.
-    public void slideDirection()
+    public void SlideDirection()
     {
-        //Reset the playersHit list, players only take damage when the penguin is sliding
-        playersHit = new List<Character>();
 
         //Take the position of the target
         GameObjectList players = GameWorld.Find("playerLIST") as GameObjectList;

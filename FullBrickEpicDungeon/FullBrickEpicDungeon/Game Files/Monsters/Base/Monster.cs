@@ -13,6 +13,7 @@ abstract partial class Monster : AnimatedGameObject
     public Monster(string id, Level currentLevel) : base(0, id)
     {
         this.currentLevel = currentLevel;
+        playersHit = new List<Character>();
         attributes = new BaseAttributes();
         baseattributes = new BaseAttributes();
         hitCounter = 0;
