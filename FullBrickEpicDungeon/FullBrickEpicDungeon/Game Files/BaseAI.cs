@@ -106,7 +106,7 @@ class BaseAI
         else
             targetList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList;
 
-        Circle lineOfSight = new Circle(sightRange + owner.Sprite.Width / 2, owner.Origin);
+        Circle lineOfSight = new Circle(sightRange, owner.Origin);
         foreach(SpriteGameObject obj in targetList.Children)
         {
             if (lineOfSight.CollidesWithRectangle(obj.BoundingBox))

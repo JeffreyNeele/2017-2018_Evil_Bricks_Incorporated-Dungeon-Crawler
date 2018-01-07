@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 abstract partial class Monster : AnimatedGameObject
 {
     protected BaseAttributes attributes, baseattributes;
-    protected BaseAI baseAI;
     protected Vector2 startPosition;
     public Monster(string id, Level currentLevel) : base(0, id)
     {
