@@ -33,11 +33,15 @@ class BaseAI
         else
         {
             List<Vector2> waypointList = FindPath(targetedObject.Position, owner.Position);
-            if (waypointList.Count > 0 && this.owner.Position == waypointList[0])
+            if (owner.BoundingBox.Intersects(targetedObject.BoundingBox))
+            {
+                MoveToPosition(targetedObject.Position - targetedObject.Origin, (float)gameTime.ElapsedGameTime.TotalSeconds);
+            }
+            else if (waypointList.Count > 0 && this.owner.Position == waypointList[0])
             {
                 waypointList.RemoveAt(0);
+                
             }
-
             if (waypointList.Count > 0)
             {
                 MoveToPosition(waypointList[0], (float)gameTime.ElapsedGameTime.TotalSeconds);
