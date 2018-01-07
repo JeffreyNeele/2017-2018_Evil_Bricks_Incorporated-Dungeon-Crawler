@@ -13,7 +13,7 @@ class BaseAI
     protected Level currentLevel;
     protected Vector2 direction;
 
-    public BaseAI(SpriteGameObject owner, float movementSpeed, Level currentLevel, bool isMonster = true, float sightRange = 50)
+    public BaseAI(SpriteGameObject owner, float movementSpeed, Level currentLevel, float sightRange = 50, bool isMonster = true)
     {
         this.currentLevel = currentLevel;
         this.isMonster = isMonster;
@@ -109,7 +109,7 @@ class BaseAI
         Circle lineOfSight = new Circle(sightRange + owner.Sprite.Width / 2, owner.Origin);
         foreach(SpriteGameObject obj in targetList.Children)
         {
-            if (lineOfSight.CollidesWithRectangle(obj.BoundingBox))
+            if (lineOfSight.CollidesWithRectangle(obj, owner))
             {
                 TargetRandomObject(50, targetList);
             }
