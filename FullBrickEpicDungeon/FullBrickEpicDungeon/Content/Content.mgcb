@@ -115,18 +115,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Tiles/TileGrass1.png
 
-#begin Assets/Sprites/Tiles/TileIce1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/Tiles/TileIce1.png
-
 #begin Assets/Sprites/Tiles/TileWater1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -646,11 +634,26 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/InteractiveObjects/ChestOpen1.png
 
-#begin Assets/Levels/level3.txt
-/copy:Assets/Levels/level3.txt
-
 #begin Assets/Levels/originaldemo.txt
 /copy:Assets/Levels/originaldemo.txt
+
+#begin Assets/Sprites/Tiles/TileIce1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Tiles/TileIce1.png
+
+#begin Assets/Levels/Tutorial2.txt
+/copy:Assets/Levels/Tutorial2.txt
+
+#begin Assets/Levels/Tutorial3.txt
+/copy:Assets/Levels/Tutorial3.txt
 
 #begin Assets/Levels/level1.txt
 /copy:Assets/Levels/level1.txt
