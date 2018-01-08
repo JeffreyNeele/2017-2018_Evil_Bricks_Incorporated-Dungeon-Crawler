@@ -72,10 +72,7 @@
     <Compile Include="Game Files\Character\Base\Character.cs" />
     <Compile Include="Game Files\BaseAttributes.cs" />
     <Compile Include="Game Files\Character\Base\CharacterInput.cs" />
-    <Compile Include="Game Files\Character\Types\ShadowHunter.cs" />
-    <Compile Include="Game Files\Character\Types\Talismaniac.cs" />
     <Compile Include="Game Files\Character\Types\Shieldmaiden.cs" />
-    <Compile Include="Game Files\Character\Types\Lightbringer.cs" />
     <Compile Include="Game Files\Enumerators.cs" />
     <Compile Include="Game Files\Cutscenes\Type\1LarryShits.cs" />
     <Compile Include="Game Files\Cutscenes\Base\Cutscene.cs" />
@@ -89,7 +86,6 @@
     <Compile Include="Game Files\Game states\PlayingState.cs" />
     <Compile Include="Game Files\Game states\SavedGameState.cs" />
     <Compile Include="Game Files\Game states\SettingsState.cs" />
-    <Compile Include="Game Files\Game states\TestState.cs" />
     <Compile Include="Game Files\Game states\TitleMenu.cs" />
     <Compile Include="Game Files\HUD\Conversation\Conversation.cs" />
     <Compile Include="Game Files\HUD\PlayerInformation\PlayerInformation.cs" />

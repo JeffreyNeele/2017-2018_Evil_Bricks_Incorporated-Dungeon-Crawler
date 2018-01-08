@@ -15,15 +15,15 @@ abstract partial class Character : AnimatedGameObject
     protected Vector2 startPosition, movementSpeed, iceSpeed;
     protected int playerNumber;
     protected float hitCounter;
-
     protected Dictionary<Buttons, Buttons> xboxControls;
-    protected bool xboxControlled = false;
-    Vector2 walkingdirection;
+    protected bool xboxControlled = false, playerControlled;
+    protected Vector2 walkingdirection;
+    protected BaseAI AI;
 
     //Constructor: sets up the controls given to the constructor for each player (xbox or keyboard)
-    protected Character(int playerNumber, bool controllerControlled, ClassType classType, string baseAsset, string id = "") : base(0, id)
+    protected Character(int playerNumber, Level currentLevel, bool xboxControlled, ClassType classType, string id = "") : base(0, id)
     {
-
+        playerControlled = true;
         this.classType = classType;
         baseattributes = new BaseAttributes();
         inventory = new List<Equipment>();
@@ -31,16 +31,11 @@ abstract partial class Character : AnimatedGameObject
         reviveTimer = new Timer(10);
         this.velocity = Vector2.Zero;
         this.movementSpeed = new Vector2(4, 4);
+        AI = new BaseAI(this, (float)Math.Sqrt((movementSpeed.X * movementSpeed.X) + (movementSpeed.Y * movementSpeed.Y)), currentLevel);
         this.hitCounter = 0;
-
-
         this.playerNumber = playerNumber;
-
-        this.xboxControlled = controllerControlled;
+        this.xboxControlled = xboxControlled;
         this.iceSpeed = new Vector2(0, 0);
-
-
-
         if (playerNumber == 1)
         {
             this.keyboardControlled = true; //player 1 en 2 kunnen naast xbox controls ook altijd nog op keyboard spelen
@@ -76,131 +71,6 @@ abstract partial class Character : AnimatedGameObject
         }
     }
 
-    // Method that handles keyboard movement and input
-    public void HandleKeyboardInput(InputHelper inputHelper)
-    {
-        if (inputHelper.KeyPressed(keyboardControls[Keys.Q]))
-            this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
-        if (inputHelper.KeyPressed(keyboardControls[Keys.R]))
-            this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
-        if (inputHelper.KeyPressed(keyboardControls[Keys.T]))
-            this.weapon.UseSpecialAbility(GameWorld.Find("monsterLIST") as GameObjectList);
-
-        //schuin linksboven
-            if (inputHelper.IsKeyDown(keyboardControls[Keys.W]))
-            {
-                if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
-                {
-                    walkingdirection = MovementVector(this.movementSpeed, 225);
-                }
-                else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
-                {
-                    walkingdirection = MovementVector(this.movementSpeed, 315);
-                }
-                else
-                {
-                    walkingdirection = MovementVector(this.movementSpeed, 270);
-                }
-
-            }
-        //schuin rechtsboven
-            else if (inputHelper.IsKeyDown(keyboardControls[Keys.S]))
-            {
-                if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
-                {
-                    walkingdirection = MovementVector(this.movementSpeed, 135);
-                }
-                else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
-                {
-                    walkingdirection = MovementVector(this.movementSpeed, 45);
-
-                }
-                else
-                {
-                    walkingdirection = MovementVector(this.movementSpeed, 90);
-                }
-            }      
-        //naar links
-             else if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
-            {
-                walkingdirection = MovementVector(this.movementSpeed, 180);
-            }
-        //naar rechts
-            else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
-            {
-                walkingdirection = MovementVector(this.movementSpeed, 0);
-            }
-
-            if (inputHelper.IsKeyDown(keyboardControls[Keys.E])) //Interact key
-            {
-                ObjectCollisionChecker();
-            }
-    }
-
-
-
-    //handles xbox controller walking and input
-    private void HandleInputXboxController(InputHelper inputHelper)
-    {
-        if (xboxControls != null) //xboxcontrols zijn niet ingeladen, dus wordt niet door xboxcontroller bestuurd.
-        {
-            if (inputHelper.ControllerConnected(playerNumber)) //check of controller connected is
-            {
-                //Attack and Main Ability
-                if (inputHelper.ButtonPressed(playerNumber, Buttons.A))
-                    this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
-                if (inputHelper.ButtonPressed(playerNumber, Buttons.B))
-                    this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
-
-                //Interact button
-                if (inputHelper.ButtonPressed(playerNumber, Buttons.X))
-                    ObjectCollisionChecker();
-
-                //Movement
-                walkingdirection = inputHelper.WalkingDirection(playerNumber) * this.movementSpeed;
-                walkingdirection.Y = -walkingdirection.Y;
-               
-
-            }
-        }
-    }
-
-
-
-
-    // Method that handles keyboard movement when the character is on ice
-    public void KeyboardHandleIceMovement(InputHelper inputHelper)
-    {
-        if (blockinput)
-        {
-            if (this.iceSpeed != new Vector2(0, 0))
-                this.position += iceSpeed;
-        }
-        else
-        {
-            if (inputHelper.IsKeyDown(keyboardControls[Keys.W]))
-            {
-                blockinput = true;
-                iceSpeed = MovementVector(this.movementSpeed * 2, 270);
-            }
-            else if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
-            {
-                blockinput = true;
-                iceSpeed = MovementVector(this.movementSpeed * 2, 180);
-            }
-            else if (inputHelper.IsKeyDown(keyboardControls[Keys.S]))
-            {
-                blockinput = true;
-                iceSpeed = MovementVector(this.movementSpeed * 2, 90);
-            }
-            else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
-            {
-                blockinput = true;
-                iceSpeed = MovementVector(this.movementSpeed * 2, 0);
-            }
-            PlayAnimationDirection(iceSpeed);
-        }
-    }
 
     // Calculates the new movementVector for a character for keyboard
     public Vector2 MovementVector(Vector2 movementSpeed, float angle)
@@ -219,7 +89,6 @@ abstract partial class Character : AnimatedGameObject
     {
         base.Update(gameTime);
         this.weapon.Update(gameTime);
-        MonsterCollisionChecker();
         IsOnIceChecker();
         if (IsDowned)
         {
@@ -239,6 +108,10 @@ abstract partial class Character : AnimatedGameObject
         }
         else
             Visible = true;
+        if (!playerControlled)
+        {
+
+        }
     }
 
 
@@ -262,20 +135,6 @@ abstract partial class Character : AnimatedGameObject
         {
             this.attributes.Gold -= amount;
             target.attributes.Gold += amount;
-        }
-    }
-
-    // Checks if the Character collides with monsters
-    public void MonsterCollisionChecker()
-    {
-        GameObjectList monsterList = GameWorld.Find("monsterLIST") as GameObjectList;
-        // TODO: Add Tilefield collision with walls puzzles etc, (not doable atm as it isn't programmed as of writing this)
-        foreach (Monster monsterobj in monsterList.Children)
-        {
-            if (monsterobj.CollidesWith(this))
-            {
-                this.TakeDamage(monsterobj.Attributes.Attack);
-            }
         }
     }
 
@@ -343,14 +202,7 @@ abstract partial class Character : AnimatedGameObject
 
         if (remove)
         {
-            try
-            {
-                inventory.Remove(item);
-            }
-            catch
-            {
-                throw new ArgumentOutOfRangeException("No such item was found in " + this.classType + "'s inventory!");
-            }
+            inventory.Remove(item);
         }
         else
         {
@@ -455,15 +307,15 @@ abstract partial class Character : AnimatedGameObject
         set { attributes = value; }
     }
 
-    public Dictionary<Keys, Keys> KeyboardControlScheme
-    {
-        get { return keyboardControls; }
-        set { keyboardControls = value; }
-    }
-
     public ClassType Type
     {
         get { return classType; }
+    }
+
+    public bool PlayerControlled
+    {
+        get { return playerControlled; }
+        set { playerControlled = value; }
     }
 
     public int PlayerNumber

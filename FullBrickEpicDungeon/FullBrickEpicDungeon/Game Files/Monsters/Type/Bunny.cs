@@ -6,7 +6,7 @@ class Bunny : AImonster
     {
         this.baseattributes.HP = 50;
         this.baseattributes.Armour = 5;
-        this.baseattributes.Attack = 0;
+        this.baseattributes.Attack = 1;
         this.baseattributes.Gold = 50;
         attributes = baseattributes;
         LoadAnimation("Assets/Sprites/Enemies/bunny_default", "idle", false);

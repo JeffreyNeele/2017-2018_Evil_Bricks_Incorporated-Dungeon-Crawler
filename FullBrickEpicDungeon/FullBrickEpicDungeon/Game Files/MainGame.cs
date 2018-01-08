@@ -9,6 +9,7 @@ namespace FullBrickEpicDungeon
     /// </summary>
     public class DungeonCrawler : GameEnvironment
     {
+        public static int numberOfPlayers = 1;
         //SpriteGameObject conversationFrame;
         public DungeonCrawler()
         {
@@ -43,14 +44,9 @@ namespace FullBrickEpicDungeon
             spriteBatch = new SpriteBatch(GraphicsDevice);
             // TODO: use this.Content to load your game content here
             gameStateManager.AddGameState("titleMenu", new TitleMenuState());
-            gameStateManager.AddGameState("characterSelection", new CharacterSelection());
-            gameStateManager.AddGameState("test", new TestState());       
+            gameStateManager.AddGameState("characterSelection", new CharacterSelection());    
             gameStateManager.AddGameState("playingState", new PlayingState());
             gameStateManager.AddGameState("conversation", new ConversationState());
-            /* gameStateManager.AddGameState("helpState", new HelpState());
-            gameStateManager.AddGameState("levelMenu", new LevelMenuState());
-            gameStateManager.AddGameState("gameOverState", new GameOverState());
-            gameStateManager.AddGameState("levelFinishedState", new LevelFinishedState()); */
             gameStateManager.SwitchTo("titleMenu");
         }
 
@@ -84,5 +80,7 @@ namespace FullBrickEpicDungeon
         {
             base.Draw(gameTime);
         }
+
+        
     }
 }

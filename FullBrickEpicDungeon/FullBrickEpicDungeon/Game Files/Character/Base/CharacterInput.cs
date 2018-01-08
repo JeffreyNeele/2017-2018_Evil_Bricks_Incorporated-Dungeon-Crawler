@@ -16,39 +16,45 @@ abstract partial class Character : AnimatedGameObject
     //TO DO: a way to distinguish characters / players from each other.
     public override void HandleInput(InputHelper inputHelper)
     {
-        Vector2 previousPosition = this.position;
-
-        if (!IsDowned && !isOnIce && !blockinput)
+        if (playerControlled)
         {
-            velocity = Vector2.Zero;
-            //Input keys for basic AA and abilities
-            if (inputHelper.KeyPressed(keyboardControls[Keys.Q]))
-                this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
-            if (inputHelper.KeyPressed(keyboardControls[Keys.R]))
-                this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
-            if (inputHelper.KeyPressed(keyboardControls[Keys.T]))
-                this.weapon.UseSpecialAbility(GameWorld.Find("monsterLIST") as GameObjectList);
-
-            if (keyboardControlled)
+            Vector2 previousPosition = this.position;
+            if (!IsDowned && !isOnIce && !blockinput)
             {
-                HandleKeyboardMovement(inputHelper);
+                velocity = Vector2.Zero;
+                //Input keys for basic AA and abilities
+                if (inputHelper.KeyPressed(keyboardControls[Keys.Q]))
+                    this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
+                if (inputHelper.KeyPressed(keyboardControls[Keys.R]))
+                    this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
+                if (inputHelper.KeyPressed(keyboardControls[Keys.T]))
+                    this.weapon.UseSpecialAbility(GameWorld.Find("monsterLIST") as GameObjectList);
+
+                if (keyboardControlled)
+                {
+                    HandleKeyboardMovement(inputHelper);
+                }
+                else
+                {
+                    HandleXboxMovement(inputHelper);
+                }
+
             }
-        }
-        else if (!IsDowned && isOnIce)
-        {
-            HandleIceMovement(inputHelper);
-        }
+            else if (!IsDowned && isOnIce)
+            {
+                HandleIceMovement(inputHelper);
+            }
 
-        if (!SolidCollisionChecker())
-        {
-            this.iceSpeed = new Vector2(0, 0);
-            this.position = previousPosition;
-            PlayAnimation("idle");
-            blockinput = false;
+            if (!SolidCollisionChecker())
+            {
+                this.iceSpeed = new Vector2(0, 0);
+                this.position = previousPosition;
+                PlayAnimation("idle");
+                blockinput = false;
+            }
+
+            base.HandleInput(inputHelper);
         }
-
-        base.HandleInput(inputHelper);
-
     }
 
     // Method that handles keyboard movement
@@ -127,7 +133,7 @@ abstract partial class Character : AnimatedGameObject
     }
 
     // Method that handles movement when the character is on ice
-    public void HandleIceMovement(InputHelper inputHelper)
+    private void HandleIceMovement(InputHelper inputHelper)
     {
         if (blockinput)
         {
@@ -161,6 +167,28 @@ abstract partial class Character : AnimatedGameObject
                 iceSpeed = MovementVector(this.movementSpeed * 3, 0);
                 PlayAnimation("rightcycle");
                 this.Mirror = true;
+            }
+        }
+    }
+
+    private void HandleXboxMovement(InputHelper inputHelper)
+    {
+        if (xboxControls != null) //xboxcontrols zijn niet ingeladen, dus wordt niet door xboxcontroller bestuurd.
+        {
+            if (inputHelper.ControllerConnected(playerNumber)) //check of controller connected is
+            {
+                //Attack and Main Ability
+                if (inputHelper.ButtonPressed(playerNumber, Buttons.A))
+                    this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
+                if (inputHelper.ButtonPressed(playerNumber, Buttons.B))
+                    this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
+
+                //Interact button
+                if (inputHelper.ButtonPressed(playerNumber, Buttons.X))
+                    ObjectCollisionChecker();
+                //Movement
+                walkingdirection = inputHelper.WalkingDirection(playerNumber) * this.movementSpeed;
+                walkingdirection.Y = -walkingdirection.Y;
             }
         }
     }

@@ -16,18 +16,16 @@ class BaseAI
     protected Timer idleTimer;
     public BaseAI(AnimatedGameObject owner, float movementSpeed, Level currentLevel, float idleTime = 1.25F, float sightRange = 200, bool isMonster = true)
     {
-        idleTimer = new Timer(idleTime);
-        idleTimer.IsExpired = true;
+        idleTimer = new Timer(idleTime)
+        {
+            IsExpired = true
+        };
         this.currentLevel = currentLevel;
         this.isMonster = isMonster;
         this.owner = owner;
         this.movementSpeed = movementSpeed;
         this.sightRange = sightRange;
         levelGrid = currentLevel.TileField;
-        if (isMonster && !(owner is Monster))
-        {
-            throw new ArgumentException("the owner of this AI is not a monster while isMonster is set to true!");
-        }
     }
 
     public void Update(GameTime gameTime)

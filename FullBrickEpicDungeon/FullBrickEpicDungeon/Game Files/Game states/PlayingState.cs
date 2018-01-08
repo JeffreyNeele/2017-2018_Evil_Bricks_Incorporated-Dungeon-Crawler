@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using System;
-using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 
-class PlayingState : IGameLoopObject
+class PlayingState : IGameLoopObject 
 {
     protected List<Level> levelList;
     protected int currentLevelIndex;
@@ -69,4 +67,5 @@ class PlayingState : IGameLoopObject
     {
         get { return levelList[currentLevelIndex]; }
     }
+
 }
