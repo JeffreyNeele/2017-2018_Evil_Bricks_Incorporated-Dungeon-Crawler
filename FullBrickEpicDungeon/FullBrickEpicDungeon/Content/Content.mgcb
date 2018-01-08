@@ -19,9 +19,6 @@
 #begin Assets/Fonts/ConversationFont.xnb
 /copy:Assets/Fonts/ConversationFont.xnb
 
-#begin Assets/Levels/level1.txt
-/copy:Assets/Levels/level1.txt
-
 #begin Assets/Sprites/Lightbringer/lightbringer_default.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -648,4 +645,13 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/InteractiveObjects/ChestOpen1.png
+
+#begin Assets/Levels/level3.txt
+/copy:Assets/Levels/level3.txt
+
+#begin Assets/Levels/originaldemo.txt
+/copy:Assets/Levels/originaldemo.txt
+
+#begin Assets/Levels/level1.txt
+/copy:Assets/Levels/level1.txt
 
