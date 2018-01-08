@@ -8,13 +8,14 @@ using Microsoft.Xna.Framework.Graphics;
 class BaseAI
 {
     protected GameObjectGrid levelGrid;
+    protected GameObjectList targetList;
     protected AnimatedGameObject targetedObject, owner;
     protected float sightRange, movementSpeed;
     protected bool isMonster, isAttacking;
     protected Level currentLevel;
     protected Vector2 direction;
     protected Timer idleTimer;
-    public BaseAI(AnimatedGameObject owner, float movementSpeed, Level currentLevel, float idleTime = 1.25F, float sightRange = 200, bool isMonster = true)
+    public BaseAI(AnimatedGameObject owner, float movementSpeed, Level currentLevel, bool isMonster = true, float idleTime = 1.25F, float sightRange = 200)
     {
         idleTimer = new Timer(idleTime)
         {
@@ -26,13 +27,25 @@ class BaseAI
         this.movementSpeed = movementSpeed;
         this.sightRange = sightRange;
         levelGrid = currentLevel.TileField;
+        
+        if (isMonster)
+            targetList = currentLevel.GameWorld.Find("playerLIST") as GameObjectList;
+        else
+            targetList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList;
     }
 
     public void Update(GameTime gameTime)
     {
         if (targetedObject == null)
         {
-            LineOfSightChecker(sightRange);
+            if (isMonster)
+            {
+                LineOfSightChecker(sightRange);
+            }
+            else 
+            {
+                TargetRandomObject(50);
+            }
         }
         else if (idleTimer.IsExpired)
         {
@@ -40,7 +53,7 @@ class BaseAI
             if (owner.BoundingBox.Intersects(targetedObject.BoundingBox))
             {
                 MoveToPosition(targetedObject.Position - targetedObject.Origin, (float)gameTime.ElapsedGameTime.TotalSeconds);
-                if (targetedObject.BoundingBox.Contains(owner.Position - owner.Origin))
+                if (targetedObject.BoundingBox.Contains(owner.Position))
                 {
                     if (isMonster)
                     {
@@ -48,14 +61,23 @@ class BaseAI
                         Monster owner_cast = owner as Monster;
                         Character target_cast = targetedObject as Character;
                         owner_cast.Attack(target_cast);
+                        if (target_cast.IsDowned)
+                        {
+                            targetedObject = null;
+                        }
                         idleTimer.Reset();
                     }
                     else
                     {
                         isAttacking = true;
                         Character owner_cast = owner as Character;
+                        Monster target_cast = targetedObject as Monster;
                         GameObjectList monsterList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList;
                         owner_cast.CurrentWeapon.Attack(monsterList, currentLevel.TileField);
+                        if (target_cast.IsDead)
+                        {
+                            targetedObject = null;
+                        }
                         idleTimer.Reset();
                     }
                 }
@@ -135,11 +157,7 @@ class BaseAI
 
     public void LineOfSightChecker(float sightRange)
     {
-        GameObjectList targetList;
-        if (isMonster)
-            targetList = currentLevel.GameWorld.Find("playerLIST") as GameObjectList;
-        else
-            targetList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList;
+        
 
         Circle lineOfSight = new Circle(sightRange, owner.Origin);
         foreach(AnimatedGameObject obj in targetList.Children)
@@ -151,7 +169,7 @@ class BaseAI
         }
     }
 
-    public void TargetRandomObject(float chance, GameObjectList targetList)
+    public void TargetRandomObject(float chance)
     {
         foreach (AnimatedGameObject target in targetList.Children)
         {
@@ -165,7 +183,7 @@ class BaseAI
 
         if (targetedObject == null)
         {
-            TargetRandomObject(chance, targetList);
+            TargetRandomObject(chance);
         }
     }
 

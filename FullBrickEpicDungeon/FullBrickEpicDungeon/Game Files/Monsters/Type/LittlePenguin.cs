@@ -65,7 +65,7 @@ class LittlePenguin : AImonster
                 movementVector = new Vector2(0, 0);
                 Position = previousPos;
                 idleCounter = 3;
-                AI.TargetRandomObject(50, players);
+                AI.TargetRandomObject(50);
             }
         }
     }
