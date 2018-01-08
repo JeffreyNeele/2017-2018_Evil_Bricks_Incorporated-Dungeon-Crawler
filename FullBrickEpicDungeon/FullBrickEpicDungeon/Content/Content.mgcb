@@ -70,30 +70,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Tiles/BasicTile1.png
 
-#begin Assets/Sprites/Tiles/ChestClosed1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/Tiles/ChestClosed1.png
-
-#begin Assets/Sprites/Tiles/ChestOpen1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/Tiles/ChestOpen1.png
-
 #begin Assets/Sprites/Tiles/RockIce.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -648,4 +624,28 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Character selection/Ready-not.png
+
+#begin Assets/Sprites/InteractiveObjects/ChestClosed1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/InteractiveObjects/ChestClosed1.png
+
+#begin Assets/Sprites/InteractiveObjects/ChestOpen1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/InteractiveObjects/ChestOpen1.png
 
