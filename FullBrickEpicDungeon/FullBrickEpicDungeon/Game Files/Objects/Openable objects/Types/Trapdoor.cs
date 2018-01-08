@@ -6,29 +6,32 @@ class Trapdoor : OpenableObject
     //naar volgende level moet nog geimplementeerd worden. Momenteel wordt hij alleen getekend.
     public Trapdoor(TileType door, string assetname, string id, int sheetIndex, Level level) : base(door, assetname, id, sheetIndex)
     {
-        allPlayers = GameWorld.Find("playerLIST") as GameObjectList;
+        
     }
     public override void Update(GameTime gameTime)
     {
-        //DetectAllPlayers();
+        if (DetectAllPlayers() && this.Sprite.SheetIndex == 1)
+            GameEnvironment.GameStateManager.SwitchTo("levelFinishedState");
         base.Update(gameTime);
     }
 
-    public void DetectAllPlayers()
+    public bool DetectAllPlayers()
     {
+        allPlayers = GameWorld.Find("playerLIST") as GameObjectList;
         int onTrapdoorCounter = 0;
         foreach (Character player in allPlayers.Children)
         {
-            Rectangle quarterBoundingBox = new Rectangle((int)this.BoundingBox.X, (int)(this.BoundingBox.Y + 0.75 * Height), this.Width, (int)(this.Height / 4));
-            if (this.BoundingBox.Contains(quarterBoundingBox))
+            Rectangle quarterBoundingBox = new Rectangle((int)player.BoundingBox.X, (int)(player.BoundingBox.Y + 0.75 * Height), player.Width, (int)(player.Height / 4));
+            if (this.BoundingBox.Intersects(quarterBoundingBox))
                 onTrapdoorCounter++;
         }
 
-        if(onTrapdoorCounter == 4)
+        if(onTrapdoorCounter == 2)
         {
-            //Go to next level
+            return true;
         }
-            
+
+        return false;
 
     }
 }

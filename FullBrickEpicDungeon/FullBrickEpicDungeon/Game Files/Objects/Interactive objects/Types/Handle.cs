@@ -7,7 +7,7 @@ class Handle : InteractiveObject
     int handlenumber = 0;
     public Handle(string assetname, string id, int sheetIndex) : base(assetname, id, sheetIndex)
     {
-        countDownTimer = new Timer((float)0.2);
+        countDownTimer = new Timer((float)1.0);
     }
 
     public override void Update(GameTime gameTime)
@@ -35,6 +35,7 @@ class Handle : InteractiveObject
         //give "open" to open the corresponding object. Give "close" to close the corresponding object.
 
         GameObjectGrid tileField = GameWorld.Find("TileField") as GameObjectGrid;
+        GameObjectList objectList = GameWorld.Find("objectLIST") as GameObjectList;
         foreach (var openableObject in tileField.Objects)
         {
             if (openableObject is OpenableObject)
@@ -46,6 +47,20 @@ class Handle : InteractiveObject
 
                     if(action == "close")
                     ((OpenableObject)openableObject).Close();
+                }
+            }
+        }
+
+        foreach(var next in objectList.Children)
+        {
+            if(next is Trapdoor)
+            {
+                if (((Trapdoor)next).Objectnumber == handlenumber)
+                {
+                    if (action == "open")
+                        ((Trapdoor)next).Open();
+                    if (action == "close")
+                        ((Trapdoor)next).Close();
                 }
             }
         }

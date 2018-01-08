@@ -4,12 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
-class LevelFinishedState
+class LevelFinishedState : GameObjectList
 {
+    protected IGameLoopObject playingState;
     public LevelFinishedState()
     {
+        playingState = GameEnvironment.GameStateManager.GetGameState("playingState");
 
+    }
+
+    public override void HandleInput(InputHelper inputHelper)
+    {
+        if (!inputHelper.KeyPressed(Keys.E))
+        {
+            return;
+        }
+        GameEnvironment.GameStateManager.SwitchTo("playingState");
+        (playingState as PlayingState).GoToNextLevel();
+    }
+
+    public override void Update(GameTime gameTime)
+    {
+        playingState.Update(gameTime);
+        GameEnvironment.GameStateManager.SwitchTo("playingState");
+        (playingState as PlayingState).GoToNextLevel();
     }
 }
 

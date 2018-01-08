@@ -685,3 +685,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Shieldmaiden/ShieldMaiden-Animation-Walk-Front@4.png
 
+#begin Assets/Levels/level2.txt
+/copy:Assets/Levels/level2.txt
+
