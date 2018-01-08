@@ -142,8 +142,8 @@ partial class Level : GameObjectList
         GameObjectGrid tileField = new GameObjectGrid(tileStringList.Count, lineArray.Length - 1, 3, "TileField"); 
 
         //values for the cell width and height, these are predetermined in the Tiled Map Editor, so are constants.
-        tileField.CellWidth = 100; 
-        tileField.CellHeight = 100;
+        tileField.CellWidth = 50; 
+        tileField.CellHeight = 50;
 
         // Go through all given lines in the file, it is assumed here that it is in the correct form. 
         int[,] IDlist = new int[tileField.Columns, tileField.Rows];
