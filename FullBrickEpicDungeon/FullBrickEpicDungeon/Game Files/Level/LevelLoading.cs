@@ -126,7 +126,14 @@ partial class Level : GameObjectList
                 objectList.Add(redlock);
             }
 
-            if(splitArray[0] == "DUMMY")
+            if (splitArray[0] == "SPIKETRAP")
+            {
+                AutomatedObject spikeTrap = new SpikeTrap("Assets/Sprites/InteractiveObjects/SpikeTrap@2", "spikeTrap", 0, this);
+                spikeTrap.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
+                objectList.Add(spikeTrap);
+            }
+
+            if (splitArray[0] == "DUMMY")
             {
                 Monster dummy = new Dummy("Assets/Sprites/Enemies/Dummy", this);
                 dummy.StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));

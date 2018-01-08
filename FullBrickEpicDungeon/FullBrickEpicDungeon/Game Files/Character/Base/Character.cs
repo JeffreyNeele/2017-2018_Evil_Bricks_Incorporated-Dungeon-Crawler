@@ -324,8 +324,10 @@ abstract partial class Character : AnimatedGameObject
 
         foreach (var intObj in objectList.Children)
         {
+            if (intObj is Trap)
+                continue;
             //hierboven kun je nog niet naar InteractiveObject vragen omdat je anders een casting error krijgt bij andere objecten waar je mee interact.
-            if (intObj is InteractiveObject)
+            else if (intObj is InteractiveObject)
             {
                 if (((InteractiveObject)intObj).CollidesWith(this))
                 {
