@@ -34,8 +34,7 @@ abstract partial class Character : AnimatedGameObject
 
                 if (keyboardControlled)
                 {
-                    //HandleKeyboardMovement(inputHelper);
-                    HandleXboxMovement(inputHelper);
+                    HandleKeyboardMovement(inputHelper);
                 }
                 else
                 {
