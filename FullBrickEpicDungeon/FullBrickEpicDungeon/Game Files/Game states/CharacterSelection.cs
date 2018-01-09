@@ -47,14 +47,14 @@ class CharacterSelection : GameObjectList
 
             //make and load in the animations
             characterSprites[i] = new AnimatedGameObject(2);
-            characterSprites[i].LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_default", "maiden1", true);
-            characterSprites[i].LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_blue", "maiden2", true);
-            characterSprites[i].LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_green", "maiden3", true);
-            characterSprites[i].LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_orange", "maiden4", true);
+            characterSprites[i].LoadAnimation("Assets/Sprites/Character selection/shieldmaiden_default", "maiden1", true);
+            characterSprites[i].LoadAnimation("Assets/Sprites/Character selection/shieldmaiden_blue", "maiden2", true);
+            characterSprites[i].LoadAnimation("Assets/Sprites/Character selection/shieldmaiden_green", "maiden3", true);
+            characterSprites[i].LoadAnimation("Assets/Sprites/Character selection/shieldmaiden_orange", "maiden4", true);
             
             //position of the sprites
             characterSprites[i].Position = new Vector2(borderSprites[i].Position.X + borderSprites[i].Width / 2,
-                borderSprites[i].Position.Y + 150);
+                borderSprites[i].Position.Y + 205);
             Add(characterSprites[i]);
 
             //play all the different animations

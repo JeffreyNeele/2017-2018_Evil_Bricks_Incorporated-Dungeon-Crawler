@@ -47,13 +47,15 @@ abstract partial class Character : AnimatedGameObject
                 HandleIceMovement(inputHelper);
             }
 
-            if (!SolidCollisionChecker())
-            {
-                this.iceSpeed = new Vector2(0, 0);
-                this.position = previousPosition;
-                PlayAnimation("idle");
-                blockinput = false;
-            }
+        if (!SolidCollisionChecker())
+        {
+            this.iceSpeed = new Vector2(0, 0);
+            this.position = previousPosition;
+            PlayAnimation("idle");
+            blockinput = false;
+        }
+        walkingdirection = inputHelper.WalkingDirection(playerNumber) * this.movementSpeed;
+        PlayAnimationDirection(walkingdirection);
 
             base.HandleInput(inputHelper);
         }
@@ -116,17 +118,7 @@ abstract partial class Character : AnimatedGameObject
             this.Mirror = false;
         }
 
-        else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
-        {
-            this.position += MovementVector(this.movementSpeed, 0);
-            this.PlayAnimation("rightcycle");
-            this.Mirror = true;
-        }
 
-        else
-        {
-            PlayAnimation("idle");
-        }
 
         if (inputHelper.IsKeyDown(keyboardControls[Keys.E])) //Interact key
         {
