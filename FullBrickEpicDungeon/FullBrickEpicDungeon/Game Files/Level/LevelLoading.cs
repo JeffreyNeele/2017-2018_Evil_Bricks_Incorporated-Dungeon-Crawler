@@ -182,6 +182,15 @@ partial class Level : GameObjectList
                     case 5:
                         newtile = new Tile(TileType.Water, "Assets/Sprites/Tiles/TileWater1");
                         break;
+                    case 6:
+                        newtile = new Tile(TileType.CobbleStone, "Assets/Sprites/Tiles/TileCobbleStone1");
+                        break;
+                    case 7:
+                        newtile = new Tile(TileType.Wood, "Assets/Sprites/Tiles/TileWood1");
+                        break;
+                    case 8:
+                        newtile = new Tile(TileType.Grass, "Assets/Sprites/Tiles/TileGrass1");
+                        break;
                     default: throw new NullReferenceException("the given ID " + IDlist[x, y] + " was not found in the preprogrammed IDs");
                 }
                 tileField.Add(newtile, x, y);
