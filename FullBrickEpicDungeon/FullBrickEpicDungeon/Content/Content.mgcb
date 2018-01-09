@@ -658,3 +658,6 @@
 #begin Assets/Levels/level1.txt
 /copy:Assets/Levels/level1.txt
 
+#begin Assets/Levels/level2.txt
+/copy:Assets/Levels/level2.txt
+
