@@ -44,6 +44,12 @@ class LittlePenguin : AImonster
             idleCounter -= (float)gameTime.ElapsedGameTime.TotalSeconds;
     }
 
+    //The penguin is special in the way that it attacks when it is sliding from 1 point to another.
+    //This means that the attack method for the penguin is obsolete. The AttackHit, however, is still important.
+    public override void Attack()
+    {
+    }
+
     //Method for checking if the penguin collides with a wall or player
     public void CheckCollision()
     {
@@ -55,7 +61,7 @@ class LittlePenguin : AImonster
         //First check if monster collides with player
         foreach (Character player in players.Children)
             if (this.BoundingBox.Intersects(player.BoundingBox) && !playersHit.Contains(player))
-                Attack(player);
+                AttackHit(player);
 
         //Then check if monster collides with solid tile
         foreach (Tile tile in field.Objects)
@@ -68,11 +74,6 @@ class LittlePenguin : AImonster
                 AI.TargetRandomObject(50);
             }
         }
-    }
-
-    public override void Attack(Character player)
-    {
-        base.Attack(player);
     }
 
     float totalDistance;

@@ -10,6 +10,7 @@ abstract partial class Monster : AnimatedGameObject
     protected Vector2 startPosition;
     protected List<Character> playersHit;
     protected float hitCounter;
+    protected string idAnimation;
     public Monster(string id, Level currentLevel) : base(0, id)
     {
         this.currentLevel = currentLevel;
@@ -17,6 +18,7 @@ abstract partial class Monster : AnimatedGameObject
         attributes = new BaseAttributes();
         baseattributes = new BaseAttributes();
         hitCounter = 0;
+        idAnimation = "idle";
     }
 
 
@@ -44,6 +46,17 @@ abstract partial class Monster : AnimatedGameObject
             else
                 this.color.A -= 10;
         }
+
+        if(idAnimation == "attack")
+        {
+            if (!CurrentAnimation.AnimationEnded)
+                AnimationCheck();
+            else
+            {
+                PlayAnimation("idle");
+                idAnimation = "idle";
+            }    
+        }
     }
 
     public override void Reset()
@@ -69,14 +82,30 @@ abstract partial class Monster : AnimatedGameObject
             hitCounter = 0.5f;
     }
 
+    public virtual void Attack()
+    {
+        playersHit = new List<Character>();
+        PlayAnimation("attack");
+        idAnimation = "attack";
+    }
+
     //Method for the attack of the monster
-    public virtual void Attack(Character player)
+    protected virtual void AttackHit(Character player)
     {
         if (!playersHit.Contains(player))
         {
             playersHit.Add(player);
             player.TakeDamage(attributes.Attack);
         }
+    }
+
+    protected virtual void AnimationCheck()
+    {
+        GameObjectList players = GameWorld.Find("playerLIST") as GameObjectList;
+
+        foreach (Character player in players.Children)
+            if (BoundingBox.Intersects(player.BoundingBox))
+                AttackHit(player);
     }
 
     // returns the base attributes of a monster
