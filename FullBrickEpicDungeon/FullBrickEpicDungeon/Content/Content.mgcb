@@ -646,15 +646,15 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Tiles/TileIce1.png
 
-#begin Assets/Levels/level1.txt
-/copy:Assets/Levels/level1.txt
-
-#begin Assets/Levels/level2.txt
-/copy:Assets/Levels/level2.txt
-
 #begin Assets/Levels/level3.txt
 /copy:Assets/Levels/level3.txt
 
 #begin Assets/Levels/level4.txt
 /copy:Assets/Levels/level4.txt
+
+#begin Assets/Levels/level2.txt
+/copy:Assets/Levels/level2.txt
+
+#begin Assets/Levels/level1.txt
+/copy:Assets/Levels/level1.txt
 
