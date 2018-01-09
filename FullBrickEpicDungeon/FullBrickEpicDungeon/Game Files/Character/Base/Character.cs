@@ -36,10 +36,15 @@ abstract partial class Character : AnimatedGameObject
         this.playerNumber = playerNumber;
         this.xboxControlled = xboxControlled;
         this.iceSpeed = new Vector2(0, 0);
-        this.keyboardControlled = true;
+        // TEMPORARY
+        this.keyboardControlled = false;
 
         if (playerNumber == 1)
         {
+            // TEMPORARY BOOLS
+            this.keyboardControlled = true;
+            this.xboxControlled = true;
+
             if (this.keyboardControlled) //opgeslagen controls staan in de txt bestandjes
                 keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player1controls.txt");
             if (this.xboxControlled)
@@ -47,6 +52,9 @@ abstract partial class Character : AnimatedGameObject
         }
         else if (playerNumber == 2)
         {
+            // TEMPORARY BOOL
+            this.keyboardControlled = true;
+
             if (this.keyboardControlled)
                 keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player2controls.txt");
             if (this.xboxControlled)
