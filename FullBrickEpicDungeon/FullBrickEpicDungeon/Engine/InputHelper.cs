@@ -5,6 +5,8 @@ using System.Collections;
 
 public partial class InputHelper
 {
+
+
     protected MouseState currentMouseState, previousMouseState;
     protected KeyboardState currentKeyboardState, previousKeyboardState;
     protected Vector2 scale, offset;

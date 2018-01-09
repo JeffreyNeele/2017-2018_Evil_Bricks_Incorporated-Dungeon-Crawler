@@ -71,7 +71,6 @@
     <Compile Include="Game Files\Abilities\Types\Abilities_Shieldmaiden\ShieldBashAbility.cs" />
     <Compile Include="Game Files\Character\Base\Character.cs" />
     <Compile Include="Game Files\BaseAttributes.cs" />
-    <Compile Include="Game Files\Character\Base\CharacterInput.cs" />
     <Compile Include="Game Files\Character\Types\ShadowHunter.cs" />
     <Compile Include="Game Files\Character\Types\Talismaniac.cs" />
     <Compile Include="Game Files\Character\Types\Shieldmaiden.cs" />

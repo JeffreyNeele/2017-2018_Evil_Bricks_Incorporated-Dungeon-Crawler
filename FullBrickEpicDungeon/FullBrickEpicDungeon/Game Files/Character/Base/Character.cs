@@ -14,16 +14,13 @@ abstract partial class Character : AnimatedGameObject
     protected Timer reviveTimer;
     protected Vector2 startPosition, movementSpeed, iceSpeed;
     protected int playerNumber;
-    protected float hitCounter;
 
     protected Dictionary<Keys, Keys> keyboardControls;
-    protected bool keyboardControlled;
-    protected bool isOnIce = false;
-    protected bool isGliding = false;
-    protected bool blockinput = false;
-
     protected Dictionary<Buttons, Buttons> xboxControls;
+    protected bool keyboardControlled;
     protected bool xboxControlled = false;
+    protected bool isOnIce = false;
+    protected bool blockinput = false;
     Vector2 walkingdirection;
 
     //Constructor: sets up the controls given to the constructor for each player (xbox or keyboard)
@@ -37,7 +34,6 @@ abstract partial class Character : AnimatedGameObject
         reviveTimer = new Timer(10);
         this.velocity = Vector2.Zero;
         this.movementSpeed = new Vector2(4, 4);
-        this.hitCounter = 0;
 
 
         this.playerNumber = playerNumber;
@@ -82,6 +78,47 @@ abstract partial class Character : AnimatedGameObject
         }
     }
 
+
+    //calls all handleinput methods
+    public override void HandleInput(InputHelper inputHelper)
+    {
+        Vector2 previousPosition = this.position;
+
+        if (!IsDowned && !isOnIce && !blockinput)
+        {
+            velocity = Vector2.Zero;
+            //Input keys for basic AA and abilities
+
+            if (keyboardControlled)
+            {
+                HandleKeyboardInput(inputHelper);
+            }
+            if (xboxControlled)
+            {
+                HandleInputXboxController(inputHelper);
+            }
+            this.position += walkingdirection;
+            PlayAnimationDirection(walkingdirection);
+            walkingdirection = Vector2.Zero;
+        }
+        // NOTE: the Ice method has to be updated to account for XBOX controls, maybe with a ||, but this will be a problem as keyboardcontrols will be null if a controller is used
+        else if (!IsDowned && isOnIce)
+        {
+            KeyboardHandleIceMovement(inputHelper);
+        }
+
+        if (!SolidCollisionChecker())
+        {
+            this.iceSpeed = new Vector2(0, 0);
+            this.position = previousPosition;
+            PlayAnimation("idle");
+            blockinput = false;
+        }
+
+        base.HandleInput(inputHelper);
+
+    }
+
     // Method that handles keyboard movement and input
     public void HandleKeyboardInput(InputHelper inputHelper)
     {
@@ -93,55 +130,54 @@ abstract partial class Character : AnimatedGameObject
             this.weapon.UseSpecialAbility(GameWorld.Find("monsterLIST") as GameObjectList);
 
         //schuin linksboven
-            if (inputHelper.IsKeyDown(keyboardControls[Keys.W]))
+        if (inputHelper.IsKeyDown(keyboardControls[Keys.W]))
+        {
+            if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
             {
-                if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
-                {
-                    walkingdirection = MovementVector(this.movementSpeed, 225);
-                }
-                else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
-                {
-                    walkingdirection = MovementVector(this.movementSpeed, 315);
-                }
-                else
-                {
-                    walkingdirection = MovementVector(this.movementSpeed, 270);
-                }
-
+                walkingdirection = MovementVector(this.movementSpeed, 225);
             }
-        //schuin rechtsboven
-            else if (inputHelper.IsKeyDown(keyboardControls[Keys.S]))
-            {
-                if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
-                {
-                    walkingdirection = MovementVector(this.movementSpeed, 135);
-                }
-                else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
-                {
-                    walkingdirection = MovementVector(this.movementSpeed, 45);
-
-                }
-                else
-                {
-                    walkingdirection = MovementVector(this.movementSpeed, 90);
-                }
-            }      
-        //naar links
-             else if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
-            {
-                walkingdirection = MovementVector(this.movementSpeed, 180);
-            }
-        //naar rechts
             else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
             {
-                walkingdirection = MovementVector(this.movementSpeed, 0);
+                walkingdirection = MovementVector(this.movementSpeed, 315);
             }
-
-            if (inputHelper.IsKeyDown(keyboardControls[Keys.E])) //Interact key
+            else
             {
-                ObjectCollisionChecker();
+                walkingdirection = MovementVector(this.movementSpeed, 270);
             }
 
+        }
+        //schuin rechtsboven
+        else if (inputHelper.IsKeyDown(keyboardControls[Keys.S]))
+        {
+            if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
+            {
+                walkingdirection = MovementVector(this.movementSpeed, 135);
+            }
+            else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
+            {
+                walkingdirection = MovementVector(this.movementSpeed, 45);
+
+            }
+            else
+            {
+                walkingdirection = MovementVector(this.movementSpeed, 90);
+            }
+        }
+        //naar links
+        else if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
+        {
+            walkingdirection = MovementVector(this.movementSpeed, 180);
+        }
+        //naar rechts
+        else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
+        {
+            walkingdirection = MovementVector(this.movementSpeed, 0);
+        }
+
+        if (inputHelper.IsKeyDown(keyboardControls[Keys.E])) //Interact key
+        {
+            ObjectCollisionChecker();
+        }
     }
 
 
@@ -158,6 +194,8 @@ abstract partial class Character : AnimatedGameObject
                     this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
                 if (inputHelper.ButtonPressed(playerNumber, Buttons.B))
                     this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
+                if (inputHelper.ButtonPressed(playerNumber, Buttons.Y))
+                    this.weapon.UseSpecialAbility(GameWorld.Find("monsterLIST") as GameObjectList);
 
                 //Interact button
                 if (inputHelper.ButtonPressed(playerNumber, Buttons.X))
@@ -166,7 +204,7 @@ abstract partial class Character : AnimatedGameObject
                 //Movement
                 walkingdirection = inputHelper.WalkingDirection(playerNumber) * this.movementSpeed;
                 walkingdirection.Y = -walkingdirection.Y;
-                PlayAnimationDirection(walkingdirection);
+
 
             }
         }
@@ -238,19 +276,11 @@ abstract partial class Character : AnimatedGameObject
                 this.attributes.Gold = this.attributes.Gold - (this.attributes.Gold / 4);
             }
         }
-
-        if (hitCounter >= 0)
-        {
-            Visible = !Visible;
-            hitCounter -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-        }
-        else
-            Visible = true;
     }
 
 
-   
-    
+
+
     public override void Reset()
     {
         this.attributes.HP = this.baseattributes.HP;
@@ -319,8 +349,8 @@ abstract partial class Character : AnimatedGameObject
     public void IsOnIceChecker()
     {
         GameObjectGrid Field = GameWorld.Find("TileField") as GameObjectGrid;
-        Rectangle feetBoundingBox = new Rectangle((int)(this.BoundingBox.X + 0.33 * Width), 
-            (int)(this.BoundingBox.Y + 0.9 * Height), (int)(this.Width / 3), (Height/10));
+        Rectangle feetBoundingBox = new Rectangle((int)(this.BoundingBox.X + 0.33 * Width),
+            (int)(this.BoundingBox.Y + 0.9 * Height), (int)(this.Width / 3), (Height / 10));
         foreach (Tile tile in Field.Objects)
         {
             if (tile.IsIce && tile.BoundingBox.Intersects(feetBoundingBox))
@@ -328,7 +358,7 @@ abstract partial class Character : AnimatedGameObject
                 isOnIce = true;
                 return;
             }
-       }
+        }
         isOnIce = false;
         blockinput = false;
     }
@@ -390,8 +420,6 @@ abstract partial class Character : AnimatedGameObject
         {
             this.attributes.HP = 0;
         }
-
-        hitCounter = 1;
     }
 
     //when called with the walkingdirection, it plays the correct animation with the movement.
@@ -414,11 +442,11 @@ abstract partial class Character : AnimatedGameObject
         }
         else if (Math.Abs(walkingdirection.Y) > Math.Abs(walkingdirection.X))
         {
-            if(walkingdirection.Y > 0)
+            if (walkingdirection.Y > 0)
             {
                 this.PlayAnimation("frontcycle");
             }
-            else if(walkingdirection.Y < 0)
+            else if (walkingdirection.Y < 0)
             {
                 this.PlayAnimation("backcycle");
             }
