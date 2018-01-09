@@ -16,5 +16,8 @@ enum TileType
     Ice,
     RockIce,
     Water,
+    CobbleStone,
+    Wood,
+    Grass,
 
 }
