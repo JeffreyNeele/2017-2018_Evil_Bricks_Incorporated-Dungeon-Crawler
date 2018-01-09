@@ -60,7 +60,7 @@ class BaseAI
                         isAttacking = true;
                         Monster owner_cast = owner as Monster;
                         Character target_cast = targetedObject as Character;
-                        owner_cast.Attack(target_cast);
+                        owner_cast.Attack();
                         if (target_cast.IsDowned)
                         {
                             targetedObject = null;

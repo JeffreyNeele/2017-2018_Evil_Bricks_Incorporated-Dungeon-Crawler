@@ -2,7 +2,7 @@
 
 class Bunny : AImonster
 {
-    public Bunny(Level currentLevel) : base(500F, currentLevel, "Bunny")
+    public Bunny(Level currentLevel) : base(100F, currentLevel, "Bunny")
     {
         this.baseattributes.HP = 50;
         this.baseattributes.Armour = 5;

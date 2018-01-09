@@ -228,7 +228,7 @@ abstract partial class Character : AnimatedGameObject
         int takendamage = (damage - (int)(0.3F * this.attributes.Armour + totalitemdefense));
         if (takendamage < 5)
         {
-            takendamage = 0;
+            takendamage = 1;
         }
         this.attributes.HP -= takendamage;
         if (this.attributes.HP < 0)
