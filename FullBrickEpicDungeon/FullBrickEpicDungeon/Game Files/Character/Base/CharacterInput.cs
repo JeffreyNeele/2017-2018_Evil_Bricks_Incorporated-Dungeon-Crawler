@@ -29,6 +29,8 @@ abstract partial class Character : AnimatedGameObject
                     this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
                 if (inputHelper.KeyPressed(keyboardControls[Keys.T]))
                     this.weapon.UseSpecialAbility(GameWorld.Find("monsterLIST") as GameObjectList);
+                //if (inputHelper.KeyPressed(keyboardControls[Keys.C]))
+                //    SwitchBetweenPlayers();
 
                 if (keyboardControlled)
                 {
@@ -191,5 +193,29 @@ abstract partial class Character : AnimatedGameObject
                 walkingdirection.Y = -walkingdirection.Y;
             }
         }
+    }
+
+    public void SwitchBetweenPlayers()
+    {
+        GameObjectList playerList = GameWorld.Find("playerLIST") as GameObjectList;
+        Character targetForSwitch;
+        for(int i = playerNumber + 1; i != playerNumber; i++)
+        {
+            if(i > 4)
+            {
+                i = 1;
+            }
+            foreach(Character p in playerList.Children)
+            {
+                if(p.playerNumber == i)
+                {
+                    targetForSwitch = p;
+                    // switch controls for the target to this players current controls
+                    // then set the controls for the current player to null after making him AI
+
+                }
+            }
+        }
+
     }
 }

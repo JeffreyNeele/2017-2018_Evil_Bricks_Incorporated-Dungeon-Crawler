@@ -36,11 +36,10 @@ abstract partial class Character : AnimatedGameObject
         this.playerNumber = playerNumber;
         this.xboxControlled = xboxControlled;
         this.iceSpeed = new Vector2(0, 0);
+        this.keyboardControlled = true;
+
         if (playerNumber == 1)
         {
-            this.keyboardControlled = true; //player 1 en 2 kunnen naast xbox controls ook altijd nog op keyboard spelen
-            this.xboxControlled = true;
-
             if (this.keyboardControlled) //opgeslagen controls staan in de txt bestandjes
                 keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player1controls.txt");
             if (this.xboxControlled)
@@ -48,8 +47,6 @@ abstract partial class Character : AnimatedGameObject
         }
         else if (playerNumber == 2)
         {
-            this.keyboardControlled = true; //player 1 en 2 kunnen naast xbox controls ook altijd nog op keyboard spelen
-            this.xboxControlled = false;
             if (this.keyboardControlled)
                 keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player2controls.txt");
             if (this.xboxControlled)
@@ -69,6 +66,7 @@ abstract partial class Character : AnimatedGameObject
             if (this.xboxControlled)
                 xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/KeyboardControls/XboxControls/player4Xbox.txt");
         }
+
     }
 
 
@@ -276,6 +274,21 @@ abstract partial class Character : AnimatedGameObject
 
     }
 
+    public void GenerateControls(int playerNUMBER)
+    {
+        if (playerNUMBER == 1)
+        {
+            if (this.keyboardControlled) //opgeslagen controls staan in de txt bestandjes
+                keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player1controls.txt");
+            if (this.xboxControlled)
+                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/KeyboardControls/XboxControls/player1Xbox.txt");
+        }
+        else if (playerNUMBER == 2)
+        {
+            if (this.keyboardControlled)
+                keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player2controls.txt");
+        }
+    }
 
     // returns if the character has gone into the "downed" state
     public bool IsDowned

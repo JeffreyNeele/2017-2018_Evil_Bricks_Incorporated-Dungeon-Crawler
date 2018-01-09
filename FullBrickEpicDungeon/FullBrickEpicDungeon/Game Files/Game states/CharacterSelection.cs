@@ -80,7 +80,7 @@ class CharacterSelection : GameObjectList
 
     public override void Update(GameTime gameTime)
     {
-        if (allReadyCheck())
+        if (AllReadyCheck())
         {
             launchCount -= (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (launchCount <= 0)
@@ -97,17 +97,17 @@ class CharacterSelection : GameObjectList
         if (!lockInSprite[0])
         {
             if (inputHelper.KeyPressed(Keys.Right))
-                changeSpriteRight(characterSprites[0], characterSelectIndex[0], 0);
+                ChangeSpriteRight(characterSprites[0], characterSelectIndex[0], 0);
 
             else if (inputHelper.KeyPressed(Keys.Left))
-                changeSpriteLeft(characterSprites[0], characterSelectIndex[0], 0);
+                ChangeSpriteLeft(characterSprites[0], characterSelectIndex[0], 0);
         }
 
         //Player 1, lock in character selection.
         if (inputHelper.KeyPressed(Keys.Enter))
         {
             //Player 1 Lock in
-            if(checkLockIn(0))
+            if(CheckLockIn(0))
                 lockInSprite[0] = !lockInSprite[0];
 
             if (lockInSprite[0])
@@ -122,7 +122,7 @@ class CharacterSelection : GameObjectList
             }
 
             //Player 3 lock in
-            if (checkLockIn(2))
+            if (CheckLockIn(2))
                 lockInSprite[2] = !lockInSprite[2];
             if (lockInSprite[2])
             {
@@ -141,16 +141,16 @@ class CharacterSelection : GameObjectList
         if (!lockInSprite[1])
         {
             if (inputHelper.KeyPressed(Keys.D))
-                changeSpriteRight(characterSprites[1], characterSelectIndex[1], 1);
+                ChangeSpriteRight(characterSprites[1], characterSelectIndex[1], 1);
 
             else if (inputHelper.KeyPressed(Keys.A))
-                changeSpriteLeft(characterSprites[1], characterSelectIndex[1], 1);
+                ChangeSpriteLeft(characterSprites[1], characterSelectIndex[1], 1);
         }
 
         if (inputHelper.KeyPressed(Keys.Space))
         {
             //Player 2 Lock in
-            if (checkLockIn(1))
+            if (CheckLockIn(1))
                 lockInSprite[1] = !lockInSprite[1];
 
             if (lockInSprite[1])
@@ -165,7 +165,7 @@ class CharacterSelection : GameObjectList
             }
 
             //Player 4 lock in
-            if (checkLockIn(3))
+            if (CheckLockIn(3))
                 lockInSprite[3] = !lockInSprite[3];
             if (lockInSprite[3])
             {
@@ -182,7 +182,7 @@ class CharacterSelection : GameObjectList
         }
     }
     //scrolling right through the selection is +1
-    public void changeSpriteRight(AnimatedGameObject obj, int animationIndex, int index)
+    public void ChangeSpriteRight(AnimatedGameObject obj, int animationIndex, int index)
     {
         //Check if the index is not at max, if so change the index number to the lowest number (=1)
         if (animationIndex == 4)
@@ -194,7 +194,7 @@ class CharacterSelection : GameObjectList
     }
 
     //scrolling left through the selection is -1
-    public void changeSpriteLeft(AnimatedGameObject obj, int animationIndex, int index)
+    public void ChangeSpriteLeft(AnimatedGameObject obj, int animationIndex, int index)
     {
         if (animationIndex == 1)
             characterSelectIndex[index] = 4;
@@ -205,7 +205,7 @@ class CharacterSelection : GameObjectList
     }
 
     //Checks if it is possible to lock in
-    public bool checkLockIn(int index)
+    public bool CheckLockIn(int index)
     {
         for (int i = 0; i < lockInSprite.Length; i++)
         {
@@ -219,7 +219,7 @@ class CharacterSelection : GameObjectList
     }
 
     //Checks if all the players are locked in with their character.
-    public bool allReadyCheck()
+    public bool AllReadyCheck()
     {
         for(int i = 0; i < lockInSprite.Length; i++)
         {

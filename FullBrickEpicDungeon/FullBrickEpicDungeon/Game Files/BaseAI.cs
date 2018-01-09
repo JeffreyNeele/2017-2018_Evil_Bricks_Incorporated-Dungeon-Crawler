@@ -128,7 +128,8 @@ class BaseAI
     public List<Vector2> FindPath(Vector2 endPosition, Vector2 startPosition)
     {
         Point gridStartPosition = new Point((int)startPosition.X / levelGrid.CellWidth, (int)startPosition.Y / levelGrid.CellHeight);
-        Point gridEndPosition = new Point((int)endPosition.X / levelGrid.CellWidth, (int)endPosition.Y / levelGrid.CellHeight);
+        Point gridEndPosition = new Point((int)endPosition.X / levelGrid.CellWidth, (int)(endPosition.Y / levelGrid.CellHeight));
+
         Grid pathGrid = new Grid(levelGrid.Columns, levelGrid.Rows);
         for (int x = 0; x < levelGrid.Columns; x++)
         {
