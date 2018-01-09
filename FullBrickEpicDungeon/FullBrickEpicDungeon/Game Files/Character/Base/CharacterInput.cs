@@ -34,12 +34,17 @@ abstract partial class Character : AnimatedGameObject
 
                 if (keyboardControlled)
                 {
-                    HandleKeyboardMovement(inputHelper);
+                    //HandleKeyboardMovement(inputHelper);
+                    HandleXboxMovement(inputHelper);
                 }
                 else
                 {
                     HandleXboxMovement(inputHelper);
                 }
+
+                this.position += walkingdirection;
+                PlayAnimationDirection(walkingdirection);
+                walkingdirection = Vector2.Zero;
 
             }
             else if (!IsDowned && isOnIce)
@@ -54,9 +59,6 @@ abstract partial class Character : AnimatedGameObject
             PlayAnimation("idle");
             blockinput = false;
         }
-        walkingdirection = inputHelper.WalkingDirection(playerNumber) * this.movementSpeed;
-        PlayAnimationDirection(walkingdirection);
-
             base.HandleInput(inputHelper);
         }
     }
@@ -64,66 +66,56 @@ abstract partial class Character : AnimatedGameObject
     // Method that handles keyboard movement
     public void HandleKeyboardMovement(InputHelper inputHelper)
     {
-        if (inputHelper.IsKeyDown(keyboardControls[Keys.W]) || inputHelper.IsKeyDown(keyboardControls[Keys.S]))
+        //schuin linksboven
+        if (inputHelper.IsKeyDown(keyboardControls[Keys.W]))
         {
-
-            if (inputHelper.IsKeyDown(keyboardControls[Keys.W]))
+            if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
             {
-                if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
-                {
-                    this.position += MovementVector(this.movementSpeed, 225);
-                    this.PlayAnimation("leftcycle");
-                    this.Mirror = false;
-                }
-                else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
-                {
-                    this.position += MovementVector(this.movementSpeed, 315);
-                    this.PlayAnimation("rightcycle");
-                    this.Mirror = true;
-                }
-                else
-                {
-                    this.position += MovementVector(this.movementSpeed, 270);
-                    this.PlayAnimation("backcycle");
-                }
-
+                walkingdirection = MovementVector(this.movementSpeed, 225);
+            }
+            else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
+            {
+                walkingdirection = MovementVector(this.movementSpeed, 315);
+            }
+            else
+            {
+                walkingdirection = MovementVector(this.movementSpeed, 270);
             }
 
-            else if (inputHelper.IsKeyDown(keyboardControls[Keys.S]))
+        }
+        //schuin rechtsboven
+        else if (inputHelper.IsKeyDown(keyboardControls[Keys.S]))
+        {
+            if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
             {
-                if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
-                {
-                    this.position += MovementVector(this.movementSpeed, 135);
-                    this.PlayAnimation("leftcycle");
-                    this.Mirror = false;
-                }
-                else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
-                {
-                    this.position += MovementVector(this.movementSpeed, 45);
-                    this.PlayAnimation("rightcycle");
-                    this.Mirror = true;
-                }
-                else
-                {
-                    this.position += MovementVector(this.movementSpeed, 90);
-                    this.PlayAnimation("frontcycle");
-                }
+                walkingdirection = MovementVector(this.movementSpeed, 135);
+            }
+            else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
+            {
+                walkingdirection = MovementVector(this.movementSpeed, 45);
+
+            }
+            else
+            {
+                walkingdirection = MovementVector(this.movementSpeed, 90);
             }
         }
-
+        //naar links
         else if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
         {
-            this.position += MovementVector(this.movementSpeed, 180);
-            this.PlayAnimation("leftcycle");
-            this.Mirror = false;
+            walkingdirection = MovementVector(this.movementSpeed, 180);
         }
-
-
+        //naar rechts
+        else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
+        {
+            walkingdirection = MovementVector(this.movementSpeed, 0);
+        }
 
         if (inputHelper.IsKeyDown(keyboardControls[Keys.E])) //Interact key
         {
             ObjectCollisionChecker();
         }
+
     }
 
     // Method that handles movement when the character is on ice
@@ -140,29 +132,26 @@ abstract partial class Character : AnimatedGameObject
             {
                 blockinput = true;
                 iceSpeed = MovementVector(this.movementSpeed * 3, 270);
-                PlayAnimation("backcycle");
             }
             else if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
             {
                 blockinput = true;
                 iceSpeed = MovementVector(this.movementSpeed * 3, 180);
-                PlayAnimation("leftcycle");
                 this.Mirror = false;
             }
             else if (inputHelper.IsKeyDown(keyboardControls[Keys.S]))
             {
                 blockinput = true;
                 iceSpeed = MovementVector(this.movementSpeed * 3, 90);
-                PlayAnimation("frontcycle");
             }
             else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
             {
                 blockinput = true;
                 iceSpeed = MovementVector(this.movementSpeed * 3, 0);
-                PlayAnimation("rightcycle");
                 this.Mirror = true;
             }
         }
+        PlayAnimationDirection(iceSpeed);
     }
 
     private void HandleXboxMovement(InputHelper inputHelper)
@@ -183,6 +172,7 @@ abstract partial class Character : AnimatedGameObject
                 //Movement
                 walkingdirection = inputHelper.WalkingDirection(playerNumber) * this.movementSpeed;
                 walkingdirection.Y = -walkingdirection.Y;
+                PlayAnimationDirection(walkingdirection);
             }
         }
     }
@@ -208,6 +198,43 @@ abstract partial class Character : AnimatedGameObject
                 }
             }
         }
+
+    }
+
+    //when called with the walkingdirection, it plays the correct animation with the movement.
+    public void PlayAnimationDirection(Vector2 walkingdirection)
+    {
+        if (Math.Abs(walkingdirection.X) >= Math.Abs(walkingdirection.Y))
+        {
+            if (walkingdirection.X > 0)
+            {
+                this.PlayAnimation("rightcycle");
+                this.Mirror = true;
+            }
+            else if (walkingdirection.X < 0)
+            {
+                this.PlayAnimation("leftcycle");
+                this.Mirror = false;
+            }
+            else
+                this.PlayAnimation("idle");
+        }
+        else if (Math.Abs(walkingdirection.Y) > Math.Abs(walkingdirection.X))
+        {
+            if (walkingdirection.Y > 0)
+            {
+                this.PlayAnimation("frontcycle");
+            }
+            else if (walkingdirection.Y < 0)
+            {
+                this.PlayAnimation("backcycle");
+            }
+            else
+                this.PlayAnimation("idle");
+
+        }
+        else
+            this.PlayAnimation("idle");
 
     }
 }

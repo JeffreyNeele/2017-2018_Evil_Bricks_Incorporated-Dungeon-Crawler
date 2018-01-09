@@ -113,7 +113,6 @@ class BaseAI
         this.owner.Position += direction * movementSpeed * elapsedGameTime;
         // this is for if we moved past the position, in this case we want go back to that position
 
-
         // NOTE: this code block currently for some reason deletes the bunny or overflow a variable without error, removing this makes the AI way less efficient
         // but with the code block it doesn't work at all
         /*
