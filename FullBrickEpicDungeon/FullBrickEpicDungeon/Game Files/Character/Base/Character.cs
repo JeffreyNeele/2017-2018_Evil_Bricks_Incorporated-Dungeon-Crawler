@@ -16,6 +16,12 @@ abstract partial class Character : AnimatedGameObject
     protected int playerNumber;
     protected float hitCounter;
 
+    protected Dictionary<Keys, Keys> keyboardControls;
+    protected bool keyboardControlled;
+    protected bool isOnIce = false;
+    protected bool isGliding = false;
+    protected bool blockinput = false;
+
     protected Dictionary<Buttons, Buttons> xboxControls;
     protected bool xboxControlled = false;
     Vector2 walkingdirection;
@@ -135,6 +141,7 @@ abstract partial class Character : AnimatedGameObject
             {
                 ObjectCollisionChecker();
             }
+
     }
 
 
@@ -159,7 +166,7 @@ abstract partial class Character : AnimatedGameObject
                 //Movement
                 walkingdirection = inputHelper.WalkingDirection(playerNumber) * this.movementSpeed;
                 walkingdirection.Y = -walkingdirection.Y;
-               
+                PlayAnimationDirection(walkingdirection);
 
             }
         }
