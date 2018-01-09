@@ -181,7 +181,7 @@ class BaseAI
             }
         }
 
-        if (targetedObject == null)
+        if (targetedObject == null && targetList.Children.Count > 0)
         {
             TargetRandomObject(chance);
         }

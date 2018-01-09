@@ -37,7 +37,7 @@ namespace FullBrickEpicDungeon
         {
             base.LoadContent();
             // TODO 
-            screen = new Point(1920, 1080);
+            screen = new Point(1900, 1050);
             windowSize = new Point(1280, 720);
             FullScreen = false;
             ApplyResolutionSettings();
