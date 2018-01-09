@@ -39,7 +39,7 @@ abstract partial class Monster : AnimatedGameObject
         {
             if (this.color.A - 10 < 0)
             {
-                GameObjectList monsterList = GameWorld.Find("monsterLIST") as GameObjectList;
+                GameObjectList monsterList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList;
                 monsterList.Remove(this);
             }
                 
@@ -101,7 +101,7 @@ abstract partial class Monster : AnimatedGameObject
 
     protected virtual void AnimationCheck()
     {
-        GameObjectList players = GameWorld.Find("playerLIST") as GameObjectList;
+        GameObjectList players = currentLevel.GameWorld.Find("playerLIST") as GameObjectList;
 
         foreach (Character player in players.Children)
             if (BoundingBox.Intersects(player.BoundingBox))

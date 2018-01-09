@@ -174,7 +174,6 @@ partial class Level : GameObjectList
                         break;
                     case 3:
                         newtile = new Tile(TileType.Ice, "Assets/Sprites/Tiles/TileIce1");
-                        icetileList.Add(newtile);
                         break;
                     case 4:
                         newtile = new Tile(TileType.RockIce, "Assets/Sprites/Tiles/RockIce");
