@@ -19,6 +19,7 @@ abstract partial class Character : AnimatedGameObject
         if (playerControlled)
         {
             Vector2 previousPosition = this.position;
+            Vector2 previousWalkingDirection = new Vector2(0, 0);
             if (!IsDowned && !isOnIce && !blockinput)
             {
                 velocity = Vector2.Zero;
@@ -43,6 +44,7 @@ abstract partial class Character : AnimatedGameObject
 
                 this.position += walkingdirection;
                 PlayAnimationDirection(walkingdirection);
+                previousWalkingDirection = walkingdirection;
                 walkingdirection = Vector2.Zero;
 
             }
@@ -51,13 +53,26 @@ abstract partial class Character : AnimatedGameObject
                 HandleIceMovement(inputHelper);
             }
 
-        if (!SolidCollisionChecker())
-        {
-            this.iceSpeed = new Vector2(0, 0);
-            this.position = previousPosition;
-            PlayAnimation("idle");
-            blockinput = false;
-        }
+            //Check if maiden collides with solid object, else adjust the character position
+            if (!SolidCollisionChecker())
+            {
+                this.iceSpeed = new Vector2(0, 0);
+
+                //Check if collision is comes from y value
+                this.position.X = previousPosition.X;
+                //if there still is collision, recreate old position and check for x value
+                if(!SolidCollisionChecker())
+                {
+                    this.position.X += previousWalkingDirection.X;
+                    this.position.Y = previousPosition.Y;
+                    if (!SolidCollisionChecker())
+                    {
+                        this.position = previousPosition;
+                        PlayAnimation("idle");
+                    }
+                }
+                blockinput = false;
+            }
             base.HandleInput(inputHelper);
         }
     }
