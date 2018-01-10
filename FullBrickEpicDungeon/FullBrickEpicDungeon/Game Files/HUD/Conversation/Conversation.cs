@@ -52,10 +52,12 @@ class Conversation : GameObjectList
         Add(conversationFrame);
 
         //Laadt het font in
-        TextGameObject currentText = new TextGameObject("Assets/Fonts/ConversationFont", 0, "currentlydisplayedtext");
-        currentText.Color = Color.White;
-        currentText.Text = textLines[convIndex];
-        currentText.Position = new Vector2(100, conversationFrame.Height / 2);
+        TextGameObject currentText = new TextGameObject("Assets/Fonts/ConversationFont", 0, "currentlydisplayedtext")
+        {
+            Color = Color.White,
+            Text = textLines[convIndex],
+            Position = new Vector2(100, conversationFrame.Height / 2)
+        };
         displayedText.Add(currentText);
     }
 
@@ -83,9 +85,12 @@ class Conversation : GameObjectList
                 {
                     for (int i = 0; i < 3; i++)
                     {
-                        TextGameObject currentText = new TextGameObject("Assets/Fonts/ConversationFont", 0, "currentlydisplayedtext"); //maakt elke keer een nieuwe currentText aan zodat hij er meerdere weergeeft.
-                        currentText.Position = new Vector2(100, i * 20 + 80); //voor y coordinaat: i*spacing + offset
-                        currentText.Text = textLines[convIndex];
+                        TextGameObject currentText = new TextGameObject("Assets/Fonts/ConversationFont", 0, "currentlydisplayedtext")
+                        {
+                            Position = new Vector2(100, i * 20 + 80), //voor y coordinaat: i*spacing + offset
+                            Text = textLines[convIndex]
+                        }; 
+                        //maakt elke keer een nieuwe currentText aan zodat hij er meerdere weergeeft.
                         displayedText.Add(currentText);
 
                         if (convIndex < textLines.Count - 1 && i < 2)
@@ -98,9 +103,11 @@ class Conversation : GameObjectList
                 }
                 else
                 {
-                    TextGameObject currentText = new TextGameObject("Assets/Fonts/ConversationFont", 0, "currentlydisplayedtext");
-                    currentText.Text = textLines[convIndex];
-                    currentText.Position = new Vector2(100, 114);
+                    TextGameObject currentText = new TextGameObject("Assets/Fonts/ConversationFont", 0, "currentlydisplayedtext")
+                    {
+                        Text = textLines[convIndex],
+                        Position = new Vector2(100, 114)
+                    };
                     displayedText.Add(currentText);
                 }
             }

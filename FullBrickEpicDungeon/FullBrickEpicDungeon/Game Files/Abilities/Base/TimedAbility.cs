@@ -11,13 +11,13 @@ abstract class TimedAbility : Ability
         this.targetTime = targetTime;
         this.abilityTimer = new Timer(targetTime);
         abilityTimer.SecondsElapsed = targetTime;
-        this.isOnCooldown = false;
+        this.IsOnCooldown = false;
     }
 
     // Resets the ability and makes it instantly usable again
     public override void Reset()
     {
-        this.isOnCooldown = false;
+        this.IsOnCooldown = false;
         base.Reset();
     }
     public override void Update(GameTime gameTime)
@@ -33,7 +33,7 @@ abstract class TimedAbility : Ability
         base.Use(weapon, idAbility);
     }
     // Sets the IsExpired value in ability so it is either in cooldown or not
-    public bool isOnCooldown
+    public bool IsOnCooldown
     {
         get { return !(abilityTimer.IsExpired); }
         set { abilityTimer.IsExpired = !value; }

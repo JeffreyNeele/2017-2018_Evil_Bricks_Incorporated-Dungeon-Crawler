@@ -84,7 +84,7 @@ abstract partial class Monster : AnimatedGameObject
 
     public virtual void Attack()
     {
-        playersHit = new List<Character>();
+        playersHit.Clear();
         PlayAnimation("attack");
         idAnimation = "attack";
     }

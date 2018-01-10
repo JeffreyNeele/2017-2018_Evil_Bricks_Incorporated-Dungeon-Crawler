@@ -21,7 +21,8 @@ abstract class Ability
     {
         this.classType = classType;
         this.owner = owner;
-        pushTimeCount = 8;
+        PushTimeCount = 8;
+        monstersHitList = new List<Monster>();
         // Ability needs the main projectile list (defined in LevelMain.cs) 
         /*try
         {
@@ -38,8 +39,8 @@ abstract class Ability
     public virtual void Update(GameTime gameTime)
     {
         //projectileList.Update(gameTime);
-        if (pushBackVector != new Vector2(0, 0) && monstersHitList != null)
-            pushBack();
+        if (PushBackVector != new Vector2(0, 0) && monstersHitList != null)
+            PushBack();
     }
     public virtual void Reset()
     {
@@ -48,7 +49,7 @@ abstract class Ability
 
     public virtual void Use(Weapon weapon, string id)
     {
-        monstersHitList = new List<Monster>();
+        monstersHitList.Clear();
         if(affectedMonsters == null)
             affectedMonsters = new Dictionary<Monster, int>();
         if (directionPush == null)
@@ -70,15 +71,15 @@ abstract class Ability
         }
     }
 
-    public virtual void attackHit(Monster monster, GameObjectGrid field)
+    public virtual void AttackHit(Monster monster, GameObjectGrid field)
     {
 
     }
 
-    public virtual void pushBack()
+    public virtual void PushBack()
     {
         //Get the knockback vector of the ability;
-        Vector2 push = pushBackVector;
+        Vector2 push = PushBackVector;
 
         //Check only for the monsters in the monstersHitList, as it should only affect these monsters
         foreach(Monster monster in monstersHitList)
@@ -93,18 +94,18 @@ abstract class Ability
             //Get the pushCount of the current monster, this affects the knockback distance
             int pushCount = affectedMonsters[monster];
 
-            push = givePushVector(pushCount, push);
-            moveMonster(monster, push);
+            push = GivePushVector(pushCount, push);
+            MoveMonster(monster, push);
 
             //Check of het monster niet in een muur zit, anders zorg ervoor dat het monster wordt gepusht tot het uiterste punt dat mogelijk is
-            if(knockedInWall(monster))
+            if(KnockedInWall(monster))
             {
                 monster.Position = previousPos;
                 for(int i = pushCount; i >= 0; i--)
                 {
-                    moveMonster(monster, givePushVector(i, pushBackVector));
+                    MoveMonster(monster, GivePushVector(i, PushBackVector));
 
-                    if (knockedInWall(monster))
+                    if (KnockedInWall(monster))
                         monster.Position = previousPos;
                     else
                         pushCount = 0;
@@ -131,12 +132,12 @@ abstract class Ability
     }
 
     //Calculates the push vector
-    protected Vector2 givePushVector(int pushCount, Vector2 push)
+    protected Vector2 GivePushVector(int pushCount, Vector2 push)
     {
-        if (pushCount == pushTimeCount)
+        if (pushCount == PushTimeCount)
             push = push / 2;
         else
-            push = push / 2 - fallOff * (pushTimeCount - pushCount);
+            push = push / 2 - fallOff * (PushTimeCount - pushCount);
 
         if (push.X <= 0)
             push.X = 0;
@@ -144,7 +145,7 @@ abstract class Ability
     }
 
     //Does the calculation of the position movement of the monster
-    protected void moveMonster(Monster monster, Vector2 push)
+    protected void MoveMonster(Monster monster, Vector2 push)
     {
         if (directionPush[monster])
             monster.Position += push;
@@ -153,7 +154,7 @@ abstract class Ability
     }
 
     //Method that states if an enemy is knocked inside a wall.
-    protected bool knockedInWall(Monster monster)
+    protected bool KnockedInWall(Monster monster)
     {
         foreach (Tile tile in fieldGrid.Objects)
         {
@@ -175,45 +176,45 @@ abstract class Ability
         get { return owner; }
     }
 
-    public int damageAA
+    public int DamageAA
     {
         get { return damage; }
         set { damage = value; }
     }
 
-    public Vector2 pushBackVector
+    public Vector2 PushBackVector
     {
         get { return pushVector; }
         set { pushVector = value; }
     }
 
-    public Vector2 pushFallOff
+    public Vector2 PushFallOff
     {
         get { return fallOff; }
         set { fallOff = value; }
     }
 
-    public int pushTimeCount
+    public int PushTimeCount
     {
         get { return pushCounts; }
         set { pushCounts = value; }
     }
 
-    public List<Monster> monsterHit
+    public List<Monster> MonsterHit
     {
         get { return monstersHitList; }
     }
 
-    public void monsterAdd(Monster monster, bool direction)
+    public void MonsterAdd(Monster monster, bool direction)
     {
-        monsterHit.Add(monster);
+        MonsterHit.Add(monster);
         if (!affectedMonsters.ContainsKey(monster))
         {
-            affectedMonsters.Add(monster, pushTimeCount);
+            affectedMonsters.Add(monster, PushTimeCount);
             directionPush.Add(monster, direction);
         }
         else
-            affectedMonsters[monster] = pushTimeCount;
+            affectedMonsters[monster] = PushTimeCount;
 
         if (directionPush[monster] != direction)
             directionPush[monster] = direction;

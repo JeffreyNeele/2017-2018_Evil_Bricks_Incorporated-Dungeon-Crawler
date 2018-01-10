@@ -100,11 +100,13 @@ public class GameEnvironment : Game
             width = (int)(height * targetAspectRatio);
         }
 
-        Viewport viewport = new Viewport();
-        viewport.X = (graphics.PreferredBackBufferWidth / 2) - (width / 2);
-        viewport.Y = (graphics.PreferredBackBufferHeight / 2) - (height / 2);
-        viewport.Width = width;
-        viewport.Height = height;
+        Viewport viewport = new Viewport
+        {
+            X = (graphics.PreferredBackBufferWidth / 2) - (width / 2),
+            Y = (graphics.PreferredBackBufferHeight / 2) - (height / 2),
+            Width = width,
+            Height = height
+        };
         graphics.GraphicsDevice.Viewport = viewport;
         cameraHelper.CameraWindowSize = new Point(width, height);
         inputHelper.Scale = new Vector2((float)GraphicsDevice.Viewport.Width / screen.X,

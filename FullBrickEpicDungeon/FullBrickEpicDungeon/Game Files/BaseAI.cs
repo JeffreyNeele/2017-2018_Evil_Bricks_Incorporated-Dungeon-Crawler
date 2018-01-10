@@ -49,10 +49,10 @@ class BaseAI
         }
         else if (idleTimer.IsExpired)
         {
-            List<Vector2> waypointList = FindPath(targetedObject.Position, owner.Position);
+            List<Vector2> waypointList = FindPath(targetedObject.Position + new Vector2(0, (targetedObject.Height / 4) + 1), owner.Position);
             if (owner.BoundingBox.Intersects(targetedObject.BoundingBox))
             {
-                MoveToPosition(targetedObject.Position - targetedObject.Origin, (float)gameTime.ElapsedGameTime.TotalSeconds);
+                MoveToPosition(targetedObject.Position, (float)gameTime.ElapsedGameTime.TotalSeconds);
                 if (targetedObject.BoundingBox.Contains(owner.Position))
                 {
                     if (isMonster)
@@ -106,7 +106,7 @@ class BaseAI
 
     public void MoveToPosition(Vector2 targetGridPosition, float elapsedGameTime)
     {
-        targetGridPosition = new Vector2((targetGridPosition.X + levelGrid.CellWidth / 2), (targetGridPosition.Y + levelGrid.CellHeight));
+        targetGridPosition = new Vector2((targetGridPosition.X + levelGrid.CellWidth / 2), (targetGridPosition.Y + levelGrid.CellHeight / 2));
         // Find the direction we have to go in
         direction = Vector2.Normalize(targetGridPosition - this.owner.Position);
         // AI moves to the direction with it's movementspeed and GameTime 

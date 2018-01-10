@@ -126,10 +126,12 @@ public class GameObjectGrid : GameObject
         {
             for (int y = 0; y < Rows; y++)
             {
-                TextGameObject numberViewer = new TextGameObject("Assets/Fonts/ConversationFont", 99);
-                numberViewer.Text = x.ToString() + " " + y.ToString();
-                numberViewer.Color = Color.Red;
-                numberViewer.Position = new Vector2(x * 50, y * 50);
+                TextGameObject numberViewer = new TextGameObject("Assets/Fonts/ConversationFont", 99)
+                {
+                    Text = x.ToString() + " " + y.ToString(),
+                    Color = Color.Red,
+                    Position = new Vector2(x * 50, y * 50)
+                };
                 debugText.Add(numberViewer);
             }
         }

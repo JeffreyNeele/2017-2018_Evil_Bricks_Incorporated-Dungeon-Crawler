@@ -12,9 +12,9 @@ class BasicAttackAbility : Ability
         : base(owner, classType)
     {
         //weapon.LoadAnimation(assetName, id, false);
-        damageAA = damage;
+        DamageAA = damage;
         pushVector = new Vector2(0, 0);
-        pushFallOff = new Vector2(0, 0);
+        PushFallOff = new Vector2(0, 0);
     }
 
     public override void Use(Weapon weapon, string id)
@@ -22,13 +22,13 @@ class BasicAttackAbility : Ability
         base.Use(weapon, id);
     }
 
-    public override void attackHit(Monster monster, GameObjectGrid field)
+    public override void AttackHit(Monster monster, GameObjectGrid field)
     {
         fieldGrid = field;
-        if(!monsterHit.Contains(monster) && monster.Attributes.HP > 0)
+        if(!MonsterHit.Contains(monster) && monster.Attributes.HP > 0)
         {
-            monster.TakeDamage(damageAA);
-            monsterAdd(monster, Owner.Mirror);
+            monster.TakeDamage(DamageAA);
+            MonsterAdd(monster, Owner.Mirror);
         }
     }
 }

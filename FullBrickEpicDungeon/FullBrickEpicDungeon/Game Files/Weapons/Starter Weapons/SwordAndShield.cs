@@ -14,10 +14,12 @@ class SwordAndShield : Weapon
         idSpecialAbility = "SwordAndShieldSpecialAbility";
 
         //Basic attack of the weapon
-        BasicAttack = new BasicAttackAbility(owner, ClassType.ShieldMaiden, this, "assetName", idBaseAA, AttackDamage);
-        BasicAttack.pushBackVector = new Vector2(30, 0);
-        BasicAttack.pushFallOff = new Vector2(2, 0);
-        BasicAttack.pushTimeCount = 8;
+        BasicAttack = new BasicAttackAbility(owner, ClassType.ShieldMaiden, this, "assetName", idBaseAA, AttackDamage)
+        {
+            PushBackVector = new Vector2(30, 0),
+            PushFallOff = new Vector2(2, 0),
+            PushTimeCount = 8
+        };
 
         //Basic ability of the weapon: ShieldBash
         mainAbility = new ShieldBashAbility(owner, ClassType.ShieldMaiden, this, "assetName", idMainAbility, 8);
@@ -40,13 +42,13 @@ class SwordAndShield : Weapon
     {
         foreach (Monster m in monsterObjectList.Children)
             if (m.CollidesWith(Owner))
-                BasicAttack.attackHit(m, fieldList);
+                BasicAttack.AttackHit(m, fieldList);
     }
 
     //Method for the use of the main ability
     public override void UseMainAbility(GameObjectList monsterList, GameObjectGrid field)
     {
-        if(!mainAbility.isOnCooldown)
+        if(!mainAbility.IsOnCooldown)
         {
             this.mainAbility.Use(this, idMainAbility);
             this.idAnimation = idMainAbility;
@@ -62,8 +64,8 @@ class SwordAndShield : Weapon
     {
         foreach (Monster m in monsterObjectList.Children)
         {
-            if (mainAbility.monsterHit.Count < 1 && m.CollidesWith(Owner))
-                mainAbility.attackHit(m, fieldList);
+            if (mainAbility.MonsterHit.Count < 1 && m.CollidesWith(Owner))
+                mainAbility.AttackHit(m, fieldList);
         }
     }
 
