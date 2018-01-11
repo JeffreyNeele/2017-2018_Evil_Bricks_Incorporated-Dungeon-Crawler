@@ -11,7 +11,6 @@ abstract partial class Character : AnimatedGameObject
     protected bool isOnIce = false;
     protected bool isGliding = false;
     protected bool blockinput = false;
-    protected bool blockxboxinput = false;
 
     //Method for character input (both xbox controller and keyboard), for now dummy keys for 1 controller are inserted, but the idea should be clear
     //TO DO: a way to distinguish characters / players from each other.
@@ -75,7 +74,6 @@ abstract partial class Character : AnimatedGameObject
                     }
                 }
                 blockinput = false;
-                blockxboxinput = false;
             }
             base.HandleInput(inputHelper);
         }
