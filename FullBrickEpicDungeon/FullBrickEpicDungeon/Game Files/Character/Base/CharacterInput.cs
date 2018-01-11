@@ -11,6 +11,7 @@ abstract partial class Character : AnimatedGameObject
     protected bool isOnIce = false;
     protected bool isGliding = false;
     protected bool blockinput = false;
+    protected bool blockxboxinput = false;
 
     //Method for character input (both xbox controller and keyboard), for now dummy keys for 1 controller are inserted, but the idea should be clear
     //TO DO: a way to distinguish characters / players from each other.
@@ -35,11 +36,12 @@ abstract partial class Character : AnimatedGameObject
 
                 if (keyboardControlled)
                 {
-                    HandleKeyboardMovement(inputHelper);
+                    HandleXboxMovement(inputHelper);
+                    HandleKeyboardMovement(inputHelper); //tijdelijk tot alles werkt met xbox, anders loop ik steeds vast
                 }
                 else
                 {
-                    HandleXboxMovement(inputHelper);
+                    HandleKeyboardMovement(inputHelper);
                 }
 
                 this.position += walkingdirection;
@@ -50,7 +52,8 @@ abstract partial class Character : AnimatedGameObject
             }
             else if (!IsDowned && isOnIce)
             {
-                HandleIceMovement(inputHelper);
+                HandleKeyboardIceMovement(inputHelper);
+                HandleXboxIceMovement(inputHelper);
             }
 
             //Check if maiden collides with solid object, else adjust the character position
@@ -72,6 +75,7 @@ abstract partial class Character : AnimatedGameObject
                     }
                 }
                 blockinput = false;
+                blockxboxinput = false;
             }
             base.HandleInput(inputHelper);
         }
@@ -133,7 +137,7 @@ abstract partial class Character : AnimatedGameObject
     }
 
     // Method that handles movement when the character is on ice
-    private void HandleIceMovement(InputHelper inputHelper)
+    private void HandleKeyboardIceMovement(InputHelper inputHelper)
     {
         if (blockinput)
         {
@@ -190,6 +194,51 @@ abstract partial class Character : AnimatedGameObject
             }
         }
     }
+
+    private void HandleXboxIceMovement(InputHelper inputHelper)
+    {
+
+        if (blockxboxinput)
+        {
+            if (this.iceSpeed != new Vector2(0, 0))
+                this.position += iceSpeed;
+        }
+        else {
+            walkingdirection = inputHelper.WalkingDirection(playerNumber) * this.movementSpeed;
+            walkingdirection.Y = -walkingdirection.Y;
+            if (Math.Abs(walkingdirection.X) >= Math.Abs(walkingdirection.Y))
+            {
+                if (walkingdirection.X > 0)
+                {
+                    blockxboxinput = true;
+                    iceSpeed = MovementVector(this.movementSpeed * 3, 0);
+                    this.Mirror = true;
+                }
+                else if (walkingdirection.X < 0)
+                {
+                    blockxboxinput = true;
+                    iceSpeed = MovementVector(this.movementSpeed * 3, 180);
+                    this.Mirror = false;
+                }
+            }
+            else if (Math.Abs(walkingdirection.Y) > Math.Abs(walkingdirection.X))
+            {
+                if (walkingdirection.Y > 0)
+                {
+                    blockxboxinput = true;
+                    iceSpeed = MovementVector(this.movementSpeed * 3, 90);
+                }
+                else if (walkingdirection.Y < 0)
+                {
+                    blockxboxinput = true;
+                    iceSpeed = MovementVector(this.movementSpeed * 3, 270);
+                }
+
+            }
+        }
+        PlayAnimationDirection(iceSpeed);        
+    }
+
 
     public void SwitchBetweenPlayers()
     {
