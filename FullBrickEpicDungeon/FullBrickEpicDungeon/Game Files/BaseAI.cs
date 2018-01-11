@@ -10,6 +10,7 @@ class BaseAI
     protected GameObjectGrid levelGrid;
     protected GameObjectList targetList;
     protected AnimatedGameObject targetedObject, owner;
+    List<AnimatedGameObject> targets;
     protected float sightRange, movementSpeed;
     protected bool isMonster, isAttacking;
     protected Level currentLevel;
@@ -32,20 +33,23 @@ class BaseAI
             targetList = currentLevel.GameWorld.Find("playerLIST") as GameObjectList;
         else
             targetList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList;
+
+        targets = new List<AnimatedGameObject>();
     }
 
     public void Update(GameTime gameTime)
     {
         if (targetedObject == null)
         {
-            if (isMonster)
-            {
-                LineOfSightChecker(sightRange);
-            }
-            else 
-            {
-                TargetRandomObject(50);
-            }
+            //if (isMonster)
+            //{
+            //    LineOfSightChecker(sightRange);
+            //}
+            //else 
+            //{
+            //    TargetRandomObject(50);
+            //}
+            LineOfSightChecker(sightRange);
         }
         else if (idleTimer.IsExpired)
         {
@@ -73,7 +77,10 @@ class BaseAI
                         Character owner_cast = owner as Character;
                         Monster target_cast = targetedObject as Monster;
                         GameObjectList monsterList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList;
-                        owner_cast.CurrentWeapon.Attack(monsterList, currentLevel.TileField);
+                        if (!owner_cast.CurrentWeapon.AbilityMain.IsOnCooldown)
+                            owner_cast.CurrentWeapon.UseMainAbility(monsterList, currentLevel.TileField);
+                        else
+                            owner_cast.CurrentWeapon.Attack(monsterList, currentLevel.TileField);
                         if (target_cast.IsDead)
                         {
                             targetedObject = null;
@@ -155,18 +162,20 @@ class BaseAI
         return pathList;
     }
 
+    
     public void LineOfSightChecker(float sightRange)
     {
-        
-
+        targets.Clear();
         Circle lineOfSight = new Circle(sightRange, owner.Origin);
         foreach(AnimatedGameObject obj in targetList.Children)
         {
             if (lineOfSight.CollidesWithRectangle(obj, owner))
             {
-                targetedObject = obj;
+                targets.Add(obj);
             }
         }
+
+        TargetClosest();
     }
 
     public void TargetRandomObject(float chance)
@@ -185,6 +194,26 @@ class BaseAI
         {
             TargetRandomObject(chance);
         }
+    }
+
+    public void TargetClosest()
+    {
+        float closestTargetDistance = 0;
+
+        foreach (AnimatedGameObject target in targets)
+        {
+            Vector2 positionDifference = owner.Position - target.Position;
+            float targetDistance = (float)Math.Sqrt(Math.Pow(positionDifference.X, 2) + Math.Pow(positionDifference.Y, 2));
+            if (targetDistance > sightRange)
+                continue;
+
+            if (closestTargetDistance == 0 || targetDistance < closestTargetDistance)
+            {
+                closestTargetDistance = targetDistance;
+                targetedObject = target;
+            }
+        }
+
     }
 
     public bool IsAttacking

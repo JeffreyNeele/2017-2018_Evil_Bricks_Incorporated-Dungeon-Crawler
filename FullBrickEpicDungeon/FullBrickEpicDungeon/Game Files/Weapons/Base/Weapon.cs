@@ -99,6 +99,16 @@ abstract class Weapon : AnimatedGameObject
         get { return owner; }
     }
 
+    public BasicAttackAbility BaseAA
+    {
+        get { return BasicAttack; }
+    }
+
+    public TimedAbility AbilityMain
+    {
+        get { return mainAbility; }
+    }
+
     public ClassType Type
     {
         get { return classType; }
