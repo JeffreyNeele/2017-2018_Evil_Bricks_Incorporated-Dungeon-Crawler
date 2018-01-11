@@ -10,9 +10,9 @@ class Conversation : GameObjectList
     GameObjectList displayedText; //huidig weergegeven tekst
     List<string> currentChoices = new List<string>(); //dit is de list met de huidige choices pure strings.
     int convIndex = 0, compensation = 0;
-    SpriteGameObject stippie = new SpriteGameObject("Assets/Sprites/Conversation Boxes/arrow", 1, "", 10, false);
-    bool vorigewasstip = false;
-    Vector2 stippiepos = new Vector2(40, 60);
+    SpriteGameObject marker = new SpriteGameObject("Assets/Sprites/Conversation Boxes/arrow", 1, "", 10, false);
+    bool PreviousLineWasChoice = false;
+    Vector2 markerpos = new Vector2(25, 60);
 
     public Conversation(string path, int startingLine, int lastLine = Int32.MaxValue) : base()
     {
@@ -20,9 +20,9 @@ class Conversation : GameObjectList
         Add(displayedText);
         LoadConversation(path, startingLine, lastLine);
         ShowConversationBox();
-        Add(stippie);
-        stippie.Position = stippiepos;
-        stippie.Visible = false;
+        Add(marker);
+        marker.Position = markerpos;
+        marker.Visible = false;
     }
     //Laadt de conversatie in uit een text bestand als LoadConversation aangeroepen wordt op locatie path. Deze komt in een List te staan.
     //Kan als Load Level af is daar ook in worden gezet. In de input wordt de eerste en laatste line aangegeven die uitgelezen moet worden.
@@ -76,41 +76,42 @@ class Conversation : GameObjectList
     {
 
         base.HandleInput(inputHelper);
-        if (inputHelper.KeyPressed(Keys.Space))
+        if (inputHelper.KeyPressed(Keys.Space) || inputHelper.ButtonPressed(1, Buttons.A))
         {
             if (convIndex < textLines.Count - 1)
             {
-                if (vorigewasstip == false)
+                if (PreviousLineWasChoice == false)
                 {
                     convIndex++;
                 }
-                if (vorigewasstip == true && stippie.Position.Y == stippiepos.Y)
+                if (PreviousLineWasChoice == true && marker.Position.Y == markerpos.Y)
                 {
                     convIndex++;
                     compensation = 2;
                 }
-                if (vorigewasstip == true && stippie.Position.Y == stippiepos.Y+20 && convIndex < textLines.Count - 2)
+                if (PreviousLineWasChoice == true && marker.Position.Y == markerpos.Y+20 && convIndex < textLines.Count - 2)
                 {
                     convIndex += 2;
                     compensation = 1;
                 }
-                //if (vorigewasstip == true && stippie.Position.Y == stippiepos.Y+20*2 && convIndex < textLines.Count - 3)
+                if (PreviousLineWasChoice == true && marker.Position.Y == markerpos.Y+20*2 && convIndex < textLines.Count - 3)
                 {
                     convIndex += 3;
                 }
                 displayedText.Clear();
-                vorigewasstip = false;
+                PreviousLineWasChoice = false;
 
 
                 if (textLines[convIndex].StartsWith("#")) //een eerste teken # geeft aan dat het om een choice gaat hier. Daar zijn er altijd 3 van achter elkaar
                 {
-                    stippie.Visible = true;
-                    vorigewasstip = true;
+                    
+                    marker.Visible = true;
+                    PreviousLineWasChoice = true;
                     for (int i = 0; i < 3; i++)
                     {
                         TextGameObject currentText = new TextGameObject("Assets/Fonts/ConversationFont", 0, "currentlydisplayedtext"); //maakt elke keer een nieuwe currentText aan zodat hij er meerdere weergeeft.
                         currentText.Position = new Vector2(100, i * 20 + 80); //voor y coordinaat: i*spacing + offset
-                        currentText.Text = textLines[convIndex];
+                        currentText.Text = textLines[convIndex].Substring(1);
                         displayedText.Add(currentText);
 
                         if (convIndex < textLines.Count - 1 && i < 2)
@@ -123,7 +124,7 @@ class Conversation : GameObjectList
                 }
                 else
                 {
-                    stippie.Visible = false;
+                    marker.Visible = false;
                     TextGameObject currentText = new TextGameObject("Assets/Fonts/ConversationFont", 0, "currentlydisplayedtext");
                     currentText.Text = textLines[convIndex];
                     currentText.Position = new Vector2(100, 114);
@@ -134,6 +135,7 @@ class Conversation : GameObjectList
                     convIndex += compensation;
                     compensation = 0;
                 }
+               
             }
             else
             {
@@ -143,14 +145,14 @@ class Conversation : GameObjectList
             }
         }
 
-        if (inputHelper.KeyPressed(Keys.Down) && stippie.Position.Y < stippiepos.Y + 2*20)
+        if ((inputHelper.KeyPressed(Keys.Down) || inputHelper.ButtonPressed(1, Buttons.DPadDown)) && marker.Position.Y < markerpos.Y + 2*20)
         {
-            stippie.Position += new Vector2(0, 20);
+            marker.Position += new Vector2(0, 20);
 
         }
-        if (inputHelper.KeyPressed(Keys.Up) && stippie.Position.Y > stippiepos.Y)
+        if ((inputHelper.KeyPressed(Keys.Up) || inputHelper.ButtonPressed(1, Buttons.DPadUp)) && marker.Position.Y > markerpos.Y)
         {
-            stippie.Position -= new Vector2(0, 20);
+            marker.Position -= new Vector2(0, 20);
         }
     }
 }
