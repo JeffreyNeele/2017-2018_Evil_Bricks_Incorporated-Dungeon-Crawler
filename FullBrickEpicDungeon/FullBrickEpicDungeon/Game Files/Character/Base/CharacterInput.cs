@@ -11,7 +11,6 @@ abstract partial class Character : AnimatedGameObject
     protected bool isOnIce = false;
     protected bool isGliding = false;
     protected bool blockinput = false;
-    protected bool blockxboxinput = false;
 
     //Method for character input (both xbox controller and keyboard), for now dummy keys for 1 controller are inserted, but the idea should be clear
     //TO DO: a way to distinguish characters / players from each other.
@@ -75,7 +74,6 @@ abstract partial class Character : AnimatedGameObject
                     }
                 }
                 blockinput = false;
-                blockxboxinput = false;
             }
             base.HandleInput(inputHelper);
         }
@@ -198,7 +196,7 @@ abstract partial class Character : AnimatedGameObject
     private void HandleXboxIceMovement(InputHelper inputHelper)
     {
 
-        if (blockxboxinput)
+        if (blockinput)
         {
             if (this.iceSpeed != new Vector2(0, 0))
                 this.position += iceSpeed;
@@ -210,13 +208,13 @@ abstract partial class Character : AnimatedGameObject
             {
                 if (walkingdirection.X > 0)
                 {
-                    blockxboxinput = true;
+                    blockinput = true;
                     iceSpeed = MovementVector(this.movementSpeed * 3, 0);
                     this.Mirror = true;
                 }
                 else if (walkingdirection.X < 0)
                 {
-                    blockxboxinput = true;
+                    blockinput = true;
                     iceSpeed = MovementVector(this.movementSpeed * 3, 180);
                     this.Mirror = false;
                 }
@@ -225,12 +223,12 @@ abstract partial class Character : AnimatedGameObject
             {
                 if (walkingdirection.Y > 0)
                 {
-                    blockxboxinput = true;
+                    blockinput = true;
                     iceSpeed = MovementVector(this.movementSpeed * 3, 90);
                 }
                 else if (walkingdirection.Y < 0)
                 {
-                    blockxboxinput = true;
+                    blockinput = true;
                     iceSpeed = MovementVector(this.movementSpeed * 3, 270);
                 }
 
