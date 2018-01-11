@@ -136,7 +136,7 @@ abstract partial class Character : AnimatedGameObject
 
     }
 
-    // Method that handles movement when the character is on ice
+    // Method that handles keyboard movement when the character is on ice
     private void HandleKeyboardIceMovement(InputHelper inputHelper)
     {
         if (blockinput)
@@ -149,29 +149,30 @@ abstract partial class Character : AnimatedGameObject
             if (inputHelper.IsKeyDown(keyboardControls[Keys.W]))
             {
                 blockinput = true;
-                iceSpeed = MovementVector(this.movementSpeed * 3, 270);
+                iceSpeed = MovementVector(this.movementSpeed, 270);
             }
             else if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
             {
                 blockinput = true;
-                iceSpeed = MovementVector(this.movementSpeed * 3, 180);
+                iceSpeed = MovementVector(this.movementSpeed, 180);
                 this.Mirror = false;
             }
             else if (inputHelper.IsKeyDown(keyboardControls[Keys.S]))
             {
                 blockinput = true;
-                iceSpeed = MovementVector(this.movementSpeed * 3, 90);
+                iceSpeed = MovementVector(this.movementSpeed, 90);
             }
             else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
             {
                 blockinput = true;
-                iceSpeed = MovementVector(this.movementSpeed * 3, 0);
+                iceSpeed = MovementVector(this.movementSpeed, 0);
                 this.Mirror = true;
             }
         }
         PlayAnimationDirection(iceSpeed);
     }
 
+    // Method that handles xbox movement and interaction
     private void HandleXboxMovement(InputHelper inputHelper)
     {
         if (xboxControls != null) //xboxcontrols zijn niet ingeladen, dus wordt niet door xboxcontroller bestuurd.
@@ -195,10 +196,11 @@ abstract partial class Character : AnimatedGameObject
         }
     }
 
+    // Method that handles xbox movement when the character is on ice
     private void HandleXboxIceMovement(InputHelper inputHelper)
     {
 
-        if (blockxboxinput)
+        if (blockinput)
         {
             if (this.iceSpeed != new Vector2(0, 0))
                 this.position += iceSpeed;
@@ -210,14 +212,14 @@ abstract partial class Character : AnimatedGameObject
             {
                 if (walkingdirection.X > 0)
                 {
-                    blockxboxinput = true;
-                    iceSpeed = MovementVector(this.movementSpeed * 3, 0);
+                    blockinput = true;
+                    iceSpeed = MovementVector(this.movementSpeed, 0);
                     this.Mirror = true;
                 }
                 else if (walkingdirection.X < 0)
                 {
-                    blockxboxinput = true;
-                    iceSpeed = MovementVector(this.movementSpeed * 3, 180);
+                    blockinput = true;
+                    iceSpeed = MovementVector(this.movementSpeed, 180);
                     this.Mirror = false;
                 }
             }
@@ -225,13 +227,13 @@ abstract partial class Character : AnimatedGameObject
             {
                 if (walkingdirection.Y > 0)
                 {
-                    blockxboxinput = true;
-                    iceSpeed = MovementVector(this.movementSpeed * 3, 90);
+                    blockinput = true;
+                    iceSpeed = MovementVector(this.movementSpeed, 90);
                 }
                 else if (walkingdirection.Y < 0)
                 {
-                    blockxboxinput = true;
-                    iceSpeed = MovementVector(this.movementSpeed * 3, 270);
+                    blockinput = true;
+                    iceSpeed = MovementVector(this.movementSpeed, 270);
                 }
 
             }
