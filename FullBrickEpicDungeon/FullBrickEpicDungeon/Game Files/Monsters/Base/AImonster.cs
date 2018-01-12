@@ -6,6 +6,7 @@ abstract class AImonster : Monster
 {
     protected Vector2 previousPos;
     protected BaseAI AI;
+    protected bool attackSide;
     public AImonster(float movementSpeed, Level currentLevel, string type) : base(type, currentLevel)
     {
         AI = new BaseAI(this, movementSpeed, currentLevel);
@@ -18,18 +19,28 @@ abstract class AImonster : Monster
         if (AI.IsAttacking)
         {
             PlayAnimation("attack");
+            if (previousPos.X < position.X)
+                this.Mirror = true;
+            else if (previousPos.X > position.X)
+                this.Mirror = false;
         }
         else if (previousPos.Y > position.Y)
+        {
             PlayAnimation("walk_back");
+            if (previousPos.X < position.X)
+                this.Mirror = false;
+            else if (previousPos.X > position.X)
+                this.Mirror = true;
+        }
         else if (previousPos.X < position.X)
         {
             PlayAnimation("walk");
-            this.Mirror = false;
+            this.Mirror = true;
         }
-       else if (previousPos.X > position.X)
+        else if (previousPos.X > position.X)
         {
             PlayAnimation("walk");
-            this.Mirror = true;
+            this.Mirror = false;
         }
         else
             PlayAnimation("idle");
