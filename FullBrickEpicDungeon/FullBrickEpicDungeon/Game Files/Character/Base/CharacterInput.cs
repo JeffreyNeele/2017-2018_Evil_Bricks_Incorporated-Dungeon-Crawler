@@ -7,10 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 abstract partial class Character : AnimatedGameObject
 {
     protected Dictionary<Keys, Keys> keyboardControls;
-    protected bool xboxControlled = false;
-    protected bool isOnIce = false;
-    protected bool isGliding = false;
-    protected bool blockinput = false;
+    protected bool xboxControlled, isOnIce = false, isGliding = false, blockinput = false;
 
     //Method for character input (both xbox controller and keyboard), for now dummy keys for 1 controller are inserted, but the idea should be clear
     //TO DO: a way to distinguish characters / players from each other.
