@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 abstract class AutomatedObject : SpriteGameObject
 {
-    protected Timer reActiveTimer, duration, setupTimer; //timers will be made in the subclasses. Do note that these timers should not be paused from the start
+    protected Timer duration, setupTimer; //timers will be made in the subclasses. Do note that these timers should not be paused from the start
     protected bool reloaded, triggered;
     protected int trapDamage;
     protected GameObjectList players;
@@ -26,7 +26,6 @@ abstract class AutomatedObject : SpriteGameObject
         base.Update(gameTime);
 
         //Update the timers
-        reActiveTimer.Update(gameTime);
         duration.Update(gameTime);
         setupTimer.Update(gameTime);
         UpdatePlayerTrapStatus(gameTime);
@@ -40,12 +39,11 @@ abstract class AutomatedObject : SpriteGameObject
         if (duration.IsExpired && setupTimer.IsExpired && !reloaded)
         {
             reloaded = true;
-            reActiveTimer.Reset();
             ChangeSpriteIndex(0);
         }
 
         //If no timers are active, check for targets
-        if (reActiveTimer.IsExpired && duration.IsExpired && setupTimer.IsExpired && !triggered && reloaded)
+        if (duration.IsExpired && setupTimer.IsExpired && !triggered && reloaded)
         {
             //If a target is found, the trap is triggered
             if (TargetCheck())
