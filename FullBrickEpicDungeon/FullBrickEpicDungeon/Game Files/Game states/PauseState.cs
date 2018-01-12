@@ -11,12 +11,14 @@ class PauseState : IGameLoopObject
 {
     protected IGameLoopObject playingState;
     protected Button continueButton, quitButton;
+    protected SpriteGameObject overlay;
 
     public PauseState()
     {
         // find the playing state
         playingState = GameEnvironment.GameStateManager.GetGameState("playingState");
 
+        overlay = new SpriteGameObject("Assets/Sprites/Paused/overlay", 3);
         // make buttons for the different assignments, eg return to menu
         continueButton = new Button("Assets/Sprites/Paused/Continue", 99);
         continueButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - continueButton.Width / 2, 250);
@@ -33,6 +35,8 @@ class PauseState : IGameLoopObject
     {
         // we draw the playingstate but we do not update it because we want the pause state to be an overlay.
         playingState.Draw(gameTime, spriteBatch);
+        //draw the overlay
+        overlay.Draw(gameTime, spriteBatch);
         // draw the buttons
         continueButton.Draw(gameTime, spriteBatch);
         quitButton.Draw(gameTime, spriteBatch);

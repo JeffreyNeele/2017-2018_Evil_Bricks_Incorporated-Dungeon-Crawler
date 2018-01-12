@@ -7,10 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 abstract partial class Character : AnimatedGameObject
 {
     protected Dictionary<Keys, Keys> keyboardControls;
-    protected bool keyboardControlled;
-    protected bool isOnIce = false;
-    protected bool isGliding = false;
-    protected bool blockinput = false;
+    protected bool xboxControlled, isOnIce = false, isGliding = false, blockinput = false;
 
     //Method for character input (both xbox controller and keyboard), for now dummy keys for 1 controller are inserted, but the idea should be clear
     //TO DO: a way to distinguish characters / players from each other.
@@ -23,21 +20,11 @@ abstract partial class Character : AnimatedGameObject
             if (!IsDowned && !isOnIce && !blockinput)
             {
                 velocity = Vector2.Zero;
-                //Input keys for basic AA and abilities
-                if (inputHelper.KeyPressed(keyboardControls[Keys.Q]))
-                    this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
-                if (inputHelper.KeyPressed(keyboardControls[Keys.R]))
-                    this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
-                if (inputHelper.KeyPressed(keyboardControls[Keys.T]))
-                    this.weapon.UseSpecialAbility(GameWorld.Find("monsterLIST") as GameObjectList);
-                //if (inputHelper.KeyPressed(keyboardControls[Keys.C]))
-                //    SwitchBetweenPlayers();
-
                 if (xboxControlled)
                 {
                     HandleXboxMovement(inputHelper);
                 }
-                else if(keyboardControlled)
+                else
                 {
                     HandleKeyboardMovement(inputHelper);
                 }
@@ -50,8 +37,14 @@ abstract partial class Character : AnimatedGameObject
             }
             else if (!IsDowned && isOnIce)
             {
-                HandleKeyboardIceMovement(inputHelper);
-                HandleXboxIceMovement(inputHelper);
+                if (xboxControlled)
+                {
+                    HandleXboxIceMovement(inputHelper);
+                }
+                else
+                {
+                    HandleKeyboardIceMovement(inputHelper);
+                }
             }
 
             //Check if maiden collides with solid object, else adjust the character position
@@ -81,6 +74,13 @@ abstract partial class Character : AnimatedGameObject
     // Method that handles keyboard movement
     public void HandleKeyboardMovement(InputHelper inputHelper)
     {
+        if (inputHelper.KeyPressed(keyboardControls[Keys.Q]))
+            this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
+        if (inputHelper.KeyPressed(keyboardControls[Keys.R]))
+            this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
+        if (inputHelper.KeyPressed(keyboardControls[Keys.T]))
+            this.weapon.UseSpecialAbility(GameWorld.Find("monsterLIST") as GameObjectList);
+
         //schuin linksboven
         if (inputHelper.IsKeyDown(keyboardControls[Keys.W]))
         {
@@ -183,7 +183,7 @@ abstract partial class Character : AnimatedGameObject
                     this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
 
                 //Interact button
-                if (inputHelper.ButtonPressed(playerNumber, Buttons.Y))
+                if (inputHelper.ButtonPressed(playerNumber, Buttons.X))
                     ObjectCollisionChecker();
                 //Movement
                 walkingdirection = inputHelper.WalkingDirection(playerNumber) * this.movementSpeed;
