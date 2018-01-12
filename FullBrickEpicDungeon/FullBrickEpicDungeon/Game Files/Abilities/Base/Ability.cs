@@ -160,7 +160,8 @@ abstract class Ability
     {
         foreach (Tile tile in fieldGrid.Objects)
         {
-            if (tile.IsSolid && tile.BoundingBox.Intersects(monster.BoundingBox))
+            Rectangle quarterBoundingBox = new Rectangle((int)monster.BoundingBox.X, (int)(monster.BoundingBox.Y + 0.75 * monster.Height), monster.Width, (int)(monster.Height / 4));
+            if (tile.IsSolid && tile.BoundingBox.Intersects(quarterBoundingBox))
             {
                 return true;
             }
