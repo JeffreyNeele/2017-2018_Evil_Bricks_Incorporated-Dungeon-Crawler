@@ -29,21 +29,14 @@ class SwordAndShield : Weapon
     //Method for the basic attack
     public override void Attack(GameObjectList monsterList, GameObjectGrid field)
     {
-        BasicAttack.Use(this, idBaseAA);
-        //base.Attack(monsterList);
-        idAnimation = idBaseAA;
+        base.Attack(monsterList, field);
         monsterObjectList = monsterList;
         fieldList = field;
         AnimationAttackCheck();
+        BasicAttack.Use(this, idBaseAA);
+        idAnimation = idBaseAA;
     }
 
-    //Method that checks the collision between the weapon and the monster
-    public void AnimationAttackCheck()
-    {
-        foreach (Monster m in monsterObjectList.Children)
-            if (m.CollidesWith(Owner))
-                BasicAttack.AttackHit(m, fieldList);
-    }
 
     //Method for the use of the main ability
     public override void UseMainAbility(GameObjectList monsterList, GameObjectGrid field)

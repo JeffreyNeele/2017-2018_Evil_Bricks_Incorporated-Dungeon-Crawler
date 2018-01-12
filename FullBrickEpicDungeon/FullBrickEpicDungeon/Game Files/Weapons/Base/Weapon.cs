@@ -14,6 +14,7 @@ abstract class Weapon : AnimatedGameObject
     protected TimedAbility mainAbility;
     protected SpecialAbility specialAbility;
     private int attack, goldCost;
+    private bool prevAttackHit;
     protected string idBaseAA, idMainAbility, idSpecialAbility, idAnimation;
     protected GameObjectList monsterObjectList;
     protected GameObjectGrid fieldList;
@@ -41,14 +42,10 @@ abstract class Weapon : AnimatedGameObject
     // This is the base attack method of the weapon,, which will be also defined as an ability
     public virtual void Attack(GameObjectList monsterList, GameObjectGrid field)
     {
-        /*BasicAttack.Use(this, this.idBaseAA);
-        CollisionChecker(this.CurrentAnimation, monsterList);*/
-        monsterObjectList = monsterList;
-        foreach (Monster m in monsterObjectList.Children)
-        {
-            m.TakeDamage(10);
-        }
+        
     }
+
+
 
     // Uses the main ability
     public virtual void UseMainAbility(GameObjectList monsterList, GameObjectGrid field)
@@ -69,16 +66,51 @@ abstract class Weapon : AnimatedGameObject
     // Checks for collision with monsters
     protected void CollisionChecker(Animation animation, GameObjectList monsterList)
     {
+        bool hit = false;
         foreach (Monster monsterobj in monsterList.Children)
         {
             if (monsterobj.CollidesWith(this))
             {
                 monsterobj.TakeDamage(owner.Attributes.Attack + this.AttackDamage);
+                hit = true;
                 if (monsterobj.IsDead)
                 {
                     owner.Attributes.Gold += monsterobj.Attributes.Gold;
                 }
             }
+        }
+
+        if (hit)
+        {
+            prevAttackHit = true;
+        }
+        else
+        {
+            prevAttackHit = false;
+        }
+
+    }
+
+    //Method that checks the collision between the weapon and the monster
+    public void AnimationAttackCheck()
+    {
+        bool hit = false;
+        foreach (Monster m in monsterObjectList.Children)
+        {
+            if (m.CollidesWith(Owner))
+            {
+                BasicAttack.AttackHit(m, fieldList);
+                hit = true;
+            }
+        }
+
+        if (hit)
+        {
+            prevAttackHit = true;
+        }
+        else
+        {
+            prevAttackHit = false;
         }
     }
 
@@ -93,7 +125,10 @@ abstract class Weapon : AnimatedGameObject
         get { return goldCost; }
         protected set { goldCost = value; }
     }
-
+    public bool PreviousAttackHit
+    {
+        get { return prevAttackHit; }
+    }
     public Character Owner
     {
         get { return owner; }

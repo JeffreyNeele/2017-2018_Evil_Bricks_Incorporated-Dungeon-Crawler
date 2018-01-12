@@ -742,3 +742,45 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Paused/overlay.png
 
+#begin Assets/SFX/Shieldmaiden/hit_shieldbash.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/SFX/Shieldmaiden/hit_shieldbash.wav
+
+#begin Assets/SFX/Shieldmaiden/sword_hit.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/SFX/Shieldmaiden/sword_hit.wav
+
+#begin Assets/SFX/Shieldmaiden/sword_miss.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/SFX/Shieldmaiden/sword_miss.wav
+
+#begin Assets/SFX/Shieldmaiden/walk.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/SFX/Shieldmaiden/walk.wav
+
+#begin Assets/SFX/button_click.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/SFX/button_click.wav
+
+#begin Assets/SFX/pause.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/SFX/pause.wav
+
+#begin Assets/SFX/ability_not_ready.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/SFX/ability_not_ready.wav
+

@@ -17,13 +17,13 @@ class Timer
     // Increases the time
     public void Update(GameTime gameTime)
     {
-        expired = currentime >= targettime;
         if (expired)
         {
             IsPaused = true;
         }
         else if (!paused)
         {
+            expired = currentime >= targettime;
             currentime += (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 

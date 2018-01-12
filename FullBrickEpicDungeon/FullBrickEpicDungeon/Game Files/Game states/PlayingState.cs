@@ -21,6 +21,7 @@ class PlayingState : IGameLoopObject
 
         if (inputHelper.KeyPressed(Keys.Space))
         {
+            GameEnvironment.AssetManager.PlaySound("Assets/SFX/pause");
             GameEnvironment.GameStateManager.SwitchTo("pauseState");
         }
     }

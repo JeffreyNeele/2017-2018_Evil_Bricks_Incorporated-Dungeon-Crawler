@@ -31,9 +31,15 @@ abstract partial class Character : AnimatedGameObject
 
                 this.position += walkingdirection;
                 PlayAnimationDirection(walkingdirection);
+                // Play walking SFX
+                if (walkingdirection != Vector2.Zero && stepSoundTimer.IsExpired)
+                {
+                    PlaySFX("walk");
+                    stepSoundTimer.Reset();
+                }
+
                 previousWalkingDirection = walkingdirection;
                 walkingdirection = Vector2.Zero;
-
             }
             else if (!IsDowned && isOnIce)
             {
@@ -75,12 +81,33 @@ abstract partial class Character : AnimatedGameObject
     public void HandleKeyboardMovement(InputHelper inputHelper)
     {
         if (inputHelper.KeyPressed(keyboardControls[Keys.Q]))
+        {
             this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
-        if (inputHelper.KeyPressed(keyboardControls[Keys.R]))
-            this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
-        if (inputHelper.KeyPressed(keyboardControls[Keys.T]))
-            this.weapon.UseSpecialAbility(GameWorld.Find("monsterLIST") as GameObjectList);
+            if (weapon.PreviousAttackHit)
+                PlaySFX("attack_hit");
+            else
+                PlaySFX("attack_miss");
 
+        }
+            
+        if (inputHelper.KeyPressed(keyboardControls[Keys.R]))
+        {
+            if (!weapon.AbilityMain.IsOnCooldown)
+            {
+                this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
+                PlaySFX("basic_ability");
+            }
+            else
+            {
+                GameEnvironment.AssetManager.PlaySound("Assets/SFX/ability_not_ready");
+            }
+        }
+
+        /*if (inputHelper.KeyPressed(keyboardControls[Keys.T]))
+        {
+            this.weapon.UseSpecialAbility(GameWorld.Find("monsterLIST") as GameObjectList);
+        }
+        */
         //schuin linksboven
         if (inputHelper.IsKeyDown(keyboardControls[Keys.W]))
         {
@@ -196,7 +223,6 @@ abstract partial class Character : AnimatedGameObject
     // Method that handles xbox movement when the character is on ice
     private void HandleXboxIceMovement(InputHelper inputHelper)
     {
-
         if (blockinput)
         {
             if (this.iceSpeed != new Vector2(0, 0))
@@ -278,8 +304,6 @@ abstract partial class Character : AnimatedGameObject
                 this.PlayAnimation("leftcycle");
                 this.Mirror = false;
             }
-            else
-                this.PlayAnimation("idle");
         }
         else if (Math.Abs(walkingdirection.Y) > Math.Abs(walkingdirection.X))
         {
@@ -291,12 +315,8 @@ abstract partial class Character : AnimatedGameObject
             {
                 this.PlayAnimation("backcycle");
             }
-            else
-                this.PlayAnimation("idle");
-
         }
         else
             this.PlayAnimation("idle");
-
     }
 }

@@ -11,14 +11,16 @@ abstract partial class Character : AnimatedGameObject
     protected BaseAttributes attributes, baseattributes;
     protected Weapon weapon;
     protected List<Equipment> inventory;
-    protected Timer reviveTimer;
+    protected Timer reviveTimer, stepSoundTimer;
     protected Vector2 startPosition, movementSpeed, iceSpeed;
     protected int playerNumber;
     protected float hitCounter;
     protected Dictionary<Buttons, Buttons> xboxControls;
+    protected Dictionary<string, string> characterSFX;
     protected bool playerControlled;
     protected Vector2 walkingdirection;
     protected BaseAI AI;
+
 
     //Constructor: sets up the controls given to the constructor for each player (xbox or keyboard)
     protected Character(int playerNumber, Level currentLevel, bool xboxControlled, ClassType classType, string id = "") : base(0, id)
@@ -27,8 +29,15 @@ abstract partial class Character : AnimatedGameObject
         this.classType = classType;
         baseattributes = new BaseAttributes();
         inventory = new List<Equipment>();
+        characterSFX = new Dictionary<string, string>();
         attributes = new BaseAttributes();
         reviveTimer = new Timer(10);
+        reviveTimer.Reset();
+        reviveTimer.IsPaused = true;
+        stepSoundTimer = new Timer(0.4F)
+        {
+            IsExpired = true
+        };
         this.velocity = Vector2.Zero;
         this.movementSpeed = new Vector2(4, 4);
         AI = new BaseAI(this, 200F, currentLevel, false, 1, 700);
@@ -87,31 +96,45 @@ abstract partial class Character : AnimatedGameObject
 
     public override void Update(GameTime gameTime)
     {
-        base.Update(gameTime);
-        this.weapon.Update(gameTime);
-        IsOnIceChecker();
-        if (IsDowned)
+        if (!IsDowned)
         {
-            reviveTimer.IsPaused = false;
+            stepSoundTimer.Update(gameTime);
+            base.Update(gameTime);
+            this.weapon.Update(gameTime);
+            if (!playerControlled)
+            {
+                Vector2 previousPosition = this.position;
+                AI.Update(gameTime);
+                if (!(previousPosition == this.position) && stepSoundTimer.IsExpired)
+                {
+                    PlaySFX("walk");
+                    stepSoundTimer.Reset();
+                }
+            }
+            
+            if (hitCounter >= 0)
+            {
+                Visible = !Visible;
+                hitCounter -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            else
+                Visible = true;
+            IsOnIceChecker();
+        }
+        else
+        {
+            reviveTimer.Update(gameTime);
             if (reviveTimer.IsExpired)
             {
                 this.Reset();
                 // when the revivetimer expires, the character dies :( sadly he will lose some of his gold after dying (currently 25% might be higher in later versions)
                 this.attributes.Gold = this.attributes.Gold - (this.attributes.Gold / 4);
+                reviveTimer.Reset();
+                reviveTimer.IsPaused = true;
             }
+            reviveTimer.IsPaused = false;
         }
 
-        if (hitCounter >= 0)
-        {
-            Visible = !Visible;
-            hitCounter -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-        }
-        else
-            Visible = true;
-        if (!playerControlled)
-        {
-            AI.Update(gameTime);
-        }
     }
 
 
@@ -236,7 +259,10 @@ abstract partial class Character : AnimatedGameObject
             this.attributes.HP = 0;
         }
     }
-
+    public void PlaySFX(string sfx)
+    {
+        GameEnvironment.AssetManager.PlaySound(characterSFX[sfx]);
+    }
     // returns if the character has gone into the "downed" state
     public bool IsDowned
     {

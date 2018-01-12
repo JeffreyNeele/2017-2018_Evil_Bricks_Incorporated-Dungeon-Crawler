@@ -23,6 +23,8 @@ abstract class Ability
         this.owner = owner;
         PushTimeCount = 8;
         monstersHitList = new List<Monster>();
+        affectedMonsters = new Dictionary<Monster, int>();
+        directionPush = new Dictionary<Monster, bool>();
         // Ability needs the main projectile list (defined in LevelMain.cs) 
         /*try
         {

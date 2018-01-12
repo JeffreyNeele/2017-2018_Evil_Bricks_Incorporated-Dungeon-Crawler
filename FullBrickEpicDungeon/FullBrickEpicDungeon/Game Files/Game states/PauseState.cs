@@ -49,11 +49,13 @@ class PauseState : IGameLoopObject
         quitButton.HandleInput(inputHelper);
         if (continueButton.Pressed)
         {
+            GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
             GameEnvironment.GameStateManager.SwitchTo("playingState");
         }
         // if the quit button is pressed, we reset the playing state and return to the menu
         else if (quitButton.Pressed)
         {
+            GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
             playingState.Reset();
             GameEnvironment.GameStateManager.SwitchTo("titleMenu");
         }

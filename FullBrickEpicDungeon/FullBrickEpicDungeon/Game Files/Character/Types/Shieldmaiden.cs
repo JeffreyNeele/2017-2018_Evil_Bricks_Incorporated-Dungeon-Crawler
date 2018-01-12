@@ -34,6 +34,11 @@ class Shieldmaiden : Character
         LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_walk_left_" + playerColor + "@4", "leftcycle", true, 0.2F);
         LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_walk_right_" + playerColor + "@4", "rightcycle", true, 0.2F);
         PlayAnimation("idle");
+
+        characterSFX.Add("attack_hit", "Assets/SFX/Shieldmaiden/sword_hit");
+        characterSFX.Add("attack_miss", "Assets/SFX/Shieldmaiden/sword_miss");
+        characterSFX.Add("basic_ability", "Assets/SFX/Shieldmaiden/hit_shieldbash");
+        characterSFX.Add("walk", "Assets/SFX/Shieldmaiden/walk");
     }
 
     public override void Update(GameTime gameTime)

@@ -6,7 +6,6 @@ abstract class AImonster : Monster
 {
     protected Vector2 previousPos;
     protected BaseAI AI;
-    protected bool attackSide;
     public AImonster(float movementSpeed, Level currentLevel, string type) : base(type, currentLevel)
     {
         AI = new BaseAI(this, movementSpeed, currentLevel);
