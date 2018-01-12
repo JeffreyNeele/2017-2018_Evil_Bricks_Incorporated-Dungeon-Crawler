@@ -35,43 +35,35 @@ abstract partial class Character : AnimatedGameObject
         this.hitCounter = 0;
         this.playerNumber = playerNumber;
         this.xboxControlled = xboxControlled;
+        this.keyboardControlled = !xboxControlled;
         this.iceSpeed = new Vector2(0, 0);
-        // TEMPORARY
-        this.keyboardControlled = false;
 
         if (playerNumber == 1)
         {
-            // TEMPORARY BOOLS
-            this.keyboardControlled = true;
-            this.xboxControlled = true;
-
             if (this.keyboardControlled) //opgeslagen controls staan in de txt bestandjes
                 keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player1controls.txt");
-            if (this.xboxControlled)
+            else if (this.xboxControlled)
                 xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/KeyboardControls/XboxControls/player1Xbox.txt");
         }
         else if (playerNumber == 2)
         {
-            // TEMPORARY BOOL
-            this.keyboardControlled = true;
-
             if (this.keyboardControlled)
                 keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player2controls.txt");
-            if (this.xboxControlled)
+            else if (this.xboxControlled)
                 xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/KeyboardControls/XboxControls/player2Xbox.txt");
         }
         else if (playerNumber == 3)
         {
             if (this.keyboardControlled)
-                throw new ArgumentOutOfRangeException("Only Player 1 and 2 can play with a keyboard");
-            if (this.xboxControlled)
+                playerControlled = false;
+            else if (this.xboxControlled)
                 xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/KeyboardControls/XboxControls/player3Xbox.txt");
         }
         else if (playerNumber == 4)
         {
             if (this.keyboardControlled)
-                throw new ArgumentOutOfRangeException("Only Player 1 and 2 can play with a keyboard");
-            if (this.xboxControlled)
+                playerControlled = false;
+            else if (this.xboxControlled)
                 xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/KeyboardControls/XboxControls/player4Xbox.txt");
         }
     }
@@ -307,6 +299,12 @@ abstract partial class Character : AnimatedGameObject
     public int PlayerNumber
     {
         get { return playerNumber; }
+    }
+
+    public bool XBOX
+    {
+        get { return xboxControlled; }
+        set { keyboardControlled = !value; xboxControlled = value; }
     }
     // returns the facing direction of the character
 }

@@ -35,12 +35,11 @@ abstract partial class Character : AnimatedGameObject
 
                 if (keyboardControlled)
                 {
-                    HandleXboxMovement(inputHelper);
                     HandleKeyboardMovement(inputHelper); //tijdelijk tot alles werkt met xbox, anders loop ik steeds vast
                 }
-                else
+                else if (xboxControlled)
                 {
-                    HandleKeyboardMovement(inputHelper);
+                    HandleXboxMovement(inputHelper);
                 }
 
                 this.position += walkingdirection;
