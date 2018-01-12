@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using RoyT.AStar;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 // Basic AI used for characters and monsters make sure to set the isMonster boolean correctly
 class BaseAI
@@ -16,7 +15,7 @@ class BaseAI
     protected Level currentLevel;
     protected Vector2 direction;
     protected Timer idleTimer;
-    public BaseAI(AnimatedGameObject owner, float movementSpeed, Level currentLevel, bool isMonster = true, float idleTime = 1.25F, float sightRange = 200)
+    public BaseAI(AnimatedGameObject owner, float movementSpeed, Level currentLevel, bool isMonster = true, float idleTime = 1.4F, float sightRange = 200)
     {
         idleTimer = new Timer(idleTime)
         {
@@ -41,14 +40,6 @@ class BaseAI
     {
         if (targetedObject == null)
         {
-            //if (isMonster)
-            //{
-            //    LineOfSightChecker(sightRange);
-            //}
-            //else 
-            //{
-            //    TargetRandomObject(50);
-            //}
             LineOfSightChecker(sightRange);
         }
         else if (idleTimer.IsExpired)
@@ -120,14 +111,6 @@ class BaseAI
         this.owner.Position += direction * movementSpeed * elapsedGameTime;
         // this is for if we moved past the position, in this case we want go back to that position
 
-        // NOTE: this code block currently for some reason deletes the bunny or overflow a variable without error, removing this makes the AI way less efficient
-        // but with the code block it doesn't work at all
-        /*
-        if (Vector2.Distance(direction, Vector2.Normalize(this.owner.Position - targetGridPosition)) < 0.1f)
-        {
-            this.owner.Position = targetGridPosition;
-        }
-        */
     }
 
     // Method that returns a list with points for the AI to follow.
@@ -215,7 +198,24 @@ class BaseAI
         }
 
     }
-
+    /*
+    public void TargetClosestObject()
+    {
+        int shortestPathCount = levelGrid.Rows * levelGrid.Columns;
+        List<Vector2> tempWayPointList = new List<Vector2>();
+        AnimatedGameObject closestTarget = new AnimatedGameObject();
+        foreach (AnimatedGameObject obj in targetList.Children)
+        {
+            tempWayPointList = FindPath(obj.Position + new Vector2(0, (obj.Height / 4) + 1), this.owner.Position);
+            if (tempWayPointList.Count < shortestPathCount)
+            {
+                shortestPathCount = tempWayPointList.Count;
+                closestTarget = obj;
+            }
+        }
+        targetedObject = closestTarget;
+    }
+    */
     public bool IsAttacking
     {
         get { return isAttacking; }
