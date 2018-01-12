@@ -18,8 +18,6 @@ class Bunny : AImonster
 
     public override void Update(GameTime gameTime)
     {
-        previousPos = position;
         base.Update(gameTime);
-        
     }
 }

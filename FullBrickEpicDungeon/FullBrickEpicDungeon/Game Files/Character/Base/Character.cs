@@ -31,7 +31,7 @@ abstract partial class Character : AnimatedGameObject
         reviveTimer = new Timer(10);
         this.velocity = Vector2.Zero;
         this.movementSpeed = new Vector2(4, 4);
-        AI = new BaseAI(this, 200F, currentLevel, false);
+        AI = new BaseAI(this, 200F, currentLevel, false, 1, 700);
         this.hitCounter = 0;
         this.playerNumber = playerNumber;
         this.xboxControlled = xboxControlled;

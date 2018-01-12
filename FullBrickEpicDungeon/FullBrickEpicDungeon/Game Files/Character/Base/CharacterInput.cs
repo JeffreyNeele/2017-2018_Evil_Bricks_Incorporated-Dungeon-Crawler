@@ -35,11 +35,12 @@ abstract partial class Character : AnimatedGameObject
 
                 if (keyboardControlled)
                 {
-                    HandleKeyboardMovement(inputHelper);
+                    HandleXboxMovement(inputHelper);
+                    HandleKeyboardMovement(inputHelper); //tijdelijk tot alles werkt met xbox, anders loop ik steeds vast
                 }
                 else
                 {
-                    HandleXboxMovement(inputHelper);
+                    HandleKeyboardMovement(inputHelper);
                 }
 
                 this.position += walkingdirection;
@@ -50,7 +51,8 @@ abstract partial class Character : AnimatedGameObject
             }
             else if (!IsDowned && isOnIce)
             {
-                HandleIceMovement(inputHelper);
+                HandleKeyboardIceMovement(inputHelper);
+                HandleXboxIceMovement(inputHelper);
             }
 
             //Check if maiden collides with solid object, else adjust the character position
@@ -132,8 +134,8 @@ abstract partial class Character : AnimatedGameObject
 
     }
 
-    // Method that handles movement when the character is on ice
-    private void HandleIceMovement(InputHelper inputHelper)
+    // Method that handles keyboard movement when the character is on ice
+    private void HandleKeyboardIceMovement(InputHelper inputHelper)
     {
         if (blockinput)
         {
@@ -145,29 +147,30 @@ abstract partial class Character : AnimatedGameObject
             if (inputHelper.IsKeyDown(keyboardControls[Keys.W]))
             {
                 blockinput = true;
-                iceSpeed = MovementVector(this.movementSpeed * 3, 270);
+                iceSpeed = MovementVector(this.movementSpeed, 270);
             }
             else if (inputHelper.IsKeyDown(keyboardControls[Keys.A]))
             {
                 blockinput = true;
-                iceSpeed = MovementVector(this.movementSpeed * 3, 180);
+                iceSpeed = MovementVector(this.movementSpeed, 180);
                 this.Mirror = false;
             }
             else if (inputHelper.IsKeyDown(keyboardControls[Keys.S]))
             {
                 blockinput = true;
-                iceSpeed = MovementVector(this.movementSpeed * 3, 90);
+                iceSpeed = MovementVector(this.movementSpeed, 90);
             }
             else if (inputHelper.IsKeyDown(keyboardControls[Keys.D]))
             {
                 blockinput = true;
-                iceSpeed = MovementVector(this.movementSpeed * 3, 0);
+                iceSpeed = MovementVector(this.movementSpeed, 0);
                 this.Mirror = true;
             }
         }
         PlayAnimationDirection(iceSpeed);
     }
 
+    // Method that handles xbox movement and interaction
     private void HandleXboxMovement(InputHelper inputHelper)
     {
         if (xboxControls != null) //xboxcontrols zijn niet ingeladen, dus wordt niet door xboxcontroller bestuurd.
@@ -190,6 +193,52 @@ abstract partial class Character : AnimatedGameObject
             }
         }
     }
+
+    // Method that handles xbox movement when the character is on ice
+    private void HandleXboxIceMovement(InputHelper inputHelper)
+    {
+
+        if (blockinput)
+        {
+            if (this.iceSpeed != new Vector2(0, 0))
+                this.position += iceSpeed;
+        }
+        else {
+            walkingdirection = inputHelper.WalkingDirection(playerNumber) * this.movementSpeed;
+            walkingdirection.Y = -walkingdirection.Y;
+            if (Math.Abs(walkingdirection.X) >= Math.Abs(walkingdirection.Y))
+            {
+                if (walkingdirection.X > 0)
+                {
+                    blockinput = true;
+                    iceSpeed = MovementVector(this.movementSpeed, 0);
+                    this.Mirror = true;
+                }
+                else if (walkingdirection.X < 0)
+                {
+                    blockinput = true;
+                    iceSpeed = MovementVector(this.movementSpeed, 180);
+                    this.Mirror = false;
+                }
+            }
+            else if (Math.Abs(walkingdirection.Y) > Math.Abs(walkingdirection.X))
+            {
+                if (walkingdirection.Y > 0)
+                {
+                    blockinput = true;
+                    iceSpeed = MovementVector(this.movementSpeed, 90);
+                }
+                else if (walkingdirection.Y < 0)
+                {
+                    blockinput = true;
+                    iceSpeed = MovementVector(this.movementSpeed, 270);
+                }
+
+            }
+        }
+        PlayAnimationDirection(iceSpeed);        
+    }
+
 
     public void SwitchBetweenPlayers()
     {

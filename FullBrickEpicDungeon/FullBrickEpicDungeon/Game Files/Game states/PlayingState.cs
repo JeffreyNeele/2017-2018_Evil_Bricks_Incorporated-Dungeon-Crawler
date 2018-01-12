@@ -19,9 +19,9 @@ class PlayingState : IGameLoopObject
     {
         CurrentLevel.HandleInput(inputHelper);
 
-        if (inputHelper.KeyPressed(Keys.C)) //test key to start a conversation
+        if (inputHelper.KeyPressed(Keys.Space))
         {
-            GameEnvironment.GameStateManager.SwitchTo("conversation");
+            GameEnvironment.GameStateManager.SwitchTo("pauseState");
         }
     }
 

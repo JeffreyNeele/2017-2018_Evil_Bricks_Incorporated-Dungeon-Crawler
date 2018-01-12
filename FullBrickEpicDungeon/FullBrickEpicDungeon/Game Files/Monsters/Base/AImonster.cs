@@ -14,6 +14,7 @@ abstract class AImonster : Monster
 
     public override void Update(GameTime gameTime)
     {
+        previousPos = position;
         AI.Update(gameTime);
         if (AI.IsAttacking)
         {

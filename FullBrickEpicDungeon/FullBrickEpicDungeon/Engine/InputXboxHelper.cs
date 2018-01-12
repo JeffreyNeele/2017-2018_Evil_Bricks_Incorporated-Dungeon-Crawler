@@ -35,9 +35,9 @@ public partial class InputHelper
         }
     }
 
-   public bool ButtonPressed(int playernumber, Buttons k)
+    public bool ButtonPressed(int playernumber, Buttons k)
     {
-       // Console.WriteLine(PreviousState(playernumber).IsButtonUp(k));
+        // Console.WriteLine(PreviousState(playernumber).IsButtonUp(k));
         return CurrentState(playernumber).IsButtonDown(k) && PreviousState(playernumber).IsButtonUp(k);
     }
 
@@ -57,8 +57,8 @@ public partial class InputHelper
         {
             //ignore thumbstick movement
             if ((ignoreThumbsticks == true) && ((currentState.ThumbSticks.Left.Length() != previousGamePadState.ThumbSticks.Left.Length()) && (currentState.ThumbSticks.Right.Length() != previousGamePadState.ThumbSticks.Right.Length())))
-            return false;
-        return true;
+                return false;
+            return true;
         }
         return false;
     }
@@ -67,15 +67,21 @@ public partial class InputHelper
 
     public Vector2 WalkingDirection(int playernumber)
     {
-        return CurrentState(playernumber).ThumbSticks.Left;
+        //return CurrentState(playernumber).ThumbSticks.Left;
+        float deadzone = 0.25f;
+        Vector2 stickInput = CurrentState(playernumber).ThumbSticks.Left;
+        float magnitude = (float)Math.Sqrt(stickInput.X * stickInput.X + stickInput.Y * stickInput.Y);
+        if (magnitude < deadzone)
+            stickInput = Vector2.Zero;
+        return stickInput;
     }
 
 
 
 
-    private GamePadState CurrentState (int playernumber)
+    private GamePadState CurrentState(int playernumber)
     {
-        switch(playernumber)
+        switch (playernumber)
         {
             case 1: return currGamePadState1;
             case 2: return currGamePadState2;
@@ -97,6 +103,5 @@ public partial class InputHelper
             default: throw new IndexOutOfRangeException("The playernumber entered is not between 1 and 4");
         }
     }
-
 }
 
