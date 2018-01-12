@@ -54,6 +54,7 @@ abstract partial class Character : AnimatedGameObject
         {
             // TEMPORARY BOOL
             this.keyboardControlled = true;
+            this.xboxControlled = false;
 
             if (this.keyboardControlled)
                 keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player2controls.txt");

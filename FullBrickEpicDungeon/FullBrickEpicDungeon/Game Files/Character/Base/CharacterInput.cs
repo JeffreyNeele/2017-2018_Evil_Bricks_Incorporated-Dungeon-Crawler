@@ -33,12 +33,11 @@ abstract partial class Character : AnimatedGameObject
                 //if (inputHelper.KeyPressed(keyboardControls[Keys.C]))
                 //    SwitchBetweenPlayers();
 
-                if (keyboardControlled)
+                if (xboxControlled)
                 {
                     HandleXboxMovement(inputHelper);
-                    HandleKeyboardMovement(inputHelper); //tijdelijk tot alles werkt met xbox, anders loop ik steeds vast
                 }
-                else
+                else if(keyboardControlled)
                 {
                     HandleKeyboardMovement(inputHelper);
                 }
@@ -184,7 +183,7 @@ abstract partial class Character : AnimatedGameObject
                     this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
 
                 //Interact button
-                if (inputHelper.ButtonPressed(playerNumber, Buttons.X))
+                if (inputHelper.ButtonPressed(playerNumber, Buttons.Y))
                     ObjectCollisionChecker();
                 //Movement
                 walkingdirection = inputHelper.WalkingDirection(playerNumber) * this.movementSpeed;
