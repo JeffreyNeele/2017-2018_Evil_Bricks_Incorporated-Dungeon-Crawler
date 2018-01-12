@@ -24,7 +24,7 @@ abstract partial class Character : AnimatedGameObject
                 {
                     HandleXboxMovement(inputHelper);
                 }
-                else
+                else if(keyboardControlled)
                 {
                     HandleKeyboardMovement(inputHelper);
                 }
@@ -183,7 +183,7 @@ abstract partial class Character : AnimatedGameObject
                     this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
 
                 //Interact button
-                if (inputHelper.ButtonPressed(playerNumber, Buttons.X))
+                if (inputHelper.ButtonPressed(playerNumber, Buttons.Y))
                     ObjectCollisionChecker();
                 //Movement
                 walkingdirection = inputHelper.WalkingDirection(playerNumber) * this.movementSpeed;
