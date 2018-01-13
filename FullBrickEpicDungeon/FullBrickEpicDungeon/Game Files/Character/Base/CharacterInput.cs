@@ -321,7 +321,7 @@ abstract partial class Character : AnimatedGameObject
     }
     public void SwitchToCharacter(Character targetCharacter)
     {
-        if (targetCharacter == this)
+        if (targetCharacter == this || !targetCharacter.SolidCollisionChecker() || targetCharacter.isOnIce)
         {
             PlaySFX("switch_wrong");
             return;
