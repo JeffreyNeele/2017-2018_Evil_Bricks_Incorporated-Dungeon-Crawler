@@ -38,7 +38,7 @@ abstract partial class Character : AnimatedGameObject
         reviveTimer = new Timer(10);
         reviveTimer.Reset();
         reviveTimer.IsPaused = true;
-        stepSoundTimer = new Timer(0.4F)
+        stepSoundTimer = new Timer(0.5F)
         {
             IsExpired = true
         };
