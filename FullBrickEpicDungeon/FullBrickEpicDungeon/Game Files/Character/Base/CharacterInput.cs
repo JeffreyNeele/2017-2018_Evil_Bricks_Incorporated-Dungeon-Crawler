@@ -17,6 +17,13 @@ abstract partial class Character : AnimatedGameObject
         {
             Vector2 previousPosition = this.position;
             Vector2 previousWalkingDirection = new Vector2(0, 0);
+            if(this.xboxControlled && !inputHelper.ControllerConnected(relativePlayerNumber))
+            {
+                FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
+                // will replace with another gamestate that tells you to reconnect your controller
+                GameEnvironment.GameStateManager.SwitchTo("pauseState");
+            } 
+
             if (!IsDowned && !isOnIce)
             {
                 velocity = Vector2.Zero;
