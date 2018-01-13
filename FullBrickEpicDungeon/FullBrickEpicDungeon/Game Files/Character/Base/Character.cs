@@ -113,6 +113,7 @@ abstract partial class Character : AnimatedGameObject
                     PlaySFX("walk");
                     stepSoundTimer.Reset();
                 }
+                PlayAnimationDirection(position - previousPosition);
             }
             
             if (hitCounter >= 0)

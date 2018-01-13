@@ -28,17 +28,16 @@ abstract partial class Character : AnimatedGameObject
                 {
                     HandleKeyboardMovement(inputHelper);
                 }
-
                 this.position += walkingdirection;
-                PlayAnimationDirection(walkingdirection);
+                
                 // Play walking SFX
                 if (walkingdirection != Vector2.Zero && stepSoundTimer.IsExpired)
                 {
                     PlaySFX("walk");
                     stepSoundTimer.Reset();
                 }
-
                 previousWalkingDirection = walkingdirection;
+                PlayAnimationDirection(walkingdirection);
                 walkingdirection = Vector2.Zero;
             }
             else if (!IsDowned && isOnIce)
@@ -232,7 +231,6 @@ abstract partial class Character : AnimatedGameObject
                 //Movement
                 walkingdirection = inputHelper.WalkingDirection(relativePlayerNumber) * this.movementSpeed;
                 walkingdirection.Y = -walkingdirection.Y;
-                PlayAnimationDirection(walkingdirection);
             }
         }
     }
@@ -339,7 +337,7 @@ abstract partial class Character : AnimatedGameObject
     //when called with the walkingdirection, it plays the correct animation with the movement.
     public void PlayAnimationDirection(Vector2 walkingdirection)
     {
-        if (Math.Abs(walkingdirection.X) >= Math.Abs(walkingdirection.Y))
+        if (Math.Abs(walkingdirection.X) > Math.Abs(walkingdirection.Y))
         {
             if (walkingdirection.X > 0)
             {
