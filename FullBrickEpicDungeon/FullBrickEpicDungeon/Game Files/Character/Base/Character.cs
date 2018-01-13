@@ -12,7 +12,7 @@ abstract partial class Character : AnimatedGameObject
     protected List<Equipment> inventory;
     protected Timer reviveTimer, stepSoundTimer;
     protected Vector2 startPosition, movementSpeed, iceSpeed;
-    protected int playerNumber;
+    protected int playerNumber, relativePlayerNumber;
     protected float hitCounter;
     protected Dictionary<Buttons, Buttons> xboxControls;
     protected Dictionary<string, string> characterSFX;
@@ -41,7 +41,8 @@ abstract partial class Character : AnimatedGameObject
         this.movementSpeed = new Vector2(4, 4);
         AI = new BaseAI(this, 200F, currentLevel, false, 1, 700);
         this.hitCounter = 0;
-        this.playerNumber = playerNumber; 
+        this.playerNumber = playerNumber;
+        relativePlayerNumber = playerNumber;
         this.xboxControlled = xboxControlled;
         this.iceSpeed = new Vector2(0, 0);
 
