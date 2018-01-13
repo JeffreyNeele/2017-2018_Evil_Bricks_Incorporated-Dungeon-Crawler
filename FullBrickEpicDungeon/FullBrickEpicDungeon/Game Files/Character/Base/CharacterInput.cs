@@ -17,7 +17,7 @@ abstract partial class Character : AnimatedGameObject
         {
             Vector2 previousPosition = this.position;
             Vector2 previousWalkingDirection = new Vector2(0, 0);
-            if (!IsDowned && !isOnIce && !blockinput)
+            if (!IsDowned && !isOnIce)
             {
                 velocity = Vector2.Zero;
                 if (xboxControlled)
@@ -39,8 +39,9 @@ abstract partial class Character : AnimatedGameObject
                 previousWalkingDirection = walkingdirection;
                 PlayAnimationDirection(walkingdirection);
                 walkingdirection = Vector2.Zero;
+                base.HandleInput(inputHelper);
             }
-            else if (!IsDowned && isOnIce)
+            else if (!IsDowned)
             {
                 if (xboxControlled)
                 {
@@ -50,6 +51,13 @@ abstract partial class Character : AnimatedGameObject
                 {
                     HandleKeyboardIceMovement(inputHelper);
                 }
+
+                if (iceSpeed != Vector2.Zero && stepSoundTimer.IsExpired)
+                {
+                    PlaySFX("ice_slide");
+                    stepSoundTimer.Reset();
+                }
+                base.HandleInput(inputHelper);
             }
 
             //Check if maiden collides with solid object, else adjust the character position
@@ -72,7 +80,6 @@ abstract partial class Character : AnimatedGameObject
                 }
                 blockinput = false;
             }
-            base.HandleInput(inputHelper);
         }
     }
 
@@ -97,7 +104,7 @@ abstract partial class Character : AnimatedGameObject
             }
             else
             {
-                GameEnvironment.AssetManager.PlaySound("Assets/SFX/ability_not_ready");
+                PlaySFX("ability_not_ready");
             }
         }
         if (inputHelper.KeyPressed(keyboardControls[Keys.LeftShift]))
@@ -217,7 +224,7 @@ abstract partial class Character : AnimatedGameObject
                     }
                     else
                     {
-                        GameEnvironment.AssetManager.PlaySound("Assets/SFX/ability_not_ready");
+                        PlaySFX("ability_not_ready");
                     }
                 }
                 //Interact button
@@ -309,7 +316,7 @@ abstract partial class Character : AnimatedGameObject
     {
         if (targetCharacter == this)
         {
-            GameEnvironment.AssetManager.PlaySound("Assets/SFX/switch_wrong");
+            PlaySFX("switch_wrong");
             return;
         }
         else

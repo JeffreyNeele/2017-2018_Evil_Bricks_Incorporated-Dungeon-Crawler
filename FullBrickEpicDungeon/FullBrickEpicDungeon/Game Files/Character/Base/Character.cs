@@ -29,6 +29,9 @@ abstract partial class Character : AnimatedGameObject
         baseattributes = new BaseAttributes();
         inventory = new List<Equipment>();
         characterSFX = new Dictionary<string, string>();
+        characterSFX.Add("ice_slide", "Assets/SFX/ice_slide");
+        characterSFX.Add("ability_not_ready", "Assets/SFX/ability_not_ready");
+        characterSFX.Add("switch_wrong", "Assets/SFX/switch_wrong");
         attributes = new BaseAttributes();
         reviveTimer = new Timer(10);
         reviveTimer.Reset();

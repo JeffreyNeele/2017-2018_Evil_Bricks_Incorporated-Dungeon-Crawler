@@ -802,3 +802,9 @@
 #begin Assets/Controls/player2default.txt
 /copy:Assets/Controls/player2default.txt
 
+#begin Assets/SFX/ice_slide.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/SFX/ice_slide.wav
+
