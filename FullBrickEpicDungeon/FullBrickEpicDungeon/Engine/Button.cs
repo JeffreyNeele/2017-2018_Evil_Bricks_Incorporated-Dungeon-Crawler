@@ -4,8 +4,6 @@ using System.Collections.Generic;
 class Button : SpriteGameObject
 {
     protected bool isPressed;
-    // Dictionary for the different states that a button can have eg on / off
-    protected Dictionary<string, int> stateNamesList;
     public Button(string AssetName, int layer = 0, string id = "") : base(AssetName, layer, id)
     {
         isPressed = false;

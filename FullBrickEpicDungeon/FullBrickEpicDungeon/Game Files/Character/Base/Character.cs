@@ -2,7 +2,6 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Graphics;
 
 abstract partial class Character : AnimatedGameObject
 {
@@ -49,29 +48,28 @@ abstract partial class Character : AnimatedGameObject
         if (playerNumber == 1)
         {
             if (xboxControlled) //opgeslagen controls staan in de txt bestandjes
-                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/KeyboardControls/XboxControls/player1Xbox.txt");
+                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/Controls/XboxControls/player1Xbox.txt");
             else
-                keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player1controls.txt");
+                keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/Controls/player1controls.txt");
         }
         else if (playerNumber == 2)
         {
             if (xboxControlled)
-                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/KeyboardControls/XboxControls/player2Xbox.txt");
+                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/Controls/XboxControls/player2Xbox.txt");
             else
-                keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player2controls.txt");
+                keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/Controls/player2controls.txt");
         }
         else if (playerNumber == 3)
         {
             if (xboxControlled)
-                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/KeyboardControls/XboxControls/player3Xbox.txt");
+                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/Controls/XboxControls/player3Xbox.txt");
             else
                 playerControlled = false;
-                
         }
         else if (playerNumber == 4)
         {
             if (xboxControlled)
-                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/KeyboardControls/XboxControls/player4Xbox.txt");
+                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/Controls/XboxControls/player4Xbox.txt");
             else if (this.xboxControlled)
                 playerControlled = false;
         }
@@ -162,8 +160,17 @@ abstract partial class Character : AnimatedGameObject
     }
 
     //Checks if the character collides with interactive objects
-    public void ObjectCollisionChecker()
+    public void InteractCollisionChecker()
     {
+        GameObjectList charList = GameWorld.Find("playerLIST") as GameObjectList;
+        foreach (Character c in charList.Children)
+        {
+            if(this.CollidesWith(c) && c.IsDowned)
+            {
+
+            }
+        }
+
         GameObjectList objectList = GameWorld.Find("objectLIST") as GameObjectList;
         // If a character collides with an interactive object, set the target character to this instance and tell the interactive object that it is currently interacting
         foreach (InteractiveObject intObj in objectList.Children)

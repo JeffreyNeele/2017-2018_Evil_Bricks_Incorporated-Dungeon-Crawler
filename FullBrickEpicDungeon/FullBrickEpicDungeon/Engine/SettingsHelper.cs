@@ -14,7 +14,7 @@ public class SettingsHelper
     public Dictionary<Keys, Keys> GenerateKeyboardControls(string path)
     {
         path = "Content/" + path;
-        ReadControlsFile("Content/Assets/KeyboardControls/defaultcontrols.txt", path);
+        ReadControlsFile("Content/Assets/Controls/defaultcontrols.txt", path);
 
         Dictionary<Keys, Keys> controlScheme = new Dictionary<Keys, Keys>();
 

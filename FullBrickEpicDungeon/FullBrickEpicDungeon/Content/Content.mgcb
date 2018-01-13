@@ -211,18 +211,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Shieldmaiden/shieldmaiden_walk_right_default@4.png
 
-#begin Assets/KeyboardControls/defaultcontrols.txt
-/copy:Assets/KeyboardControls/defaultcontrols.txt
-
-#begin Assets/KeyboardControls/player1controls.txt
-/copy:Assets/KeyboardControls/player1controls.txt
-
-#begin Assets/KeyboardControls/player2controls.txt
-/copy:Assets/KeyboardControls/player2controls.txt
-
-#begin Assets/KeyboardControls/player2default.txt
-/copy:Assets/KeyboardControls/player2default.txt
-
 #begin Assets/Sprites/Shieldmaiden/shieldmaiden_walk_back_default@4.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -462,21 +450,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Character selection/fotoLijst.png
-
-#begin Assets/KeyboardControls/XboxControls/player1Xbox.txt
-/copy:Assets/KeyboardControls/XboxControls/player1Xbox.txt
-
-#begin Assets/KeyboardControls/XboxControls/defaultXboxControls.txt
-/copy:Assets/KeyboardControls/XboxControls/defaultXboxControls.txt
-
-#begin Assets/KeyboardControls/XboxControls/player2Xbox.txt
-/copy:Assets/KeyboardControls/XboxControls/player2Xbox.txt
-
-#begin Assets/KeyboardControls/XboxControls/player3Xbox.txt
-/copy:Assets/KeyboardControls/XboxControls/player3Xbox.txt
-
-#begin Assets/KeyboardControls/XboxControls/player4Xbox.txt
-/copy:Assets/KeyboardControls/XboxControls/player4Xbox.txt
 
 #begin Assets/Sprites/Enemies/bunny_attack@5.png
 /importer:TextureImporter
@@ -795,4 +768,37 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Menu/SettingsButton.png
+
+#begin Assets/SFX/switch_wrong.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/SFX/switch_wrong.wav
+
+#begin Assets/Controls/XboxControls/defaultXboxControls.txt
+/copy:Assets/Controls/XboxControls/defaultXboxControls.txt
+
+#begin Assets/Controls/XboxControls/player1Xbox.txt
+/copy:Assets/Controls/XboxControls/player1Xbox.txt
+
+#begin Assets/Controls/XboxControls/player2Xbox.txt
+/copy:Assets/Controls/XboxControls/player2Xbox.txt
+
+#begin Assets/Controls/XboxControls/player3Xbox.txt
+/copy:Assets/Controls/XboxControls/player3Xbox.txt
+
+#begin Assets/Controls/XboxControls/player4Xbox.txt
+/copy:Assets/Controls/XboxControls/player4Xbox.txt
+
+#begin Assets/Controls/defaultcontrols.txt
+/copy:Assets/Controls/defaultcontrols.txt
+
+#begin Assets/Controls/player1controls.txt
+/copy:Assets/Controls/player1controls.txt
+
+#begin Assets/Controls/player2controls.txt
+/copy:Assets/Controls/player2controls.txt
+
+#begin Assets/Controls/player2default.txt
+/copy:Assets/Controls/player2default.txt
 
