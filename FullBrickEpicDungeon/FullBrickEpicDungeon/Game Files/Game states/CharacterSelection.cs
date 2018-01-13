@@ -12,11 +12,16 @@ class CharacterSelection : GameObjectList
 {
     AnimatedGameObject[] characterSprites = new AnimatedGameObject[4];
     SpriteGameObject[] borderSprites = new SpriteGameObject[4];
+    SpriteGameObject[] controlSprites = new SpriteGameObject[4];
     AnimatedGameObject[] readySprite = new AnimatedGameObject[4];
     int[] characterSelectIndex = new int[4];
     bool[] lockInSprite = new bool[4];
     Color[] lockInColor = new Color[8];
     float launchCount = 1;
+    int playersjoined = 0;
+    bool[] keyboardjoined = new bool[2];
+    bool[] xboxjoined = new bool[4];
+
     public CharacterSelection()
     {
         //The colors of the background borders
@@ -34,7 +39,7 @@ class CharacterSelection : GameObjectList
         Add(backgroundSprite);
 
         //Make a list of all the possible character sprites, also place all the necessary components
-        for (int i = 0; i < characterSprites.Length; i++)
+        for (int i = 0; i < 4; i++)
         {
             //First load in the title of the state
             SpriteGameObject titleState = new SpriteGameObject("Assets/Sprites/Character selection/CharacterSelectTitle");
@@ -45,37 +50,11 @@ class CharacterSelection : GameObjectList
             borderSprites[i].Position = new Vector2(GameEnvironment.Screen.X / 4 * i, 170);
             Add(borderSprites[i]);
 
-            //make and load in the animations
-            characterSprites[i] = new AnimatedGameObject(2);
-            characterSprites[i].LoadAnimation("Assets/Sprites/Character selection/shieldmaiden_default", "maiden1", true);
-            characterSprites[i].LoadAnimation("Assets/Sprites/Character selection/shieldmaiden_blue", "maiden2", true);
-            characterSprites[i].LoadAnimation("Assets/Sprites/Character selection/shieldmaiden_green", "maiden3", true);
-            characterSprites[i].LoadAnimation("Assets/Sprites/Character selection/shieldmaiden_orange", "maiden4", true);
-            
-            //position of the sprites
-            characterSprites[i].Position = new Vector2(borderSprites[i].Position.X + borderSprites[i].Width / 2,
-                borderSprites[i].Position.Y + 205);
-            Add(characterSprites[i]);
-
-            //play all the different animations
-            characterSprites[i].PlayAnimation("maiden" + (i + 1));
-
-            //Add the index number of the selected animation
-            characterSelectIndex[i] = i + 1;
-
-            //Change color of background accordingly to the playing animation
-            borderSprites[i].GetColor = lockInColor[(characterSelectIndex[i] - 1) * 2];
-
-            //Place all the ready sprites
-            readySprite[i] = new AnimatedGameObject(2);
-            readySprite[i].Position = new Vector2(borderSprites[i].Position.X + borderSprites[i].Width / 2, borderSprites[i].Position.Y + borderSprites[i].Height / 7 * 6);
-            readySprite[i].LoadAnimation("Assets/Sprites/Character selection/Ready-not", "notReady", true);
-            readySprite[i].LoadAnimation("Assets/Sprites/Character selection/Ready!", "Ready", true);
-            readySprite[i].PlayAnimation("notReady");
-            Add(readySprite[i]);
-
-
-        }
+            //load in Press to join frame
+            controlSprites[i] = new SpriteGameObject("Assets/Sprites/Character selection/ControllerParchment/PressToJoinRes400",2);
+            controlSprites[i].Position = new Vector2(GameEnvironment.Screen.X / 4 * i +40, 370);
+            Add(controlSprites[i]);
+        }   
     }
 
     public override void Update(GameTime gameTime)
@@ -92,6 +71,32 @@ class CharacterSelection : GameObjectList
     public override void HandleInput(InputHelper inputHelper)
     {
         base.HandleInput(inputHelper);
+        //Join the player that presses the button
+        if (playersjoined < 4)
+        {
+            //Join keyboard players if input is detected
+            if (inputHelper.KeyPressed(Keys.S) && keyboardjoined[0] == false)
+            {
+                keyboardjoined[0] = true;
+                JoinPlayer();
+            }
+            if (inputHelper.KeyPressed(Keys.Down) && keyboardjoined[1] == false)
+            {
+                keyboardjoined[1] = true;
+                JoinPlayer();
+            }
+
+            //Join xbox players if input is detected
+          for(int player = 1; player <= 4; player++)
+            if (inputHelper.ButtonPressed(player, Buttons.A) && xboxjoined[player-1] ==false)
+            {
+                    xboxjoined[player - 1] = true;
+                    JoinPlayer();
+            }
+
+        }
+
+
 
         //Input player 1, keyboard controlled
         if (!lockInSprite[0])
@@ -230,6 +235,40 @@ class CharacterSelection : GameObjectList
             }
         }
         return true;
+    }
+
+    public void JoinPlayer()
+    {
+            //make and load in the animations
+            characterSprites[playersjoined] = new AnimatedGameObject(2);
+            characterSprites[playersjoined].LoadAnimation("Assets/Sprites/Character selection/shieldmaiden_default", "maiden1", true);
+            characterSprites[playersjoined].LoadAnimation("Assets/Sprites/Character selection/shieldmaiden_blue", "maiden2", true);
+            characterSprites[playersjoined].LoadAnimation("Assets/Sprites/Character selection/shieldmaiden_green", "maiden3", true);
+            characterSprites[playersjoined].LoadAnimation("Assets/Sprites/Character selection/shieldmaiden_orange", "maiden4", true);
+
+            //position of the sprites
+            characterSprites[playersjoined].Position = new Vector2(borderSprites[playersjoined].Position.X + borderSprites[playersjoined].Width / 2,
+            borderSprites[playersjoined].Position.Y + 205);
+            Add(characterSprites[playersjoined]);
+
+            //play all the different animations
+            characterSprites[playersjoined].PlayAnimation("maiden" + (playersjoined + 1));
+
+            //Add the index number of the selected animation
+            characterSelectIndex[playersjoined] = playersjoined+1;
+
+            //Change color of background accordingly to the playing animation
+            borderSprites[playersjoined].GetColor = lockInColor[(characterSelectIndex[playersjoined] - 1) * 2];
+
+            //Place all the ready sprites
+            readySprite[playersjoined] = new AnimatedGameObject(2);
+            readySprite[playersjoined].Position = new Vector2(borderSprites[playersjoined].Position.X + borderSprites[playersjoined].Width / 2, borderSprites[playersjoined].Position.Y + borderSprites[playersjoined].Height / 7 * 6);
+            readySprite[playersjoined].LoadAnimation("Assets/Sprites/Character selection/Ready-not", "notReady", true);
+            readySprite[playersjoined].LoadAnimation("Assets/Sprites/Character selection/Ready!", "Ready", true);
+            readySprite[playersjoined].PlayAnimation("notReady");
+            Add(readySprite[playersjoined]);
+
+            playersjoined++;
     }
 }
 

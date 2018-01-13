@@ -25,7 +25,7 @@ class TitleMenuState: GameObjectList
         if (startButton.Pressed)
         {
             FullBrickEpicDungeon.DungeonCrawler.numberOfPlayers = 2;
-            GameEnvironment.GameStateManager.SwitchTo("playingState");
+            GameEnvironment.GameStateManager.SwitchTo("characterSelection");
             //GameEnvironment.GameStateManager.SwitchTo("characterSelection");
         }
     }

@@ -24,10 +24,8 @@ abstract partial class Character : AnimatedGameObject
                 {
                     HandleXboxMovement(inputHelper);
                 }
-                else if(keyboardControlled)
-                {
+                else 
                     HandleKeyboardMovement(inputHelper);
-                }
 
                 this.position += walkingdirection;
                 PlayAnimationDirection(walkingdirection);
