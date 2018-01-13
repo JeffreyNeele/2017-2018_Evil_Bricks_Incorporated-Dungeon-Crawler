@@ -36,7 +36,7 @@ public class SettingsHelper
     public Dictionary<Buttons, Buttons> GenerateXboxControls(string path)
     {
         path = "Content/" + path;        
-        ReadControlsFile("Content/Assets/KeyboardControls/XboxControls/defaultXboxcontrols.txt", path);
+        ReadControlsFile("Content/Assets/Controls/XboxControls/defaultXboxcontrols.txt", path);
 
         Dictionary<Buttons, Buttons> controlScheme = new Dictionary<Buttons, Buttons>();
         for (int k = 0; k < defaultControls.Count; k++)
