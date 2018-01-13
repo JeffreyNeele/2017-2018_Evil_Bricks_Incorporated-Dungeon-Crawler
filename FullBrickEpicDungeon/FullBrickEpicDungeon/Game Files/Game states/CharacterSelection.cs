@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 //Spelers kunnen in deze state connecten met de game (met xbox controller of toetsenbord).
@@ -84,7 +79,11 @@ class CharacterSelection : GameObjectList
         {
             launchCount -= (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (launchCount <= 0)
+            {
+                FullBrickEpicDungeon.DungeonCrawler.mouseVisible = false;
                 GameEnvironment.GameStateManager.SwitchTo("playingState");
+            }
+                
         }
         base.Update(gameTime);
     }

@@ -21,7 +21,10 @@ class PlayingState : IGameLoopObject
 
         if (inputHelper.KeyPressed(Keys.Space))
         {
-            GameEnvironment.AssetManager.PlaySound("Assets/SFX/pause");
+            if(FullBrickEpicDungeon.DungeonCrawler.SFX)
+                GameEnvironment.AssetManager.PlaySound("Assets/SFX/pause");
+
+            FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
             GameEnvironment.GameStateManager.SwitchTo("pauseState");
         }
     }

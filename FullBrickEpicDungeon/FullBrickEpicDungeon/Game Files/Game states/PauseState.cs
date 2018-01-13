@@ -50,6 +50,7 @@ class PauseState : IGameLoopObject
         if (continueButton.Pressed)
         {
             GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
+            FullBrickEpicDungeon.DungeonCrawler.mouseVisible = false;
             GameEnvironment.GameStateManager.SwitchTo("playingState");
         }
         // if the quit button is pressed, we reset the playing state and return to the menu
@@ -57,6 +58,7 @@ class PauseState : IGameLoopObject
         {
             GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
             playingState.Reset();
+            FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
             GameEnvironment.GameStateManager.SwitchTo("titleMenu");
         }
     }

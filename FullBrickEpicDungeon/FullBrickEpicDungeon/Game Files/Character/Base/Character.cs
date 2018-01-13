@@ -261,7 +261,8 @@ abstract partial class Character : AnimatedGameObject
     }
     public void PlaySFX(string sfx)
     {
-        GameEnvironment.AssetManager.PlaySound(characterSFX[sfx]);
+        if(FullBrickEpicDungeon.DungeonCrawler.SFX)
+            GameEnvironment.AssetManager.PlaySound(characterSFX[sfx]);
     }
     // returns if the character has gone into the "downed" state
     public bool IsDowned

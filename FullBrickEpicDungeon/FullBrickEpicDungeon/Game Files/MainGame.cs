@@ -10,6 +10,7 @@ namespace FullBrickEpicDungeon
     public class DungeonCrawler : GameEnvironment
     {
         public static int numberOfPlayers = 1;
+        public static bool SFX = true, music = true, mouseVisible = true;
         //SpriteGameObject conversationFrame;
         public DungeonCrawler()
         {
@@ -68,6 +69,11 @@ namespace FullBrickEpicDungeon
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            if (mouseVisible)
+                IsMouseVisible = true;
+            else
+                IsMouseVisible = false;
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             // TODO: Add your update logic here
