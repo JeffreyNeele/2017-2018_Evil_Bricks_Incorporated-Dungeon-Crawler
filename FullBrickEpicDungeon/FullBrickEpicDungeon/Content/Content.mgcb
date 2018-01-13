@@ -802,3 +802,15 @@
 #begin Assets/Controls/player2default.txt
 /copy:Assets/Controls/player2default.txt
 
+#begin Assets/Sprites/Shieldmaiden/HealthBar.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Shieldmaiden/HealthBar.png
+
