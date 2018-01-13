@@ -43,10 +43,6 @@ public class SpriteGameObject : GameObject
         
         sprite.Draw(spriteBatch, this.GlobalPosition + cameraOffset, origin, color);
     }
-    public void ChangeSpriteIndex(int index)
-    {
-        sprite = new SpriteSheet(assetName, index);
-    }
 
     public SpriteSheet Sprite
     {

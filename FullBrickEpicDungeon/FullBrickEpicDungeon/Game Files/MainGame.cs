@@ -46,6 +46,7 @@ namespace FullBrickEpicDungeon
             spriteBatch = new SpriteBatch(GraphicsDevice);
             // TODO: use this.Content to load your game content here
             gameStateManager.AddGameState("titleMenu", new TitleMenuState());
+            GameStateManager.AddGameState("settingsState", new SettingsState());
             gameStateManager.AddGameState("characterSelection", new CharacterSelection());    
             gameStateManager.AddGameState("playingState", new PlayingState());
             GameStateManager.AddGameState("pauseState", new PauseState());

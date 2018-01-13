@@ -36,8 +36,10 @@ class CharacterSelection : GameObjectList
             Add(titleState);
 
             //load in the borders of the selection
-            borderSprites[i] = new SpriteGameObject("Assets/Sprites/Character selection/Border", 1);
-            borderSprites[i].Position = new Vector2(GameEnvironment.Screen.X / 4 * i, 170);
+            borderSprites[i] = new SpriteGameObject("Assets/Sprites/Character selection/Border", 1)
+            {
+                Position = new Vector2(GameEnvironment.Screen.X / 4 * i, 170)
+            };
             Add(borderSprites[i]);
 
             //make and load in the animations
@@ -62,8 +64,10 @@ class CharacterSelection : GameObjectList
             borderSprites[i].GetColor = lockInColor[(characterSelectIndex[i] - 1) * 2];
 
             //Place all the ready sprites
-            readySprite[i] = new AnimatedGameObject(2);
-            readySprite[i].Position = new Vector2(borderSprites[i].Position.X + borderSprites[i].Width / 2, borderSprites[i].Position.Y + borderSprites[i].Height / 7 * 6);
+            readySprite[i] = new AnimatedGameObject(2)
+            {
+                Position = new Vector2(borderSprites[i].Position.X + borderSprites[i].Width / 2, borderSprites[i].Position.Y + borderSprites[i].Height / 7 * 6)
+            };
             readySprite[i].LoadAnimation("Assets/Sprites/Character selection/Ready-not", "notReady", true);
             readySprite[i].LoadAnimation("Assets/Sprites/Character selection/Ready!", "Ready", true);
             readySprite[i].PlayAnimation("notReady");

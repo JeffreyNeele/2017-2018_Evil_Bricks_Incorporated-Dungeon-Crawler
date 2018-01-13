@@ -19,30 +19,6 @@
 #begin Assets/Fonts/ConversationFont.xnb
 /copy:Assets/Fonts/ConversationFont.xnb
 
-#begin Assets/Sprites/Lightbringer/lightbringer_default.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/Lightbringer/lightbringer_default.png
-
-#begin Assets/Sprites/Lightbringer/lightbringer_idle@3.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/Lightbringer/lightbringer_idle@3.png
-
 #begin Assets/Sprites/Conversation Boxes/ConversationBox1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -139,18 +115,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Tiles/TileWood1.png
 
-#begin Assets/Sprites/Shadowhunter/shadowhunter_default.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/Shadowhunter/shadowhunter_default.png
-
 #begin Assets/Sprites/Shieldmaiden/shieldmaiden_default.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -162,18 +126,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Shieldmaiden/shieldmaiden_default.png
-
-#begin Assets/Sprites/Talismaniac/talismaniac_default.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/Talismaniac/talismaniac_default.png
 
 #begin Assets/Sprites/Menu/placeholderbackground.jpg
 /importer:TextureImporter
@@ -783,4 +735,64 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Assets/SFX/ability_not_ready.wav
+
+#begin Assets/Sprites/Settings/musicbutton@2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Settings/musicbutton@2.png
+
+#begin Assets/Sprites/Settings/ReturnToMenu.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Settings/ReturnToMenu.png
+
+#begin Assets/Sprites/Settings/settingsbackground.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Settings/settingsbackground.png
+
+#begin Assets/Sprites/Settings/sfxbutton@2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Settings/sfxbutton@2.png
+
+#begin Assets/Sprites/Menu/SettingsButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Menu/SettingsButton.png
 
