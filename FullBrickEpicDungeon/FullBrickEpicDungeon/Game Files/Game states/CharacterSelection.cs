@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
+
+//NOG FIXEN DAT LOCK IN (SPATIE/ENTER) NIET KAN TOT ER EEN SPELER IS DIE TOETSENBORD BESTUURT DAARMEE
+
 //Spelers kunnen in deze state connecten met de game (met xbox controller of toetsenbord).
 //Daarna is het mogelijk om een character te kiezen. Uitgangspunt is dat een character maar één keer gekozen kan worden.
 class CharacterSelection : GameObjectList
@@ -14,16 +17,34 @@ class CharacterSelection : GameObjectList
     SpriteGameObject[] borderSprites = new SpriteGameObject[4];
     SpriteGameObject[] controlSprites = new SpriteGameObject[4];
     AnimatedGameObject[] readySprite = new AnimatedGameObject[4];
+
     int[] characterSelectIndex = new int[4];
     bool[] lockInSprite = new bool[4];
     Color[] lockInColor = new Color[8];
     float launchCount = 1;
+
     int playersjoined = 0;
     bool[] keyboardjoined = new bool[2];
     bool[] xboxjoined = new bool[4];
 
+    
+    //left in this is 1,2,3,4,5,6. (0,1 for keyboard, 2-5 for xbox. Dictionary translates to the number of the playerborder the player joined in.
+    Dictionary<int, int> playerborder = new Dictionary<int, int>();
+
+    //toetsenbord controls dictionary van player 0 en 1 in de dictionary hiervoor
+    protected Dictionary<Keys, Keys> keyboardControls1;
+    protected Dictionary<Keys, Keys> keyboardControls2;
+
+    //matches the player number to the controls dictionary used.
+    protected Dictionary<int, Dictionary<Keys, Keys>> keyboardcontrols= new Dictionary<int, Dictionary<Keys, Keys>>();
+
     public CharacterSelection()
     {
+        keyboardControls1 = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player1controls.txt");
+        keyboardControls2 = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player2controls.txt");
+        keyboardcontrols.Add(0, keyboardControls1);
+        keyboardcontrols.Add(1, keyboardControls2);
+
         //The colors of the background borders
         lockInColor[0] = Color.LightSlateGray;
         lockInColor[1] = Color.DarkGray;
@@ -71,6 +92,8 @@ class CharacterSelection : GameObjectList
     public override void HandleInput(InputHelper inputHelper)
     {
         base.HandleInput(inputHelper);
+
+
         //Join the player that presses the button
         if (playersjoined < 4)
         {
@@ -78,79 +101,60 @@ class CharacterSelection : GameObjectList
             if (inputHelper.KeyPressed(Keys.S) && keyboardjoined[0] == false)
             {
                 keyboardjoined[0] = true;
-                JoinPlayer();
+                JoinPlayer(0);
             }
             if (inputHelper.KeyPressed(Keys.Down) && keyboardjoined[1] == false)
             {
                 keyboardjoined[1] = true;
-                JoinPlayer();
+                JoinPlayer(1);
             }
 
             //Join xbox players if input is detected
-          for(int player = 1; player <= 4; player++)
-            if (inputHelper.ButtonPressed(player, Buttons.A) && xboxjoined[player-1] ==false)
+          for(int controller = 1; controller <= 4; controller++)
+            if (inputHelper.ButtonPressed(controller, Buttons.A) && xboxjoined[controller-1] == false)
             {
-                    xboxjoined[player - 1] = true;
-                    JoinPlayer();
+                    xboxjoined[controller - 1] = true;
+                    JoinPlayer(controller + 2); //to yield 3-6 in the dictionary
             }
 
         }
 
 
 
-        //Input player 1, keyboard controlled
-        if (!lockInSprite[0])
+        //links rechts werkt niet
+        
+        try
         {
-            if (inputHelper.KeyPressed(Keys.Right))
-                ChangeSpriteRight(characterSprites[0], characterSelectIndex[0], 0);
+            //handles keyboard input for each joined player, independant of in which playerborder it fits.
+            for (int i = 0; i <=1; i++)
+            {
+                if (!lockInSprite[i])
+                {
+                    if (inputHelper.KeyPressed(keyboardcontrols[i][Keys.D]))
+                        ChangeSpriteRight(characterSprites[playerborder[i]], characterSelectIndex[playerborder[i]], playerborder[i]);
 
-            else if (inputHelper.KeyPressed(Keys.Left))
-                ChangeSpriteLeft(characterSprites[0], characterSelectIndex[0], 0);
+                    else if (inputHelper.KeyPressed(keyboardcontrols[i][Keys.A]))
+                        ChangeSpriteLeft(characterSprites[playerborder[i]], characterSelectIndex[playerborder[i]], playerborder[i]);
+                }
+
+                //Als ik de if functie hieronder uitcomment werkt alles perfect (behalve inlocken natuurlijk)
+                if (!lockInSprite[i])
+                {
+                    //Player 1, lock in character selection.
+                    if (inputHelper.KeyPressed(keyboardcontrols[i][Keys.E]))
+                        LockinPlayer(playerborder[i]);
+                } //tot hier uitcommenten werkt
+                
+
+            }
+            
         }
-
-        //Player 1, lock in character selection.
-        if (inputHelper.KeyPressed(Keys.Enter))
+        catch (KeyNotFoundException e)
         {
-            //Player 1 Lock in
-            if(CheckLockIn(0))
-                lockInSprite[0] = !lockInSprite[0];
-
-            if (lockInSprite[0])
-            {
-                borderSprites[0].GetColor = lockInColor[(characterSelectIndex[0] - 1) * 2 + 1];
-                readySprite[0].PlayAnimation("Ready");
-            }
-            else
-            {
-                borderSprites[0].GetColor = lockInColor[(characterSelectIndex[0] - 1) * 2];
-                readySprite[0].PlayAnimation("notReady");
-            }
-
-            //Player 3 lock in
-            if (CheckLockIn(2))
-                lockInSprite[2] = !lockInSprite[2];
-            if (lockInSprite[2])
-            {
-                borderSprites[2].GetColor = lockInColor[(characterSelectIndex[2] - 1) * 2 + 1];
-                readySprite[2].PlayAnimation("Ready");
-            }
-            else
-            {
-                borderSprites[2].GetColor = lockInColor[(characterSelectIndex[2] - 1) * 2];
-                readySprite[2].PlayAnimation("notReady");
-            }
 
         }
 
-        //input player 2, keyboard controlled
-        if (!lockInSprite[1])
-        {
-            if (inputHelper.KeyPressed(Keys.D))
-                ChangeSpriteRight(characterSprites[1], characterSelectIndex[1], 1);
-
-            else if (inputHelper.KeyPressed(Keys.A))
-                ChangeSpriteLeft(characterSprites[1], characterSelectIndex[1], 1);
-        }
+       
 
         if (inputHelper.KeyPressed(Keys.Space))
         {
@@ -169,23 +173,10 @@ class CharacterSelection : GameObjectList
                 readySprite[1].PlayAnimation("notReady");
             }
 
-            //Player 4 lock in
-            if (CheckLockIn(3))
-                lockInSprite[3] = !lockInSprite[3];
-            if (lockInSprite[3])
-            {
-                borderSprites[3].GetColor = lockInColor[(characterSelectIndex[3] - 1) * 2 + 1];
-                readySprite[3].PlayAnimation("Ready");
-            }
-            else
-            {
-                borderSprites[3].GetColor = lockInColor[(characterSelectIndex[3] - 1) * 2];
-                readySprite[3].PlayAnimation("notReady");
-            }
-
-
         }
     }
+
+
     //scrolling right through the selection is +1
     public void ChangeSpriteRight(AnimatedGameObject obj, int animationIndex, int index)
     {
@@ -237,7 +228,7 @@ class CharacterSelection : GameObjectList
         return true;
     }
 
-    public void JoinPlayer()
+    public void JoinPlayer(int controlsnr)
     {
             //make and load in the animations
             characterSprites[playersjoined] = new AnimatedGameObject(2);
@@ -268,7 +259,26 @@ class CharacterSelection : GameObjectList
             readySprite[playersjoined].PlayAnimation("notReady");
             Add(readySprite[playersjoined]);
 
+            playerborder.Add(controlsnr, this.playersjoined); //playersjoined is the same as the border number in this case
             playersjoined++;
+            
+    }
+
+    private void LockinPlayer(int player)
+    {
+        if (CheckLockIn(player))
+            lockInSprite[player] = !lockInSprite[0];
+
+        if (lockInSprite[player])
+        {
+            borderSprites[player].GetColor = lockInColor[(characterSelectIndex[0] - 1) * 2 + 1];
+            readySprite[player].PlayAnimation("Ready");
+        }
+        else
+        {
+            borderSprites[player].GetColor = lockInColor[(characterSelectIndex[0] - 1) * 2];
+            readySprite[player].PlayAnimation("notReady");
+        }
     }
 }
 
