@@ -138,12 +138,10 @@ class CharacterSelection : GameObjectList
                 }
 
                 //Als ik de if functie hieronder uitcomment werkt alles perfect (behalve inlocken natuurlijk)
-                if (!lockInSprite[i])
-                {
                     //Player 1, lock in character selection.
                     if (inputHelper.KeyPressed(keyboardcontrols[i][Keys.E]))
                         LockinPlayer(playerborder[i]);
-                } //tot hier uitcommenten werkt
+                 //tot hier uitcommenten werkt
                 
 
             }
@@ -266,8 +264,8 @@ class CharacterSelection : GameObjectList
 
     private void LockinPlayer(int player)
     {
-        if (CheckLockIn(player))
-            lockInSprite[player] = !lockInSprite[0];
+       if (CheckLockIn(player))
+            lockInSprite[player] = !lockInSprite[player];
 
         if (lockInSprite[player])
         {
