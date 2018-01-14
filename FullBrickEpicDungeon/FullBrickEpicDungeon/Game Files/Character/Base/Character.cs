@@ -3,6 +3,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 abstract partial class Character : AnimatedGameObject
 {
@@ -20,8 +21,10 @@ abstract partial class Character : AnimatedGameObject
     protected bool playerControlled;
     protected Vector2 walkingdirection;
     protected BaseAI AI;
-    SpriteGameObject healthBar;
-
+    SpriteGameObject healthbar;
+    Rectangle healthrectangle;
+    Texture2D healthtexture;
+    Vector2 healthposition;
 
     //Constructor: sets up the controls given to the constructor for each player (xbox or keyboard)
     protected Character(int playerNumber, Level currentLevel, bool xboxControlled, ClassType classType, string id = "") : base(0, id)
@@ -50,7 +53,7 @@ abstract partial class Character : AnimatedGameObject
         relativePlayerNumber = playerNumber;
         this.xboxControlled = xboxControlled;
         this.iceSpeed = new Vector2(0, 0);
-        healthBar = new SpriteGameObject(assetName = "Assets/Sprites/Shieldmaiden/HealthBar", layer = 5, id = "healthbar");
+        healthbar = new SpriteGameObject(assetName = "Assets/Sprites/Shieldmaiden/HealthBar", layer = 5, id = "healthbar");
 
         if (playerNumber == 1)
         {
@@ -145,26 +148,25 @@ abstract partial class Character : AnimatedGameObject
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
-        healthBar.Draw(gameTime, spriteBatch);
+
+        //spriteBatch.Draw(healthtexture, healthrectangle, Color.White);
+        healthbar.Draw(gameTime, spriteBatch);
         
         base.Draw(gameTime, spriteBatch);
     }
 
     public void UpdateHealthBar()
     {
-
         int maxhealth = baseattributes.HP;
         int health = attributes.HP;
-        int displayedhealth = (health / maxhealth) * 60;
-        Vector2 healthbarposition = new Vector2(position.X - (Width / 2), position.Y - (Height/2 + 5));
-        healthBar.Position = healthbarposition;
+        int displayedhealth = ((health / maxhealth) * 60);
+        healthposition = new Vector2(position.X - (Width / 2), position.Y - (Height/2 + 5));
+        healthrectangle = new Rectangle((int)healthposition.X, (int)healthposition.Y, displayedhealth, healthbar.Height);
+        //healthtexture = GameEnvironment.ContentManager.Load<Texture2D>("Assets/Sprites/Shieldmaiden/HealthBar");
+        healthbar.Position = healthposition;
 
         // not sure how to make the healthbar scale down to account for damage taken.
-        //Rectangle pppppppp = new Rectangle((int)healthbarposition.X, (int)healthbarposition.Y, displayedhealth, healthBar.Height);
-
-        
     }
-
 
     public override void Reset()
     {

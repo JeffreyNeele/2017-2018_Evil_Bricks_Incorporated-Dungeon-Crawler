@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Content;
 
 public class GameEnvironment : Game
 {
@@ -14,6 +15,7 @@ public class GameEnvironment : Game
     protected static GameStateManager gameStateManager;
     protected static Random random;
     protected static AssetManager assetManager;
+    protected static ContentManager contentManager;
     protected static GameSettingsManager gameSettingsManager;
     protected static CameraHelper cameraHelper;
     protected static SettingsHelper settingsHelper;
@@ -45,6 +47,11 @@ public class GameEnvironment : Game
     public static AssetManager AssetManager
     {
         get { return assetManager; }
+    }
+
+    public static ContentManager ContentManager
+    {
+        get { return contentManager; }
     }
 
     public static GameStateManager GameStateManager
