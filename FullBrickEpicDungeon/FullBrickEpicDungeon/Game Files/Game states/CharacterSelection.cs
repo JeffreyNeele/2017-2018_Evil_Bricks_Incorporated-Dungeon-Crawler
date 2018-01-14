@@ -137,11 +137,9 @@ class CharacterSelection : GameObjectList
                         ChangeSpriteLeft(characterSprites[playerborder[i]], characterSelectIndex[playerborder[i]], playerborder[i]);
                 }
 
-                //Als ik de if functie hieronder uitcomment werkt alles perfect (behalve inlocken natuurlijk)
                     //Player 1, lock in character selection.
                     if (inputHelper.KeyPressed(keyboardcontrols[i][Keys.E]))
                         LockinPlayer(playerborder[i]);
-                 //tot hier uitcommenten werkt
                 
 
             }
@@ -149,28 +147,7 @@ class CharacterSelection : GameObjectList
         }
         catch (KeyNotFoundException e)
         {
-
-        }
-
-       
-
-        if (inputHelper.KeyPressed(Keys.Space))
-        {
-            //Player 2 Lock in
-            if (CheckLockIn(1))
-                lockInSprite[1] = !lockInSprite[1];
-
-            if (lockInSprite[1])
-            {
-                borderSprites[1].GetColor = lockInColor[(characterSelectIndex[1] - 1) * 2 + 1];
-                readySprite[1].PlayAnimation("Ready");
-            }
-            else
-            {
-                borderSprites[1].GetColor = lockInColor[(characterSelectIndex[1] - 1) * 2];
-                readySprite[1].PlayAnimation("notReady");
-            }
-
+            //player 1 or 2 had not joined yet in the check for input, no problem.
         }
     }
 
@@ -215,7 +192,7 @@ class CharacterSelection : GameObjectList
     //Checks if all the players are locked in with their character.
     public bool AllReadyCheck()
     {
-        for(int i = 0; i < lockInSprite.Length; i++)
+        for(int i = 0; i <= playersjoined; i++)
         {
             if (!lockInSprite[i])
             {
@@ -269,12 +246,12 @@ class CharacterSelection : GameObjectList
 
         if (lockInSprite[player])
         {
-            borderSprites[player].GetColor = lockInColor[(characterSelectIndex[0] - 1) * 2 + 1];
+            borderSprites[player].GetColor = lockInColor[(characterSelectIndex[player] - 1) * 2 + 1];
             readySprite[player].PlayAnimation("Ready");
         }
         else
         {
-            borderSprites[player].GetColor = lockInColor[(characterSelectIndex[0] - 1) * 2];
+            borderSprites[player].GetColor = lockInColor[(characterSelectIndex[player] - 1) * 2];
             readySprite[player].PlayAnimation("notReady");
         }
     }
