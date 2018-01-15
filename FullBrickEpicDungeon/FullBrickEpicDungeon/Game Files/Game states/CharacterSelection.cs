@@ -38,8 +38,8 @@ class CharacterSelection : GameObjectList
 
     public CharacterSelection()
     {
-        keyboardControls1 = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player1controls.txt");
-        keyboardControls2 = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player2controls.txt");
+        keyboardControls1 = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/Controls/player1controls.txt");
+        keyboardControls2 = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/Controls/player2controls.txt");
         keyboardcontrols.Add(0, keyboardControls1);
         keyboardcontrols.Add(1, keyboardControls2);
 
