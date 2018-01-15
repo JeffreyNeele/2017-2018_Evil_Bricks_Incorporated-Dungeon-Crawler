@@ -36,10 +36,10 @@ class Healthbar : SpriteGameObject
 
     public override void Update(GameTime gameTime)
     {
+        //currentHealth = something met atributes van character
         if (currentHealth >= 0)
         healthrectangle = new Rectangle((int)healthBarPosition.X, (int)healthBarPosition.Y, currentHealth, healthTexture.Height);
         HealthColor();
-
         base.Update(gameTime);
     }
 
@@ -52,16 +52,21 @@ class Healthbar : SpriteGameObject
 
     public void HealthColor()
     {
-        if (currentHealth >= (fullHealth/2))
+        if (currentHealth >= (fullHealth*0.75))
         {
             healthColor = Color.Green;
-        } else if (currentHealth <= (fullHealth / 2) && currentHealth >= (fullHealth / 4))
+        } else if (currentHealth >= (fullHealth*0.5))
+        {
+            healthColor = Color.Yellow;
+        } else if (currentHealth >= (fullHealth * 0.25))
         {
             healthColor = Color.Orange;
-        } else if (currentHealth <= (fullHealth / 4) && currentHealth >= 0)
+        } else 
         {
             healthColor = Color.Red;
         }
+
+
 
     }
 
