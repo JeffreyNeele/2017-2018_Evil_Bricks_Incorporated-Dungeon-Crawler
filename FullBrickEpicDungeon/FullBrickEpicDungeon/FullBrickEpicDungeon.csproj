@@ -84,6 +84,14 @@
     <Compile Include="Game Files\Game states\SettingsState.cs" />
     <Compile Include="Game Files\Game states\TitleMenu.cs" />
     <Compile Include="Game Files\HUD\Conversation\Conversation.cs" />
+    <Compile Include="Game Files\Objects\Interactive objects\Base\DroppedItem.cs" />
+    <Compile Include="Game Files\Objects\Interactive objects\Base\InteractiveObject.cs" />
+    <Compile Include="Game Files\Objects\Interactive objects\Types\KeyItem.cs" />
+    <Compile Include="Game Files\Objects\Interactive objects\Types\Lock.cs" />
+    <Compile Include="Game Files\Objects\Openable objects\Base\OpenableObject.cs" />
+    <Compile Include="Game Files\Objects\Interactive objects\Types\Handle.cs" />
+    <Compile Include="Game Files\Objects\Openable objects\Types\Door.cs" />
+    <Compile Include="Game Files\Objects\Openable objects\Types\Trapdoor.cs" />
     <Compile Include="Game Files\HUD\Healthbars\Healthbar.cs" />
     <Compile Include="Game Files\HUD\PlayerInformation\PlayerInformation.cs" />
     <Compile Include="Game Files\Interactive objects\Base\DroppedItem.cs" />
@@ -102,7 +110,7 @@
     <Compile Include="Game Files\Monsters\Type\LittlePenguin.cs" />
     <Compile Include="Game Files\Projectiles\Projectile.cs" />
     <Compile Include="Game Files\Puzzle\Base\Puzzle.cs" />
-    <Compile Include="Game Files\Interactive objects\Types\Trap.cs" />
+    <Compile Include="Game Files\Objects\Interactive objects\Types\Trap.cs" />
     <Compile Include="Game Files\Shop\ShopMain.cs" />
     <Compile Include="Game Files\Weapons\Base\Weapon.cs" />
     <Compile Include="Game Files\MainGame.cs" />

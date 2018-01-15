@@ -21,7 +21,7 @@ enum TileType
 class Tile : SpriteGameObject
 {
     TileType type;
-    public Tile(TileType type, string assetname, int layer = 0, string id = "") : base(assetname, layer, id)
+    public Tile(TileType type, string assetname, int layer = 0, string id = "", int sheetindex = 0) : base(assetname, layer, id, sheetindex)
     {
         this.type = type;
     }
