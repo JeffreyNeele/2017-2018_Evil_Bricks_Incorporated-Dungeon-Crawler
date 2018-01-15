@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 class IronArmour : Equipment
 {
-    public IronArmour() : base(ClassType.ShieldMaiden, "putassetnamehere", "Ironarmour")
+    public IronArmour() : base("putassetnamehere", "Ironarmour")
     {
         this.MovementSpeedIncrease = 0;
         this.Armour = 30;

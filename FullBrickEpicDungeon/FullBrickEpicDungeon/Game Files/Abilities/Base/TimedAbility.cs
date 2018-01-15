@@ -6,7 +6,7 @@ abstract class TimedAbility : Ability
 {
     protected float targetTime;
     Timer abilityTimer;
-    protected TimedAbility(Character owner, ClassType type, float targetTime) : base(owner, type)
+    protected TimedAbility(Character owner, float targetTime) : base(owner)
     {
         this.targetTime = targetTime;
         this.abilityTimer = new Timer(targetTime);

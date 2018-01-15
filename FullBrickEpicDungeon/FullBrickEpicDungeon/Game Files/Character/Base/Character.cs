@@ -8,8 +8,6 @@ using Microsoft.Xna.Framework.Graphics;
 
 abstract partial class Character : AnimatedGameObject
 {
-    //baseattributes contains the standard base stats and should not be changed, the values in attributes may be changes are used during the remainder of the level
-    protected ClassType classType;
     protected BaseAttributes attributes, baseattributes;
     protected Weapon weapon;
     protected List<Equipment> inventory;
@@ -22,15 +20,11 @@ abstract partial class Character : AnimatedGameObject
     protected bool playerControlled;
     protected Vector2 walkingdirection;
     protected BaseAI AI;
-    
-
-
 
     //Constructor: sets up the controls given to the constructor for each player (xbox or keyboard)
-    protected Character(int playerNumber, Level currentLevel, bool xboxControlled, ClassType classType, string id = "") : base(0, id)
+    protected Character(int playerNumber, Level currentLevel, bool xboxControlled, string id = "") : base(0, id)
     {
         playerControlled = true;
-        this.classType = classType;
         baseattributes = new BaseAttributes();
         inventory = new List<Equipment>();
         characterSFX = new Dictionary<string, string>
@@ -320,11 +314,6 @@ abstract partial class Character : AnimatedGameObject
         set { attributes = value; }
     }
 
-    public ClassType Type
-    {
-        get { return classType; }
-    }
-
     public bool PlayerControlled
     {
         get { return playerControlled; }
@@ -341,5 +330,4 @@ abstract partial class Character : AnimatedGameObject
         get { return xboxControlled; }
         set { xboxControlled = value; }
     }
-    // returns the facing direction of the character
 }

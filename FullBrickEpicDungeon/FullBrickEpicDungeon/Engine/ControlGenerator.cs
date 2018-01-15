@@ -3,14 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-public class SettingsHelper
+// Class that generates controls from files
+public class ControlGenerator
     {
     StreamReader fileReader;
     List<string> defaultControls = new List<string>();
     List<string> generatedControls = new List<string>();
 
 
-    //genereert keyboard dictionary
+    //Generates the keyboard dictionary -> defaultcontrols, actualcontrols
     public Dictionary<Keys, Keys> GenerateKeyboardControls(string path)
     {
         path = "Content/" + path;
@@ -32,7 +33,7 @@ public class SettingsHelper
     }
 
 
-    //genereert xbox controller dictionary
+    //generates xbox controls -> originalxboxcontrols, actualcontrols
     public Dictionary<Buttons, Buttons> GenerateXboxControls(string path)
     {
         path = "Content/" + path;        
@@ -52,12 +53,12 @@ public class SettingsHelper
 
 
 
-    //linkt de default controls aan de generatedcontrols in de dictionary
+    //reads the control files
     public List<string> ReadControlsFile(string defaultFilePath, string generateFilePath)
     {
         fileReader = new StreamReader(defaultFilePath);
         string line = fileReader.ReadLine();
-        // Reads the file
+        // Reads the defaultcontrols file
         while (line != null)
         {
             defaultControls.Add(line);
@@ -66,13 +67,14 @@ public class SettingsHelper
         fileReader.Close();
         fileReader = new StreamReader(generateFilePath);
         line = fileReader.ReadLine();
-        // Reads the file
+        // Reads the generatedcontrols file
         while (line != null)
         {
             generatedControls.Add(line);
             line = fileReader.ReadLine();
         }
         fileReader.Close();
+        // return an error if generatedcontrols and defaultcontrols are not the same length, this is because this might cause errors if left undetected
         if (generatedControls.Count != defaultControls.Count)
         {
             throw new IndexOutOfRangeException("defaultcontrols and generatedcontrols are not the same length.");

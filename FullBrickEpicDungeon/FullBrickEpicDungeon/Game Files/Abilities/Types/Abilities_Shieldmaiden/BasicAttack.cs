@@ -8,8 +8,8 @@ using Microsoft.Xna.Framework;
 class BasicAttackAbility : Ability
 {
 
-    public BasicAttackAbility(Character owner, ClassType classType, Weapon weapon, string assetName, string id, int damage) 
-        : base(owner, classType)
+    public BasicAttackAbility(Character owner, Weapon weapon, string assetName, string id, int damage) 
+        : base(owner)
     {
         //weapon.LoadAnimation(assetName, id, false);
         DamageAA = damage;

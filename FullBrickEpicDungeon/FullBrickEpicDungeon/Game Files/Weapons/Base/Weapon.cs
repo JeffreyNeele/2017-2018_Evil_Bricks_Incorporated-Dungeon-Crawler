@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 abstract class Weapon : AnimatedGameObject
 {
 
-    protected ClassType classType;
     // var for the owner of this weapon
     Character owner;
     // vars for abilities that will be called in methods such as MainAbility
@@ -25,10 +24,9 @@ abstract class Weapon : AnimatedGameObject
     /// <param name="classType">The classtype the weapon belongs to</param>
     /// <param name="id">the id of the weapon object in the gameworld</param>
     /// <param name="assetName">Give the path where to find the asset in the content</param>
-    protected Weapon(Character owner, ClassType classType, string id, string assetName): base(1, id)
+    protected Weapon(Character owner, string id, string assetName): base(1, id)
     {
         this.owner = owner;
-        this.classType = classType;
     }
 
     public override void Update(GameTime gameTime)
@@ -144,9 +142,5 @@ abstract class Weapon : AnimatedGameObject
         get { return mainAbility; }
     }
 
-    public ClassType Type
-    {
-        get { return classType; }
-    }
 }
 

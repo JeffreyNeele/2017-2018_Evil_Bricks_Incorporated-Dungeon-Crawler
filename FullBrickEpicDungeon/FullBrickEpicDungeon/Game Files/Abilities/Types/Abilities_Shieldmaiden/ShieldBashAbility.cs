@@ -7,8 +7,8 @@ using Microsoft.Xna.Framework;
 
 class ShieldBashAbility : TimedAbility
 {
-    public ShieldBashAbility(Character owner, ClassType classType, Weapon weapon, string assetName, string id, float targetTime)
-        : base(owner, classType, targetTime)
+    public ShieldBashAbility(Character owner, Weapon weapon, string assetName, string id, float targetTime)
+        : base(owner, targetTime)
     {
         //weapon.LoadAnimation(assetName, id, false);
         pushVector = new Vector2(60, 0);

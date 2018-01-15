@@ -17,8 +17,7 @@ public class GameEnvironment : Game
     protected static AssetManager assetManager;
     protected static ContentManager contentManager;
     protected static GameSettingsManager gameSettingsManager;
-    protected static CameraHelper cameraHelper;
-    protected static SettingsHelper settingsHelper;
+    protected static ControlGenerator settingsHelper;
 
     public GameEnvironment()
     {
@@ -29,8 +28,7 @@ public class GameEnvironment : Game
         random = new Random();
         assetManager = new AssetManager(Content);
         gameSettingsManager = new GameSettingsManager();
-        cameraHelper = new CameraHelper(new Point(0,0));
-        settingsHelper = new SettingsHelper();
+        settingsHelper = new ControlGenerator();
     }
 
     public static Point Screen
@@ -63,12 +61,8 @@ public class GameEnvironment : Game
     {
         get { return gameSettingsManager; }
     }
-    public static CameraHelper CameraHelper
-    {
-        get { return cameraHelper; }
-    }
 
-    public static SettingsHelper SettingsHelper
+    public static ControlGenerator SettingsHelper
     {
         get { return settingsHelper; }
     }
@@ -115,7 +109,6 @@ public class GameEnvironment : Game
             Height = height
         };
         graphics.GraphicsDevice.Viewport = viewport;
-        cameraHelper.CameraWindowSize = new Point(width, height);
         inputHelper.Scale = new Vector2((float)GraphicsDevice.Viewport.Width / screen.X,
                                         (float)GraphicsDevice.Viewport.Height / screen.Y);
         inputHelper.Offset = new Vector2(viewport.X, viewport.Y);

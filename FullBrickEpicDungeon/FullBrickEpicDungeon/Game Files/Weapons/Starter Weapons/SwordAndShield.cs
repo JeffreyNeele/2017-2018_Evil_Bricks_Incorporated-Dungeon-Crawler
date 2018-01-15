@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 class SwordAndShield : Weapon
 {
     //ShieldBashAbility abilityMain;
-    public SwordAndShield(Character owner) : base(owner, ClassType.ShieldMaiden, "Swordandshield", "putassetnamehere")
+    public SwordAndShield(Character owner) : base(owner, "Swordandshield", "putassetnamehere")
     {
         AttackDamage = 10;
         GoldWorth = 100;
@@ -14,7 +14,7 @@ class SwordAndShield : Weapon
         idSpecialAbility = "SwordAndShieldSpecialAbility";
 
         //Basic attack of the weapon
-        BasicAttack = new BasicAttackAbility(owner, ClassType.ShieldMaiden, this, "assetName", idBaseAA, AttackDamage)
+        BasicAttack = new BasicAttackAbility(owner, this, "assetName", idBaseAA, AttackDamage)
         {
             PushBackVector = new Vector2(30, 0),
             PushFallOff = new Vector2(2, 0),
@@ -22,7 +22,7 @@ class SwordAndShield : Weapon
         };
 
         //Basic ability of the weapon: ShieldBash
-        mainAbility = new ShieldBashAbility(owner, ClassType.ShieldMaiden, this, "assetName", idMainAbility, 8);
+        mainAbility = new ShieldBashAbility(owner, this, "assetName", idMainAbility, 8);
 
     }
 

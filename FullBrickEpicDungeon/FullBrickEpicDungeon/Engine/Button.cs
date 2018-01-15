@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+// Simple button class
 class Button : SpriteGameObject
 {
     protected bool isPressed;

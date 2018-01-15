@@ -4,6 +4,20 @@ using Microsoft.Xna.Framework;
 
 // Add more tiletypes in the Enumerators class!
 
+// enum for tiletypes
+enum TileType
+{
+    BasicTile,
+    Brick,
+    Ice,
+    RockIce,
+    Water,
+    CobbleStone,
+    Wood,
+    Grass,
+
+}
+
 class Tile : SpriteGameObject
 {
     TileType type;

@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework.Graphics;
 abstract class Ability
 {
     Character owner;
-    protected ClassType classType;
     protected GameObjectGrid fieldGrid;
     protected int damage;
     protected Vector2 pushVector, fallOff;
@@ -15,9 +14,8 @@ abstract class Ability
     protected Dictionary<Monster, int> affectedMonsters;
     protected List<Monster> monstersHitList;
     protected Dictionary<Monster, bool> directionPush;
-    protected Ability(Character owner, ClassType classType)
+    protected Ability(Character owner)
     {
-        this.classType = classType;
         this.owner = owner;
         PushTimeCount = 8;
         monstersHitList = new List<Monster>();
@@ -133,11 +131,6 @@ abstract class Ability
             }
         }
         return false;
-    }
-
-    public ClassType Type
-    {
-        get { return classType; }
     }
 
     public Character Owner
