@@ -36,6 +36,7 @@ abstract partial class Character : AnimatedGameObject
             { "switch_wrong", "Assets/SFX/switch_wrong" }
         };
         attributes = new BaseAttributes();
+        healthbar = new Healthbar(this);
         deathTimer = new Timer(10);
         deathTimer.Reset();
         deathTimer.IsPaused = true;
@@ -49,7 +50,7 @@ abstract partial class Character : AnimatedGameObject
         AI = new BaseAI(this, 200F, currentLevel, false, 1, 700);
         this.hitCounter = 0;
         this.hitTicks = 0;
-        healthbar = new Healthbar(this);
+
         this.playerNumber = playerNumber;
         relativePlayerNumber = playerNumber;
         this.xboxControlled = xboxControlled;

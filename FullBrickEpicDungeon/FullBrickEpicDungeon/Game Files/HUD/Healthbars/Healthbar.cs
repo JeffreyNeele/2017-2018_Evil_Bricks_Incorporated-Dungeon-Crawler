@@ -10,22 +10,24 @@ using Microsoft.Xna.Framework.Content;
 
 class Healthbar : SpriteGameObject
 {
-    Texture2D healthTexture;
-    Vector2 healthBarPosition;
-    Color healthColor;
-    int fullHealth;
-    int currentHealth;
-    Rectangle healthrectangle;
     Character owner;
+    Vector2 healthBarPosition;
+    Vector2 healthBarOffset;
+    Texture2D healthTexture;
+    Rectangle healthrectangle;
+    Color healthColor;
+    int currentHealth;
+    
+    
 
     //                                    assetname + layer + id
     public Healthbar(Character characterowner) : base("", 5, "")
     {
         healthTexture = GameEnvironment.AssetManager.GetSprite("Assets/Sprites/Shieldmaiden/HealthBar");
         owner = characterowner;
-        healthBarPosition = owner.Position;
-        fullHealth = owner.Attributes.HP;
-        currentHealth = fullHealth;
+        healthBarOffset = new Vector2(-50, -60);
+        healthBarPosition = owner.Position + healthBarOffset;
+        currentHealth = owner.Attributes.HP;
         healthColor = Color.Red;
         healthrectangle = new Rectangle((int)healthBarPosition.X, (int)healthBarPosition.Y, currentHealth, healthTexture.Height);
 
@@ -34,12 +36,13 @@ class Healthbar : SpriteGameObject
 
     public override void Update(GameTime gameTime)
     {
-        healthBarPosition = owner.Position;
         currentHealth = owner.Attributes.HP;
         if (currentHealth >= 0)
+        {
+            healthBarPosition = owner.Position + healthBarOffset;           
             healthrectangle = new Rectangle((int)healthBarPosition.X, (int)healthBarPosition.Y, currentHealth, healthTexture.Height);
-        //HealthColor();
-        base.Update(gameTime);
+            base.Update(gameTime);
+        }
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
