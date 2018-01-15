@@ -16,7 +16,7 @@ class Door : OpenableObject
     {
         DoorLockedChecker();
         if (DoorOpen == true)
-            this.ChangeSpriteIndex(1);
+            this.sprite.SheetIndex = 1;
     }
 
     public void DoorLockedChecker()

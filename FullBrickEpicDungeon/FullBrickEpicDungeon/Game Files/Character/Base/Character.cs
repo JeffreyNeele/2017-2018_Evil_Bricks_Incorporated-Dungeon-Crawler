@@ -17,7 +17,7 @@ abstract partial class Character : AnimatedGameObject
     protected float hitCounter, hitTicks;
     protected Dictionary<Buttons, Buttons> xboxControls;
     protected Dictionary<string, string> characterSFX;
-    protected bool playerControlled;
+    protected bool playerControlled, hasAKey;
     protected Vector2 walkingdirection;
     protected BaseAI AI;
 
@@ -25,6 +25,7 @@ abstract partial class Character : AnimatedGameObject
     protected Character(int playerNumber, Level currentLevel, bool xboxControlled, string id = "") : base(0, id)
     {
         playerControlled = true;
+        hasAKey = false;
         baseattributes = new BaseAttributes();
         inventory = new List<Equipment>();
         characterSFX = new Dictionary<string, string>
@@ -51,8 +52,6 @@ abstract partial class Character : AnimatedGameObject
         relativePlayerNumber = playerNumber;
         this.xboxControlled = xboxControlled;
         this.iceSpeed = new Vector2(0, 0);
-        
-
         if (playerNumber == 1)
         {
             if (xboxControlled) //opgeslagen controls staan in de txt bestandjes
@@ -78,11 +77,10 @@ abstract partial class Character : AnimatedGameObject
         {
             if (xboxControlled)
                 xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/Controls/XboxControls/player4Xbox.txt");
-            else if (this.xboxControlled)
+            else
                 playerControlled = false;
         }
 
-        this.xboxControlled = controllerControlled;
         this.iceSpeed = new Vector2(0, 0);
     }
 

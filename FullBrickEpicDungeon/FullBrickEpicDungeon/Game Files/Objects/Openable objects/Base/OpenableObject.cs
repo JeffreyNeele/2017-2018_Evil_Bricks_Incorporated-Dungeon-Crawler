@@ -10,11 +10,11 @@
     }
     public void Open()
     {
-        this.ChangeSpriteIndex(1);
+        this.sprite.SheetIndex = 1;
     }
     public void Close()
     {
-        this.ChangeSpriteIndex(0);
+        this.sprite.SheetIndex = 0;
     }
 
     public int Objectnumber

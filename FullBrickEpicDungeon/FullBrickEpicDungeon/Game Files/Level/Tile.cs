@@ -15,7 +15,8 @@ enum TileType
     CobbleStone,
     Wood,
     Grass,
-
+    Trapdoor,
+    DoorTile
 }
 
 class Tile : SpriteGameObject
