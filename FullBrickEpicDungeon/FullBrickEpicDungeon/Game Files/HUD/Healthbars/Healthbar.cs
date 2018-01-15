@@ -16,59 +16,58 @@ class Healthbar : SpriteGameObject
     int fullHealth;
     int currentHealth;
     Rectangle healthrectangle;
+    Character owner;
 
-    //               assetname + layer + id
-    public Healthbar(ContentManager content, Vector2 playerlocation) : base("", 5, "")
+    //                                    assetname + layer + id
+    public Healthbar(Character characterowner) : base("", 5, "")
     {
-        healthBarPosition = playerlocation;
-        LoadContent(content);
-        fullHealth = healthTexture.Width;
+        healthTexture = GameEnvironment.AssetManager.GetSprite("Assets/Sprites/Shieldmaiden/HealthBar");
+        owner = characterowner;
+        healthBarPosition = owner.Position;
+        fullHealth = owner.Attributes.HP;
         currentHealth = fullHealth;
-        healthColor = Color.Green;
+        healthColor = Color.Red;
         healthrectangle = new Rectangle((int)healthBarPosition.X, (int)healthBarPosition.Y, currentHealth, healthTexture.Height);
-    }
-        
 
-    private void LoadContent(ContentManager content)
-    {
-        healthTexture = content.Load<Texture2D>("Assets/Sprites/Shieldmaiden/HealthBar");
     }
+
 
     public override void Update(GameTime gameTime)
     {
-        //currentHealth = something met atributes van character
+        healthBarPosition = owner.Position;
+        currentHealth = owner.Attributes.HP;
         if (currentHealth >= 0)
-        healthrectangle = new Rectangle((int)healthBarPosition.X, (int)healthBarPosition.Y, currentHealth, healthTexture.Height);
-        HealthColor();
+            healthrectangle = new Rectangle((int)healthBarPosition.X, (int)healthBarPosition.Y, currentHealth, healthTexture.Height);
+        //HealthColor();
         base.Update(gameTime);
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(healthTexture, healthBarPosition, healthrectangle ,healthColor);
+        spriteBatch.Draw(healthTexture, healthBarPosition, healthrectangle, healthColor);
 
         base.Draw(gameTime, spriteBatch);
     }
 
-    public void HealthColor()
-    {
-        if (currentHealth >= (fullHealth*0.75))
-        {
-            healthColor = Color.Green;
-        } else if (currentHealth >= (fullHealth*0.5))
-        {
-            healthColor = Color.Yellow;
-        } else if (currentHealth >= (fullHealth * 0.25))
-        {
-            healthColor = Color.Orange;
-        } else 
-        {
-            healthColor = Color.Red;
-        }
-
-
-
-    }
+    //public void HealthColor()
+    //{
+    //    if (currentHealth >= (fullHealth * 0.75))
+    //    {
+    //        healthColor = Color.LightGreen;
+    //    }
+    //    else if (currentHealth >= (fullHealth * 0.5))
+    //    {
+    //        healthColor = Color.Yellow;
+    //    }
+    //    else if (currentHealth >= (fullHealth * 0.25))
+    //    {
+    //        healthColor = Color.Orange;
+    //    }
+    //    else
+    //    {
+    //        healthColor = Color.Red;
+    //    }
+    //}
 
 
 
@@ -92,4 +91,21 @@ class Healthbar : SpriteGameObject
 
 
 }
+
+
+
+
+    //public void UpdateHealthBar()
+    //{
+    //    int maxhealth = baseattributes.HP;
+    //    int health = attributes.HP;
+    //    int displayedhealth = ((health / maxhealth) * 60);
+    //    healthbarposition = new Vector2(position.X - (Width / 2), position.Y - (Height / 2 + 5));
+    //    healthrectangle = new Rectangle((int)healthbarposition.X, (int)healthbarposition.Y, displayedhealth, healthbar.Height);
+    //    healthtexture = GameEnvironment.ContentManager.Load<Texture2D>("Assets/Sprites/Shieldmaiden/HealthBar");
+    //    healthbar.Position = healthbarposition;
+
+    //    //not sure how to make the healthbar scale down to account for damage taken.
+    //    }
+
 

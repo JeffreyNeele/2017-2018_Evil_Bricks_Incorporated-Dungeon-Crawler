@@ -20,6 +20,7 @@ abstract partial class Character : AnimatedGameObject
     protected bool playerControlled, hasAKey;
     protected Vector2 walkingdirection;
     protected BaseAI AI;
+    protected Healthbar healthbar;
 
     //Constructor: sets up the controls given to the constructor for each player (xbox or keyboard)
     protected Character(int playerNumber, Level currentLevel, bool xboxControlled, string id = "") : base(0, id)
@@ -48,6 +49,7 @@ abstract partial class Character : AnimatedGameObject
         AI = new BaseAI(this, 200F, currentLevel, false, 1, 700);
         this.hitCounter = 0;
         this.hitTicks = 0;
+        healthbar = new Healthbar(this);
         this.playerNumber = playerNumber;
         relativePlayerNumber = playerNumber;
         this.xboxControlled = xboxControlled;
@@ -109,6 +111,7 @@ abstract partial class Character : AnimatedGameObject
             stepSoundTimer.Update(gameTime);
             base.Update(gameTime);
             this.weapon.Update(gameTime);
+            healthbar.Update(gameTime);
             if (!playerControlled)
             {
                 Vector2 previousPosition = this.position;
@@ -149,7 +152,12 @@ abstract partial class Character : AnimatedGameObject
         }
     }
 
- 
+    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    {
+        healthbar.Draw(gameTime, spriteBatch);
+        base.Draw(gameTime, spriteBatch);
+    }
+
 
     public override void Reset()
     {
