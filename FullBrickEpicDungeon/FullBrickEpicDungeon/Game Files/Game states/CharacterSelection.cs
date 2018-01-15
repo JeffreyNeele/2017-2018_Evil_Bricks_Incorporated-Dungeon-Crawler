@@ -73,7 +73,7 @@ class CharacterSelection : GameObjectList
 
             //load in Press to join frame
             controlSprites[i] = new SpriteGameObject("Assets/Sprites/Character selection/ControllerParchment/PressToJoinRes400",2);
-            controlSprites[i].Position = new Vector2(GameEnvironment.Screen.X / 4 * i +40, 370);
+            controlSprites[i].Position = new Vector2(GameEnvironment.Screen.X / 4 * i +40, 450);
             Add(controlSprites[i]);
         }   
     }
@@ -98,59 +98,91 @@ class CharacterSelection : GameObjectList
         if (playersjoined < 4)
         {
             //Join keyboard players if input is detected
-            if (inputHelper.KeyPressed(Keys.S) && keyboardjoined[0] == false)
+            if (inputHelper.KeyPressed(Keys.S))
             {
-                keyboardjoined[0] = true;
-                JoinPlayer(0);
+                if (keyboardjoined[0] == false)
+                {
+                    keyboardjoined[0] = true;
+                    JoinPlayer(0);
+                }
             }
-            if (inputHelper.KeyPressed(Keys.Down) && keyboardjoined[1] == false)
+
+            if (inputHelper.KeyPressed(Keys.Down))
             {
-                keyboardjoined[1] = true;
-                JoinPlayer(1);
+                if (keyboardjoined[1] == false)
+                {
+                    keyboardjoined[1] = true;
+                    JoinPlayer(1);
+                }
             }
 
             //Join xbox players if input is detected
-          for(int controller = 1; controller <= 4; controller++)
-            if (inputHelper.ButtonPressed(controller, Buttons.A) && xboxjoined[controller-1] == false)
-            {
+            for (int controller = 1; controller <= 4; controller++)
+                if (inputHelper.ButtonPressed(controller, Buttons.A) && xboxjoined[controller - 1] == false)
+                {
                     xboxjoined[controller - 1] = true;
-                    JoinPlayer(controller + 2); //to yield 3-6 in the dictionary
-            }
-
+                    JoinPlayer(controller + 1); //to yield 2-5 in the dictionary
+                }  
         }
 
 
-
-        //links rechts werkt niet
+        //the methods below handle the characterselection left right input and lock in
+        XboxCharacterSelection(inputHelper);
+        KeyboardCharacterSelection(inputHelper);
         
-        try
-        {
-            //handles keyboard input for each joined player, independant of in which playerborder it fits.
-            for (int i = 0; i <=1; i++)
-            {
-                if (!lockInSprite[i])
-                {
-                    if (inputHelper.KeyPressed(keyboardcontrols[i][Keys.D]))
-                        ChangeSpriteRight(characterSprites[playerborder[i]], characterSelectIndex[playerborder[i]], playerborder[i]);
+    }
 
-                    else if (inputHelper.KeyPressed(keyboardcontrols[i][Keys.A]))
+    protected void XboxCharacterSelection(InputHelper inputHelper)
+    {
+        //handle xbox input/interact button for each joined player, independant of in which playerborder it fits.
+        //iterates for controllers 2-5 (xbox controllers)
+        for (int i = 2; i < 6; i++)
+        {
+            if (ControllerJoined(i))
+            {
+                //gives the correct number for input controllers (1-4)
+                int controllernr = i - 1;
+
+                //if the player is not locked in, handle left and right input to change character
+                if (!lockInSprite[playerborder[i]])
+                {
+                    //right
+                    if (inputHelper.MenuDirection(controllernr, true, false) == new Vector2(1, 0))
+                        ChangeSpriteRight(characterSprites[playerborder[i]], characterSelectIndex[playerborder[i]], playerborder[i]);
+                    //left
+                    else if (inputHelper.MenuDirection(controllernr, true, false) == new Vector2(-1, 0))
                         ChangeSpriteLeft(characterSprites[playerborder[i]], characterSelectIndex[playerborder[i]], playerborder[i]);
                 }
-
-                    //Player 1, lock in character selection.
-                    if (inputHelper.KeyPressed(keyboardcontrols[i][Keys.E]))
-                        LockinPlayer(playerborder[i]);
-                
-
+                //lock in character selection
+                if (inputHelper.ButtonPressed(controllernr, Buttons.Y))
+                    LockinPlayer(playerborder[i]);
             }
-            
-        }
-        catch (KeyNotFoundException e)
-        {
-            //player 1 or 2 had not joined yet in the check for input, no problem.
         }
     }
 
+    protected void KeyboardCharacterSelection(InputHelper inputHelper)
+    {
+        //handle keyboard input/interact button for each joined player, independant of in which playerborder it fits.
+        //iterates for controller 0 and 1 (keyboard)
+        for (int i = 0; i <= 1; i++)
+        {
+            if (ControllerJoined(i))
+            {
+                
+                    //right
+                    if (inputHelper.KeyPressed(keyboardcontrols[i][Keys.D]))
+                        ChangeSpriteRight(characterSprites[playerborder[i]], characterSelectIndex[playerborder[i]], playerborder[i]);
+
+                    //left
+                    else if (inputHelper.KeyPressed(keyboardcontrols[i][Keys.A]))
+                        ChangeSpriteLeft(characterSprites[playerborder[i]], characterSelectIndex[playerborder[i]], playerborder[i]);
+
+                //lock in character selection.
+                if (inputHelper.KeyPressed(keyboardcontrols[i][Keys.E]))
+                    LockinPlayer(playerborder[i]);
+            }
+        }
+    }
 
     //scrolling right through the selection is +1
     public void ChangeSpriteRight(AnimatedGameObject obj, int animationIndex, int index)
@@ -189,20 +221,6 @@ class CharacterSelection : GameObjectList
         return true;
     }
 
-    //Checks if all the players are locked in with their character.
-    public bool AllReadyCheck()
-    {
-        for(int i = 0; i <= playersjoined; i++)
-        {
-            if (!lockInSprite[i])
-            {
-                launchCount = 3;
-                return false;
-            }
-        }
-        return true;
-    }
-
     public void JoinPlayer(int controlsnr)
     {
             //make and load in the animations
@@ -213,8 +231,7 @@ class CharacterSelection : GameObjectList
             characterSprites[playersjoined].LoadAnimation("Assets/Sprites/Character selection/shieldmaiden_orange", "maiden4", true);
 
             //position of the sprites
-            characterSprites[playersjoined].Position = new Vector2(borderSprites[playersjoined].Position.X + borderSprites[playersjoined].Width / 2,
-            borderSprites[playersjoined].Position.Y + 205);
+            characterSprites[playersjoined].Position = new Vector2(borderSprites[playersjoined].Position.X + borderSprites[playersjoined].Width / 2, borderSprites[playersjoined].Position.Y + 100);
             Add(characterSprites[playersjoined]);
 
             //play all the different animations
@@ -226,7 +243,7 @@ class CharacterSelection : GameObjectList
             //Change color of background accordingly to the playing animation
             borderSprites[playersjoined].GetColor = lockInColor[(characterSelectIndex[playersjoined] - 1) * 2];
 
-            //Place all the ready sprites
+            //Place the ready sprite
             readySprite[playersjoined] = new AnimatedGameObject(2);
             readySprite[playersjoined].Position = new Vector2(borderSprites[playersjoined].Position.X + borderSprites[playersjoined].Width / 2, borderSprites[playersjoined].Position.Y + borderSprites[playersjoined].Height / 7 * 6);
             readySprite[playersjoined].LoadAnimation("Assets/Sprites/Character selection/Ready-not", "notReady", true);
@@ -234,12 +251,24 @@ class CharacterSelection : GameObjectList
             readySprite[playersjoined].PlayAnimation("notReady");
             Add(readySprite[playersjoined]);
 
-            playerborder.Add(controlsnr, this.playersjoined); //playersjoined is the same as the border number in this case
+            
+            //link the controlnumber to the bordernumber
+            playerborder.Add(controlsnr, this.playersjoined); //playersjoined is the same as the border number in this method
+
+            //load in Controls  Sprite
+            if(controlsnr <= 1) //0 and 1 is keyboard
+            controlSprites[playersjoined] = new SpriteGameObject("Assets/Sprites/Character selection/ControllerParchment/KeyboardControls2-2long400", 2);
+            if(controlsnr >= 2) //2 to 5 is xbox
+            controlSprites[playersjoined] = new SpriteGameObject("Assets/Sprites/Character selection/ControllerParchment/XboxControlled1long3-400", 2);
+
+            controlSprites[playersjoined].Position = new Vector2(GameEnvironment.Screen.X / 4 * playersjoined + 40, 450);
+            Add(controlSprites[playersjoined]);
+
             playersjoined++;
             
     }
 
-    private void LockinPlayer(int player)
+    protected void LockinPlayer(int player)
     {
        if (CheckLockIn(player))
             lockInSprite[player] = !lockInSprite[player];
@@ -254,6 +283,34 @@ class CharacterSelection : GameObjectList
             borderSprites[player].GetColor = lockInColor[(characterSelectIndex[player] - 1) * 2];
             readySprite[player].PlayAnimation("notReady");
         }
+    }
+
+
+    //Checks if all the players are locked in with their character.
+    public bool AllReadyCheck()
+    {
+        for (int i = 0; i < playerborder.Count; i++)
+        {
+            if (!lockInSprite[i])
+            {
+                launchCount = 3;
+                return false;
+            }
+        }
+        return true;
+    }
+
+    protected bool ControllerJoined(int player)
+    {
+        // if the controller is present in the dictionary (in other words: joined), handle the input
+        foreach (int controller in playerborder.Keys)
+        {
+            if (controller == player)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
 
