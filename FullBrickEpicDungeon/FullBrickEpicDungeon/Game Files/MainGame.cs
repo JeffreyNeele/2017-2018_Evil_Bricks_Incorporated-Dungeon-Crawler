@@ -10,7 +10,7 @@ namespace FullBrickEpicDungeon
     /// </summary>
     public class DungeonCrawler : GameEnvironment
     {
-        public static int numberOfPlayers = 1;
+
         public static bool SFX = true, music = true, mouseVisible = true;
         //SpriteGameObject conversationFrame;
         public DungeonCrawler()
@@ -49,9 +49,6 @@ namespace FullBrickEpicDungeon
             gameStateManager.AddGameState("titleMenu", new TitleMenuState());
             GameStateManager.AddGameState("settingsState", new SettingsState());
             gameStateManager.AddGameState("characterSelection", new CharacterSelection());    
-            gameStateManager.AddGameState("playingState", new PlayingState());
-            GameStateManager.AddGameState("pauseState", new PauseState());
-            gameStateManager.AddGameState("conversation", new ConversationState());
             gameStateManager.SwitchTo("titleMenu");
         }
 

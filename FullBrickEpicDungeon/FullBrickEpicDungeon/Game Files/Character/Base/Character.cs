@@ -27,7 +27,7 @@ abstract partial class Character : AnimatedGameObject
 
 
     //Constructor: sets up the controls given to the constructor for each player (xbox or keyboard)
-    protected Character(int playerNumber, Level currentLevel, bool xboxControlled, ClassType classType, string id = "") : base(0, id)
+    protected Character(int playernr, Level currentLevel, int controlnr, ClassType classType, string id = "") : base(0, id)
     {
         playerControlled = true;
         this.classType = classType;
@@ -52,40 +52,33 @@ abstract partial class Character : AnimatedGameObject
         this.movementSpeed = new Vector2(4, 4);
         AI = new BaseAI(this, 200F, currentLevel, false, 1, 700);
         this.hitCounter = 0;
-        this.playerNumber = playerNumber;
-        relativePlayerNumber = playerNumber;
-        this.xboxControlled = xboxControlled;
+        this.playerNumber = playernr;
+        relativePlayerNumber = playernr;
+        this.xboxControlled = false;
         this.iceSpeed = new Vector2(0, 0);
-        
 
-        if (playerNumber == 1)
+
+        if (controlnr == 0)
         {
-            if (xboxControlled) //opgeslagen controls staan in de txt bestandjes
-                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/Controls/XboxControls/player1Xbox.txt");
-            else
-                keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/Controls/player1controls.txt");
+            xboxControlled = false;
+            keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/Controls/player1controls.txt");
         }
-        else if (playerNumber == 2)
+        else if (controlnr == 1)
         {
-            if (xboxControlled)
-                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/Controls/XboxControls/player2Xbox.txt");
-            else
-                keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/Controls/player2controls.txt");
+            xboxControlled = false;
+            keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/Controls/player2controls.txt");
         }
-        else if (playerNumber == 3)
+        else if (controlnr >= 2 && playernr <= 5)
         {
-            if (xboxControlled)
-                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/Controls/XboxControls/player3Xbox.txt");
-            else
-                playerControlled = false;
+
+            xboxControlled = true;
+            xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/Controls/XboxControls/player" + (controlnr - 1) + "Xbox.txt");
         }
-        else if (playerNumber == 4)
+        else if(controlnr == -1) //AI
         {
-            if (xboxControlled)
-                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/Controls/XboxControls/player4Xbox.txt");
-            else if (this.xboxControlled)
-                playerControlled = false;
+            playerControlled = false;
         }
+
     }
 
 

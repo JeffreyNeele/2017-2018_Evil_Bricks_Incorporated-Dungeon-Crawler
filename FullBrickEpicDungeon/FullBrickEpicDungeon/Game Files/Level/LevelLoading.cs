@@ -84,11 +84,10 @@ partial class Level : GameObjectList
             string[] splitArray = positionStringList[i].Split(' ');
             if(splitArray[0] == "SHIELDMAIDEN")
             {
-                Shieldmaiden shieldmaiden = new Shieldmaiden(int.Parse(splitArray[3]), this);
-                if(int.Parse(splitArray[3]) > FullBrickEpicDungeon.DungeonCrawler.numberOfPlayers)
-                {
-                    shieldmaiden.PlayerControlled = false;
-                }
+                int controlsnr = CharacterSelection.Controls(int.Parse(splitArray[3]));
+                Console.WriteLine("maiden" + int.Parse(splitArray[3]) + "controlnr" + CharacterSelection.Controls(int.Parse(splitArray[3])));
+                Shieldmaiden shieldmaiden = new Shieldmaiden(int.Parse(splitArray[3]), this, controlsnr);
+
                 shieldmaiden.StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
                 shieldmaiden.CurrentWeapon = new SwordAndShield(shieldmaiden);
                 shieldmaiden.Reset();

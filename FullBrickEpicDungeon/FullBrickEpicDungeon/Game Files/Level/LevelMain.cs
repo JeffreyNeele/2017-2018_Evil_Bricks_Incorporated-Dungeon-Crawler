@@ -10,7 +10,7 @@ partial class Level : GameObjectList
     protected GameObjectGrid levelTileField;
     public Level(int levelIndex) : base(1)
     {
-        numberOfPlayers = FullBrickEpicDungeon.DungeonCrawler.numberOfPlayers;
+        numberOfPlayers = CharacterSelection.NumberOfPlayers;
         this.levelIndex = levelIndex;
         playerList = new GameObjectList(5, "playerLIST");
         monsterList = new GameObjectList(5, "monsterLIST");

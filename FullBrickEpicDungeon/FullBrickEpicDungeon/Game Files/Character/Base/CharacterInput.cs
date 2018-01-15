@@ -21,7 +21,7 @@ abstract partial class Character : AnimatedGameObject
             {
                 FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
                 // will replace with another gamestate that tells you to reconnect your controller
-                GameEnvironment.GameStateManager.SwitchTo("pauseState");
+                //GameEnvironment.GameStateManager.SwitchTo("pauseState");
             } 
 
             if (!IsDowned && !isOnIce)

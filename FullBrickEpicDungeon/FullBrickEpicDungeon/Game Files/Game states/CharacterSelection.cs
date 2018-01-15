@@ -16,18 +16,18 @@ class CharacterSelection : GameObjectList
     SpriteGameObject[] controlSprites = new SpriteGameObject[4];
     AnimatedGameObject[] readySprite = new AnimatedGameObject[4];
 
-    int[] characterSelectIndex = new int[4];
+    static int[] characterSelectIndex = new int[4];
     bool[] lockInSprite = new bool[4];
     Color[] lockInColor = new Color[8];
     float launchCount = 1;
 
-    int playersjoined = 0;
+    static int playersjoined = 0;
     bool[] keyboardjoined = new bool[2];
     bool[] xboxjoined = new bool[4];
 
     
     //left in this is 1,2,3,4,5,6. (0,1 for keyboard, 2-5 for xbox. Dictionary translates to the number of the playerborder the player joined in.
-    Dictionary<int, int> playerborder = new Dictionary<int, int>();
+    static Dictionary<int, int> playerborder = new Dictionary<int, int>();
 
     //toetsenbord controls dictionary van player 0 en 1 in de dictionary hiervoor
     protected Dictionary<Keys, Keys> keyboardControls1;
@@ -87,7 +87,12 @@ class CharacterSelection : GameObjectList
         {
             launchCount -= (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (launchCount <= 0)
+            {
+                GameEnvironment.GameStateManager.AddGameState("playingState", new PlayingState());
+                GameEnvironment.GameStateManager.AddGameState("pauseState", new PauseState());
+                GameEnvironment.GameStateManager.AddGameState("conversation", new ConversationState());
                 GameEnvironment.GameStateManager.SwitchTo("playingState");
+            }
         }
         base.Update(gameTime);
     }
@@ -165,6 +170,8 @@ class CharacterSelection : GameObjectList
         //Change color of background accordingly to the playing animation
         borderSprites[playersjoined].GetColor = lockInColor[(characterSelectIndex[playersjoined] - 1) * 2];
 
+        
+
         //Place the ready sprite
         readySprite[playersjoined] = new AnimatedGameObject(2);
         readySprite[playersjoined].Position = new Vector2(borderSprites[playersjoined].Position.X + borderSprites[playersjoined].Width / 2, borderSprites[playersjoined].Position.Y + borderSprites[playersjoined].Height / 7 * 6);
@@ -175,7 +182,7 @@ class CharacterSelection : GameObjectList
 
 
         //link the controlnumber to the bordernumber
-        playerborder.Add(controlsnr, this.playersjoined); //playersjoined is the same as the border number in this method
+        playerborder.Add(controlsnr, playersjoined); //playersjoined is the same as the border number in this method
 
         //load in Controls  Sprite
         if (controlsnr <= 1) //0 and 1 is keyboard
@@ -259,7 +266,6 @@ class CharacterSelection : GameObjectList
         {
             if (controller == player)
             {
-                Console.WriteLine(player);
                 return true;
             }
         }
@@ -295,6 +301,20 @@ class CharacterSelection : GameObjectList
     }
 
 
+    /*       string playerColor;
+        switch (playerNumber)
+        {
+            case 1: playerColor = "default";
+                break;
+            case 2: playerColor = "blue";
+                break;
+            case 3: playerColor = "green";
+                break;
+            case 4: playerColor = "orange";
+                break;
+            default:
+                throw new IndexOutOfRangeException("playerNumber was not between 1 and 4, the given number was: " + playerNumber);
+        }*/ //gekopieerd uit Shieldmaiden loading deel. De playernumber staat in de txt momenteel. De juiste toetsen moeten dus aan de juiste kleur worden verbonden.
 
 
 
@@ -346,9 +366,31 @@ class CharacterSelection : GameObjectList
         }
         if (playerborder.Count >= 2)
         {
-            return true;
+           return true;
         }
             return false;
+    }
+
+    //yields the an array with the numbers of shieldmaiden numbers chosen in order.
+    public static int Controls(int maiden)
+    {
+        for (int border = 0; border < 4; border++)
+        {
+
+            if (characterSelectIndex[border] == maiden)
+            {
+                //gives reverse translate of playerborder dictionary. From border to controlnr instead of the other way around.
+                return playerborder.FirstOrDefault(x => x.Value == border).Key;
+            }
+        }
+        return -1; //-1 will be for AI
+
+
+    }
+
+    public static int NumberOfPlayers
+    {
+        get { return playersjoined; }
     }
 
 }
