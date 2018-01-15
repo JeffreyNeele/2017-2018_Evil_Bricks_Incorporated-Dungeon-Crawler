@@ -10,9 +10,9 @@ class PlayingState : IGameLoopObject
 
     public PlayingState()
     {
-        currentLevelIndex = 0;
+        currentLevelIndex = 6;
         levelList = new List<Level>();
-        LoadLevels(7);
+        LoadLevels(8);
     }
 
     public void HandleInput(InputHelper inputHelper)

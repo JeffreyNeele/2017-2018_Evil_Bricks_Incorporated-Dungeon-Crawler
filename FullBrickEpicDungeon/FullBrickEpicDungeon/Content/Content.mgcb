@@ -667,3 +667,6 @@
 #begin Assets/Levels/level7.txt
 /copy:Assets/Levels/level7.txt
 
+#begin Assets/Levels/level8.txt
+/copy:Assets/Levels/level8.txt
+
