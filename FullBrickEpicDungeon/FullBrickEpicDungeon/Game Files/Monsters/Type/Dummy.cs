@@ -14,7 +14,10 @@ class Dummy : Monster
         this.baseattributes.Armour = 0;
         this.baseattributes.Gold = 0;
         this.baseattributes.Attack = 0;
-        attributes = baseattributes;
+        attributes.HP = baseattributes.HP;
+        attributes.Armour = baseattributes.Armour;
+        attributes.Attack = baseattributes.Attack;
+        attributes.Gold = baseattributes.Gold;
         LoadAnimation(assetName, "default", false);
         PlayAnimation("default");
     }

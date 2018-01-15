@@ -16,7 +16,10 @@ class LittlePenguin : AImonster
         this.baseattributes.Armour = 0;
         this.baseattributes.Attack = 0;
         this.baseattributes.Gold = 75;
-        attributes = baseattributes;
+        attributes.HP = baseattributes.HP;
+        attributes.Armour = baseattributes.Armour;
+        attributes.Attack = baseattributes.Attack;
+        attributes.Gold = baseattributes.Gold;
 
         //The total speed of movement of the penguin
         slideSpeed = 10f;
