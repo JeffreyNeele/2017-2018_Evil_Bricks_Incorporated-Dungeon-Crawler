@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Content;
+
 
 abstract partial class Character : AnimatedGameObject
 {
@@ -21,6 +22,7 @@ abstract partial class Character : AnimatedGameObject
     protected bool playerControlled;
     protected Vector2 walkingdirection;
     protected BaseAI AI;
+
 
 
     //Constructor: sets up the controls given to the constructor for each player (xbox or keyboard)
