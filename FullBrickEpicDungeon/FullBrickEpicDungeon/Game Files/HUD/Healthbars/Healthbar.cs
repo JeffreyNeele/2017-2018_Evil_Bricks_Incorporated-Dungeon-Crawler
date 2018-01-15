@@ -36,7 +36,6 @@ class Healthbar : SpriteGameObject
 
     public override void Update(GameTime gameTime)
     {
-        currentHealth = 
         if (currentHealth >= 0)
         healthrectangle = new Rectangle((int)healthBarPosition.X, (int)healthBarPosition.Y, currentHealth, healthTexture.Height);
         HealthColor();

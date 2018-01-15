@@ -13,7 +13,7 @@ abstract partial class Character : AnimatedGameObject
     protected BaseAttributes attributes, baseattributes;
     protected Weapon weapon;
     protected List<Equipment> inventory;
-    protected Timer reviveTimer, stepSoundTimer;
+    protected Timer deathTimer, reviveTimer, stepSoundTimer;
     protected Vector2 startPosition, movementSpeed, iceSpeed;
     protected int playerNumber, relativePlayerNumber;
     protected float hitCounter;
@@ -33,18 +33,21 @@ abstract partial class Character : AnimatedGameObject
         this.classType = classType;
         baseattributes = new BaseAttributes();
         inventory = new List<Equipment>();
-        characterSFX = new Dictionary<string, string>();
-        characterSFX.Add("ice_slide", "Assets/SFX/ice_slide");
-        characterSFX.Add("ability_not_ready", "Assets/SFX/ability_not_ready");
-        characterSFX.Add("switch_wrong", "Assets/SFX/switch_wrong");
+        characterSFX = new Dictionary<string, string>
+        {
+            { "ice_slide", "Assets/SFX/ice_slide" },
+            { "ability_not_ready", "Assets/SFX/ability_not_ready" },
+            { "switch_wrong", "Assets/SFX/switch_wrong" }
+        };
         attributes = new BaseAttributes();
-        reviveTimer = new Timer(10);
-        reviveTimer.Reset();
-        reviveTimer.IsPaused = true;
+        deathTimer = new Timer(10);
+        deathTimer.Reset();
+        deathTimer.IsPaused = true;
         stepSoundTimer = new Timer(0.5F)
         {
             IsExpired = true
         };
+        reviveTimer = new Timer(3);
         this.velocity = Vector2.Zero;
         this.movementSpeed = new Vector2(4, 4);
         AI = new BaseAI(this, 200F, currentLevel, false, 1, 700);
@@ -106,6 +109,7 @@ abstract partial class Character : AnimatedGameObject
     {
         if (!IsDowned)
         {
+            reviveTimer.Update(gameTime);
             stepSoundTimer.Update(gameTime);
             base.Update(gameTime);
             this.weapon.Update(gameTime);
@@ -132,16 +136,14 @@ abstract partial class Character : AnimatedGameObject
         }
         else
         {
-            reviveTimer.Update(gameTime);
-            if (reviveTimer.IsExpired)
+            deathTimer.Update(gameTime);
+            if (deathTimer.IsExpired)
             {
                 this.Reset();
                 // when the revivetimer expires, the character dies :( sadly he will lose some of his gold after dying (currently 25% might be higher in later versions)
                 this.attributes.Gold = this.attributes.Gold - (this.attributes.Gold / 4);
-                reviveTimer.Reset();
-                reviveTimer.IsPaused = true;
+                deathTimer.Reset();
             }
-            reviveTimer.IsPaused = false;
         }
     }
 
@@ -176,7 +178,15 @@ abstract partial class Character : AnimatedGameObject
         {
             if(this.CollidesWith(c) && c.IsDowned)
             {
-
+                if (reviveTimer.IsPaused)
+                {
+                    reviveTimer.Reset();
+                }
+                else if (reviveTimer.IsExpired)
+                {
+                    c.attributes.HP = c.baseattributes.HP;
+                    reviveTimer.IsPaused = true;
+                }
             }
         }
 
