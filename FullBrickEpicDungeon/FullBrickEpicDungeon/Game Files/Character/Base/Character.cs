@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+
 
 abstract partial class Character : AnimatedGameObject
 {
@@ -11,14 +13,17 @@ abstract partial class Character : AnimatedGameObject
     protected BaseAttributes attributes, baseattributes;
     protected Weapon weapon;
     protected List<Equipment> inventory;
-    protected Timer reviveTimer;
+    protected Timer reviveTimer, stepSoundTimer;
     protected Vector2 startPosition, movementSpeed, iceSpeed;
-    protected int playerNumber;
+    protected int playerNumber, relativePlayerNumber;
     protected float hitCounter;
     protected Dictionary<Buttons, Buttons> xboxControls;
+    protected Dictionary<string, string> characterSFX;
     protected bool playerControlled;
     protected Vector2 walkingdirection;
     protected BaseAI AI;
+
+
 
     //Constructor: sets up the controls given to the constructor for each player (xbox or keyboard)
     protected Character(int playerNumber, Level currentLevel, bool xboxControlled, ClassType classType, string id = "") : base(0, id)
@@ -27,42 +32,53 @@ abstract partial class Character : AnimatedGameObject
         this.classType = classType;
         baseattributes = new BaseAttributes();
         inventory = new List<Equipment>();
+        characterSFX = new Dictionary<string, string>();
+        characterSFX.Add("ice_slide", "Assets/SFX/ice_slide");
+        characterSFX.Add("ability_not_ready", "Assets/SFX/ability_not_ready");
+        characterSFX.Add("switch_wrong", "Assets/SFX/switch_wrong");
         attributes = new BaseAttributes();
         reviveTimer = new Timer(10);
+        reviveTimer.Reset();
+        reviveTimer.IsPaused = true;
+        stepSoundTimer = new Timer(0.5F)
+        {
+            IsExpired = true
+        };
         this.velocity = Vector2.Zero;
         this.movementSpeed = new Vector2(4, 4);
         AI = new BaseAI(this, 200F, currentLevel, false, 1, 700);
         this.hitCounter = 0;
-        this.playerNumber = playerNumber; 
+        this.playerNumber = playerNumber;
+        relativePlayerNumber = playerNumber;
         this.xboxControlled = xboxControlled;
         this.iceSpeed = new Vector2(0, 0);
+        
 
         if (playerNumber == 1)
         {
             if (xboxControlled) //opgeslagen controls staan in de txt bestandjes
-                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/KeyboardControls/XboxControls/player1Xbox.txt");
+                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/Controls/XboxControls/player1Xbox.txt");
             else
-                keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player1controls.txt");
+                keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/Controls/player1controls.txt");
         }
         else if (playerNumber == 2)
         {
             if (xboxControlled)
-                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/KeyboardControls/XboxControls/player2Xbox.txt");
+                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/Controls/XboxControls/player2Xbox.txt");
             else
-                keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/KeyboardControls/player2controls.txt");
+                keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/Controls/player2controls.txt");
         }
         else if (playerNumber == 3)
         {
             if (xboxControlled)
-                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/KeyboardControls/XboxControls/player3Xbox.txt");
+                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/Controls/XboxControls/player3Xbox.txt");
             else
                 playerControlled = false;
-                
         }
         else if (playerNumber == 4)
         {
             if (xboxControlled)
-                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/KeyboardControls/XboxControls/player4Xbox.txt");
+                xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/Controls/XboxControls/player4Xbox.txt");
             else if (this.xboxControlled)
                 playerControlled = false;
         }
@@ -87,36 +103,49 @@ abstract partial class Character : AnimatedGameObject
 
     public override void Update(GameTime gameTime)
     {
-        base.Update(gameTime);
-        this.weapon.Update(gameTime);
-        IsOnIceChecker();
-        if (IsDowned)
+        if (!IsDowned)
         {
-            reviveTimer.IsPaused = false;
+            stepSoundTimer.Update(gameTime);
+            base.Update(gameTime);
+            this.weapon.Update(gameTime);
+            if (!playerControlled)
+            {
+                Vector2 previousPosition = this.position;
+                AI.Update(gameTime);
+                if (!(previousPosition == this.position) && stepSoundTimer.IsExpired)
+                {
+                    PlaySFX("walk");
+                    stepSoundTimer.Reset();
+                }
+                PlayAnimationDirection(position - previousPosition);
+            }
+            
+            if (hitCounter >= 0)
+            {
+                Visible = !Visible;
+                hitCounter -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            else
+                Visible = true;
+            IsOnIceChecker();
+        }
+        else
+        {
+            reviveTimer.Update(gameTime);
             if (reviveTimer.IsExpired)
             {
                 this.Reset();
                 // when the revivetimer expires, the character dies :( sadly he will lose some of his gold after dying (currently 25% might be higher in later versions)
                 this.attributes.Gold = this.attributes.Gold - (this.attributes.Gold / 4);
+                reviveTimer.Reset();
+                reviveTimer.IsPaused = true;
             }
-        }
-
-        if (hitCounter >= 0)
-        {
-            Visible = !Visible;
-            hitCounter -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-        }
-        else
-            Visible = true;
-        if (!playerControlled)
-        {
-            AI.Update(gameTime);
+            reviveTimer.IsPaused = false;
         }
     }
 
+ 
 
-   
-    
     public override void Reset()
     {
         this.attributes.HP = this.baseattributes.HP;
@@ -139,8 +168,17 @@ abstract partial class Character : AnimatedGameObject
     }
 
     //Checks if the character collides with interactive objects
-    public void ObjectCollisionChecker()
+    public void InteractCollisionChecker()
     {
+        GameObjectList charList = GameWorld.Find("playerLIST") as GameObjectList;
+        foreach (Character c in charList.Children)
+        {
+            if(this.CollidesWith(c) && c.IsDowned)
+            {
+
+            }
+        }
+
         GameObjectList objectList = GameWorld.Find("objectLIST") as GameObjectList;
         // If a character collides with an interactive object, set the target character to this instance and tell the interactive object that it is currently interacting
         foreach (InteractiveObject intObj in objectList.Children)
@@ -236,7 +274,11 @@ abstract partial class Character : AnimatedGameObject
             this.attributes.HP = 0;
         }
     }
-
+    public void PlaySFX(string sfx)
+    {
+        if(FullBrickEpicDungeon.DungeonCrawler.SFX)
+            GameEnvironment.AssetManager.PlaySound(characterSFX[sfx]);
+    }
     // returns if the character has gone into the "downed" state
     public bool IsDowned
     {

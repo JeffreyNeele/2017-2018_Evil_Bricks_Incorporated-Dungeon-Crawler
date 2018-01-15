@@ -96,31 +96,39 @@ partial class Level : GameObjectList
             }
             if (splitArray[0] == "HANDLE")
             {
-                Handle handle = new Handle("Assets/Sprites/InteractiveObjects/handles@2", "Handle", 0);
-                handle.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
+                Handle handle = new Handle("Assets/Sprites/InteractiveObjects/handles@2", "Handle", 0)
+                {
+                    Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
+                };
                 objectList.Add(handle);
             }
 
             if(splitArray[0] == "DUMMY")
             {
-                Monster dummy = new Dummy("Assets/Sprites/Enemies/Dummy", this);
-                dummy.StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
+                Monster dummy = new Dummy("Assets/Sprites/Enemies/Dummy", this)
+                {
+                    StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
+                };
                 dummy.Reset();
                 monsterList.Add(dummy);
             }
 
             if (splitArray[0] == "BUNNY")
             {
-                Bunny bunny = new Bunny(this);
-                bunny.StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
+                Bunny bunny = new Bunny(this)
+                {
+                    StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
+                };
                 bunny.Reset();
                 monsterList.Add(bunny);
             }
 
             if (splitArray[0] == "PENGUIN")
             {
-                Monster penguin = new LittlePenguin(this);
-                penguin.StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
+                Monster penguin = new LittlePenguin(this)
+                {
+                    StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
+                };
                 penguin.Reset();
                 monsterList.Add(penguin);
             }

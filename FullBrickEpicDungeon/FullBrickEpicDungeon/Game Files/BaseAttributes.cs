@@ -8,6 +8,7 @@ class BaseAttributes
     {
 
     }
+
     private int hitpoints, armour, attack, gold;
 
    public int HP

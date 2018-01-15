@@ -1,52 +1,80 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
-class SettingsState : GameObjectList
+class SettingsState : IGameLoopObject
 {
+    private Texture2D settingsBackground;
+    protected Button SFX, music, back;
     public SettingsState()
     {
-        GenerateKeyboardControls("Assets/KeyboardControls/player2controls");
+        settingsBackground = GameEnvironment.AssetManager.GetSprite("Assets/Sprites/Settings/settingsbackground");
+        SFX = new Button("Assets/Sprites/Settings/sfxbutton@2");
+        SFX.Position = new Vector2(GameEnvironment.Screen.X / 2 - SFX.Width / 2, 250);
+        music = new Button("Assets/Sprites/Settings/musicbutton@2");
+        music.Position = new Vector2(GameEnvironment.Screen.X / 2 - music.Width / 2, 400);
+        back = new Button("Assets/Sprites/Settings/ReturnToMenu");
+        back.Position = new Vector2(GameEnvironment.Screen.X / 2 - back.Width / 2, GameEnvironment.Screen.Y - (back.Height + 100));
     }
 
-    protected Dictionary<Keys, Keys> GenerateKeyboardControls(string path)
+    public void Update(GameTime gameTime)
     {
-        path = "Content/" + path;
-        StreamReader fileReader = new StreamReader("Content/Assets/KeyboardControls/defaultcontrols");
-        List<string> defaultControls = new List<string>();
-        List<string> generatedControls = new List<string>();
-        string line = fileReader.ReadLine();
-        // Reads the file
-        while (line != null)
+
+    }
+
+    public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    {
+        spriteBatch.Draw(settingsBackground, Vector2.Zero, Color.White);
+        SFX.Draw(gameTime, spriteBatch);
+        music.Draw(gameTime, spriteBatch);
+        back.Draw(gameTime, spriteBatch);
+    }
+
+    public void HandleInput(InputHelper inputHelper)
+    {
+        SFX.HandleInput(inputHelper);
+        music.HandleInput(inputHelper);
+        back.HandleInput(inputHelper);
+        if (back.Pressed)
         {
-            defaultControls.Add(line);
-            line = fileReader.ReadLine();
+            GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
+            GameEnvironment.GameStateManager.SwitchTo("titleMenu");
         }
-        fileReader.Close();
-        fileReader = new StreamReader(path);
-        line = fileReader.ReadLine();
-        // Reads the file
-        while (line != null)
+        if (SFX.Pressed)
         {
-            generatedControls.Add(line);
-            line = fileReader.ReadLine();
-        }
-        fileReader.Close();
-        if (generatedControls.Count != defaultControls.Count)
-        {
-            throw new IndexOutOfRangeException("defaultcontrols and generatedcontrols are not the same length.");
+            GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
+            if (SFX.Sprite.SheetIndex == 0)
+            {
+                FullBrickEpicDungeon.DungeonCrawler.SFX = false;
+                SFX.Sprite.SheetIndex = 1;
+            }
+            else
+            {
+                FullBrickEpicDungeon.DungeonCrawler.SFX = true;
+                SFX.Sprite.SheetIndex = 0;
+            }
+               
         }
 
-        Dictionary<Keys, Keys> controlScheme = new Dictionary<Keys, Keys>();
-        for (int k = 0; k < defaultControls.Count; k++)
+        if (music.Pressed)
         {
-            Keys defaultkey = (Keys)Enum.Parse(typeof(Keys), defaultControls[k]);
-            Keys newkey = (Keys)Enum.Parse(typeof(Keys), generatedControls[k]);
-            controlScheme.Add(defaultkey, newkey);
+            GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
+            if (music.Sprite.SheetIndex == 0)
+            {
+                FullBrickEpicDungeon.DungeonCrawler.music = false;
+                music.Sprite.SheetIndex = 1;
+            }
+            else
+            {
+                FullBrickEpicDungeon.DungeonCrawler.music = true;
+                music.Sprite.SheetIndex = 0;
+            }
         }
+    }
 
-        return controlScheme;
+    public void Reset()
+    {
+        SFX.Reset();
+        music.Reset();
+        back.Reset();
     }
 }

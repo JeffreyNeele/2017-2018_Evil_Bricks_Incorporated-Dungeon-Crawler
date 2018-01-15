@@ -20,14 +20,14 @@ class Handle : InteractiveObject
     }
     protected override void Interact(Character targetCharacter)
     {
-        this.ChangeSpriteIndex(1);
+        this.Sprite.SheetIndex = 1;
         interacting = false;
         StartResetTimer();
     }
 
     public override void Reset()
     {
-        this.ChangeSpriteIndex(0);
+        this.sprite.SheetIndex = 0;
         base.Reset();
     }
 

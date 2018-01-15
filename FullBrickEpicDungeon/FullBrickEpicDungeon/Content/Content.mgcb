@@ -19,30 +19,6 @@
 #begin Assets/Fonts/ConversationFont.xnb
 /copy:Assets/Fonts/ConversationFont.xnb
 
-#begin Assets/Sprites/Lightbringer/lightbringer_default.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/Lightbringer/lightbringer_default.png
-
-#begin Assets/Sprites/Lightbringer/lightbringer_idle@3.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/Lightbringer/lightbringer_idle@3.png
-
 #begin Assets/Sprites/Conversation Boxes/ConversationBox1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -139,18 +115,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Tiles/TileWood1.png
 
-#begin Assets/Sprites/Shadowhunter/shadowhunter_default.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/Shadowhunter/shadowhunter_default.png
-
 #begin Assets/Sprites/Shieldmaiden/shieldmaiden_default.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -162,18 +126,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Shieldmaiden/shieldmaiden_default.png
-
-#begin Assets/Sprites/Talismaniac/talismaniac_default.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/Talismaniac/talismaniac_default.png
 
 #begin Assets/Sprites/Menu/placeholderbackground.jpg
 /importer:TextureImporter
@@ -258,18 +210,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Shieldmaiden/shieldmaiden_walk_right_default@4.png
-
-#begin Assets/KeyboardControls/defaultcontrols.txt
-/copy:Assets/KeyboardControls/defaultcontrols.txt
-
-#begin Assets/KeyboardControls/player1controls.txt
-/copy:Assets/KeyboardControls/player1controls.txt
-
-#begin Assets/KeyboardControls/player2controls.txt
-/copy:Assets/KeyboardControls/player2controls.txt
-
-#begin Assets/KeyboardControls/player2default.txt
-/copy:Assets/KeyboardControls/player2default.txt
 
 #begin Assets/Sprites/Shieldmaiden/shieldmaiden_walk_back_default@4.png
 /importer:TextureImporter
@@ -511,21 +451,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Character selection/fotoLijst.png
 
-#begin Assets/KeyboardControls/XboxControls/player1Xbox.txt
-/copy:Assets/KeyboardControls/XboxControls/player1Xbox.txt
-
-#begin Assets/KeyboardControls/XboxControls/defaultXboxControls.txt
-/copy:Assets/KeyboardControls/XboxControls/defaultXboxControls.txt
-
-#begin Assets/KeyboardControls/XboxControls/player2Xbox.txt
-/copy:Assets/KeyboardControls/XboxControls/player2Xbox.txt
-
-#begin Assets/KeyboardControls/XboxControls/player3Xbox.txt
-/copy:Assets/KeyboardControls/XboxControls/player3Xbox.txt
-
-#begin Assets/KeyboardControls/XboxControls/player4Xbox.txt
-/copy:Assets/KeyboardControls/XboxControls/player4Xbox.txt
-
 #begin Assets/Sprites/Enemies/bunny_attack@5.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -741,6 +666,159 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Paused/overlay.png
+
+#begin Assets/SFX/Shieldmaiden/hit_shieldbash.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/SFX/Shieldmaiden/hit_shieldbash.wav
+
+#begin Assets/SFX/Shieldmaiden/sword_hit.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/SFX/Shieldmaiden/sword_hit.wav
+
+#begin Assets/SFX/Shieldmaiden/sword_miss.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/SFX/Shieldmaiden/sword_miss.wav
+
+#begin Assets/SFX/Shieldmaiden/walk.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/SFX/Shieldmaiden/walk.wav
+
+#begin Assets/SFX/button_click.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/SFX/button_click.wav
+
+#begin Assets/SFX/pause.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/SFX/pause.wav
+
+#begin Assets/SFX/ability_not_ready.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/SFX/ability_not_ready.wav
+
+#begin Assets/Sprites/Settings/musicbutton@2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Settings/musicbutton@2.png
+
+#begin Assets/Sprites/Settings/ReturnToMenu.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Settings/ReturnToMenu.png
+
+#begin Assets/Sprites/Settings/settingsbackground.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Settings/settingsbackground.png
+
+#begin Assets/Sprites/Settings/sfxbutton@2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Settings/sfxbutton@2.png
+
+#begin Assets/Sprites/Menu/SettingsButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Menu/SettingsButton.png
+
+#begin Assets/SFX/switch_wrong.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/SFX/switch_wrong.wav
+
+#begin Assets/Controls/XboxControls/defaultXboxControls.txt
+/copy:Assets/Controls/XboxControls/defaultXboxControls.txt
+
+#begin Assets/Controls/XboxControls/player1Xbox.txt
+/copy:Assets/Controls/XboxControls/player1Xbox.txt
+
+#begin Assets/Controls/XboxControls/player2Xbox.txt
+/copy:Assets/Controls/XboxControls/player2Xbox.txt
+
+#begin Assets/Controls/XboxControls/player3Xbox.txt
+/copy:Assets/Controls/XboxControls/player3Xbox.txt
+
+#begin Assets/Controls/XboxControls/player4Xbox.txt
+/copy:Assets/Controls/XboxControls/player4Xbox.txt
+
+#begin Assets/Controls/defaultcontrols.txt
+/copy:Assets/Controls/defaultcontrols.txt
+
+#begin Assets/Controls/player1controls.txt
+/copy:Assets/Controls/player1controls.txt
+
+#begin Assets/Controls/player2controls.txt
+/copy:Assets/Controls/player2controls.txt
+
+#begin Assets/Controls/player2default.txt
+/copy:Assets/Controls/player2default.txt
+
+#begin Assets/Sprites/Shieldmaiden/HealthBar.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Shieldmaiden/HealthBar.png
+
+#begin Assets/SFX/ice_slide.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/SFX/ice_slide.wav
 
 #begin Assets/Sprites/Character selection/ControllerParchment/PressToJoinRes400.png
 /importer:TextureImporter

@@ -6,3 +6,4 @@ Q
 R
 T
 E
+LeftShift

@@ -11,14 +11,14 @@ class PauseState : IGameLoopObject
 {
     protected IGameLoopObject playingState;
     protected Button continueButton, quitButton;
-    protected SpriteGameObject overlay;
+    protected Texture2D overlay;
 
     public PauseState()
     {
         // find the playing state
         playingState = GameEnvironment.GameStateManager.GetGameState("playingState");
 
-        overlay = new SpriteGameObject("Assets/Sprites/Paused/overlay", 3);
+        overlay = GameEnvironment.AssetManager.GetSprite("Assets/Sprites/Paused/overlay");
         // make buttons for the different assignments, eg return to menu
         continueButton = new Button("Assets/Sprites/Paused/Continue", 99);
         continueButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - continueButton.Width / 2, 250);
@@ -36,7 +36,7 @@ class PauseState : IGameLoopObject
         // we draw the playingstate but we do not update it because we want the pause state to be an overlay.
         playingState.Draw(gameTime, spriteBatch);
         //draw the overlay
-        overlay.Draw(gameTime, spriteBatch);
+        spriteBatch.Draw(overlay, Vector2.Zero, Color.White);
         // draw the buttons
         continueButton.Draw(gameTime, spriteBatch);
         quitButton.Draw(gameTime, spriteBatch);
@@ -49,19 +49,24 @@ class PauseState : IGameLoopObject
         quitButton.HandleInput(inputHelper);
         if (continueButton.Pressed)
         {
+            GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
+            FullBrickEpicDungeon.DungeonCrawler.mouseVisible = false;
             GameEnvironment.GameStateManager.SwitchTo("playingState");
         }
-        // if the quit button is pressed, we reset the playing state and return to the menu
+
         else if (quitButton.Pressed)
         {
+            GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
             playingState.Reset();
+            FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
             GameEnvironment.GameStateManager.SwitchTo("titleMenu");
         }
     }
 
     public void Reset()
     {
-
+        continueButton.Reset();
+        quitButton.Reset();
     }
 }
 

@@ -69,9 +69,16 @@ class BaseAI
                         Monster target_cast = targetedObject as Monster;
                         GameObjectList monsterList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList;
                         if (!owner_cast.CurrentWeapon.AbilityMain.IsOnCooldown)
+                        {
                             owner_cast.CurrentWeapon.UseMainAbility(monsterList, currentLevel.TileField);
+                            owner_cast.PlaySFX("basic_ability");
+                        }
                         else
+                        {
                             owner_cast.CurrentWeapon.Attack(monsterList, currentLevel.TileField);
+                            owner_cast.PlaySFX("attack_hit");
+                        }
+                            
                         if (target_cast.IsDead)
                         {
                             targetedObject = null;

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Content;
 
 namespace FullBrickEpicDungeon
 {
@@ -9,7 +10,8 @@ namespace FullBrickEpicDungeon
     /// </summary>
     public class DungeonCrawler : GameEnvironment
     {
-        public static int numberOfPlayers = 2;
+        public static int numberOfPlayers = 1;
+        public static bool SFX = true, music = true, mouseVisible = true;
         //SpriteGameObject conversationFrame;
         public DungeonCrawler()
         {
@@ -45,6 +47,7 @@ namespace FullBrickEpicDungeon
             spriteBatch = new SpriteBatch(GraphicsDevice);
             // TODO: use this.Content to load your game content here
             gameStateManager.AddGameState("titleMenu", new TitleMenuState());
+            GameStateManager.AddGameState("settingsState", new SettingsState());
             gameStateManager.AddGameState("characterSelection", new CharacterSelection());    
             gameStateManager.AddGameState("playingState", new PlayingState());
             GameStateManager.AddGameState("pauseState", new PauseState());
@@ -68,6 +71,11 @@ namespace FullBrickEpicDungeon
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            if (mouseVisible)
+                IsMouseVisible = true;
+            else
+                IsMouseVisible = false;
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             // TODO: Add your update logic here
