@@ -14,7 +14,7 @@ abstract partial class Character : AnimatedGameObject
     protected Timer deathTimer, reviveTimer, stepSoundTimer;
     protected Vector2 startPosition, movementSpeed, iceSpeed;
     protected int playerNumber, relativePlayerNumber;
-    protected float hitCounter;
+    protected float hitCounter, hitTicks;
     protected Dictionary<Buttons, Buttons> xboxControls;
     protected Dictionary<string, string> characterSFX;
     protected bool playerControlled;
@@ -46,6 +46,7 @@ abstract partial class Character : AnimatedGameObject
         this.movementSpeed = new Vector2(4, 4);
         AI = new BaseAI(this, 200F, currentLevel, false, 1, 700);
         this.hitCounter = 0;
+        this.hitTicks = 0;
         this.playerNumber = playerNumber;
         relativePlayerNumber = playerNumber;
         this.xboxControlled = xboxControlled;
@@ -121,7 +122,13 @@ abstract partial class Character : AnimatedGameObject
             
             if (hitCounter >= 0)
             {
-                Visible = !Visible;
+                if (hitTicks >= 4)
+                {
+                    hitTicks = 0;
+                    Visible = !Visible;
+                }
+                else
+                    hitTicks++;
                 hitCounter -= (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else
@@ -277,6 +284,10 @@ abstract partial class Character : AnimatedGameObject
         if (this.attributes.HP < 0)
         {
             this.attributes.HP = 0;
+        }
+        else
+        {
+            hitCounter = 0.5f;
         }
     }
     public void PlaySFX(string sfx)

@@ -35,6 +35,7 @@ abstract partial class Character : AnimatedGameObject
                 {
                     HandleKeyboardMovement(inputHelper);
                 }
+
                 this.position += walkingdirection;
                 
                 // Play walking SFX
