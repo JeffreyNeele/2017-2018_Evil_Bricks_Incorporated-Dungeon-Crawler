@@ -820,3 +820,39 @@
 /processorParam:Quality=Best
 /build:Assets/SFX/ice_slide.wav
 
+#begin Assets/Sprites/Character selection/ControllerParchment/PressToJoinRes400.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Character selection/ControllerParchment/PressToJoinRes400.png
+
+#begin Assets/Sprites/Character selection/ControllerParchment/KeyboardControls2-2long400.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Character selection/ControllerParchment/KeyboardControls2-2long400.png
+
+#begin Assets/Sprites/Character selection/ControllerParchment/XboxControlled1long3-400.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Character selection/ControllerParchment/XboxControlled1long3-400.png
+

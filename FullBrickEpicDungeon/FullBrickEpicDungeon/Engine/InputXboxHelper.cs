@@ -64,7 +64,7 @@ public partial class InputHelper
     }
 
 
-
+    //gives continuous vector2 output of left thumbstick
     public Vector2 WalkingDirection(int playernumber)
     {
         //return CurrentState(playernumber).ThumbSticks.Left;
@@ -75,6 +75,86 @@ public partial class InputHelper
             stickInput = Vector2.Zero;
         return stickInput;
     }
+
+    //gives previous vector2 output of left thumbstick
+    public Vector2 PrevWalkingDirection(int playernumber)
+    {
+        //return CurrentState(playernumber).ThumbSticks.Left;
+        float deadzone = 0.25f;
+        Vector2 stickInput = PreviousState(playernumber).ThumbSticks.Left;
+        float magnitude = (float)Math.Sqrt(stickInput.X * stickInput.X + stickInput.Y * stickInput.Y);
+        if (magnitude < deadzone)
+            stickInput = Vector2.Zero;
+        return stickInput;
+    }
+
+    public Vector2 StraightDirection(int playernumber, Vector2 currprevdir)
+    {
+        //the first run it will run for the currentdirection, the second for the previousdirection
+        Vector2 direction = currprevdir;
+        Vector2 straightdirection = Vector2.Zero;
+
+
+        if (Math.Abs(direction.X) >= Math.Abs(direction.Y))
+        {
+            if (direction.X > 0)
+            {
+                straightdirection = new Vector2(1, 0);
+            }
+            else if (direction.X < 0)
+            {
+                straightdirection = new Vector2(-1, 0);
+            }
+        }
+        else if (Math.Abs(direction.Y) > Math.Abs(direction.X))
+        {
+            if (direction.Y > 0)
+            {
+                straightdirection = new Vector2(0, 1);
+            }
+            else if (direction.Y < 0)
+            {
+                straightdirection = new Vector2(0, -1);
+            }
+        }
+        return straightdirection;
+    }
+
+    //gives vector2 4 directions only output of left thumbstick only once.
+    public Vector2 MenuDirection(int playernumber, bool X, bool Y)
+    {
+         
+        Vector2 previousDirection = PrevWalkingDirection(playernumber);
+        Vector2 currentDirection = WalkingDirection(playernumber);
+
+        previousDirection = StraightDirection(playernumber, previousDirection);
+        currentDirection = StraightDirection(playernumber, currentDirection);
+
+        if (X && !Y)
+        {
+            if (previousDirection.X != currentDirection.X) //direction is niet veranderd
+                return currentDirection;
+        }
+        else if (!X && Y)
+        {
+            if (previousDirection.Y != currentDirection.Y) //direction is niet veranderd
+                return currentDirection;
+        }
+        else if (X && Y)
+        {
+            if (previousDirection != currentDirection)
+                return currentDirection;
+        }
+        
+       return Vector2.Zero; //does never give output if both X an Y is not wanted
+
+
+
+
+
+
+    }
+
 
 
 
