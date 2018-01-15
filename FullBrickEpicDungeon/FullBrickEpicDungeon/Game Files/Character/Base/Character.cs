@@ -22,6 +22,7 @@ abstract partial class Character : AnimatedGameObject
     protected bool playerControlled;
     protected Vector2 walkingdirection;
     protected BaseAI AI;
+    
 
 
 
