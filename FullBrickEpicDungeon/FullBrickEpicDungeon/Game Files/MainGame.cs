@@ -9,7 +9,7 @@ namespace FullBrickEpicDungeon
     /// </summary>
     public class DungeonCrawler : GameEnvironment
     {
-        public static int numberOfPlayers = 1;
+        public static int numberOfPlayers = 2;
         //SpriteGameObject conversationFrame;
         public DungeonCrawler()
         {
