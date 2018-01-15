@@ -23,7 +23,7 @@ class Handle : InteractiveObject
     protected override void Interact(Character targetCharacter)
     {
         //verandert de hendel sprite naar aan stand
-        this.ChangeSpriteIndex(1);
+        this.sprite.SheetIndex = 1;
         ActivateCorrObject("open"); //opent de bijbehorende objecten
         interacting = false;
         StartResetTimer();
@@ -53,7 +53,7 @@ class Handle : InteractiveObject
 
     public override void Reset()
     {
-        this.ChangeSpriteIndex(0);
+        this.sprite.SheetIndex = 0;
         base.Reset();
     }
 
