@@ -7,8 +7,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 
-//NOG FIXEN DAT LOCK IN (SPATIE/ENTER) NIET KAN TOT ER EEN SPELER IS DIE TOETSENBORD BESTUURT DAARMEE
-
 //Spelers kunnen in deze state connecten met de game (met xbox controller of toetsenbord).
 //Daarna is het mogelijk om een character te kiezen. Uitgangspunt is dat een character maar één keer gekozen kan worden.
 class CharacterSelection : GameObjectList
@@ -46,10 +44,10 @@ class CharacterSelection : GameObjectList
         keyboardcontrols.Add(1, keyboardControls2);
 
         //The colors of the background borders
-        lockInColor[0] = Color.LightSlateGray;
-        lockInColor[1] = Color.DarkGray;
+        lockInColor[0] = Color.Purple;
+        lockInColor[1] = Color.MediumPurple;
         lockInColor[2] = Color.DarkBlue;
-        lockInColor[3] = Color.Blue;
+        lockInColor[3] = Color.RoyalBlue;
         lockInColor[4] = Color.Green;
         lockInColor[5] = Color.LightGreen;
         lockInColor[6] = Color.OrangeRed;
@@ -78,6 +76,11 @@ class CharacterSelection : GameObjectList
         }   
     }
 
+
+
+
+
+
     public override void Update(GameTime gameTime)
     {
         if (AllReadyCheck())
@@ -88,6 +91,10 @@ class CharacterSelection : GameObjectList
         }
         base.Update(gameTime);
     }
+
+
+
+
 
     public override void HandleInput(InputHelper inputHelper)
     {
@@ -132,6 +139,61 @@ class CharacterSelection : GameObjectList
         
     }
 
+
+
+
+
+    public void JoinPlayer(int controlsnr)
+    {
+        //make and load in the animations
+        characterSprites[playersjoined] = new AnimatedGameObject(2);
+        characterSprites[playersjoined].LoadAnimation("Assets/Sprites/Character selection/shieldmaiden_default", "maiden1", true);
+        characterSprites[playersjoined].LoadAnimation("Assets/Sprites/Character selection/shieldmaiden_blue", "maiden2", true);
+        characterSprites[playersjoined].LoadAnimation("Assets/Sprites/Character selection/shieldmaiden_green", "maiden3", true);
+        characterSprites[playersjoined].LoadAnimation("Assets/Sprites/Character selection/shieldmaiden_orange", "maiden4", true);
+
+        //position of the sprites
+        characterSprites[playersjoined].Position = new Vector2(borderSprites[playersjoined].Position.X + borderSprites[playersjoined].Width / 2, borderSprites[playersjoined].Position.Y + 100);
+        Add(characterSprites[playersjoined]);
+
+        //play all the different animations
+        characterSprites[playersjoined].PlayAnimation("maiden" + (playersjoined + 1));
+
+        //Add the index number of the selected animation
+        characterSelectIndex[playersjoined] = playersjoined + 1;
+
+        //Change color of background accordingly to the playing animation
+        borderSprites[playersjoined].GetColor = lockInColor[(characterSelectIndex[playersjoined] - 1) * 2];
+
+        //Place the ready sprite
+        readySprite[playersjoined] = new AnimatedGameObject(2);
+        readySprite[playersjoined].Position = new Vector2(borderSprites[playersjoined].Position.X + borderSprites[playersjoined].Width / 2, borderSprites[playersjoined].Position.Y + borderSprites[playersjoined].Height / 7 * 6);
+        readySprite[playersjoined].LoadAnimation("Assets/Sprites/Character selection/Ready-not", "notReady", true);
+        readySprite[playersjoined].LoadAnimation("Assets/Sprites/Character selection/Ready!", "Ready", true);
+        readySprite[playersjoined].PlayAnimation("notReady");
+        Add(readySprite[playersjoined]);
+
+
+        //link the controlnumber to the bordernumber
+        playerborder.Add(controlsnr, this.playersjoined); //playersjoined is the same as the border number in this method
+
+        //load in Controls  Sprite
+        if (controlsnr <= 1) //0 and 1 is keyboard
+            controlSprites[playersjoined] = new SpriteGameObject("Assets/Sprites/Character selection/ControllerParchment/KeyboardControls2-2long400", 2);
+        if (controlsnr >= 2) //2 to 5 is xbox
+            controlSprites[playersjoined] = new SpriteGameObject("Assets/Sprites/Character selection/ControllerParchment/XboxControlled1long3-400", 2);
+
+        controlSprites[playersjoined].Position = new Vector2(GameEnvironment.Screen.X / 4 * playersjoined + 40, 450);
+        Add(controlSprites[playersjoined]);
+
+        playersjoined++;
+
+    }
+
+
+
+
+
     protected void XboxCharacterSelection(InputHelper inputHelper)
     {
         //handle xbox input/interact button for each joined player, independant of in which playerborder it fits.
@@ -160,6 +222,8 @@ class CharacterSelection : GameObjectList
         }
     }
 
+
+
     protected void KeyboardCharacterSelection(InputHelper inputHelper)
     {
         //handle keyboard input/interact button for each joined player, independant of in which playerborder it fits.
@@ -184,6 +248,27 @@ class CharacterSelection : GameObjectList
         }
     }
 
+
+
+
+    // if the controller is present in the dictionary (in other words: joined)
+    protected bool ControllerJoined(int player)
+    {
+
+        foreach (int controller in playerborder.Keys)
+        {
+            if (controller == player)
+            {
+                Console.WriteLine(player);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+
     //scrolling right through the selection is +1
     public void ChangeSpriteRight(AnimatedGameObject obj, int animationIndex, int index)
     {
@@ -196,6 +281,8 @@ class CharacterSelection : GameObjectList
         borderSprites[index].GetColor = lockInColor[(characterSelectIndex[index] - 1) * 2];
     }
 
+
+
     //scrolling left through the selection is -1
     public void ChangeSpriteLeft(AnimatedGameObject obj, int animationIndex, int index)
     {
@@ -206,6 +293,10 @@ class CharacterSelection : GameObjectList
         obj.PlayAnimation("maiden" + characterSelectIndex[index].ToString());
         borderSprites[index].GetColor = lockInColor[(characterSelectIndex[index] - 1) * 2];
     }
+
+
+
+
 
     //Checks if it is possible to lock in
     public bool CheckLockIn(int index)
@@ -221,52 +312,6 @@ class CharacterSelection : GameObjectList
         return true;
     }
 
-    public void JoinPlayer(int controlsnr)
-    {
-            //make and load in the animations
-            characterSprites[playersjoined] = new AnimatedGameObject(2);
-            characterSprites[playersjoined].LoadAnimation("Assets/Sprites/Character selection/shieldmaiden_default", "maiden1", true);
-            characterSprites[playersjoined].LoadAnimation("Assets/Sprites/Character selection/shieldmaiden_blue", "maiden2", true);
-            characterSprites[playersjoined].LoadAnimation("Assets/Sprites/Character selection/shieldmaiden_green", "maiden3", true);
-            characterSprites[playersjoined].LoadAnimation("Assets/Sprites/Character selection/shieldmaiden_orange", "maiden4", true);
-
-            //position of the sprites
-            characterSprites[playersjoined].Position = new Vector2(borderSprites[playersjoined].Position.X + borderSprites[playersjoined].Width / 2, borderSprites[playersjoined].Position.Y + 100);
-            Add(characterSprites[playersjoined]);
-
-            //play all the different animations
-            characterSprites[playersjoined].PlayAnimation("maiden" + (playersjoined + 1));
-
-            //Add the index number of the selected animation
-            characterSelectIndex[playersjoined] = playersjoined+1;
-
-            //Change color of background accordingly to the playing animation
-            borderSprites[playersjoined].GetColor = lockInColor[(characterSelectIndex[playersjoined] - 1) * 2];
-
-            //Place the ready sprite
-            readySprite[playersjoined] = new AnimatedGameObject(2);
-            readySprite[playersjoined].Position = new Vector2(borderSprites[playersjoined].Position.X + borderSprites[playersjoined].Width / 2, borderSprites[playersjoined].Position.Y + borderSprites[playersjoined].Height / 7 * 6);
-            readySprite[playersjoined].LoadAnimation("Assets/Sprites/Character selection/Ready-not", "notReady", true);
-            readySprite[playersjoined].LoadAnimation("Assets/Sprites/Character selection/Ready!", "Ready", true);
-            readySprite[playersjoined].PlayAnimation("notReady");
-            Add(readySprite[playersjoined]);
-
-            
-            //link the controlnumber to the bordernumber
-            playerborder.Add(controlsnr, this.playersjoined); //playersjoined is the same as the border number in this method
-
-            //load in Controls  Sprite
-            if(controlsnr <= 1) //0 and 1 is keyboard
-            controlSprites[playersjoined] = new SpriteGameObject("Assets/Sprites/Character selection/ControllerParchment/KeyboardControls2-2long400", 2);
-            if(controlsnr >= 2) //2 to 5 is xbox
-            controlSprites[playersjoined] = new SpriteGameObject("Assets/Sprites/Character selection/ControllerParchment/XboxControlled1long3-400", 2);
-
-            controlSprites[playersjoined].Position = new Vector2(GameEnvironment.Screen.X / 4 * playersjoined + 40, 450);
-            Add(controlSprites[playersjoined]);
-
-            playersjoined++;
-            
-    }
 
     protected void LockinPlayer(int player)
     {
@@ -286,31 +331,25 @@ class CharacterSelection : GameObjectList
     }
 
 
+
     //Checks if all the players are locked in with their character.
     public bool AllReadyCheck()
     {
+       
         for (int i = 0; i < playerborder.Count; i++)
         {
             if (!lockInSprite[i])
             {
-                launchCount = 3;
+                launchCount = 2;
                 return false;
             }
         }
-        return true;
+        if (playerborder.Count >= 2)
+        {
+            return true;
+        }
+            return false;
     }
 
-    protected bool ControllerJoined(int player)
-    {
-        // if the controller is present in the dictionary (in other words: joined), handle the input
-        foreach (int controller in playerborder.Keys)
-        {
-            if (controller == player)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
 }
 
