@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 abstract partial class Character : AnimatedGameObject
 {
     // variables for Timers
-    private Timer deathTimer, reviveTimer, stepSoundTimer;
+    private Timer deathTimer, reviveTimer, stepSoundTimer, hitTimer;
     // Dictionary for SFX paths
     protected Dictionary<string, string> characterSFX;
     // attributes for the character
@@ -18,7 +18,6 @@ abstract partial class Character : AnimatedGameObject
     // Vector2s for startposition, movementspeed and icespeed
     protected Vector2 startPosition, movementSpeed, iceSpeed;
     protected int playerNumber, relativePlayerNumber;
-    protected float hitCounter, hitTicks;
     protected bool playerControlled = true, hasAKey = false;
     protected Vector2 walkingdirection;
     protected BaseAI AI;
@@ -48,13 +47,13 @@ abstract partial class Character : AnimatedGameObject
             IsExpired = true
         };
         reviveTimer = new Timer(3);
+        hitTimer = new Timer(0.5f);
+        hitTimer.IsExpired = true;
         // Define speeds on ice and land
         this.iceSpeed = new Vector2(0, 0);
         this.movementSpeed = new Vector2(4, 4);
         // Make a new AI
         AI = new BaseAI(this, 200F, currentLevel, false, 1, 700);
-        this.hitCounter = 0;
-        this.hitTicks = 0;
         this.playerNumber = playerNumber;
         relativePlayerNumber = playerNumber;
 
@@ -128,19 +127,15 @@ abstract partial class Character : AnimatedGameObject
                 weapon.SwordDirectionChecker(position - previousPosition);
             }
             
-            if (hitCounter >= 0)
+            //When a character takes damage, let the character blink as an indication.
+            if (!hitTimer.IsExpired)
             {
-                if (hitTicks >= 4)
-                {
-                    hitTicks = 0;
-                    Visible = !Visible;
-                }
-                else
-                    hitTicks++;
-                hitCounter -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                Visible = !Visible;
+                hitTimer.Update(gameTime);
             }
             else
                 Visible = true;
+
             // Checks if the character is on ice
             IsOnIceChecker();
             base.Update(gameTime);
@@ -307,11 +302,10 @@ abstract partial class Character : AnimatedGameObject
         if (this.attributes.HP < 0)
         {
             this.attributes.HP = 0;
+            hitTimer.IsExpired = true;
         }
         else
-        {
-            hitCounter = 0.5f;
-        }
+            hitTimer.Reset();
     }
     /// <summary>
     /// Method that plays a sound effect from the SFX dictionary
