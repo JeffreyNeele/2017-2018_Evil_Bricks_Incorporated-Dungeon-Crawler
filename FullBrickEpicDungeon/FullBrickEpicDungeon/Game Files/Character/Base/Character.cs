@@ -50,7 +50,6 @@ abstract partial class Character : AnimatedGameObject
         AI = new BaseAI(this, 200F, currentLevel, false, 1, 700);
         this.hitCounter = 0;
         this.hitTicks = 0;
-
         this.playerNumber = playerNumber;
         relativePlayerNumber = playerNumber;
         this.xboxControlled = xboxControlled;

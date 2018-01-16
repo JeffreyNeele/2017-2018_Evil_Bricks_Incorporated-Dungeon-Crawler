@@ -29,19 +29,21 @@ class Healthbar : SpriteGameObject
     public override void Update(GameTime gameTime)
     {
         currentHealth = Owner.Attributes.HP;
-        if (currentHealth >= 0)
+        if (currentHealth > 0)
         {
             healthBarPosition = Owner.Position + healthBarOffset;           
             healthBarRectangle = new Rectangle((int)healthBarPosition.X, (int)healthBarPosition.Y, currentHealth, healthTexture.Height);
-            base.Update(gameTime);
         }
+        base.Update(gameTime);
     }
 
     // draws the healthbar at the desired location
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(healthTexture, healthBarPosition, healthBarRectangle, healthColor);
-
+        if (currentHealth > 0)
+        {
+            spriteBatch.Draw(healthTexture, healthBarPosition, healthBarRectangle, healthColor);
+        }
         base.Draw(gameTime, spriteBatch);
     }
 
