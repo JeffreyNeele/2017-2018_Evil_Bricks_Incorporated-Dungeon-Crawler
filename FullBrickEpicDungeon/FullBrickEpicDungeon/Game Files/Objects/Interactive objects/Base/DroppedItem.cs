@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
-// Class for defining a dropped item that is on the ground, takes the item itself as a property.
+/// <summary>
+/// Class for defining a dropped item that is on the ground, takes the item itself as a property.
+/// </summary>
 class DroppedItem : InteractiveObject
 {
     GameObject item;
