@@ -5,8 +5,6 @@ using System.IO;
 
 partial class Level : GameObjectList
 {
-    GameObjectGrid tileField; //door wordt hier ook aan toegevoegd, daarom moet hij voor de volledige klasse beschikbaar zijn
-
     // Method that glues all other load methods together and checks which parts of the files it should pass to these methods
     public void LoadFromFile()
     {
@@ -106,17 +104,17 @@ partial class Level : GameObjectList
             }
             if(splitArray[0] == "TRAPDOOR")
             {
-                Trapdoor trapdoor = new Trapdoor(TileType.Trapdoor, "Assets/Sprites/InteractiveObjects/NextLevelCombined@2", "Trapdoor", 0);
+                Trapdoor trapdoor = new Trapdoor("Assets/Sprites/InteractiveObjects/NextLevelCombined@2", "Trapdoor", 0);
                 trapdoor.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
                 trapdoor.Objectnumber = int.Parse(splitArray[3]);
                 objectList.Add(trapdoor);
             }
             if(splitArray[0] == "DOOR")
             {
-                Door door = new Door(TileType.DoorTile, "Assets/Sprites/Tiles/TileDoorFront@2", "Door", 0);
+                Door door = new Door("Assets/Sprites/Tiles/TileDoorFront@2", "Door", 0);
                 door.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
                 door.Objectnumber = int.Parse(splitArray[3]);
-                tileField.Add(door, (int)door.Position.X/100, (int)door.Position.Y/100);
+                levelTileField.Add(door, (int)door.Position.X/100, (int)door.Position.Y/100);
             }
             if (splitArray[0] == "REDKEY")
             {
