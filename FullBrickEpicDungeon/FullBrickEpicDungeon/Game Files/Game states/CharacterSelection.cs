@@ -302,20 +302,6 @@ class CharacterSelection : GameObjectList
     }
 
 
-    /*       string playerColor;
-        switch (playerNumber)
-        {
-            case 1: playerColor = "default";
-                break;
-            case 2: playerColor = "blue";
-                break;
-            case 3: playerColor = "green";
-                break;
-            case 4: playerColor = "orange";
-                break;
-            default:
-                throw new IndexOutOfRangeException("playerNumber was not between 1 and 4, the given number was: " + playerNumber);
-        }*/ //gekopieerd uit Shieldmaiden loading deel. De playernumber staat in de txt momenteel. De juiste toetsen moeten dus aan de juiste kleur worden verbonden.
 
 
 
