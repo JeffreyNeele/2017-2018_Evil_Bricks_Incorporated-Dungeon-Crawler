@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using System.IO;
 
+/// <summary>
+/// Class that loads the level
+/// </summary>
 partial class Level : GameObjectList
 {
-    // Method that glues all other load methods together and checks which parts of the files it should pass to these methods
+    /// <summary>
+    /// Method that loads everything from a file with the name level + levelindex 
+    /// </summary>
     public void LoadFromFile()
     {
         // Define a list for all information in the file
@@ -69,24 +74,32 @@ partial class Level : GameObjectList
         }
     }
 
-    //Loads level information
+    /// <summary>
+    /// Loads the level information
+    /// </summary>
+    /// <param name="informationStringList">given string list that corresponds to the level information</param>
     protected void LevelInformationLoader(List<string> informationStringList)
     {
         this.id = "LEVEL_" + informationStringList[0];
     }
 
-    // Loads Characters at their appropiate position, as well as interactive objects
+    /// <summary>
+    /// Loads things that aren't tiles at their correct positions
+    /// </summary>
+    /// <param name="positionStringList">The given list of strings by the main method</param>
     protected void LevelPositionLoader(List<string> positionStringList)
     {
         for (int i = 0; i < positionStringList.Count; i++)
         {
-            // Split the current line
             string[] splitArray = positionStringList[i].Split(' ');
+            // All the code blocks below check what object needs to be loaded, loads them in, and then assigns the correct values that are in the file to them
             if(splitArray[0] == "SHIELDMAIDEN")
             {
                 Shieldmaiden shieldmaiden = new Shieldmaiden(int.Parse(splitArray[3]), this);
-                if(int.Parse(splitArray[3]) > FullBrickEpicDungeon.DungeonCrawler.numberOfPlayers)
+                // If there are no more real players left make the Character an AI
+                if(int.Parse(splitArray[3]) > numberOfPlayers)
                 {
+                    shieldmaiden.XBOXcontrolled = false; // sets the xbox controls to true or false, currently false
                     shieldmaiden.PlayerControlled = false;
                 }
                 shieldmaiden.StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
@@ -104,28 +117,36 @@ partial class Level : GameObjectList
             }
             if(splitArray[0] == "TRAPDOOR")
             {
-                Trapdoor trapdoor = new Trapdoor("Assets/Sprites/InteractiveObjects/NextLevelCombined@2", "Trapdoor", 0);
-                trapdoor.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
-                trapdoor.Objectnumber = int.Parse(splitArray[3]);
+                Trapdoor trapdoor = new Trapdoor("Assets/Sprites/InteractiveObjects/NextLevelCombined@2", "Trapdoor", 0)
+                {
+                    Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
+                    Objectnumber = int.Parse(splitArray[3])
+                };
                 objectList.Add(trapdoor);
             }
             if(splitArray[0] == "DOOR")
             {
-                Door door = new Door("Assets/Sprites/Tiles/TileDoorFront@2", "Door", 0);
-                door.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
-                door.Objectnumber = int.Parse(splitArray[3]);
+                Door door = new Door("Assets/Sprites/Tiles/TileDoorFront@2", "Door", 0)
+                {
+                    Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
+                    Objectnumber = int.Parse(splitArray[3])
+                };
                 levelTileField.Add(door, (int)door.Position.X/100, (int)door.Position.Y/100);
             }
             if (splitArray[0] == "REDKEY")
             {
-                KeyItem redkey = new KeyItem("Assets/Sprites/InteractiveObjects/paladinkey1", "redkey", 0);
-                redkey.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
+                KeyItem redkey = new KeyItem("Assets/Sprites/InteractiveObjects/paladinkey1", "redkey", 0)
+                {
+                    Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
+                };
                 objectList.Add(redkey);
             }
             if (splitArray[0] == "REDLOCK")
             {
-                Lock redlock = new Lock("Assets/Sprites/InteractiveObjects/PaladinLock", "redlock", 0);
-                redlock.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
+                Lock redlock = new Lock("Assets/Sprites/InteractiveObjects/PaladinLock", "redlock", 0)
+                {
+                    Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
+                };
                 objectList.Add(redlock);
             }
 
@@ -163,7 +184,11 @@ partial class Level : GameObjectList
         }
     }
 
-    // Method that loads tiles based on an ID list seperated by commas e.g. 3,4,4,5,3,4
+    /// <summary>
+    /// Method that loads all tiles into the tilefield
+    /// </summary>
+    /// <param name="tileStringList">string list with tile information given from the main method</param>
+    /// <returns></returns>
     protected GameObjectGrid LoadTiles(List<string> tileStringList)
     {
         // Throw an exception if the given Tile string list is null

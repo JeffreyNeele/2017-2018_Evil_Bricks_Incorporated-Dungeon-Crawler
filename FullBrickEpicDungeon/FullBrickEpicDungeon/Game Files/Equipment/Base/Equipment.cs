@@ -5,6 +5,12 @@ abstract class Equipment : SpriteGameObject
 {
     private int movementspeedincrease, armour, goldworth; 
 
+    /// <summary>
+    /// Class that defines an Equipment item
+    /// </summary>
+    /// <param name="assetName">asset name</param>
+    /// <param name="id">id for this piece of equipment</param>
+    /// <param name="layer">layer this equipment should be drawn on</param>
     protected Equipment(string assetName, string id, int layer = 0) : base(assetName, layer, id)
     {
 
@@ -14,7 +20,10 @@ abstract class Equipment : SpriteGameObject
     {
 
     }
-    // Equipment has a movementspeedincrease, armour and goldworth value, furthermore it has a string but that's about it. Equipment names will derive from the id
+
+    /// <summary>
+    /// Properties for the equipment
+    /// </summary>
     public int MovementSpeedIncrease
     {
         get { return movementspeedincrease; }

@@ -1,6 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
+﻿using System;
 using Microsoft.Xna.Framework;
 
 abstract class Weapon : AnimatedGameObject
@@ -169,24 +167,25 @@ abstract class Weapon : AnimatedGameObject
             switch (AttackDirection)
             {
                 case "Up":
-                    Position = new Vector2(Owner.Position.X + 15, Owner.Position.Y - 12);
+                    Position = new Vector2(Owner.Position.X, Owner.Position.Y - 30);
                     PlayAnimation("attack_up");
                     owner.PlayAnimation("attack_upwards");
                     break;
                 case "Down":
-                    Position = new Vector2(Owner.Position.X + 15, Owner.Position.Y - 30);
+                    Position = new Vector2(Owner.Position.X, Owner.Position.Y + 30);
                     PlayAnimation("attack_down");
                     owner.PlayAnimation("attack_downwards");
                     break;
                 case "Left":
-                    Position = new Vector2(Owner.Position.X, Owner.Position.Y - 25);
+                    Position = new Vector2(Owner.Position.X - 30, Owner.Position.Y - 10);
                     PlayAnimation("attack_left");
                     owner.PlayAnimation("attack_fromleft");
                     break;
                 case "Right":
-                    Position = new Vector2(Owner.Position.X + 30, Owner.Position.Y - 25);
+                    Position = new Vector2(Owner.Position.X + 30, Owner.Position.Y - 10);
                     PlayAnimation("attack_right");
                     owner.PlayAnimation("attack_fromright");
+                    owner.Mirror = false;
                     break;
             }
         }

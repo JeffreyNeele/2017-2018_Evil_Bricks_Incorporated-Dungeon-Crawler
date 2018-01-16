@@ -5,16 +5,25 @@ using Microsoft.Xna.Framework.Graphics;
 
 class PlayingState : IGameLoopObject 
 {
+    // level list
     protected List<Level> levelList;
+    // current level that is being used
     protected int currentLevelIndex;
 
+    /// <summary>
+    /// A state that defines the playing state of the game
+    /// </summary>
     public PlayingState()
     {
         currentLevelIndex = 0;
         levelList = new List<Level>();
+        // Loads the levels from all level files
         LoadLevels(4);
     }
 
+    /// <summary>
+    /// Handles input, making it able for the player to pause the game
+    /// </summary>
     public void HandleInput(InputHelper inputHelper)
     {
         CurrentLevel.HandleInput(inputHelper);
@@ -44,6 +53,10 @@ class PlayingState : IGameLoopObject
         CurrentLevel.Draw(gameTime, spriteBatch);
     }
 
+    /// <summary>
+    /// Loads the levels into the level list
+    /// </summary>
+    /// <param name="levelAmount">total amount of levels</param>
     public void LoadLevels(int levelAmount)
     {
         for(int x = 1; x <= levelAmount; x++)
@@ -58,7 +71,8 @@ class PlayingState : IGameLoopObject
         CurrentLevel.Reset();
         if (currentLevelIndex >= levelList.Count - 1)
         {
-            // GameEnvironment.GameStateManager.SwitchTo aka switch to another state if all levels are finished
+            // if all the levels are over switch to the title state
+            GameEnvironment.GameStateManager.SwitchTo("titleMenu");
         }
         else
         {
@@ -66,7 +80,7 @@ class PlayingState : IGameLoopObject
         }
     }
 
-    
+    // returns the current level being used in the state
     public Level CurrentLevel
     {
         get { return levelList[currentLevelIndex]; }

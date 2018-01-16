@@ -8,11 +8,12 @@ class CutsceneState : IGameLoopObject
     int currentCutscene = 0;
 
 
-
+/// <summary>
+/// State for cutscenes
+/// </summary>
 public CutsceneState()
     {
         Cutscene cutscene = new Cutscene();
-        cutscene.Play_Cutscene(currentCutscene); //zorgt dat de juiste cutscene wordt afgespeeld
         currentCutscene += 1;
         GameEnvironment.GameStateManager.SwitchTo("playingState");
     }

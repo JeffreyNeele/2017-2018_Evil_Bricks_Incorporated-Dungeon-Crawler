@@ -5,9 +5,14 @@ class SettingsState : IGameLoopObject
 {
     private Texture2D settingsBackground;
     protected Button SFX, music, back;
+    /// <summary>
+    /// Class that displays a settings screen.
+    /// </summary>
     public SettingsState()
     {
+        // Load the background
         settingsBackground = GameEnvironment.AssetManager.GetSprite("Assets/Sprites/Settings/settingsbackground");
+        // Load the buttons for the SFX toggler, music toggler and the back button.
         SFX = new Button("Assets/Sprites/Settings/sfxbutton@2");
         SFX.Position = new Vector2(GameEnvironment.Screen.X / 2 - SFX.Width / 2, 250);
         music = new Button("Assets/Sprites/Settings/musicbutton@2");
@@ -20,7 +25,9 @@ class SettingsState : IGameLoopObject
     {
 
     }
-
+    /// <summary>
+    /// Draws the settings menu
+    /// </summary>
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         spriteBatch.Draw(settingsBackground, Vector2.Zero, Color.White);
@@ -29,16 +36,22 @@ class SettingsState : IGameLoopObject
         back.Draw(gameTime, spriteBatch);
     }
 
+    /// <summary>
+    /// Handles input for the settings menu
+    /// </summary>
     public void HandleInput(InputHelper inputHelper)
     {
+        // handle input for the buttons
         SFX.HandleInput(inputHelper);
         music.HandleInput(inputHelper);
         back.HandleInput(inputHelper);
+        // If the back button is pressed return to the title menu
         if (back.Pressed)
         {
             GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
             GameEnvironment.GameStateManager.SwitchTo("titleMenu");
         }
+        // if the SFX button is pressed, switch to the opposite sprite and set the correct global SFX variable
         if (SFX.Pressed)
         {
             GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
@@ -54,7 +67,7 @@ class SettingsState : IGameLoopObject
             }
                
         }
-
+        // same thing for the music button
         if (music.Pressed)
         {
             GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
@@ -71,6 +84,9 @@ class SettingsState : IGameLoopObject
         }
     }
 
+    /// <summary>
+    /// Resets thed settings menu
+    /// </summary>
     public void Reset()
     {
         SFX.Reset();

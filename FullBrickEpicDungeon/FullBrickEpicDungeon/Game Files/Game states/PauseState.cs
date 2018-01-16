@@ -13,12 +13,16 @@ class PauseState : IGameLoopObject
     protected Button continueButton, quitButton;
     protected Texture2D overlay;
 
+    /// <summary>
+    /// Class that defines a Pause state
+    /// </summary>
     public PauseState()
     {
         // find the playing state
         playingState = GameEnvironment.GameStateManager.GetGameState("playingState");
 
         overlay = GameEnvironment.AssetManager.GetSprite("Assets/Sprites/Paused/overlay");
+
         // make buttons for the different assignments, eg return to menu
         continueButton = new Button("Assets/Sprites/Paused/Continue", 99);
         continueButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - continueButton.Width / 2, 250);
@@ -42,7 +46,9 @@ class PauseState : IGameLoopObject
         quitButton.Draw(gameTime, spriteBatch);
     }
 
-    // handles input
+    /// <summary>
+    /// Handles input for the pause state
+    /// </summary>
     public void HandleInput(InputHelper inputHelper)
     {
         continueButton.HandleInput(inputHelper);

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
 class LittlePenguin : AImonster
@@ -107,7 +103,7 @@ class LittlePenguin : AImonster
             }
 
         Vector2 differencePos = targetPos - position;
-        movementVector = getMovementVector(differencePos);
+        movementVector = GetMovementVector(differencePos);
     }
 
     /// <summary>
@@ -115,7 +111,7 @@ class LittlePenguin : AImonster
     /// </summary>
     /// <param name="difference">Amount of distance between the target and the penguin</param>
     /// <returns></returns>
-    public Vector2 getMovementVector(Vector2 difference)
+    public Vector2 GetMovementVector(Vector2 difference)
     {
         totalDistance = (float)Math.Sqrt(difference.X * difference.X + difference.Y * difference.Y);
         float scaling = slideSpeed / totalDistance;

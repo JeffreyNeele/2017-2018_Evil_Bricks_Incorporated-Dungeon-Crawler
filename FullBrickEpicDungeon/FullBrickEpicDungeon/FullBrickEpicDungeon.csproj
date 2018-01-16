@@ -72,10 +72,9 @@
     <Compile Include="Game Files\BaseAttributes.cs" />
     <Compile Include="Game Files\Character\Base\CharacterInput.cs" />
     <Compile Include="Game Files\Character\Types\Shieldmaiden.cs" />
-    <Compile Include="Game Files\Cutscenes\Type\1LarryShits.cs" />
     <Compile Include="Game Files\Cutscenes\Base\Cutscene.cs" />
+    <Compile Include="Game Files\Cutscenes\Base\CutsceneManager.cs" />
     <Compile Include="Game Files\Equipment\Base\Equipment.cs" />
-    <Compile Include="Game Files\Equipment\ShieldMaiden\IronArmour.cs" />
     <Compile Include="Game Files\Game states\CharacterSelection.cs" />
     <Compile Include="Game Files\Game states\ConversationState.cs" />
     <Compile Include="Game Files\Game states\CutsceneState.cs" />
@@ -83,8 +82,7 @@
     <Compile Include="Game Files\Game states\PlayingState.cs" />
     <Compile Include="Game Files\Game states\SettingsState.cs" />
     <Compile Include="Game Files\Game states\TitleMenu.cs" />
-    <Compile Include="Game Files\HUD\Conversation\Conversation.cs" />
-    <Compile Include="Game Files\Objects\Interactive objects\Base\DroppedItem.cs" />
+    <Compile Include="Game Files\HUD\Conversation.cs" />
     <Compile Include="Game Files\Objects\Interactive objects\Base\InteractiveObject.cs" />
     <Compile Include="Game Files\Objects\Interactive objects\Types\KeyItem.cs" />
     <Compile Include="Game Files\Objects\Interactive objects\Types\Lock.cs" />
@@ -92,8 +90,7 @@
     <Compile Include="Game Files\Objects\Interactive objects\Types\Handle.cs" />
     <Compile Include="Game Files\Objects\Openable objects\Types\Door.cs" />
     <Compile Include="Game Files\Objects\Openable objects\Types\Trapdoor.cs" />
-    <Compile Include="Game Files\HUD\Healthbars\Healthbar.cs" />
-    <Compile Include="Game Files\HUD\PlayerInformation\PlayerInformation.cs" />
+    <Compile Include="Game Files\HUD\Healthbar.cs" />
     <Compile Include="Game Files\Level\LevelGameLoop.cs" />
     <Compile Include="Game Files\Level\LevelLoading.cs" />
     <Compile Include="Game Files\Level\LevelMain.cs" />

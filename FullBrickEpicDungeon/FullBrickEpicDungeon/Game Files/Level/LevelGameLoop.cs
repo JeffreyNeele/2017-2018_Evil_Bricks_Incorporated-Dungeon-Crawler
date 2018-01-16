@@ -1,9 +1,9 @@
-﻿
-using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+/// <summary>
+/// Game loop for the level
+/// </summary>
 partial class Level : GameObjectList
 {
     public override void Update(GameTime gameTime)
