@@ -1,6 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
+﻿using System;
 using Microsoft.Xna.Framework;
 
 abstract class Weapon : AnimatedGameObject
