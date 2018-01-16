@@ -71,7 +71,7 @@ class LittlePenguin : AImonster
                 movementVector = new Vector2(0, 0);
                 Position = previousPos;
                 idleCounter = 3;
-                AI.TargetRandomObject(50);
+                // TargetRandomObject (currently removed but might add back later, but as a local method?
             }
         }
     }

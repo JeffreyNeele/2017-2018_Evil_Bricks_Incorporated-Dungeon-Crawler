@@ -35,9 +35,10 @@ abstract partial class Character : AnimatedGameObject
             { "switch_wrong", "Assets/SFX/switch_wrong" }
         };
         attributes = new BaseAttributes();
-        deathTimer = new Timer(10);
-        deathTimer.Reset();
-        deathTimer.IsPaused = true;
+        deathTimer = new Timer(1)
+        {
+            IsPaused = false
+        };
         stepSoundTimer = new Timer(0.5F)
         {
             IsExpired = true

@@ -21,7 +21,6 @@ abstract class Weapon : AnimatedGameObject
     /// Creates a weapon for a character
     /// </summary>
     /// <param name="owner">The owner of the weapon</param>
-    /// <param name="classType">The classtype the weapon belongs to</param>
     /// <param name="id">the id of the weapon object in the gameworld</param>
     /// <param name="assetName">Give the path where to find the asset in the content</param>
     protected Weapon(Character owner, string id, string assetName): base(1, id)

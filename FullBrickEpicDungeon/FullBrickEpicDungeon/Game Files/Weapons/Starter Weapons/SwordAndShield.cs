@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 class SwordAndShield : Weapon
 {
-    //ShieldBashAbility abilityMain;
+    /// <summary>
+    /// Main weapon for the ShieldMaiden
+    /// </summary>
+    /// <param name="owner"></param>
     public SwordAndShield(Character owner) : base(owner, "Swordandshield", "putassetnamehere")
     {
         AttackDamage = 10;

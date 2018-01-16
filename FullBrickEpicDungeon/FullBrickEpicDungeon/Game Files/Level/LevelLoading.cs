@@ -201,7 +201,6 @@ partial class Level : GameObjectList
             {
                 
                 Tile newtile;
-                newtile = null; //moet, anders error bij case 999 tileField.Add(newtile, x, y)
                 switch (IDlist[x, y])
                 {
                     case 1:
