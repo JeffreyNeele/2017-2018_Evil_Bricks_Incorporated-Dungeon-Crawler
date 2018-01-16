@@ -1,5 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 /// <summary>
@@ -9,13 +7,19 @@ class SwordAndShield : Weapon
 {
     /// <summary>
     /// </summary>
-    /// <param name="owner">Defines the owner of the weapon</param>
+    /// <param name="owner">Character that owns this weapon</param>
     public SwordAndShield(Character owner) : base(owner, "Swordandshield", "putassetnamehere")
     {
+        // properties for attack and amount of gold the weapon costs
         AttackDamage = 10;
-        GoldWorth = 100;
+        GoldWorth = 0;
 
-        //Defines the id for the ability animations
+        LoadAnimation("Assets/Sprites/Weapons/SwordUp", "attack_up", false);
+        LoadAnimation("Assets/Sprites/Weapons/SwordDown", "attack_down", false);
+        LoadAnimation("Assets/Sprites/Weapons/SwordLeft", "attack_left", false);
+        LoadAnimation("Assets/Sprites/Weapons/SwordRight", "attack_right", false);
+
+        // IDs for the abilities this weapon has
         idBaseAA = "SwordAndShieldAA";
         idMainAbility = "SwordAndShieldMainAbility";
         idSpecialAbility = "SwordAndShieldSpecialAbility";
@@ -27,10 +31,11 @@ class SwordAndShield : Weapon
             PushFallOff = new Vector2(2, 0),
             PushTimeCount = 8
         };
-
         //Basic ability of the weapon: ShieldBash
         mainAbility = new ShieldBashAbility(owner, AttackDamage * 4, 8);
 
+        AttackDirection = "Up";
+        PlayAnimation("attack_up");
     }
 
     //Method that checks collision for the mainAbility with the monsters
@@ -45,7 +50,6 @@ class SwordAndShield : Weapon
                 hit = true;
             }
         }
-
         if (hit)
             prevAttackHit = true;
         else

@@ -102,10 +102,11 @@ class BaseAI
                     // attack logic for Character AI
                     else
                     {
-                        isAttacking = true;
+                        
                         // cast both the owner and target so we can access the Character / Monster properties
                         Character owner_cast = owner as Character;
                         Monster target_cast = targetedObject as Monster;
+                        owner_cast.CurrentWeapon.IsAttacking = true;
                         GameObjectList monsterList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList;
                         // if our ability is not on cooldown we use it.
                         if (!owner_cast.CurrentWeapon.AbilityMain.IsOnCooldown)

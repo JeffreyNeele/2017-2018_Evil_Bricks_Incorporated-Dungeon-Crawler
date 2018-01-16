@@ -123,6 +123,7 @@ abstract partial class Character : AnimatedGameObject
                     stepSoundTimer.Reset();
                 }
                 PlayAnimationDirection(position - previousPosition);
+                weapon.SwordDirectionChecker(position - previousPosition);
             }
             
             if (hitCounter >= 0)
@@ -156,6 +157,10 @@ abstract partial class Character : AnimatedGameObject
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         healthbar.Draw(gameTime, spriteBatch);
+        if (weapon.IsAttacking)
+        {
+            weapon.Draw(gameTime, spriteBatch);
+        }
         base.Draw(gameTime, spriteBatch);
     }
 
@@ -246,7 +251,7 @@ abstract partial class Character : AnimatedGameObject
             (int)(this.BoundingBox.Y + 0.9 * Height), (int)(this.Width / 3), (Height / 10));
         foreach (Tile tile in Field.Objects)
         {
-            if (tile.IsIce && tile.BoundingBox.Intersects(feetBoundingBox))
+            if (tile.Type == TileType.Ice && tile.BoundingBox.Intersects(feetBoundingBox))
             {
                 isOnIce = true;
                 return;

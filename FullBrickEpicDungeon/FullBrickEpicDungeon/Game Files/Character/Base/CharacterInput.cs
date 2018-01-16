@@ -17,12 +17,12 @@ abstract partial class Character : AnimatedGameObject
         {
             Vector2 previousPosition = this.position;
             Vector2 previousWalkingDirection = new Vector2(0, 0);
-            if(this.xboxControlled && !inputHelper.ControllerConnected(relativePlayerNumber))
+            if (this.xboxControlled && !inputHelper.ControllerConnected(relativePlayerNumber))
             {
                 FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
                 // will replace with another gamestate that tells you to reconnect your controller
                 GameEnvironment.GameStateManager.SwitchTo("pauseState");
-            } 
+            }
 
             if (!IsDowned && !isOnIce)
             {
@@ -37,7 +37,7 @@ abstract partial class Character : AnimatedGameObject
                 }
 
                 this.position += walkingdirection;
-                
+
                 // Play walking SFX
                 if (walkingdirection != Vector2.Zero && stepSoundTimer.IsExpired)
                 {
@@ -46,6 +46,7 @@ abstract partial class Character : AnimatedGameObject
                 }
                 previousWalkingDirection = walkingdirection;
                 PlayAnimationDirection(walkingdirection);
+                weapon.SwordDirectionChecker(walkingdirection);
                 walkingdirection = Vector2.Zero;
                 base.HandleInput(inputHelper);
             }
@@ -76,7 +77,7 @@ abstract partial class Character : AnimatedGameObject
                 //Check if collision is comes from y value
                 this.position.X = previousPosition.X;
                 //if there still is collision, recreate old position and check for x value
-                if(!SolidCollisionChecker())
+                if (!SolidCollisionChecker())
                 {
                     this.position.X += previousWalkingDirection.X;
                     this.position.Y = previousPosition.Y;
@@ -96,15 +97,17 @@ abstract partial class Character : AnimatedGameObject
     {
         if (inputHelper.KeyPressed(keyboardControls[Keys.Q]))
         {
+            weapon.IsAttacking = true;
             this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
             if (weapon.PreviousAttackHit)
                 PlaySFX("attack_hit");
             else
                 PlaySFX("attack_miss");
 
-        } 
+        }
         if (inputHelper.KeyPressed(keyboardControls[Keys.R]))
         {
+            weapon.IsAttacking = true;
             if (!weapon.AbilityMain.IsOnCooldown)
             {
                 this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
@@ -164,7 +167,7 @@ abstract partial class Character : AnimatedGameObject
             walkingdirection = MovementVector(this.movementSpeed, 0);
         }
 
-        if (inputHelper.IsKeyDown(keyboardControls[Keys.E])) 
+        if (inputHelper.IsKeyDown(keyboardControls[Keys.E]))
         {
             InteractCollisionChecker();
         }
@@ -217,6 +220,7 @@ abstract partial class Character : AnimatedGameObject
                 //Attack and Main Ability
                 if (inputHelper.ButtonPressed(relativePlayerNumber, xboxControls[Buttons.A]))
                 {
+                    weapon.IsAttacking = true;
                     this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
                     if (weapon.PreviousAttackHit)
                         PlaySFX("attack_hit");
@@ -227,6 +231,7 @@ abstract partial class Character : AnimatedGameObject
                 {
                     if (!weapon.AbilityMain.IsOnCooldown)
                     {
+                        weapon.IsAttacking = true;
                         this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
                         PlaySFX("basic_ability");
                     }
@@ -291,7 +296,7 @@ abstract partial class Character : AnimatedGameObject
 
             }
         }
-        PlayAnimationDirection(iceSpeed);        
+        PlayAnimationDirection(iceSpeed);
     }
 
 
@@ -299,7 +304,7 @@ abstract partial class Character : AnimatedGameObject
     {
         GameObjectList playerList = GameWorld.Find("playerLIST") as GameObjectList;
         int targetPlayerNumber = this.playerNumber + 1;
-        for(int i = 1; i < 4; i++)
+        for (int i = 1; i < 4; i++)
         {
             if (targetPlayerNumber > 4)
             {
@@ -352,31 +357,39 @@ abstract partial class Character : AnimatedGameObject
     //when called with the walkingdirection, it plays the correct animation with the movement.
     public void PlayAnimationDirection(Vector2 walkingdirection)
     {
-        if (Math.Abs(walkingdirection.X) > Math.Abs(walkingdirection.Y))
+        if (!weapon.IsAttacking)
         {
-            if (walkingdirection.X > 0)
+            if (Math.Abs(walkingdirection.X) > Math.Abs(walkingdirection.Y))
             {
-                this.PlayAnimation("rightcycle");
-                this.Mirror = true;
+                if (walkingdirection.X > 0)
+                {
+                    this.PlayAnimation("rightcycle");
+                    this.Mirror = true;
+                }
+                else if (walkingdirection.X < 0)
+                {
+                    this.PlayAnimation("leftcycle");
+                    this.Mirror = false;
+                }
             }
-            else if (walkingdirection.X < 0)
+            else if (Math.Abs(walkingdirection.Y) > Math.Abs(walkingdirection.X))
             {
-                this.PlayAnimation("leftcycle");
-                this.Mirror = false;
+                if (walkingdirection.Y > 0)
+                {
+                    this.PlayAnimation("frontcycle");
+                }
+                else if (walkingdirection.Y < 0)
+                {
+                    this.PlayAnimation("backcycle");
+                }
             }
+            else
+                this.PlayAnimation("idle");
         }
-        else if (Math.Abs(walkingdirection.Y) > Math.Abs(walkingdirection.X))
-        {
-            if (walkingdirection.Y > 0)
-            {
-                this.PlayAnimation("frontcycle");
-            }
-            else if (walkingdirection.Y < 0)
-            {
-                this.PlayAnimation("backcycle");
-            }
-        }
-        else
-            this.PlayAnimation("idle");
+    }
+
+    public Vector2 WalkingDirection
+    {
+        get { return walkingdirection; }
     }
 }
