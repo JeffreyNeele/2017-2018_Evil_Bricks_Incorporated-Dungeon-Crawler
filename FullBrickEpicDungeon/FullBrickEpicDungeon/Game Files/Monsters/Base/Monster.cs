@@ -1,16 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-// NOTE: the gold attribute for the monster is seen as the amount of gold the player gets when it is defeated.
 abstract partial class Monster : AnimatedGameObject
 {
     protected BaseAttributes attributes, baseattributes;
     protected Level currentLevel;
     protected Vector2 startPosition;
+    // List for checking what players the monster last hit
     protected List<Character> playersHit;
+    // semi timer that checks if the monster should be flashing from taking damage
     protected float hitCounter;
+    // the ID of the current animation
     protected string idAnimation;
+    /// <summary>
+    /// Class that defines a simple monster that has no AI
+    /// </summary>
+    /// <param name="id">the ID of the monster</param>
+    /// <param name="currentLevel">current level the monster is in</param>
     public Monster(string id, Level currentLevel) : base(0, id)
     {
         this.currentLevel = currentLevel;
@@ -21,12 +27,16 @@ abstract partial class Monster : AnimatedGameObject
         idAnimation = "idle";
     }
 
-
+    /// <summary>
+    /// Updates the monster
+    /// </summary>
+    /// <param name="gameTime">current game time</param>
     public override void Update(GameTime gameTime)
     {
         if (!IsDead)
         {
             base.Update(gameTime);
+            // If the monster was hit, display a visual effect
             if (hitCounter >= 0)
             {
                 Visible = !Visible;
@@ -37,16 +47,17 @@ abstract partial class Monster : AnimatedGameObject
         }
         else
         {
+            // If the monster is dead, make it slowly fade and then remove it
             if (this.color.A - 10 < 0)
             {
                 GameObjectList monsterList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList;
                 monsterList.Remove(this);
             }
-                
             else
                 this.color.A -= 10;
         }
-
+        
+        // Check for attack collisions
         if(idAnimation == "attack")
         {
             if (!CurrentAnimation.AnimationEnded)
@@ -59,13 +70,19 @@ abstract partial class Monster : AnimatedGameObject
         }
     }
 
+    /// <summary>
+    /// Resets the Monster
+    /// </summary>
     public override void Reset()
     {
         this.position = startPosition;
         base.Reset();
     }
 
-    //Takes damage, HP can never be below 0 because of health bars
+    /// <summary>
+    /// Makes the monster take damage
+    /// </summary>
+    /// <param name="damage">amount of damage received</param>
     public void TakeDamage(int damage)
     {
         int takendamage = (damage - (int)(0.3F * this.attributes.Armour));
@@ -82,6 +99,9 @@ abstract partial class Monster : AnimatedGameObject
             hitCounter = 0.5f;
     }
 
+    /// <summary>
+    /// Attacks a player
+    /// </summary>
     public virtual void Attack()
     {
         playersHit.Clear();
@@ -89,7 +109,10 @@ abstract partial class Monster : AnimatedGameObject
         idAnimation = "attack";
     }
 
-    //Method for the attack of the monster
+    /// <summary>
+    /// If an attack hit a player, add this player to the recently damaged players and force it to take damage
+    /// </summary>
+    /// <param name="player">the player that was hit</param>
     protected virtual void AttackHit(Character player)
     {
         if (!playersHit.Contains(player))
@@ -98,7 +121,10 @@ abstract partial class Monster : AnimatedGameObject
             player.TakeDamage(attributes.Attack);
         }
     }
-
+    
+    /// <summary>
+    /// Checks if the monster (if it is currently playing the attack animation) hit a player
+    /// </summary>
     protected virtual void AnimationCheck()
     {
         GameObjectList players = currentLevel.GameWorld.Find("playerLIST") as GameObjectList;
@@ -108,7 +134,9 @@ abstract partial class Monster : AnimatedGameObject
                 AttackHit(player);
     }
 
-    // returns the base attributes of a monster
+    /// <summary>
+    /// Monster properties
+    /// </summary>
     public BaseAttributes Attributes
     {
         get { return attributes; }

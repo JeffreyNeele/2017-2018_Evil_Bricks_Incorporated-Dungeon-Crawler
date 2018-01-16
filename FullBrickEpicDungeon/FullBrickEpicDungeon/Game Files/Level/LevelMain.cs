@@ -4,10 +4,13 @@ using Microsoft.Xna.Framework;
 
 partial class Level : GameObjectList
 {
-    // Lists for items NOTE TO LEVEL PROGRAMMERS: do not remove these and make sure they are initialized before the monsters, players, objects etc.
     protected int levelIndex, numberOfPlayers;
     protected GameObjectList playerList, monsterList, objectList, projectileList;
     protected GameObjectGrid levelTileField;
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="levelIndex"></param>
     public Level(int levelIndex) : base(1)
     {
         numberOfPlayers = FullBrickEpicDungeon.DungeonCrawler.numberOfPlayers;

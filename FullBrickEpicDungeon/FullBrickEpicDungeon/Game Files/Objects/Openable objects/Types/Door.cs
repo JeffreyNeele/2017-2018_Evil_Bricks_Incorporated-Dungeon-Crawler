@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 class Door : OpenableObject
 {
-    public bool DoorOpen = false;
+    private bool DoorOpen = false;
     public Door(string assetname, string id, int sheetIndex) : base(TileType.DoorTile, assetname, id, sheetIndex)
     {
     }
@@ -34,5 +34,9 @@ class Door : OpenableObject
         }
     }
 
+    public bool IsOpen
+    {
+        get { return IsOpen; }
+    }
 }
 

@@ -251,7 +251,7 @@ abstract partial class Character : AnimatedGameObject
             (int)(this.BoundingBox.Y + 0.9 * Height), (int)(this.Width / 3), (Height / 10));
         foreach (Tile tile in Field.Objects)
         {
-            if (tile.IsIce && tile.BoundingBox.Intersects(feetBoundingBox))
+            if (tile.Type == TileType.Ice && tile.BoundingBox.Intersects(feetBoundingBox))
             {
                 isOnIce = true;
                 return;
