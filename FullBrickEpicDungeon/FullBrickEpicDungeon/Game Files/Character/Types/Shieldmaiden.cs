@@ -11,9 +11,11 @@ class Shieldmaiden : Character
         this.baseattributes.Armour = 50;
         this.baseattributes.Attack = 10;
         this.baseattributes.Gold = 0;
-        attributes = baseattributes;
+        attributes.HP = baseattributes.HP;
+        attributes.Armour = baseattributes.Armour;
+        attributes.Attack = baseattributes.Attack;
+        attributes.Gold = baseattributes.Gold;
         weapon = new SwordAndShield(this);
-        //Healthbar healthbar = new Healthbar(content, this.position);
         string playerColor;
         switch (playerNumber)
         {
