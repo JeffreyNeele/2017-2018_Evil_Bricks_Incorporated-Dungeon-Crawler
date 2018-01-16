@@ -36,6 +36,7 @@ abstract partial class Character : AnimatedGameObject
             { "switch_wrong", "Assets/SFX/switch_wrong" }
         };
         attributes = new BaseAttributes();
+        healthbar = new Healthbar(this);
         deathTimer = new Timer(1)
         {
             IsPaused = false
