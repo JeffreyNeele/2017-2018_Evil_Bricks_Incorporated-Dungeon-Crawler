@@ -10,7 +10,7 @@ class PlayingState : IGameLoopObject
 
     public PlayingState()
     {
-        currentLevelIndex = 0;
+        currentLevelIndex = 7;
         levelList = new List<Level>();
         LoadLevels(9);
     }
