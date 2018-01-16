@@ -3,7 +3,7 @@ using System;
 
 class Shieldmaiden : Character
 {
-    public Shieldmaiden(int playernr, Level currentLevel, int controlnr) : base(playernr, currentLevel, controlnr, ClassType.ShieldMaiden, "Shieldmaiden")
+    public Shieldmaiden(int maidennr, Level currentLevel, int controlnr) : base(maidennr, currentLevel, controlnr, ClassType.ShieldMaiden, "Shieldmaiden")
     {
         // Loads the idle animation
         // sets this characters base attributes, might be set in level later but for now it is in this constructors example.
@@ -15,7 +15,7 @@ class Shieldmaiden : Character
         weapon = new SwordAndShield(this);
         //Healthbar healthbar = new Healthbar(content, this.position);
         string playerColor;
-        switch (playernr)
+        switch (maidennr)
         {
             case 1: playerColor = "default";
                 break;
@@ -26,7 +26,7 @@ class Shieldmaiden : Character
             case 4: playerColor = "orange";
                 break;
             default:
-                throw new IndexOutOfRangeException("playerNumber was not between 1 and 4, the given number was: " + playernr);
+                throw new IndexOutOfRangeException("playerNumber was not between 1 and 4, the given number was: " + maidennr);
         }
 
         LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_" + playerColor, "idle", false);

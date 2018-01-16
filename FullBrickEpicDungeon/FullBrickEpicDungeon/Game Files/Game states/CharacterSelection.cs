@@ -25,6 +25,7 @@ class CharacterSelection : GameObjectList
     bool[] keyboardjoined = new bool[2];
     bool[] xboxjoined = new bool[4];
 
+
     
     //left in this is 1,2,3,4,5,6. (0,1 for keyboard, 2-5 for xbox. Dictionary translates to the number of the playerborder the player joined in.
     static Dictionary<int, int> playerborder = new Dictionary<int, int>();

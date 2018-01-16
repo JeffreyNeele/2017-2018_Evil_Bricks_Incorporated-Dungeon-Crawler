@@ -15,7 +15,7 @@ abstract partial class Character : AnimatedGameObject
     protected List<Equipment> inventory;
     protected Timer deathTimer, reviveTimer, stepSoundTimer;
     protected Vector2 startPosition, movementSpeed, iceSpeed;
-    protected int playerNumber, relativePlayerNumber;
+    protected int playerNumber, controllernumber;
     protected float hitCounter;
     protected Dictionary<Buttons, Buttons> xboxControls;
     protected Dictionary<string, string> characterSFX;
@@ -27,7 +27,7 @@ abstract partial class Character : AnimatedGameObject
 
 
     //Constructor: sets up the controls given to the constructor for each player (xbox or keyboard)
-    protected Character(int playernr, Level currentLevel, int controlnr, ClassType classType, string id = "") : base(0, id)
+    protected Character(int maidennr, Level currentLevel, int controlnr, ClassType classType, string id = "") : base(0, id)
     {
         playerControlled = true;
         this.classType = classType;
@@ -52,12 +52,11 @@ abstract partial class Character : AnimatedGameObject
         this.movementSpeed = new Vector2(4, 4);
         AI = new BaseAI(this, 200F, currentLevel, false, 1, 700);
         this.hitCounter = 0;
-        this.playerNumber = playernr;
-        relativePlayerNumber = playernr;
+        this.playerNumber = maidennr;
         this.xboxControlled = false;
         this.iceSpeed = new Vector2(0, 0);
 
-
+        //Player selected Keyboard in CharacterSelection
         if (controlnr == 0)
         {
             xboxControlled = false;
@@ -68,9 +67,11 @@ abstract partial class Character : AnimatedGameObject
             xboxControlled = false;
             keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/Controls/player2controls.txt");
         }
-        else if (controlnr >= 2 && playernr <= 5)
-        {
 
+        //Player selected Controller in CharacterSelection
+        else if (controlnr >= 2 && controlnr <= 5)
+        {
+            controllernumber = controlnr - 1;
             xboxControlled = true;
             xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/Controls/XboxControls/player" + (controlnr - 1) + "Xbox.txt");
         }
