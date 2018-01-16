@@ -1,25 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
+/// <summary>
+/// The shieldBash ability is a knockback ability and shall use the push methodes defined in the super class Ability.
+/// Is the main ability of the shieldMaiden
+/// </summary>
 class ShieldBashAbility : TimedAbility
 {
-    public ShieldBashAbility(Character owner, Weapon weapon, string assetName, string id, float targetTime)
+    /// <summary>
+    /// </summary>
+    /// <param name="owner">Defines the owner of the ability</param>
+    /// <param name="damage">Defines the damage of the ability</param>
+    /// <param name="targetTime">Defines the cooldown of the ability</param>
+    public ShieldBashAbility(Character owner, int damage, float targetTime)
         : base(owner, targetTime)
     {
-        //weapon.LoadAnimation(assetName, id, false);
         pushVector = new Vector2(60, 0);
         PushFallOff = new Vector2(2, 0);
         PushTimeCount = 16;
-        DamageAA = 40;
-    }
-
-    public override void Use(Weapon weapon, string idAbility)
-    {
-        base.Use(weapon, idAbility);
+        DamageAA = damage;
     }
 
     public override void AttackHit(Monster monster, GameObjectGrid field)
@@ -30,10 +28,5 @@ class ShieldBashAbility : TimedAbility
             monster.TakeDamage(DamageAA);
             MonsterAdd(monster, Owner.Mirror);
         }
-    }
-
-    public override void Update(GameTime gameTime)
-    {
-        base.Update(gameTime);
     }
 }

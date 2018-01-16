@@ -4,6 +4,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 // the super basic class for ability, contains stuff that every type of ability HAS to do
+/// <summary>
+/// Defines the basic methods and attributes for abilities
+/// </summary>
 abstract class Ability
 {
     Character owner;
@@ -26,7 +29,7 @@ abstract class Ability
     // Empty methods that will be defined better in subclasses
     public virtual void Update(GameTime gameTime)
     {
-        if (PushBackVector != new Vector2(0, 0) && monstersHitList != null)
+        if (PushBackVector != new Vector2(0, 0))
             PushBack();
     }
     public virtual void Reset()
@@ -34,21 +37,34 @@ abstract class Ability
 
     }
 
-    public virtual void Use(Weapon weapon, string id)
+    /// <summary>
+    /// Called method that readies the necessary attributes for the attack
+    /// </summary>
+    public virtual void Use()
     {
         monstersHitList.Clear();
-        if(affectedMonsters == null)
-            affectedMonsters = new Dictionary<Monster, int>();
-        if (directionPush == null)
-            directionPush = new Dictionary<Monster, bool>();
-        //weapon.PlayAnimation(id);
     }
 
+    /// <summary>
+    /// Method that defines what happens when a monster gets hit
+    /// </summary>
+    /// <param name="monster">The affected monster</param>
+    /// <param name="field">The tileField of the level</param>
     public virtual void AttackHit(Monster monster, GameObjectGrid field)
     {
+        fieldGrid = field;
 
+        //Only affects the monster if it has not been affected by the ability already
+        if (!MonsterHit.Contains(monster) && monster.Attributes.HP > 0)
+        {
+            monster.TakeDamage(DamageAA);
+            MonsterAdd(monster, Owner.Mirror);
+        }
     }
 
+    /// <summary>
+    /// Method that handles the knockback of each affected monster
+    /// </summary>
     public virtual void PushBack()
     {
         //Get the knockback vector of the ability;
@@ -97,7 +113,12 @@ abstract class Ability
 
     }
 
-    //Calculates the push vector
+    /// <summary>
+    /// Method that calculates the push vector
+    /// </summary>
+    /// <param name="pushCount">How many ticks are left for the knockback</param>
+    /// <param name="push">The push Vector, reduced effect with less pushCount left</param>
+    /// <returns></returns>
     protected Vector2 GivePushVector(int pushCount, Vector2 push)
     {
         if (pushCount == PushTimeCount)
@@ -110,7 +131,11 @@ abstract class Ability
         return push;
     }
 
-    //Does the calculation of the position movement of the monster
+    /// <summary>
+    /// Does the calculation of the position movement of the monster
+    /// </summary>
+    /// <param name="monster">The affected monster</param>
+    /// <param name="push">Vector that defines the total position movement</param>
     protected void MoveMonster(Monster monster, Vector2 push)
     {
         if (directionPush[monster])
@@ -119,7 +144,11 @@ abstract class Ability
             monster.Position -= push;
     }
 
-    //Method that states if an enemy is knocked inside a wall.
+    /// <summary>
+    /// Method that checks if an enemy is not knocked inside a wall
+    /// </summary>
+    /// <param name="monster">The affected monster</param>
+    /// <returns></returns>
     protected bool KnockedInWall(Monster monster)
     {
         foreach (Tile tile in fieldGrid.Objects)

@@ -13,7 +13,7 @@ abstract class Weapon : AnimatedGameObject
     // integers for attack and goldcost
     private int attack, goldCost;
     // bool that returns if the player actually hit something after pressing the key
-    private bool prevAttackHit;
+    protected bool prevAttackHit;
     // IDs for the abilities
     protected string idBaseAA, idMainAbility, idSpecialAbility, idAnimation;
     protected GameObjectList monsterObjectList;
@@ -37,7 +37,10 @@ abstract class Weapon : AnimatedGameObject
         this.owner = owner;
     }
 
-    // Updates the weapon
+    /// <summary>
+    /// Updates the Shield and sword weapon
+    /// </summary>
+    /// <param name="gameTime">current gameTime</param>
     public override void Update(GameTime gameTime)
     {
         attackAnimationTimer.Update(gameTime);
@@ -47,13 +50,23 @@ abstract class Weapon : AnimatedGameObject
             attackAnimationTimer.Reset();
         }
 
+        if (!this.CurrentAnimation.AnimationEnded)
+            if (idAnimation == idBaseAA)
+                AnimationAttackCheck();
+            else if (idAnimation == idMainAbility)
+                AnimationMainCheck();
+
         base.Update(gameTime);
     }
 
     // This is the base attack method of the weapon,, which will be also defined as an ability
     public virtual void Attack(GameObjectList monsterList, GameObjectGrid field)
     {
-        
+        monsterObjectList = monsterList;
+        fieldList = field;
+        BasicAttack.Use();
+        idAnimation = idBaseAA;
+        AnimationAttackCheck();
     }
 
 
@@ -61,17 +74,22 @@ abstract class Weapon : AnimatedGameObject
     // Uses the main ability
     public virtual void UseMainAbility(GameObjectList monsterList, GameObjectGrid field)
     {
-        monsterObjectList = monsterList;
-        mainAbility.Use(this, idMainAbility);
-        CollisionChecker(this.CurrentAnimation, monsterObjectList);
+        if (!mainAbility.IsOnCooldown)
+        {
+            mainAbility.Use();
+            idAnimation = idMainAbility;
+            monsterObjectList = monsterList;
+            fieldList = field;
+            AnimationMainCheck();
+        }
     }
 
     // uses the special ability if it is ready
     public virtual void UseSpecialAbility(GameObjectList monsterList)
     {
-        monsterObjectList = monsterList;
-        specialAbility.Use(this, this.idSpecialAbility);
-        CollisionChecker(this.CurrentAnimation, monsterObjectList);
+        //monsterObjectList = monsterList;
+        //specialAbility.Use();
+        //CollisionChecker(this.CurrentAnimation, monsterObjectList);
     }
 
     /// <summary>
@@ -79,27 +97,27 @@ abstract class Weapon : AnimatedGameObject
     /// </summary>
     /// <param name="animation">Current used animation</param>
     /// <param name="monsterList">monster list of the current level</param>
-    protected void CollisionChecker(Animation animation, GameObjectList monsterList)
-    {
-        bool hit = false;
-        foreach (Monster monsterobj in monsterList.Children)
-        {
-            if (monsterobj.CollidesWith(this))
-            {
-                monsterobj.TakeDamage(owner.Attributes.Attack + this.AttackDamage);
-                hit = true;
-                if (monsterobj.IsDead)
-                {
-                    owner.Attributes.Gold += monsterobj.Attributes.Gold;
-                }
-            }
-        }
+    //protected void CollisionChecker(Animation animation, GameObjectList monsterList)
+    //{
+    //    bool hit = false;
+    //    foreach (Monster monsterobj in monsterList.Children)
+    //    {
+    //        if (monsterobj.CollidesWith(this))
+    //        {
+    //            monsterobj.TakeDamage(owner.Attributes.Attack + this.AttackDamage);
+    //            hit = true;
+    //            if (monsterobj.IsDead)
+    //            {
+    //                owner.Attributes.Gold += monsterobj.Attributes.Gold;
+    //            }
+    //        }
+    //    }
 
-        if (hit)
-            prevAttackHit = true;
-        else
-            prevAttackHit = false;
-    }
+    //    if (hit)
+    //        prevAttackHit = true;
+    //    else
+    //        prevAttackHit = false;
+    //}
 
     /// <summary>
     /// Collision checker for an animated weapon
@@ -113,6 +131,10 @@ abstract class Weapon : AnimatedGameObject
             {
                 BasicAttack.AttackHit(m, fieldList);
                 hit = true;
+
+                if (m.IsDead)
+                    owner.Attributes.Gold += m.Attributes.Gold;
+                
             }
         }
         if (hit)
@@ -120,6 +142,8 @@ abstract class Weapon : AnimatedGameObject
         else
             prevAttackHit = false;
     }
+
+    abstract public void AnimationMainCheck();
 
     public void SwordDirectionChecker(Vector2 walkingdirection)
     {
@@ -191,9 +215,7 @@ abstract class Weapon : AnimatedGameObject
         }
     }
 
-    /// <summary>
-    /// Properties for the weapon
-    /// </summary>
+    // Properties for the weapon
     public int AttackDamage
     {
         get { return attack; }
