@@ -18,7 +18,6 @@ abstract class Weapon : AnimatedGameObject
     protected string idBaseAA, idMainAbility, idSpecialAbility, idAnimation;
     protected GameObjectList monsterObjectList;
     protected GameObjectGrid fieldList;
-    protected string AttackDirection;
     protected bool isAttacking;
     Timer attackAnimationTimer;
     /// <summary>
@@ -84,40 +83,14 @@ abstract class Weapon : AnimatedGameObject
         }
     }
 
-    // uses the special ability if it is ready
+    /*
     public virtual void UseSpecialAbility(GameObjectList monsterList)
     {
-        //monsterObjectList = monsterList;
-        //specialAbility.Use();
-        //CollisionChecker(this.CurrentAnimation, monsterObjectList);
+        monsterObjectList = monsterList;
+        specialAbility.Use();
+        CollisionChecker(this.CurrentAnimation, monsterObjectList);
     }
-
-    /// <summary>
-    /// Checks if the owner currently collides with a monster, and if it does make the monster take damage
-    /// </summary>
-    /// <param name="animation">Current used animation</param>
-    /// <param name="monsterList">monster list of the current level</param>
-    //protected void CollisionChecker(Animation animation, GameObjectList monsterList)
-    //{
-    //    bool hit = false;
-    //    foreach (Monster monsterobj in monsterList.Children)
-    //    {
-    //        if (monsterobj.CollidesWith(this))
-    //        {
-    //            monsterobj.TakeDamage(owner.Attributes.Attack + this.AttackDamage);
-    //            hit = true;
-    //            if (monsterobj.IsDead)
-    //            {
-    //                owner.Attributes.Gold += monsterobj.Attributes.Gold;
-    //            }
-    //        }
-    //    }
-
-    //    if (hit)
-    //        prevAttackHit = true;
-    //    else
-    //        prevAttackHit = false;
-    //}
+    */
 
     /// <summary>
     /// Collision checker for an animated weapon
@@ -145,73 +118,86 @@ abstract class Weapon : AnimatedGameObject
 
     abstract public void AnimationMainCheck();
 
-    public void SwordDirectionChecker(Vector2 walkingdirection)
+    public void SwordDirectionCheckerManager(Vector2 walkingdirection)
     {
+        string attackDirection = "";
         if (isAttacking)
         {
             if (Math.Abs(walkingdirection.X) >= Math.Abs(walkingdirection.Y))
             {
                 if (walkingdirection.X > 0)
                 {
-                    AttackDirection = "Right";
+                    attackDirection = "Right";
                 }
                 else if (walkingdirection.X <= 0)
                 {
-                    AttackDirection = "Left";
+                    attackDirection = "Left";
                 }
             }
             else if (Math.Abs(walkingdirection.Y) > Math.Abs(walkingdirection.X))
             {
-                if (walkingdirection.Y > 0)
-                {
-                    AttackDirection = "Down";
-                }
-                else if (Math.Abs(walkingdirection.Y) > Math.Abs(walkingdirection.X))
-                {
-                    if (walkingdirection.Y > 0)
-                    {
-                        AttackDirection = "Down";
-                    }
-
-                    else if (walkingdirection.Y < 0)
-                    {
-                        AttackDirection = "Up";
-                    }
-                }
-                else if (Math.Abs(walkingdirection.X) == Math.Abs(walkingdirection.Y) && walkingdirection.X > 0)
-                {
-                    AttackDirection = "Right";
-                }
-                else if (Math.Abs(walkingdirection.X) == Math.Abs(walkingdirection.Y) && walkingdirection.X < 0)
-                {
-                    AttackDirection = "Left";
-                }
+                attackDirection = VerticalSwordDirection(walkingdirection);
             }
 
-            switch (AttackDirection)
-            {
-                case "Up":
-                    Position = new Vector2(Owner.Position.X, Owner.Position.Y - 30);
-                    PlayAnimation("attack_up");
-                    owner.PlayAnimation("attack_upwards");
-                    break;
-                case "Down":
-                    Position = new Vector2(Owner.Position.X, Owner.Position.Y + 30);
-                    PlayAnimation("attack_down");
-                    owner.PlayAnimation("attack_downwards");
-                    break;
-                case "Left":
-                    Position = new Vector2(Owner.Position.X - 30, Owner.Position.Y - 10);
-                    PlayAnimation("attack_left");
-                    owner.PlayAnimation("attack_fromleft");
-                    break;
-                case "Right":
-                    Position = new Vector2(Owner.Position.X + 30, Owner.Position.Y - 10);
-                    PlayAnimation("attack_right");
-                    owner.PlayAnimation("attack_fromright");
-                    owner.Mirror = false;
-                    break;
-            }
+            PlaySwordAnimations(attackDirection);
+        }
+    }
+
+    private string VerticalSwordDirection(Vector2 walkingdirection)
+    {
+        if (walkingdirection.Y > 0)
+        {
+            return "Down";
+        }
+        else if (Math.Abs(walkingdirection.Y) > Math.Abs(walkingdirection.X))
+        {
+            return "Up";
+        }
+        else if (Math.Abs(walkingdirection.X) == Math.Abs(walkingdirection.Y) && walkingdirection.X > 0)
+        {
+            return "Right";
+        }
+        else if (Math.Abs(walkingdirection.X) == Math.Abs(walkingdirection.Y) && walkingdirection.X <= 0)
+        {
+            return "Left";
+        }
+        return "";
+    }
+
+    /// <summary>
+    /// PLays the correct animations for sword attacks
+    /// </summary>
+    /// <param name="attackDirection">string that represents the attack direction</param>
+    private void PlaySwordAnimations(string attackDirection)
+    {
+        switch (attackDirection)
+        {
+            // If the string is empty, we have no animation to play so we return
+            case "":
+                return;
+            case "Up":
+                Position = new Vector2(Owner.Position.X, Owner.Position.Y - 30);
+                PlayAnimation("attack_up");
+                owner.PlayAnimation("attack_upwards");
+                break;
+            case "Down":
+                Position = new Vector2(Owner.Position.X, Owner.Position.Y + 30);
+                PlayAnimation("attack_down");
+                owner.PlayAnimation("attack_downwards");
+                break;
+            case "Left":
+                Position = new Vector2(Owner.Position.X - 30, Owner.Position.Y - 10);
+                PlayAnimation("attack_left");
+                owner.PlayAnimation("attack_fromleft");
+                break;
+            case "Right":
+                Position = new Vector2(Owner.Position.X + 30, Owner.Position.Y - 10);
+                PlayAnimation("attack_right");
+                owner.PlayAnimation("attack_fromright");
+                owner.Mirror = false;
+                break;
+            default:
+                throw new ArgumentException("No direction given to play animations for");
         }
     }
 
