@@ -174,7 +174,7 @@ partial class Level : GameObjectList
         if (lockitem != null)
             objectList.Add(lockitem);
         else
-            throw new ArgumentNullException("added key was null");
+            throw new ArgumentNullException("added lock was null");
     }
 
     /// <summary>
