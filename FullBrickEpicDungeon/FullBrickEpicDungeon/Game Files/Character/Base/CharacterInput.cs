@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 abstract partial class Character : AnimatedGameObject
 {
     protected Dictionary<Keys, Keys> keyboardControls;
-    protected bool xboxControlled, isOnIce = false, isGliding = false, blockinput = false;
+    protected bool xboxControlled, isGliding = false, blockinput = false;
 
     /// <summary>
     /// Method for handling input for the character
@@ -26,7 +26,7 @@ abstract partial class Character : AnimatedGameObject
             }
 
             // Handle normal movement
-            if (!IsDowned && !isOnIce)
+            if (!IsDowned && !IsOnIceChecker())
             {
                 velocity = Vector2.Zero;
                 if (xboxControlled)
@@ -348,7 +348,7 @@ abstract partial class Character : AnimatedGameObject
     public void SwitchToCharacter(Character targetCharacter)
     {
         // If the target character is the owner himself, or the target character is on a wrong position (due to how AI is handled) the switch will not commence
-        if (targetCharacter == this || !targetCharacter.SolidCollisionChecker() || targetCharacter.isOnIce)
+        if (targetCharacter == this || !targetCharacter.SolidCollisionChecker() || targetCharacter.IsOnIceChecker())
         {
             PlaySFX("switch_wrong");
             return;

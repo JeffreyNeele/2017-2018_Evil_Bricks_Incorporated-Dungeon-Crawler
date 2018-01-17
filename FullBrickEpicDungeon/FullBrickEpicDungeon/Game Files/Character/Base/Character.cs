@@ -203,7 +203,7 @@ abstract partial class Character : AnimatedGameObject
     /// <summary>
     /// Collision checker that checks for collisions with interactive objects
     /// </summary>
-    public void InteractCollisionChecker()
+    private void InteractCollisionChecker()
     {
         // Code that handles a player trying to revive his friend
         GameObjectList charList = GameWorld.Find("playerLIST") as GameObjectList;
@@ -248,7 +248,7 @@ abstract partial class Character : AnimatedGameObject
     /// Checks whether a character collides with a tile
     /// </summary>
     /// <returns>whether the position the character is going is valid</returns>
-    public bool SolidCollisionChecker()
+    private bool SolidCollisionChecker()
     {
         GameObjectGrid Field = GameWorld.Find("TileField") as GameObjectGrid;
         // Define a quarter bounding box (the feet plus part of the legs) for isometric collision
@@ -266,7 +266,7 @@ abstract partial class Character : AnimatedGameObject
     /// <summary>
     /// Checker that checks whether a character is on ice
     /// </summary>
-    public void IsOnIceChecker()
+    public bool IsOnIceChecker()
     {
         GameObjectGrid Field = GameWorld.Find("TileField") as GameObjectGrid;
         // Bounding box for only the feet
@@ -276,12 +276,11 @@ abstract partial class Character : AnimatedGameObject
         {
             if (tile.Type == TileType.Ice && tile.BoundingBox.Intersects(feetBoundingBox))
             {
-                isOnIce = true;
-                return;
+                return true;
             }
         }
-        isOnIce = false;
         blockinput = false;
+        return false;
     }
 
     /// <summary>
@@ -310,7 +309,7 @@ abstract partial class Character : AnimatedGameObject
     /// Method that plays a sound effect from the SFX dictionary
     /// </summary>
     /// <param name="sfx">name of the SFX</param>
-    public void PlaySFX(string sfx)
+    private void PlaySFX(string sfx)
     {
         if(FullBrickEpicDungeon.DungeonCrawler.SFX)
             GameEnvironment.AssetManager.PlaySound(characterSFX[sfx]);
