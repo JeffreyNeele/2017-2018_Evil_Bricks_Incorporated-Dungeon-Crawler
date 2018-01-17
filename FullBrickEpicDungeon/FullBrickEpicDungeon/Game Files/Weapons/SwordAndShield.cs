@@ -33,8 +33,6 @@ class SwordAndShield : Weapon
         };
         //Basic ability of the weapon: ShieldBash
         mainAbility = new ShieldBashAbility(owner, AttackDamage * 4, 8);
-
-        AttackDirection = "Up";
         PlayAnimation("attack_up");
     }
 

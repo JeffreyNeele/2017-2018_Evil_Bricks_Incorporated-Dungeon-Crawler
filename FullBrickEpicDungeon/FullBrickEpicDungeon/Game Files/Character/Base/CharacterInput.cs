@@ -49,7 +49,7 @@ abstract partial class Character : AnimatedGameObject
                 previousWalkingDirection = walkingdirection;
                 // Play Animations
                 PlayAnimationDirection(walkingdirection);
-                weapon.SwordDirectionChecker(walkingdirection);
+                weapon.SwordDirectionCheckerManager(walkingdirection);
                 walkingdirection = Vector2.Zero;
                 base.HandleInput(inputHelper);
             }

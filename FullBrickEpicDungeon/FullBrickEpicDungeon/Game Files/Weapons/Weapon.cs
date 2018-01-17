@@ -125,22 +125,27 @@ abstract class Weapon : AnimatedGameObject
         {
             if (Math.Abs(walkingdirection.X) >= Math.Abs(walkingdirection.Y))
             {
-                if (walkingdirection.X > 0)
-                {
-                    attackDirection = "Right";
-                }
-                else if (walkingdirection.X <= 0)
-                {
-                    attackDirection = "Left";
-                }
+                attackDirection = HorizontalSwordDirection(walkingdirection);
             }
             else if (Math.Abs(walkingdirection.Y) > Math.Abs(walkingdirection.X))
             {
                 attackDirection = VerticalSwordDirection(walkingdirection);
             }
-
             PlaySwordAnimations(attackDirection);
         }
+    }
+
+    private string HorizontalSwordDirection(Vector2 walkingdirection)
+    {
+        if (walkingdirection.X > 0)
+        {
+            return "Right";
+        }
+        else if (walkingdirection.X <= 0)
+        {
+            return "Left";
+        }
+        return "";
     }
 
     private string VerticalSwordDirection(Vector2 walkingdirection)

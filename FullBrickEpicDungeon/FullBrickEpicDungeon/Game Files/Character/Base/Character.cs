@@ -123,7 +123,7 @@ abstract partial class Character : AnimatedGameObject
                 }
                 // Play animations for the AI
                 PlayAnimationDirection(position - previousPosition);
-                weapon.SwordDirectionChecker(position - previousPosition);
+                weapon.SwordDirectionCheckerManager(position - previousPosition);
             }
             
             //When a character takes damage, let the character blink as an indication.
