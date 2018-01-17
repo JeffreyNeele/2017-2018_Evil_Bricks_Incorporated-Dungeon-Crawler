@@ -309,7 +309,7 @@ abstract partial class Character : AnimatedGameObject
     /// Method that plays a sound effect from the SFX dictionary
     /// </summary>
     /// <param name="sfx">name of the SFX</param>
-    private void PlaySFX(string sfx)
+    public void PlaySFX(string sfx)
     {
         if(FullBrickEpicDungeon.DungeonCrawler.SFX)
             GameEnvironment.AssetManager.PlaySound(characterSFX[sfx]);
