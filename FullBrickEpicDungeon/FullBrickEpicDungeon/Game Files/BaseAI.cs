@@ -23,7 +23,7 @@ class BaseAI
     /// </summary>
     /// <param name="owner">The owner of this AI (and the thing that the AI perfoms it's operations on)</param>
     /// <param name="movementSpeed">Variable that determines how fast the AI moves</param>
-    /// <param name="currentLevel">The current level the owner of the AI is currently</param>
+    /// <param name="currentLevel">The current level the owner of the AI is currently in</param>
     /// <param name="isMonster">Bool that determines whether this AI follows monster or player logic</param>
     /// <param name="idleTime">Amount of time an AI waits after attacking</param>
     /// <param name="sightRange">Distance of the LOS of the AI</param>
@@ -68,67 +68,7 @@ class BaseAI
             // checks if the AI is already at it's target
             if (owner.BoundingBox.Intersects(targetedObject.BoundingBox))
             {
-                //moves into the target
-                MoveToPosition(targetedObject.Position, (float)gameTime.ElapsedGameTime.TotalSeconds);
-                // if the AI is inside the target it attacks
-                if (targetedObject.BoundingBox.Contains(owner.Position))
-                {
-                    // attack logic for monster AI
-                    if (isMonster)
-                    {
-                        isAttacking = true;
-                        // cast both the owner and target so we can access the Character / Monster properties
-                        Monster owner_cast = owner as Monster;
-                        Character target_cast = targetedObject as Character;
-                        owner_cast.Attack();
-                        // The Character is downed so we want to target a new Character
-                        if (target_cast.IsDowned)
-                        {
-                            foreach (Character target in targetList.Children)
-                            {
-                                // If the target is down, we do not want to target it so we continue to the next iteration in the loop.
-                                if (target.IsDowned)
-                                {
-                                    continue;
-                                }
-                                else
-                                {
-                                    targetedObject = target;
-                                }
-                            }
-                        }
-                        idleTimer.Reset();
-                    }
-                    // attack logic for Character AI
-                    else
-                    {
-                        
-                        // cast both the owner and target so we can access the Character / Monster properties
-                        Character owner_cast = owner as Character;
-                        Monster target_cast = targetedObject as Monster;
-                        owner_cast.CurrentWeapon.IsAttacking = true;
-                        GameObjectList monsterList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList;
-                        // if our ability is not on cooldown we use it.
-                        if (!owner_cast.CurrentWeapon.AbilityMain.IsOnCooldown)
-                        {
-                            owner_cast.CurrentWeapon.UseMainAbility(monsterList, currentLevel.TileField);
-                            owner_cast.PlaySFX("basic_ability");
-                        }
-                        // otherwise perform a normal strike
-                        else
-                        {
-                            owner_cast.CurrentWeapon.Attack(monsterList, currentLevel.TileField);
-                            owner_cast.PlaySFX("attack_hit");
-                        }
-
-                        // if the target is dead we set the targetedobject to null and wait for another monster to enter our LOS again
-                        if (target_cast.IsDead)
-                        {
-                            targetedObject = null;
-                        }
-                        idleTimer.Reset();
-                    }
-                }
+                AIAttackManager(gameTime);
             }
             // If we have reached a waypoint, remove it
             else if (waypointList.Count > 0 && this.owner.Position == waypointList[0])
@@ -151,6 +91,87 @@ class BaseAI
             }
             // update the time in the idletimer
             idleTimer.Update(gameTime);
+        }
+    }
+
+    /// <summary>
+    /// Method that manages the AI attack logic methods. First moves to the target and then calls the correct attack method.
+    /// </summary>
+    /// <param name="gameTime">Current game time</param>
+    private void AIAttackManager(GameTime gameTime)
+    {
+        //moves into the target
+        MoveToPosition(targetedObject.Position, (float)gameTime.ElapsedGameTime.TotalSeconds);
+        // if the AI is inside the target it attacks
+        if (targetedObject.BoundingBox.Contains(owner.Position))
+        {
+            if (isMonster)
+            {
+                isAttacking = true;
+                MonsterAttackLogic();
+            }
+            else
+            {
+                CharacterAttackLogic();
+            }
+            idleTimer.Reset();
+        }
+    }
+
+    /// <summary>
+    /// Attack logic for Characters, makes the Character use abilities, attacks and retargets if the target it was attacking died;
+    /// </summary>
+    private void CharacterAttackLogic()
+    {
+        // cast both the owner and target so we can access the Character / Monster properties
+        Character owner_cast = owner as Character;
+        Monster target_cast = targetedObject as Monster;
+        owner_cast.CurrentWeapon.IsAttacking = true;
+        GameObjectList monsterList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList;
+        // if our ability is not on cooldown we use it.
+        if (!owner_cast.CurrentWeapon.AbilityMain.IsOnCooldown)
+        {
+            owner_cast.CurrentWeapon.UseMainAbility(monsterList, currentLevel.TileField);
+            owner_cast.PlaySFX("basic_ability");
+        }
+        // otherwise perform a normal strike
+        else
+        {
+            owner_cast.CurrentWeapon.Attack(monsterList, currentLevel.TileField);
+            owner_cast.PlaySFX("attack_hit");
+        }
+
+        // if the target is dead we set the targetedobject to null and wait for another monster to enter our LOS again
+        if (target_cast.IsDead)
+        {
+            targetedObject = null;
+        }
+    }
+
+    /// <summary>
+    /// Attack Logic method for monsters, attacks the character and finds a new target if the character it waas attacking got downed
+    /// </summary>
+    private void MonsterAttackLogic()
+    {
+        // cast both the owner and target so we can access the Character / Monster properties
+        Monster owner_cast = owner as Monster;
+        Character target_cast = targetedObject as Character;
+        owner_cast.Attack();
+        // The Character is downed so we want to target a new Character
+        if (target_cast.IsDowned)
+        {
+            foreach (Character target in targetList.Children)
+            {
+                // If the target is down, we do not want to target it so we continue to the next iteration in the loop.
+                if (target.IsDowned)
+                {
+                    continue;
+                }
+                else
+                {
+                    targetedObject = target;
+                }
+            }
         }
     }
 

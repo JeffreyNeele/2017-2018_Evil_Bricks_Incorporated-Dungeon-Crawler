@@ -22,7 +22,6 @@ abstract partial class Character : AnimatedGameObject
     protected Vector2 walkingdirection;
     protected BaseAI AI;
     protected Healthbar healthbar;
-
     //Constructor: sets up the controls given to the constructor for each player (xbox or keyboard)
     protected Character(int playerNumber, Level currentLevel, string id = "") : base(0, id)
     {
@@ -47,8 +46,10 @@ abstract partial class Character : AnimatedGameObject
             IsExpired = true
         };
         reviveTimer = new Timer(3);
-        hitTimer = new Timer(0.5f);
-        hitTimer.IsExpired = true;
+        hitTimer = new Timer(0.5f)
+        {
+            IsExpired = true
+        };
         // Define speeds on ice and land
         this.iceSpeed = new Vector2(0, 0);
         this.movementSpeed = new Vector2(4, 4);
@@ -56,7 +57,6 @@ abstract partial class Character : AnimatedGameObject
         AI = new BaseAI(this, 200F, currentLevel, false, 1, 700);
         this.playerNumber = playerNumber;
         relativePlayerNumber = playerNumber;
-
         // Generates controls for the keyboard if the character is not controlled by xbox, keyboard is only used for 2 players so as a safeguard player 3 and 4 will become AI if this is called them.
         if (!xboxControlled)
         {
@@ -72,7 +72,6 @@ abstract partial class Character : AnimatedGameObject
             {
                 playerControlled = false;
             }
-
         }
 
     }
