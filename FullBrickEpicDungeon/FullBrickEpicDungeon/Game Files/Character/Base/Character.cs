@@ -161,12 +161,12 @@ abstract partial class Character : AnimatedGameObject
         if(this.attributes.HP > 0)
         {
             healthbar.Draw(gameTime, spriteBatch);
+            if (weapon.IsAttacking)
+            {
+                weapon.Draw(gameTime, spriteBatch);
+            }
         }
         // draw the weapon if an attack animation is being played
-        if (weapon.IsAttacking)
-        {
-            weapon.Draw(gameTime, spriteBatch);
-        }
         base.Draw(gameTime, spriteBatch);
     }
 

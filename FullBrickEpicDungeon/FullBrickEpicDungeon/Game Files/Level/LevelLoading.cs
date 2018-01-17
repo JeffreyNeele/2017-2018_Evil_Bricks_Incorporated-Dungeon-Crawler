@@ -93,95 +93,129 @@ partial class Level : GameObjectList
         {
             string[] splitArray = positionStringList[i].Split(' ');
             // All the code blocks below check what object needs to be loaded, loads them in, and then assigns the correct values that are in the file to them
-            if(splitArray[0] == "SHIELDMAIDEN")
+            switch (splitArray[0])
             {
-                Shieldmaiden shieldmaiden = new Shieldmaiden(int.Parse(splitArray[3]), this);
-                // If there are no more real players left make the Character an AI
-                if(int.Parse(splitArray[3]) > numberOfPlayers)
-                {
-                    shieldmaiden.XBOXcontrolled = false; // sets the xbox controls to true or false, currently false
-                    shieldmaiden.PlayerControlled = false;
-                }
-                shieldmaiden.StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
-                shieldmaiden.CurrentWeapon = new SwordAndShield(shieldmaiden);
-                shieldmaiden.Reset();
-                playerList.Add(shieldmaiden);
+                case "PENGUIN":
+                    Monster penguin = new LittlePenguin(this)
+                    {
+                        StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
+                    };
+                    penguin.Reset();
+                    monsterList.Add(penguin);
+                    break;
+                case "DUMMY":
+                    Monster dummy = new Dummy("Assets/Sprites/Enemies/Dummy", this)
+                    {
+                        StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
+                    };
+                    dummy.Reset();
+                    monsterList.Add(dummy);
+                    break;
+                case "BUNNY":
+                    Bunny bunny = new Bunny(this)
+                    {
+                        StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
+                    };
+                    bunny.Reset();
+                    monsterList.Add(bunny);
+                    break;
+                case "HANDLE":
+                    Handle handle = new Handle("Assets/Sprites/InteractiveObjects/handles@2", "Handle", 0)
+                    {
+                        Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
+                    };
+                    objectList.Add(handle);
+                    break;
+                case "TRAPDOOR":
+                    Trapdoor trapdoor = new Trapdoor("Assets/Sprites/InteractiveObjects/NextLevelCombined@2", "Trapdoor", 0)
+                    {
+                        Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
+                        Objectnumber = int.Parse(splitArray[3])
+                    };
+                    objectList.Add(trapdoor);
+                    break;
+                case "DOOR":
+                    Door door = new Door("Assets/Sprites/Tiles/TileDoorFront@2", "Door", 0)
+                    {
+                        Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
+                        Objectnumber = int.Parse(splitArray[3])
+                    };
+                    levelTileField.Add(door, (int)door.Position.X / 100, (int)door.Position.Y / 100);
+                    break;
+                case "SHIELDMAIDEN":
+                    ShieldMaidenLoader(splitArray);
+                    break;
+                case "KEY":
+                    KeyLoader(splitArray);
+                    break;
+                case "LOCK":
+                    LockLoader(splitArray);
+                    break;
             }
-            if (splitArray[0] == "HANDLE")
-            {
-                Handle handle = new Handle("Assets/Sprites/InteractiveObjects/handles@2", "Handle", 0)
-                {
-                    Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
-                };
-                objectList.Add(handle);
-            }
-            if(splitArray[0] == "TRAPDOOR")
-            {
-                Trapdoor trapdoor = new Trapdoor("Assets/Sprites/InteractiveObjects/NextLevelCombined@2", "Trapdoor", 0)
-                {
-                    Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
-                    Objectnumber = int.Parse(splitArray[3])
-                };
-                objectList.Add(trapdoor);
-            }
-            if(splitArray[0] == "DOOR")
-            {
-                Door door = new Door("Assets/Sprites/Tiles/TileDoorFront@2", "Door", 0)
-                {
-                    Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
-                    Objectnumber = int.Parse(splitArray[3])
-                };
-                levelTileField.Add(door, (int)door.Position.X/100, (int)door.Position.Y/100);
-            }
-            if (splitArray[0] == "REDKEY")
-            {
-                KeyItem redkey = new KeyItem("Assets/Sprites/InteractiveObjects/paladinkey1", "redkey", 0)
-                {
-                    Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
-                };
-                objectList.Add(redkey);
-            }
-            if (splitArray[0] == "REDLOCK")
-            {
-                Lock redlock = new Lock("Assets/Sprites/InteractiveObjects/PaladinLock", "redlock", 0)
-                {
-                    Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
-                };
-                objectList.Add(redlock);
-            }
-
-            if(splitArray[0] == "DUMMY")
-            {
-                Monster dummy = new Dummy("Assets/Sprites/Enemies/Dummy", this)
-                {
-                    StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
-                };
-                dummy.Reset();
-                monsterList.Add(dummy);
-            }
-
-            if (splitArray[0] == "BUNNY")
-            {
-                Bunny bunny = new Bunny(this)
-                {
-                    StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
-                };
-                bunny.Reset();
-                monsterList.Add(bunny);
-            }
-
-            if (splitArray[0] == "PENGUIN")
-            {
-                Monster penguin = new LittlePenguin(this)
-                {
-                    StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
-                };
-                penguin.Reset();
-                monsterList.Add(penguin);
-            }
-
-
         }
+    }
+
+    /// <summary>
+    /// Loads the correct color of lock into the level
+    /// </summary>
+    /// <param name="textArray">array given by the Position loader</param>
+    private void LockLoader(string[] textArray)
+    {
+        Lock lockitem = null;
+        switch (textArray[3])
+        {
+            case "RED":
+                lockitem = new Lock("Assets/Sprites/InteractiveObjects/PaladinLock", "redlock", 0);
+                break;
+            default:
+                throw new ArgumentException("The given color " + textArray[3] + " was not found in the switch statement!");
+        }
+        lockitem.Position = new Vector2(float.Parse(textArray[1]), float.Parse(textArray[2]));
+        if (lockitem != null)
+            objectList.Add(lockitem);
+        else
+            throw new ArgumentNullException("added key was null");
+    }
+
+    /// <summary>
+    /// Loads the correct color of key into the level
+    /// </summary>
+    /// <param name="textArray">array given by the Position loader</param>
+    private void KeyLoader(string[] textArray)
+    {
+        KeyItem key = null;
+        switch (textArray[3])
+        {
+            case "RED":
+                key = new KeyItem("Assets/Sprites/InteractiveObjects/paladinkey1", "redkey", 0);
+                break;
+            default:
+                throw new ArgumentException("The given color " + textArray[3] + " was not found in the switch statement!");
+        }
+        key.Position = new Vector2(float.Parse(textArray[1]), float.Parse(textArray[2]));
+        if (key != null)
+            objectList.Add(key);
+        else
+            throw new ArgumentNullException("added key was null");
+    }
+
+    /// <summary>
+    /// Loads the Characters into the level
+    /// </summary>
+    /// <param name="textArray">array given by the Position loader</param>
+    private void ShieldMaidenLoader(string[] textArray)
+    {
+        Shieldmaiden shieldmaiden = new Shieldmaiden(int.Parse(textArray[3]), this);
+        // If there are no more real players left make the Character an AI
+        if (int.Parse(textArray[3]) > numberOfPlayers)
+        {
+            shieldmaiden.XBOXcontrolled = false; // sets the xbox controls to true or false, currently false
+            shieldmaiden.PlayerControlled = false;
+        }
+        shieldmaiden.StartPosition = new Vector2(float.Parse(textArray[1]), float.Parse(textArray[2]));
+        shieldmaiden.CurrentWeapon = new SwordAndShield(shieldmaiden);
+        shieldmaiden.Reset();
+        playerList.Add(shieldmaiden);
     }
 
     /// <summary>
