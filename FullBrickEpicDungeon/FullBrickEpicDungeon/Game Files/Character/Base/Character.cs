@@ -62,7 +62,7 @@ abstract partial class Character : AnimatedGameObject
 
     }
 
-    public void ControlsInitializer(int controlsNumber)
+    private void ControlsInitializer(int controlsNumber)
     {
         if (controlsNumber == 0)
         {
