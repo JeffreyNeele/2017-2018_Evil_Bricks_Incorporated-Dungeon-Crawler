@@ -17,7 +17,7 @@ abstract partial class Character : AnimatedGameObject
     protected Weapon weapon;
     // Vector2s for startposition, movementspeed and icespeed
     protected Vector2 startPosition, movementSpeed, iceSpeed;
-    protected int playerNumber, relativePlayerNumber;
+    protected int playerNumber, controllerNumber;
     protected bool playerControlled = true, hasAKey = false;
     protected Vector2 walkingdirection;
     protected BaseAI AI;
@@ -56,7 +56,7 @@ abstract partial class Character : AnimatedGameObject
         // Make a new AI
         AI = new BaseAI(this, 200F, currentLevel, false, 1, 700);
         this.playerNumber = playerNumber;
-        relativePlayerNumber = playerNumber;
+        controllerNumber = playerNumber;
         // Generates controls for the keyboard if the character is not controlled by xbox, keyboard is only used for 2 players so as a safeguard player 3 and 4 will become AI if this is called them.
         if (!xboxControlled)
         {

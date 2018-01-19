@@ -17,26 +17,25 @@ class CharacterSelection : GameObjectList
     SpriteGameObject[] controlSprites = new SpriteGameObject[4];            //The sprites that show the controls of each player. Some players may have more options than others
     AnimatedGameObject[] readySprite = new AnimatedGameObject[4];           //Contains the objects for the ready button.
 
-    static int[] characterSelectIndex = new int[4];
-    bool[] lockInSprite = new bool[4];
-    Color[] lockInColor = new Color[8];
-    float launchCount = 1;
+    int[] characterSelectIndex = new int[4];                                //Contains the integer that is charactersprite needs to play and switch to the appropriate maiden animation
+    bool[] lockInSprite = new bool[4];                                      //Each player has to lock in their choice of character. The array has a value 'true' if the player has made their selection
+    Color[] lockInColor = new Color[8];                                     //Array that contains the color for the borders when a certain maiden is shown and upon lock in
+    Timer launch = new Timer(2);                                            //The amount of seconds that will elapse when all the players are locked in. When 0, the gamestate will change.
 
-    static int playersjoined = 0;
-    bool[] keyboardjoined = new bool[2];
+    int playersjoined = 0;                                                  //Amount of players joined currently. Updates when a new player joins
+    bool[] keyboardjoined = new bool[2];                                    //Only 2 players are able to play with keyboard input, all the players are able to play with xbox controller
     bool[] xboxjoined = new bool[4];
 
 
-    
     //left in this is 1,2,3,4,5,6. (0,1 for keyboard, 2-5 for xbox. Dictionary translates to the number of the playerborder the player joined in.
-    static Dictionary<int, int> playerborder = new Dictionary<int, int>();
+    Dictionary<int, int> playerborder = new Dictionary<int, int>();
 
     //toetsenbord controls dictionary van player 0 en 1 in de dictionary hiervoor
     protected Dictionary<Keys, Keys> keyboardControls1;
     protected Dictionary<Keys, Keys> keyboardControls2;
 
     //matches the player number to the controls dictionary used.
-    protected Dictionary<int, Dictionary<Keys, Keys>> keyboardcontrols= new Dictionary<int, Dictionary<Keys, Keys>>();
+    protected Dictionary<int, Dictionary<Keys, Keys>> keyboardcontrols = new Dictionary<int, Dictionary<Keys, Keys>>();
 
     public CharacterSelection()
     {
@@ -70,9 +69,9 @@ class CharacterSelection : GameObjectList
 
             //load in Press to join frame
             controlSprites[i] = new SpriteGameObject("Assets/Sprites/Character selection/ControllerParchment/PressToJoinRes400");
-            controlSprites[i].Position = new Vector2(GameEnvironment.Screen.X / 4 * i +40, 450);
+            controlSprites[i].Position = new Vector2(GameEnvironment.Screen.X / 4 * i + 40, 450);
             Add(controlSprites[i]);
-        }   
+        }
     }
 
     //In the update method check if all the players are locked in. If so, start the launch timer
@@ -80,11 +79,9 @@ class CharacterSelection : GameObjectList
     {
         if (AllReadyCheck())
         {
-            launchCount -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (launchCount <= 0)
-            {
+            launch.Update(gameTime);
+            if (launch.IsExpired)
                 GameEnvironment.GameStateManager.SwitchTo("playingState");
-            }
         }
         base.Update(gameTime);
     }
@@ -121,7 +118,7 @@ class CharacterSelection : GameObjectList
                 {
                     xboxjoined[controller - 1] = true;
                     JoinPlayer(controller + 1); //to yield 2-5 in the dictionary
-                }  
+                }
         }
 
         //the methods below handle the characterselection left right input and lock in
@@ -155,8 +152,6 @@ class CharacterSelection : GameObjectList
         //Change color of background accordingly to the playing animation
         borderSprites[playersjoined].GetColor = lockInColor[(characterSelectIndex[playersjoined] - 1) * 2];
 
-        
-
         //Place the ready sprite
         readySprite[playersjoined] = new AnimatedGameObject(2);
         readySprite[playersjoined].Position = new Vector2(borderSprites[playersjoined].Position.X + borderSprites[playersjoined].Width / 2, borderSprites[playersjoined].Position.Y + borderSprites[playersjoined].Height / 7 * 6);
@@ -167,7 +162,7 @@ class CharacterSelection : GameObjectList
 
 
         //link the controlnumber to the bordernumber
-        playerborder.Add(controlsnr, playersjoined); //playersjoined is the same as the border number in this method
+        playerborder.Add(controlsnr, this.playersjoined); //playersjoined is the same as the border number in this method
 
         //load in Controls  Sprite
         if (controlsnr <= 1) //0 and 1 is keyboard
@@ -225,13 +220,13 @@ class CharacterSelection : GameObjectList
         {
             if (ControllerJoined(i))
             {
-                    //right
-                    if (inputHelper.KeyPressed(keyboardcontrols[i][Keys.D]))
-                        ChangeSpriteRight(characterSprites[playerborder[i]], characterSelectIndex[playerborder[i]], playerborder[i]);
+                //right
+                if (inputHelper.KeyPressed(keyboardcontrols[i][Keys.D]))
+                    ChangeSpriteRight(characterSprites[playerborder[i]], characterSelectIndex[playerborder[i]], playerborder[i]);
 
-                    //left
-                    else if (inputHelper.KeyPressed(keyboardcontrols[i][Keys.A]))
-                        ChangeSpriteLeft(characterSprites[playerborder[i]], characterSelectIndex[playerborder[i]], playerborder[i]);
+                //left
+                else if (inputHelper.KeyPressed(keyboardcontrols[i][Keys.A]))
+                    ChangeSpriteLeft(characterSprites[playerborder[i]], characterSelectIndex[playerborder[i]], playerborder[i]);
 
                 //lock in character selection.
                 if (inputHelper.KeyPressed(keyboardcontrols[i][Keys.E]))
@@ -251,6 +246,7 @@ class CharacterSelection : GameObjectList
         {
             if (controller == player)
             {
+                Console.WriteLine(player);
                 return true;
             }
         }
@@ -316,7 +312,7 @@ class CharacterSelection : GameObjectList
     /// <param name="player">Border number</param>
     protected void LockinPlayer(int player)
     {
-       if (CheckLockIn(player))
+        if (CheckLockIn(player))
             lockInSprite[player] = !lockInSprite[player];
 
         if (lockInSprite[player])
@@ -337,7 +333,7 @@ class CharacterSelection : GameObjectList
     /// <returns></returns>
     public bool AllReadyCheck()
     {
-       
+
         for (int i = 0; i < playerborder.Count; i++)
         {
             if (!lockInSprite[i])
@@ -348,31 +344,9 @@ class CharacterSelection : GameObjectList
         }
         if (playerborder.Count >= 2)
         {
-           return true;
+            return true;
         }
-            return false;
-    }
-
-    //yields the an array with the numbers of shieldmaiden numbers chosen in order.
-    public static int Controls(int maiden)
-    {
-        for (int border = 0; border < 4; border++)
-        {
-
-            if (characterSelectIndex[border] == maiden)
-            {
-                //gives reverse translate of playerborder dictionary. From border to controlnr instead of the other way around.
-                return playerborder.FirstOrDefault(x => x.Value == border).Key;
-            }
-        }
-        return -1; //-1 will be for AI
-
-
-    }
-
-    public static int NumberOfPlayers
-    {
-        get { return playersjoined; }
+        return false;
     }
 
 }

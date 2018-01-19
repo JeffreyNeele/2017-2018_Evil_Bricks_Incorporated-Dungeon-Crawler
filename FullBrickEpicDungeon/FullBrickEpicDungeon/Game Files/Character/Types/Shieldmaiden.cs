@@ -17,7 +17,7 @@ class Shieldmaiden : Character
         attributes.Gold = baseattributes.Gold;
         weapon = new SwordAndShield(this);
         string playerColor;
-        switch (maidennr)
+        switch (playerNumber)
         {
             case 1: playerColor = "default";
                 break;
@@ -28,7 +28,7 @@ class Shieldmaiden : Character
             case 4: playerColor = "orange";
                 break;
             default:
-                throw new IndexOutOfRangeException("playerNumber was not between 1 and 4, the given number was: " + maidennr);
+                throw new IndexOutOfRangeException("playerNumber was not between 1 and 4, the given number was: " +playerNumber);
         }
 
         LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_" + playerColor, "idle", false);
