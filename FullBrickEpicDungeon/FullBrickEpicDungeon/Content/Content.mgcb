@@ -1333,3 +1333,24 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Tiles/DoorUpperRight@2.png
 
+#begin Assets/Levels/level5.txt
+/copy:Assets/Levels/level5.txt
+
+#begin Assets/Levels/level6.txt
+/copy:Assets/Levels/level6.txt
+
+#begin Assets/Levels/level7.txt
+/copy:Assets/Levels/level7.txt
+
+#begin Assets/Levels/level8.txt
+/copy:Assets/Levels/level8.txt
+
+#begin Assets/Levels/level9.txt
+/copy:Assets/Levels/level9.txt
+
+#begin Assets/Levels/level10.txt
+/copy:Assets/Levels/level10.txt
+
+#begin Assets/Levels/level11.txt
+/copy:Assets/Levels/level11.txt
+
