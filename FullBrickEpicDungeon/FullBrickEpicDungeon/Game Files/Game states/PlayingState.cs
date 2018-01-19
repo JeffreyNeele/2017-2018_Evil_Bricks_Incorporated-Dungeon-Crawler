@@ -15,10 +15,10 @@ class PlayingState : IGameLoopObject
     /// </summary>
     public PlayingState()
     {
-        currentLevelIndex = 4;
+        currentLevelIndex = 9;
         levelList = new List<Level>();
         // Loads the levels from all level files
-        LoadLevels(10);
+        LoadLevels(11);
     }
 
     /// <summary>

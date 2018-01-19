@@ -1327,3 +1327,6 @@
 #begin Assets/Levels/level10.txt
 /copy:Assets/Levels/level10.txt
 
+#begin Assets/Levels/level11.txt
+/copy:Assets/Levels/level11.txt
+
