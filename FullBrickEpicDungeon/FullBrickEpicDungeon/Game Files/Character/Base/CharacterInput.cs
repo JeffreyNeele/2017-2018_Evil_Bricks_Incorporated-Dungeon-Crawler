@@ -383,7 +383,9 @@ abstract partial class Character : AnimatedGameObject
         // The attack animations have priority over the walking animations, and thus if these are being played we just return from the method
         if (!weapon.IsAttacking)
         {
-            if (Math.Abs(walkingdirection.X) > Math.Abs(walkingdirection.Y))
+            if(walkingdirection == new Vector2(0, 0))
+                this.PlayAnimation("idle");
+            else if (Math.Abs(walkingdirection.X) >= Math.Abs(walkingdirection.Y))
             {
                 if (walkingdirection.X > 0)
                 {
@@ -407,8 +409,6 @@ abstract partial class Character : AnimatedGameObject
                     this.PlayAnimation("backcycle");
                 }
             }
-            else
-                this.PlayAnimation("idle");
         }
     }
 

@@ -1261,18 +1261,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/InteractiveObjects/RogueLock.png
 
-#begin Assets/Sprites/InteractiveObjects/taismaniackey1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/InteractiveObjects/taismaniackey1.png
-
 #begin Assets/Sprites/InteractiveObjects/TalismaniacLock.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1425,4 +1413,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Enemies/PenguinSlideUp@4.png
+
+#begin Assets/Sprites/InteractiveObjects/talismaniackey1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/InteractiveObjects/talismaniackey1.png
 
