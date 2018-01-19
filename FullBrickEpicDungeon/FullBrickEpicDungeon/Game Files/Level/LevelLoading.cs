@@ -167,10 +167,23 @@ partial class Level : GameObjectList
             case "RED":
                 lockitem = new Lock("Assets/Sprites/InteractiveObjects/PaladinLock", "redlock", 0);
                 break;
+            case "BLUE":
+                lockitem = new Lock("Assets/Sprites/InteractiveObjects/LightbringerLock", "bluelock", 0);
+                break;
+            case "GREEN":
+                lockitem = new Lock("Assets/Sprites/InteractiveObjects/RogueLock", "greenlock", 0);
+                break;
+            case "ORANGE":
+                lockitem = new Lock("Assets/Sprites/InteractiveObjects/TalismaniacLock", "orangelock", 0);
+                break;
+            case "ALL":
+                lockitem = new Lock("Assets/Sprites/InteractiveObjects/AllLock", "alllock", 0);
+                break;
             default:
                 throw new ArgumentException("The given color " + textArray[3] + " was not found in the switch statement!");
         }
         lockitem.Position = new Vector2(float.Parse(textArray[1]), float.Parse(textArray[2]));
+        lockitem.Objectnumber = int.Parse(textArray[4]);
         if (lockitem != null)
             objectList.Add(lockitem);
         else
@@ -189,10 +202,23 @@ partial class Level : GameObjectList
             case "RED":
                 key = new KeyItem("Assets/Sprites/InteractiveObjects/paladinkey1", "redkey", 0);
                 break;
+            case "BLUE":
+                key = new KeyItem("Assets/Sprites/InteractiveObjects/lightbringerkey1", "bluekey", 0);
+                break;
+            case "GREEN":
+                key = new KeyItem("Assets/Sprites/InteractiveObjects/roguekey1", "greenkey", 0);
+                break;
+            case "ORANGE":
+                key = new KeyItem("Assets/Sprites/InteractiveObjects/talismaniackey1", "orangekey", 0);
+                break;
+            case "ALL":
+                key = new KeyItem("Assets/Sprites/InteractiveObjects/AllKey1", "allkey", 0);
+                break;
             default:
                 throw new ArgumentException("The given color " + textArray[3] + " was not found in the switch statement!");
         }
         key.Position = new Vector2(float.Parse(textArray[1]), float.Parse(textArray[2]));
+        key.Objectnumber = int.Parse(textArray[4]);
         if (key != null)
             objectList.Add(key);
         else

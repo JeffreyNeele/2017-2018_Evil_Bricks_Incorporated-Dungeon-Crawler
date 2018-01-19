@@ -10,10 +10,7 @@ namespace FullBrickEpicDungeon
     /// </summary>
     public class DungeonCrawler : GameEnvironment
     {
-        // global variable that keeps track of the amount of players
-        public static int numberOfPlayers = 1;
-        // global booleans for turning sound effects and music on/off
-        // and a boolean to make the mouseVisible (or not)
+
         public static bool SFX = true, music = true, mouseVisible = true;
         //SpriteGameObject conversationFrame;
         public DungeonCrawler()

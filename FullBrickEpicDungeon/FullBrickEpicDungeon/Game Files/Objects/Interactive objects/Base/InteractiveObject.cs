@@ -8,7 +8,6 @@ abstract class InteractiveObject : SpriteGameObject
     protected bool interacting;
     Character targetCharacter;
 
-
     /// <param name="assetName">Path to the sprite to load in the object</param>
     /// <param name="id">id to be able to find the object</param>
     /// <param name="sheetIndex">Defines which picture of the animation will be shown</param>

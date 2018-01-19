@@ -21,14 +21,14 @@ class Shieldmaiden : Character
         {
             case 1: playerColor = "default";
                 break;
-            case 2: playerColor = "orange";
+            case 2: playerColor = "blue";
                 break;
             case 3: playerColor = "green";
                 break;
-            case 4: playerColor = "blue";
+            case 4: playerColor = "orange";
                 break;
             default:
-                throw new IndexOutOfRangeException("playerNumber was not between 1 and 4, the given number was: " + playerNumber);
+                throw new IndexOutOfRangeException("playerNumber was not between 1 and 4, the given number was: " +playerNumber);
         }
 
         LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_" + playerColor, "idle", false);

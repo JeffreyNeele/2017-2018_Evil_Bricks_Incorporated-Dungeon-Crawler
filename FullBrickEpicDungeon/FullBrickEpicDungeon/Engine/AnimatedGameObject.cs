@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
+
 public class AnimatedGameObject : SpriteGameObject
 {
     protected Dictionary<string,Animation> animations;

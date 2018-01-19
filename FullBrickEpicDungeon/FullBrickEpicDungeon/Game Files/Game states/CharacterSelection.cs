@@ -26,7 +26,7 @@ class CharacterSelection : GameObjectList
     bool[] keyboardjoined = new bool[2];                                    //Only 2 players are able to play with keyboard input, all the players are able to play with xbox controller
     bool[] xboxjoined = new bool[4];
 
-    
+
     //left in this is 1,2,3,4,5,6. (0,1 for keyboard, 2-5 for xbox. Dictionary translates to the number of the playerborder the player joined in.
     Dictionary<int, int> playerborder = new Dictionary<int, int>();
 
@@ -35,7 +35,7 @@ class CharacterSelection : GameObjectList
     protected Dictionary<Keys, Keys> keyboardControls2;
 
     //matches the player number to the controls dictionary used.
-    protected Dictionary<int, Dictionary<Keys, Keys>> keyboardcontrols= new Dictionary<int, Dictionary<Keys, Keys>>();
+    protected Dictionary<int, Dictionary<Keys, Keys>> keyboardcontrols = new Dictionary<int, Dictionary<Keys, Keys>>();
 
     public CharacterSelection()
     {
@@ -69,9 +69,9 @@ class CharacterSelection : GameObjectList
 
             //load in Press to join frame
             controlSprites[i] = new SpriteGameObject("Assets/Sprites/Character selection/ControllerParchment/PressToJoinRes400");
-            controlSprites[i].Position = new Vector2(GameEnvironment.Screen.X / 4 * i +40, 450);
+            controlSprites[i].Position = new Vector2(GameEnvironment.Screen.X / 4 * i + 40, 450);
             Add(controlSprites[i]);
-        }   
+        }
     }
 
     //In the update method check if all the players are locked in. If so, start the launch timer
@@ -80,7 +80,7 @@ class CharacterSelection : GameObjectList
         if (AllReadyCheck())
         {
             launch.Update(gameTime);
-            if(launch.IsExpired)
+            if (launch.IsExpired)
                 GameEnvironment.GameStateManager.SwitchTo("playingState");
         }
         base.Update(gameTime);
@@ -118,7 +118,7 @@ class CharacterSelection : GameObjectList
                 {
                     xboxjoined[controller - 1] = true;
                     JoinPlayer(controller + 1); //to yield 2-5 in the dictionary
-                }  
+                }
         }
 
         //the methods below handle the characterselection left right input and lock in
@@ -220,13 +220,13 @@ class CharacterSelection : GameObjectList
         {
             if (ControllerJoined(i))
             {
-                    //right
-                    if (inputHelper.KeyPressed(keyboardcontrols[i][Keys.D]))
-                        ChangeSpriteRight(characterSprites[playerborder[i]], characterSelectIndex[playerborder[i]], playerborder[i]);
+                //right
+                if (inputHelper.KeyPressed(keyboardcontrols[i][Keys.D]))
+                    ChangeSpriteRight(characterSprites[playerborder[i]], characterSelectIndex[playerborder[i]], playerborder[i]);
 
-                    //left
-                    else if (inputHelper.KeyPressed(keyboardcontrols[i][Keys.A]))
-                        ChangeSpriteLeft(characterSprites[playerborder[i]], characterSelectIndex[playerborder[i]], playerborder[i]);
+                //left
+                else if (inputHelper.KeyPressed(keyboardcontrols[i][Keys.A]))
+                    ChangeSpriteLeft(characterSprites[playerborder[i]], characterSelectIndex[playerborder[i]], playerborder[i]);
 
                 //lock in character selection.
                 if (inputHelper.KeyPressed(keyboardcontrols[i][Keys.E]))
@@ -312,7 +312,7 @@ class CharacterSelection : GameObjectList
     /// <param name="player">Border number</param>
     protected void LockinPlayer(int player)
     {
-       if (CheckLockIn(player))
+        if (CheckLockIn(player))
             lockInSprite[player] = !lockInSprite[player];
 
         if (lockInSprite[player])
@@ -333,7 +333,7 @@ class CharacterSelection : GameObjectList
     /// <returns></returns>
     public bool AllReadyCheck()
     {
-       
+
         for (int i = 0; i < playerborder.Count; i++)
         {
             if (!lockInSprite[i])
@@ -346,7 +346,7 @@ class CharacterSelection : GameObjectList
         {
             return true;
         }
-            return false;
+        return false;
     }
 
 }
