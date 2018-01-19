@@ -38,10 +38,5 @@ class Door : OpenableObject
             }
         }
     }
-
-    public bool IsOpen
-    {
-        get { return IsOpen; }
-    }
 }
 
