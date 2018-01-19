@@ -2,18 +2,18 @@
 using Microsoft.Xna.Framework.Input;
 using System;
 
-
+// Class that handles XBOX input
 public partial class InputHelper
 {
+    // Define gamepadstates for each player
     protected GamePadState currGamePadState1, currGamePadState2, currGamePadState3, currGamePadState4;
     protected GamePadState prevGamePadState1, prevGamePadState2, prevGamePadState3, prevGamePadState4;
 
 
-    /* XBOX CONTROLLER UPDATE */
-
+    // Updates the XBOX Gamepadstates
     void UpdateXbox()
     {
-        prevGamePadState1 = currGamePadState1; //oorspronkelijk currGamePadState1
+        prevGamePadState1 = currGamePadState1;
         prevGamePadState2 = currGamePadState2;
         prevGamePadState3 = currGamePadState3;
         prevGamePadState4 = currGamePadState4;
@@ -24,20 +24,21 @@ public partial class InputHelper
         currGamePadState4 = GamePad.GetState(3);
     }
 
-    public bool ControllerConnected(int playernumber) //misschien overbodig
+
+    // Returns a boolean that represents if a controlelr is connected
+    public bool ControllerConnected(int playernumber)
     {
         if (CurrentState(playernumber).IsConnected)
             return true;
         else
         {
-            // Console.WriteLine("A Controller has been disconnected!");
             return false;
         }
     }
 
+    // Returns if a button of a controller with a certain player number is pressed
     public bool ButtonPressed(int playernumber, Buttons k)
     {
-        // Console.WriteLine(PreviousState(playernumber).IsButtonUp(k));
         return CurrentState(playernumber).IsButtonDown(k) && PreviousState(playernumber).IsButtonUp(k);
     }
 
@@ -46,8 +47,7 @@ public partial class InputHelper
         return CurrentState(playernumber).IsButtonDown(k);
     }
 
-
-
+    // returns if the input of a playernumber has changed
     public bool HasInputChanged(int playernumber, bool ignoreThumbsticks)
     {
         GamePadState currentState = CurrentState(playernumber);
@@ -67,7 +67,6 @@ public partial class InputHelper
     //gives continuous vector2 output of left thumbstick
     public Vector2 WalkingDirection(int playernumber)
     {
-        //return CurrentState(playernumber).ThumbSticks.Left;
         float deadzone = 0.25f;
         Vector2 stickInput = CurrentState(playernumber).ThumbSticks.Left;
         float magnitude = (float)Math.Sqrt(stickInput.X * stickInput.X + stickInput.Y * stickInput.Y);
@@ -156,9 +155,7 @@ public partial class InputHelper
     }
 
 
-
-
-
+    // Returns the currentstate
     private GamePadState CurrentState(int playernumber)
     {
         switch (playernumber)
@@ -171,7 +168,7 @@ public partial class InputHelper
         }
     }
 
-
+    // returns the previous state
     private GamePadState PreviousState(int playernumber)
     {
         switch (playernumber)

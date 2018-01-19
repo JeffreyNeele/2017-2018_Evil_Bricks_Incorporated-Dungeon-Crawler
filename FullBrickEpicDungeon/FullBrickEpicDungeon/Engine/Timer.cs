@@ -1,11 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 
-// A class that maintains a timer
+// A class that symbolizes a timer
 class Timer
 {
+    // floats for the targettime for a timer to be expired, and the currenttime
     private float targettime, currentime;
-    private bool paused;
-    protected bool expired;
+    // bools for if a timer is paused or expired
+    private bool paused, expired;
     public Timer(float targettime)
     {
         this.targettime = targettime;
@@ -14,19 +15,20 @@ class Timer
         expired = false;
     }
 
-    // Increases the time
+    // Updates the timer
     public void Update(GameTime gameTime)
     {
+        // if the timer expires, we do not want the timer to (possibly) overflow so we pause it
         if (expired)
         {
             IsPaused = true;
         }
+        // if the timer is not paused, we check if it is expired and update the currenttime
         else if (!paused)
         {
-            expired = currentime >= targettime;
             currentime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            expired = currentime >= targettime;
         }
-
     }
 
 

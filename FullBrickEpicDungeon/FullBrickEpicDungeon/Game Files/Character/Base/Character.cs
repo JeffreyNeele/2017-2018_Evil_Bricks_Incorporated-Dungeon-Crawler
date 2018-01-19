@@ -8,85 +8,82 @@ using Microsoft.Xna.Framework.Graphics;
 
 abstract partial class Character : AnimatedGameObject
 {
-    //baseattributes contains the standard base stats and should not be changed, the values in attributes may be changes are used during the remainder of the level
-    protected ClassType classType;
+    // variables for Timers
+    private Timer deathTimer, reviveTimer, stepSoundTimer, hitTimer;
+    // Dictionary for SFX paths
+    protected Dictionary<string, string> characterSFX;
+    // attributes for the character
     protected BaseAttributes attributes, baseattributes;
     protected Weapon weapon;
-    protected List<Equipment> inventory;
-    protected Timer deathTimer, reviveTimer, stepSoundTimer;
+    // Vector2s for startposition, movementspeed and icespeed
     protected Vector2 startPosition, movementSpeed, iceSpeed;
-    protected int playerNumber, controllernumber;
-    protected float hitCounter;
-    protected Dictionary<Buttons, Buttons> xboxControls;
-    protected Dictionary<string, string> characterSFX;
-    protected bool playerControlled;
+    protected int playerNumber, relativePlayerNumber;
+    protected bool playerControlled = true, hasAKey = false;
     protected Vector2 walkingdirection;
     protected BaseAI AI;
-    
-
-
-
+    protected Healthbar healthbar;
     //Constructor: sets up the controls given to the constructor for each player (xbox or keyboard)
-    protected Character(int maidennr, Level currentLevel, int controlnr, ClassType classType, string id = "") : base(0, id)
+    protected Character(int playerNumber, Level currentLevel, string id = "") : base(0, id)
     {
-        playerControlled = true;
-        this.classType = classType;
+        attributes = new BaseAttributes();
         baseattributes = new BaseAttributes();
-        inventory = new List<Equipment>();
+        // load paths into the characterSFX dictionary
         characterSFX = new Dictionary<string, string>
         {
             { "ice_slide", "Assets/SFX/ice_slide" },
             { "ability_not_ready", "Assets/SFX/ability_not_ready" },
             { "switch_wrong", "Assets/SFX/switch_wrong" }
         };
-        attributes = new BaseAttributes();
-        deathTimer = new Timer(10);
-        deathTimer.Reset();
-        deathTimer.IsPaused = true;
+        // make a new healthbar
+        healthbar = new Healthbar(this);
+        // initialize all the timers
+        deathTimer = new Timer(10)
+        {
+            IsPaused = false
+        };
         stepSoundTimer = new Timer(0.5F)
         {
             IsExpired = true
         };
         reviveTimer = new Timer(3);
-        this.velocity = Vector2.Zero;
-        this.movementSpeed = new Vector2(4, 4);
-        AI = new BaseAI(this, 200F, currentLevel, false, 1, 700);
-        this.hitCounter = 0;
-        this.playerNumber = maidennr;
-        this.xboxControlled = false;
+        hitTimer = new Timer(0.5f)
+        {
+            IsExpired = true
+        };
+        // Define speeds on ice and land
         this.iceSpeed = new Vector2(0, 0);
-
-        //Player selected Keyboard in CharacterSelection
-        if (controlnr == 0)
+        this.movementSpeed = new Vector2(4, 4);
+        // Make a new AI
+        AI = new BaseAI(this, 200F, currentLevel, false, 1, 700);
+        this.playerNumber = playerNumber;
+        relativePlayerNumber = playerNumber;
+        // Generates controls for the keyboard if the character is not controlled by xbox, keyboard is only used for 2 players so as a safeguard player 3 and 4 will become AI if this is called them.
+        if (!xboxControlled)
         {
-            xboxControlled = false;
-            keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/Controls/player1controls.txt");
-        }
-        else if (controlnr == 1)
-        {
-            xboxControlled = false;
-            keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/Controls/player2controls.txt");
-        }
-
-        //Player selected Controller in CharacterSelection
-        else if (controlnr >= 2 && controlnr <= 5)
-        {
-            controllernumber = controlnr - 1;
-            xboxControlled = true;
-            xboxControls = GameEnvironment.SettingsHelper.GenerateXboxControls("Assets/Controls/XboxControls/player" + (controlnr - 1) + "Xbox.txt");
-        }
-        else if(controlnr == -1) //AI
-        {
-            playerControlled = false;
+            if (playerNumber == 1)
+            {
+                keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/Controls/player1controls.txt");
+            }
+            else if (playerNumber == 2)
+            {
+                keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/Controls/player2controls.txt");
+            }
+            else
+            {
+                playerControlled = false;
+            }
         }
 
     }
 
 
 
-   
-
-    // Calculates the new movementVector for a character for keyboard
+   /// <summary>
+   /// Calculates the movement vector for a character (this makes sure that going to a lateral direction is the same speed as going to a diagonal direction)
+   /// </summary>
+   /// <param name="movementSpeed">How fast the character moves</param>
+   /// <param name="angle">What angle/direction the character is moving to</param>
+   /// <returns></returns>
     public Vector2 MovementVector(Vector2 movementSpeed, float angle)
     {
         float adjacent = movementSpeed.X;
@@ -99,14 +96,22 @@ abstract partial class Character : AnimatedGameObject
         return new Vector2(adjacent, opposite);
     }
 
+    /// <summary>
+    /// Updates the character
+    /// </summary>
+    /// <param name="gameTime">the current game time</param>
     public override void Update(GameTime gameTime)
     {
+        // if the character is not downed, it gets updated according to normal rules, so this code block is entered
         if (!IsDowned)
         {
+            // Timer updates
             reviveTimer.Update(gameTime);
             stepSoundTimer.Update(gameTime);
-            base.Update(gameTime);
+            // Updates the weapon and healthbar
             this.weapon.Update(gameTime);
+            healthbar.Update(gameTime);
+            // Update for if the player is AI
             if (!playerControlled)
             {
                 Vector2 previousPosition = this.position;
@@ -116,43 +121,74 @@ abstract partial class Character : AnimatedGameObject
                     PlaySFX("walk");
                     stepSoundTimer.Reset();
                 }
+                // Play animations for the AI
                 PlayAnimationDirection(position - previousPosition);
+                weapon.SwordDirectionCheckerManager(position - previousPosition);
             }
             
-            if (hitCounter >= 0)
+            //When a character takes damage, let the character blink as an indication.
+            if (!hitTimer.IsExpired)
             {
                 Visible = !Visible;
-                hitCounter -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                hitTimer.Update(gameTime);
             }
             else
                 Visible = true;
+
+            // Checks if the character is on ice
             IsOnIceChecker();
+            base.Update(gameTime);
         }
         else
         {
+            // Updates the death timer and if it expires, the character gets reset and loses some gold
             deathTimer.Update(gameTime);
             if (deathTimer.IsExpired)
             {
                 this.Reset();
-                // when the revivetimer expires, the character dies :( sadly he will lose some of his gold after dying (currently 25% might be higher in later versions)
                 this.attributes.Gold = this.attributes.Gold - (this.attributes.Gold / 4);
                 deathTimer.Reset();
             }
         }
     }
 
- 
+    /// <summary>
+    /// Draws things attached to the character
+    /// </summary>
+    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    {
+        // draw the healthbar if the characterr is not down
+        if(this.attributes.HP > 0)
+        {
+            healthbar.Draw(gameTime, spriteBatch);
+            if (weapon.IsAttacking)
+            {
+                weapon.Draw(gameTime, spriteBatch);
+            }
+        }
+        // draw the weapon if an attack animation is being played
+        base.Draw(gameTime, spriteBatch);
+    }
 
+    /// <summary>
+    /// Resets the character
+    /// </summary>
     public override void Reset()
     {
+        this.weapon.AbilityMain.IsOnCooldown = false;
         this.attributes.HP = this.baseattributes.HP;
         this.position = startPosition;
     }
 
 
-    // Transfers money to another character
+   /// <summary>
+   /// Transfers gold to another character
+   /// </summary>
+   /// <param name="amount">amount of gold to be transferred</param>
+   /// <param name="target">the character that will receve this gold</param>
     public void TransferGold(int amount, Character target)
     {
+        // This method is also used for if normal gold is added with no target, so this code block is for that
         if (target == this)
         {
             this.attributes.Gold += amount;
@@ -164,9 +200,12 @@ abstract partial class Character : AnimatedGameObject
         }
     }
 
-    //Checks if the character collides with interactive objects
-    public void InteractCollisionChecker()
+    /// <summary>
+    /// Collision checker that checks for collisions with interactive objects
+    /// </summary>
+    private void InteractCollisionChecker()
     {
+        // Code that handles a player trying to revive his friend
         GameObjectList charList = GameWorld.Find("playerLIST") as GameObjectList;
         foreach (Character c in charList.Children)
         {
@@ -186,20 +225,33 @@ abstract partial class Character : AnimatedGameObject
 
         GameObjectList objectList = GameWorld.Find("objectLIST") as GameObjectList;
         // If a character collides with an interactive object, set the target character to this instance and tell the interactive object that it is currently interacting
-        foreach (InteractiveObject intObj in objectList.Children)
+        foreach (var intObj in objectList.Children)
         {
-            if (intObj.CollidesWith(this))
+            if (intObj is InteractiveObject)
             {
-                intObj.TargetCharacter = this;
-                intObj.IsInteracting = true;
+                InteractiveObject intObj_cast = intObj as InteractiveObject;
+                if (intObj_cast.CollidesWith(this))
+                {
+                    intObj_cast.TargetCharacter = this;
+                    intObj_cast.IsInteracting = true;
+                    // if the intobj is a key set hasakey to true
+                    if (intObj is KeyItem)
+                    {
+                        HasAKey = true;
+                    }
+                }
             }
         }
     }
 
-    //Dikke collision met muren/andere solid objects moet ervoor zorgen dat de player niet verder kan bewegen.
-    public bool SolidCollisionChecker()
+    /// <summary>
+    /// Checks whether a character collides with a tile
+    /// </summary>
+    /// <returns>whether the position the character is going is valid</returns>
+    private bool SolidCollisionChecker()
     {
         GameObjectGrid Field = GameWorld.Find("TileField") as GameObjectGrid;
+        // Define a quarter bounding box (the feet plus part of the legs) for isometric collision
         Rectangle quarterBoundingBox = new Rectangle((int)this.BoundingBox.X, (int)(this.BoundingBox.Y + 0.75 * Height), this.Width, (int)(this.Height / 4));
         foreach (Tile tile in Field.Objects)
         {
@@ -211,85 +263,72 @@ abstract partial class Character : AnimatedGameObject
         return true;
     }
 
-    public void IsOnIceChecker()
+    /// <summary>
+    /// Checker that checks whether a character is on ice
+    /// </summary>
+    public bool IsOnIceChecker()
     {
         GameObjectGrid Field = GameWorld.Find("TileField") as GameObjectGrid;
+        // Bounding box for only the feet
         Rectangle feetBoundingBox = new Rectangle((int)(this.BoundingBox.X + 0.33 * Width),
             (int)(this.BoundingBox.Y + 0.9 * Height), (int)(this.Width / 3), (Height / 10));
         foreach (Tile tile in Field.Objects)
         {
-            if (tile.IsIce && tile.BoundingBox.Intersects(feetBoundingBox))
+            if (tile.Type == TileType.Ice && tile.BoundingBox.Intersects(feetBoundingBox))
             {
-                isOnIce = true;
-                return;
+                return true;
             }
         }
-        isOnIce = false;
         blockinput = false;
+        return false;
     }
 
-    // Changes the weapon of a Character and drops the weapon on the ground
-    public void ChangeWeapon(Weapon newweapon)
-    {
-        DroppedItem droppedWeapon = new DroppedItem(this.weapon, "DROPPED" + weapon.Id);
-        this.weapon = newweapon;
-    }
-
-    // Changes items in the characters inventory, also allows to remove it
-    public void ChangeItems(Equipment item, bool remove = false)
-    {
-        if (item == null)
-        {
-            return;
-        }
-
-        if (remove)
-        {
-            inventory.Remove(item);
-        }
-        else
-        {
-            inventory.Add(item);
-        }
-
-    }
-
-    // Checks if a character owns an item (only for equipment)
-    public bool OwnsItem(Equipment item)
-    {
-        return inventory.Contains(item);
-    }
-
-
+    /// <summary>
+    /// Makes the character take damage
+    /// </summary>
+    /// <param name="damage">the amount of damage to take</param>
     public void TakeDamage(int damage)
     {
-        int totalitemdefense = 0;
-        foreach (Equipment item in inventory)
-        {
-            totalitemdefense += item.Armour;
-        }
-        int takendamage = (damage - (int)(0.3F * this.attributes.Armour + totalitemdefense));
+        // damage is reduced by this characters armour
+        int takendamage = (damage - (int)(0.3F * this.attributes.Armour));
         if (takendamage < 5)
         {
             takendamage = 1;
         }
         this.attributes.HP -= takendamage;
+
         if (this.attributes.HP < 0)
         {
             this.attributes.HP = 0;
+            hitTimer.IsExpired = true;
         }
+        else
+            hitTimer.Reset();
     }
+    /// <summary>
+    /// Method that plays a sound effect from the SFX dictionary
+    /// </summary>
+    /// <param name="sfx">name of the SFX</param>
     public void PlaySFX(string sfx)
     {
         if(FullBrickEpicDungeon.DungeonCrawler.SFX)
             GameEnvironment.AssetManager.PlaySound(characterSFX[sfx]);
     }
+
     // returns if the character has gone into the "downed" state
     public bool IsDowned
     {
         get { return this.attributes.HP == 0; }
     }
 
+    /// <summary>
+    /// Character properties
+    /// </summary>
+    public bool HasAKey
+    {
+        get { return hasAKey; }
+        set { hasAKey = value; }
+    }
     // returns the startPosition of the character. Will be newly set when entering a level
     public Vector2 StartPosition
     {
@@ -314,11 +353,7 @@ abstract partial class Character : AnimatedGameObject
         set { attributes = value; }
     }
 
-    public ClassType Type
-    {
-        get { return classType; }
-    }
-
+    // property for saying if a character is AI or player controlled
     public bool PlayerControlled
     {
         get { return playerControlled; }
@@ -335,5 +370,4 @@ abstract partial class Character : AnimatedGameObject
         get { return xboxControlled; }
         set { xboxControlled = value; }
     }
-    // returns the facing direction of the character
 }

@@ -2,21 +2,26 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
+// Self made class that defines a simple circle, used for the Line of sight (LOS) checker
 class Circle
 {
+    // variables for radius and origin
     private double radius;
     private Vector2 origin;
+
     public Circle(double radius, Vector2 origin)
     {
         this.radius = radius;
         this.origin = origin;
     }
 
+    // returns diamater
     public double Diameter
     {
         get { return radius * 2; }
     }
 
+    // returns area
     public double Area
     {
         get
@@ -25,6 +30,7 @@ class Circle
         }
     }
 
+    // returns circumference
     public double Circumference
     {
         get { return 2 * Math.PI * radius; }
@@ -40,6 +46,7 @@ class Circle
         get { return origin; }
     }
 
+    // method that checks if the circle collides with a rectangle
     public bool CollidesWithRectangle(SpriteGameObject target, SpriteGameObject owner)
     {
         float targetCenterX = target.Position.X + target.Width / 2;

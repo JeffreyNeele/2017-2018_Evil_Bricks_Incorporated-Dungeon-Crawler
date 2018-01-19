@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using System.IO;
 
+/// <summary>
+/// Class that loads the level
+/// </summary>
 partial class Level : GameObjectList
 {
-    // Method that glues all other load methods together and checks which parts of the files it should pass to these methods
+    /// <summary>
+    /// Method that loads everything from a file with the name level + levelindex 
+    /// </summary>
     public void LoadFromFile()
     {
         // Define a list for all information in the file
@@ -69,74 +74,181 @@ partial class Level : GameObjectList
         }
     }
 
-    //Loads level information
+    /// <summary>
+    /// Loads the level information
+    /// </summary>
+    /// <param name="informationStringList">given string list that corresponds to the level information</param>
     protected void LevelInformationLoader(List<string> informationStringList)
     {
         this.id = "LEVEL_" + informationStringList[0];
     }
 
-    // Loads Characters at their appropiate position, as well as interactive objects
+    /// <summary>
+    /// Loads things that aren't tiles at their correct positions
+    /// </summary>
+    /// <param name="positionStringList">The given list of strings by the main method</param>
     protected void LevelPositionLoader(List<string> positionStringList)
     {
         for (int i = 0; i < positionStringList.Count; i++)
         {
-            // Split the current line
             string[] splitArray = positionStringList[i].Split(' ');
-            if(splitArray[0] == "SHIELDMAIDEN")
+            // All the code blocks below check what object needs to be loaded, loads them in, and then assigns the correct values that are in the file to them
+            switch (splitArray[0])
             {
-                int controlsnr = CharacterSelection.Controls(int.Parse(splitArray[3]));
-                Console.WriteLine("maiden" + int.Parse(splitArray[3]) + "controlnr" + CharacterSelection.Controls(int.Parse(splitArray[3])));
-                Shieldmaiden shieldmaiden = new Shieldmaiden(int.Parse(splitArray[3]), this, controlsnr);
-
-                shieldmaiden.StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
-                shieldmaiden.CurrentWeapon = new SwordAndShield(shieldmaiden);
-                shieldmaiden.Reset();
-                playerList.Add(shieldmaiden);
+                case "PENGUIN":
+                    Monster penguin = new LittlePenguin(this)
+                    {
+                        StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
+                    };
+                    penguin.Reset();
+                    monsterList.Add(penguin);
+                    break;
+                case "DUMMY":
+                    Monster dummy = new Dummy("Assets/Sprites/Enemies/Dummy", this)
+                    {
+                        StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
+                    };
+                    dummy.Reset();
+                    monsterList.Add(dummy);
+                    break;
+                case "BUNNY":
+                    Bunny bunny = new Bunny(this)
+                    {
+                        StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
+                    };
+                    bunny.Reset();
+                    monsterList.Add(bunny);
+                    break;
+                case "HANDLE":
+                    Handle handle = new Handle("Assets/Sprites/InteractiveObjects/handles@2", "Handle", 0)
+                    {
+                        Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
+                    };
+                    objectList.Add(handle);
+                    break;
+                case "TRAPDOOR":
+                    Trapdoor trapdoor = new Trapdoor("Assets/Sprites/InteractiveObjects/NextLevelCombined@2", "Trapdoor", 0)
+                    {
+                        Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
+                        Objectnumber = int.Parse(splitArray[3])
+                    };
+                    objectList.Add(trapdoor);
+                    break;
+                case "DOOR":
+                    Door door = new Door("Assets/Sprites/Tiles/TileDoorFront@2", "Door", 0)
+                    {
+                        Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
+                        Objectnumber = int.Parse(splitArray[3])
+                    };
+                    levelTileField.Add(door, (int)door.Position.X / 100, (int)door.Position.Y / 100);
+                    break;
+                case "SHIELDMAIDEN":
+                    ShieldMaidenLoader(splitArray);
+                    break;
+                case "KEY":
+                    KeyLoader(splitArray);
+                    break;
+                case "LOCK":
+                    LockLoader(splitArray);
+                    break;
             }
-            if (splitArray[0] == "HANDLE")
-            {
-                Handle handle = new Handle("Assets/Sprites/InteractiveObjects/handles@2", "Handle", 0)
-                {
-                    Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
-                };
-                objectList.Add(handle);
-            }
-
-            if(splitArray[0] == "DUMMY")
-            {
-                Monster dummy = new Dummy("Assets/Sprites/Enemies/Dummy", this)
-                {
-                    StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
-                };
-                dummy.Reset();
-                monsterList.Add(dummy);
-            }
-
-            if (splitArray[0] == "BUNNY")
-            {
-                Bunny bunny = new Bunny(this)
-                {
-                    StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
-                };
-                bunny.Reset();
-                monsterList.Add(bunny);
-            }
-
-            if (splitArray[0] == "PENGUIN")
-            {
-                Monster penguin = new LittlePenguin(this)
-                {
-                    StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
-                };
-                penguin.Reset();
-                monsterList.Add(penguin);
-            }
-
-
         }
     }
 
-    // Method that loads tiles based on an ID list seperated by commas e.g. 3,4,4,5,3,4
+    /// <summary>
+    /// Loads the correct color of lock into the level
+    /// </summary>
+    /// <param name="textArray">array given by the Position loader</param>
+    private void LockLoader(string[] textArray)
+    {
+        Lock lockitem = null;
+        switch (textArray[3])
+        {
+            case "RED":
+                lockitem = new Lock("Assets/Sprites/InteractiveObjects/PaladinLock", "redlock", 0);
+                break;
+            case "BLUE":
+                lockitem = new Lock("Assets/Sprites/InteractiveObjects/LightbringerLock", "bluelock", 0);
+                break;
+            case "GREEN":
+                lockitem = new Lock("Assets/Sprites/InteractiveObjects/RogueLock", "greenlock", 0);
+                break;
+            case "ORANGE":
+                lockitem = new Lock("Assets/Sprites/InteractiveObjects/TalismaniacLock", "orangelock", 0);
+                break;
+            case "ALL":
+                lockitem = new Lock("Assets/Sprites/InteractiveObjects/AllLock", "alllock", 0);
+                break;
+            default:
+                throw new ArgumentException("The given color " + textArray[3] + " was not found in the switch statement!");
+        }
+        lockitem.Position = new Vector2(float.Parse(textArray[1]), float.Parse(textArray[2]));
+        lockitem.Objectnumber = int.Parse(textArray[4]);
+        if (lockitem != null)
+            objectList.Add(lockitem);
+        else
+            throw new ArgumentNullException("added lock was null");
+    }
+
+    /// <summary>
+    /// Loads the correct color of key into the level
+    /// </summary>
+    /// <param name="textArray">array given by the Position loader</param>
+    private void KeyLoader(string[] textArray)
+    {
+        KeyItem key = null;
+        switch (textArray[3])
+        {
+            case "RED":
+                key = new KeyItem("Assets/Sprites/InteractiveObjects/paladinkey1", "redkey", 0);
+                break;
+            case "BLUE":
+                key = new KeyItem("Assets/Sprites/InteractiveObjects/lightbringerkey1", "bluekey", 0);
+                break;
+            case "GREEN":
+                key = new KeyItem("Assets/Sprites/InteractiveObjects/roguekey1", "greenkey", 0);
+                break;
+            case "ORANGE":
+                key = new KeyItem("Assets/Sprites/InteractiveObjects/talismaniackey1", "orangekey", 0);
+                break;
+            case "ALL":
+                key = new KeyItem("Assets/Sprites/InteractiveObjects/AllKey1", "allkey", 0);
+                break;
+            default:
+                throw new ArgumentException("The given color " + textArray[3] + " was not found in the switch statement!");
+        }
+        key.Position = new Vector2(float.Parse(textArray[1]), float.Parse(textArray[2]));
+        key.Objectnumber = int.Parse(textArray[4]);
+        if (key != null)
+            objectList.Add(key);
+        else
+            throw new ArgumentNullException("added key was null");
+    }
+
+    /// <summary>
+    /// Loads the Characters into the level
+    /// </summary>
+    /// <param name="textArray">array given by the Position loader</param>
+    private void ShieldMaidenLoader(string[] textArray)
+    {
+        Shieldmaiden shieldmaiden = new Shieldmaiden(int.Parse(textArray[3]), this);
+        // If there are no more real players left make the Character an AI
+        if (int.Parse(textArray[3]) > numberOfPlayers)
+        {
+            shieldmaiden.XBOXcontrolled = false; // sets the xbox controls to true or false, currently false
+            shieldmaiden.PlayerControlled = false;
+        }
+        shieldmaiden.StartPosition = new Vector2(float.Parse(textArray[1]), float.Parse(textArray[2]));
+        shieldmaiden.CurrentWeapon = new SwordAndShield(shieldmaiden);
+        shieldmaiden.Reset();
+        playerList.Add(shieldmaiden);
+    }
+
+    /// <summary>
+    /// Method that loads all tiles into the tilefield
+    /// </summary>
+    /// <param name="tileStringList">string list with tile information given from the main method</param>
+    /// <returns></returns>
     protected GameObjectGrid LoadTiles(List<string> tileStringList)
     {
         // Throw an exception if the given Tile string list is null
@@ -198,8 +310,12 @@ partial class Level : GameObjectList
                     case 8:
                         newtile = new Tile(TileType.Grass, "Assets/Sprites/Tiles/TileGrass1");
                         break;
+                    case 99:
+                        newtile = new Tile(TileType.BasicTile, "Assets/Sprites/Tiles/BasicTile1");
+                        break;
                     default: throw new NullReferenceException("the given ID " + IDlist[x, y] + " was not found in the preprogrammed IDs");
                 }
+              
                 tileField.Add(newtile, x, y);
             }
         }

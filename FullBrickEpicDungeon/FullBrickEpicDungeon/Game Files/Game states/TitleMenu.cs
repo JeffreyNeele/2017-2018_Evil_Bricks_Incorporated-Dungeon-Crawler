@@ -3,15 +3,18 @@ using Microsoft.Xna.Framework.Graphics;
 
 class TitleMenuState : IGameLoopObject
 {
-    // protected Button playButton, loadButton, settingsButton, quitButton;
     Button startButton, settingsButton;
     Texture2D background;
 
+    /// <summary>
+    /// Class that defines the Title Menu of the game
+    /// </summary>
     public TitleMenuState()
     {
+        // load the background
         background = GameEnvironment.AssetManager.GetSprite("Assets/Sprites/Menu/LarrySketch");
 
-        // add a play button
+        // load a settings and start button
         startButton = new Button("Assets/Sprites/Menu/StartButton", 1);
         startButton.Position = new Vector2((GameEnvironment.Screen.X / 2 - startButton.Width / 2), (GameEnvironment.Screen.Y * 3 / 4 - startButton.Height / 2));
 
@@ -19,6 +22,9 @@ class TitleMenuState : IGameLoopObject
         settingsButton.Position = new Vector2(GameEnvironment.Screen.X - settingsButton.Width, 0);
     }
 
+    /// <summary>
+    /// Draws the title menu
+    /// </summary>
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         spriteBatch.Draw(background, Vector2.Zero, Color.White);
@@ -31,8 +37,12 @@ class TitleMenuState : IGameLoopObject
 
     }
 
+    /// <summary>
+    /// Handles the input for the title menu
+    /// </summary>
     public void HandleInput(InputHelper inputHelper)
     {
+        // Updates the input for the start and settingsbutton
         startButton.HandleInput(inputHelper);
         settingsButton.HandleInput(inputHelper);
         if (startButton.Pressed)

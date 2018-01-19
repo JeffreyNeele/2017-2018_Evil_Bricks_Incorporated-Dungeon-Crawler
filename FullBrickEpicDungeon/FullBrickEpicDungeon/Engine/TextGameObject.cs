@@ -19,10 +19,6 @@ public class TextGameObject : GameObject
 
     public override void Update(GameTime gameTime)
     {
-        if (affectedByCamera)
-        {
-            cameraOffset = GameEnvironment.CameraHelper.CameraOffset;
-        }
         base.Update(gameTime);
     }
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

@@ -1,7 +1,8 @@
-﻿// Contains all base attributes of equipment, monsters or character
-// this class is initialized in one of those classes themselves.
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
+/// <summary>
+/// Class that defines simple variables that a monster or character have, should be self explanatory
+/// </summary>
 class BaseAttributes
 {
     public BaseAttributes()

@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Content;
 namespace FullBrickEpicDungeon
 {
     /// <summary>
-    /// This is the main type for your game.
+    /// Main Game file of our game
     /// </summary>
     public class DungeonCrawler : GameEnvironment
     {
@@ -20,25 +20,11 @@ namespace FullBrickEpicDungeon
         }
 
         /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
+        /// Initializes the screen and applies the correct resolution and adds all gamestates to the gamestate manager.
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             base.Initialize();
-        }
-
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
-        protected override void LoadContent()
-        {
-            base.LoadContent();
-            // TODO 
             screen = new Point(1900, 1050);
             windowSize = new Point(1280, 720);
             FullScreen = false;
@@ -48,26 +34,36 @@ namespace FullBrickEpicDungeon
             // TODO: use this.Content to load your game content here
             gameStateManager.AddGameState("titleMenu", new TitleMenuState());
             GameStateManager.AddGameState("settingsState", new SettingsState());
-            gameStateManager.AddGameState("characterSelection", new CharacterSelection());    
+            gameStateManager.AddGameState("characterSelection", new CharacterSelection());
+            gameStateManager.AddGameState("playingState", new PlayingState());
+            GameStateManager.AddGameState("pauseState", new PauseState());
+            gameStateManager.AddGameState("conversation", new ConversationState());
             gameStateManager.SwitchTo("titleMenu");
         }
 
         /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
+        /// Load the content for the game
         /// </summary>
-        protected override void UnloadContent()
+        protected override void LoadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            base.LoadContent();
         }
 
         /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
+        /// Unloads Content
+        /// </summary>
+        protected override void UnloadContent()
+        {
+            base.UnloadContent();
+        }
+
+        /// <summary>
+        /// Update for the DungeonCrawler game, checks for mouse visiblity and has the ability to exit the game if the ESC key is pressed
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            // If the global mousevisibility variable changed, update it accordingly.
             if (mouseVisible)
                 IsMouseVisible = true;
             else

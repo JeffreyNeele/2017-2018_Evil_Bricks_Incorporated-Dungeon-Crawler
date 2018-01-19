@@ -1,17 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-//State die zorgt voor de conversaties tussen characters in de game. Kan ook overgangen maken naar CutSceneState.
+
 class ConversationState : IGameLoopObject
 {
     IGameLoopObject playingState;
     Conversation conversation;
 
+    /// <summary>
+    /// State for if a conversation state is being displayed
+    /// </summary>
     public ConversationState()
     {
-        //makes and shows a new conversation when switched to this state.
+        // draw over the playingstate
         playingState = GameEnvironment.GameStateManager.GetGameState("playingState");
-        conversation = new Conversation("Assets/Conversations/conv_test.txt", 0, 100);
+        // loads the conversation
+        conversation = new Conversation("Assets/Conversations/conv_test.txt");
     }
 
     public void Update(GameTime gameTime)

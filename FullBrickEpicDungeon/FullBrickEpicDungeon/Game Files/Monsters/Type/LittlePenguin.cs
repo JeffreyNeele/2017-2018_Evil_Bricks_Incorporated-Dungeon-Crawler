@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
 class LittlePenguin : AImonster
@@ -10,13 +6,20 @@ class LittlePenguin : AImonster
     float slideSpeed;
     Vector2 targetPos, movementVector;
     float idleCounter;
+    /// <summary>
+    /// Class that defines a Penguin that slides around
+    /// </summary>
+    /// <param name="currentLevel">current level the penguin is in</param>
     public LittlePenguin(Level currentLevel) : base(0f, currentLevel, "LittlePenguin")
     {
         this.baseattributes.HP = 80;
         this.baseattributes.Armour = 0;
         this.baseattributes.Attack = 0;
         this.baseattributes.Gold = 75;
-        attributes = baseattributes;
+        attributes.HP = baseattributes.HP;
+        attributes.Armour = baseattributes.Armour;
+        attributes.Attack = baseattributes.Attack;
+        attributes.Gold = baseattributes.Gold;
 
         //The total speed of movement of the penguin
         slideSpeed = 10f;
@@ -29,6 +32,10 @@ class LittlePenguin : AImonster
         PlayAnimation("idle");
     }
 
+    /// <summary>
+    /// Method that updates the penguin
+    /// </summary>
+    /// <param name="gameTime">current game time</param>
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
@@ -48,9 +55,12 @@ class LittlePenguin : AImonster
     //This means that the attack method for the penguin is obsolete. The AttackHit, however, is still important.
     public override void Attack()
     {
+
     }
 
-    //Method for checking if the penguin collides with a wall or player
+    /// <summary>
+    /// Collision checker for the Penguin
+    /// </summary>
     public void CheckCollision()
     {
         //Take the grid to check for all tiles that are solid or doors, and player list for collision with players
@@ -71,13 +81,16 @@ class LittlePenguin : AImonster
                 movementVector = new Vector2(0, 0);
                 Position = previousPos;
                 idleCounter = 3;
-                AI.TargetRandomObject(50);
+                // TargetRandomObject (currently removed but might add back later, but as a local method?
             }
         }
     }
 
     float totalDistance;
-    //Method that defines the movementVector of the penguin.
+    
+    /// <summary>
+    /// Method that calculates the sliding direction
+    /// </summary>
     public void SlideDirection()
     {
 
@@ -90,11 +103,15 @@ class LittlePenguin : AImonster
             }
 
         Vector2 differencePos = targetPos - position;
-        movementVector = getMovementVector(differencePos);
+        movementVector = GetMovementVector(differencePos);
     }
 
-    //Method that calculates the movement vector of the penguin
-    public Vector2 getMovementVector(Vector2 difference)
+    /// <summary>
+    /// Method that calculates the movement vector of the penguin
+    /// </summary>
+    /// <param name="difference">Amount of distance between the target and the penguin</param>
+    /// <returns></returns>
+    public Vector2 GetMovementVector(Vector2 difference)
     {
         totalDistance = (float)Math.Sqrt(difference.X * difference.X + difference.Y * difference.Y);
         float scaling = slideSpeed / totalDistance;

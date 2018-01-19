@@ -27,10 +27,6 @@ public class SpriteGameObject : GameObject
     }
     public override void Update(GameTime gameTime)
     {
-        if (affectedByCamera)
-        {
-            cameraOffset = GameEnvironment.CameraHelper.CameraOffset;
-        }
 
         base.Update(gameTime);
     }

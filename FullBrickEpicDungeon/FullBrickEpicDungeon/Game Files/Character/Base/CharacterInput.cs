@@ -7,24 +7,26 @@ using Microsoft.Xna.Framework.Graphics;
 abstract partial class Character : AnimatedGameObject
 {
     protected Dictionary<Keys, Keys> keyboardControls;
-    protected bool xboxControlled, isOnIce = false, isGliding = false, blockinput = false;
+    protected bool xboxControlled, isGliding = false, blockinput = false;
 
-    //Method for character input (both xbox controller and keyboard), for now dummy keys for 1 controller are inserted, but the idea should be clear
-    //TO DO: a way to distinguish characters / players from each other.
+    /// <summary>
+    /// Method for handling input for the character
+    /// </summary>
     public override void HandleInput(InputHelper inputHelper)
     {
         if (playerControlled)
         {
             Vector2 previousPosition = this.position;
             Vector2 previousWalkingDirection = new Vector2(0, 0);
-            if(this.xboxControlled && !inputHelper.ControllerConnected(controllernumber))
+            if (this.xboxControlled && !inputHelper.ControllerConnected(relativePlayerNumber))
             {
                 FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
                 // will replace with another gamestate that tells you to reconnect your controller
                 GameEnvironment.GameStateManager.SwitchTo("pauseState");
-            } 
+            }
 
-            if (!IsDowned && !isOnIce)
+            // Handle normal movement
+            if (!IsDowned && !IsOnIceChecker())
             {
                 velocity = Vector2.Zero;
                 if (xboxControlled)
@@ -37,7 +39,7 @@ abstract partial class Character : AnimatedGameObject
                 }
 
                 this.position += walkingdirection;
-                
+
                 // Play walking SFX
                 if (walkingdirection != Vector2.Zero && stepSoundTimer.IsExpired)
                 {
@@ -45,10 +47,13 @@ abstract partial class Character : AnimatedGameObject
                     stepSoundTimer.Reset();
                 }
                 previousWalkingDirection = walkingdirection;
+                // Play Animations
                 PlayAnimationDirection(walkingdirection);
+                weapon.SwordDirectionCheckerManager(walkingdirection);
                 walkingdirection = Vector2.Zero;
                 base.HandleInput(inputHelper);
             }
+            // Handle ice movement
             else if (!IsDowned)
             {
                 if (xboxControlled)
@@ -76,7 +81,7 @@ abstract partial class Character : AnimatedGameObject
                 //Check if collision is comes from y value
                 this.position.X = previousPosition.X;
                 //if there still is collision, recreate old position and check for x value
-                if(!SolidCollisionChecker())
+                if (!SolidCollisionChecker())
                 {
                     this.position.X += previousWalkingDirection.X;
                     this.position.Y = previousPosition.Y;
@@ -91,20 +96,24 @@ abstract partial class Character : AnimatedGameObject
         }
     }
 
-    // Method that handles keyboard movement
+    /// <summary>
+    /// Method that handles the keyboard input for the character
+    /// </summary>
     public void HandleKeyboardMovement(InputHelper inputHelper)
     {
         if (inputHelper.KeyPressed(keyboardControls[Keys.Q]))
         {
+            weapon.IsAttacking = true;
             this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
             if (weapon.PreviousAttackHit)
                 PlaySFX("attack_hit");
             else
                 PlaySFX("attack_miss");
 
-        } 
+        }
         if (inputHelper.KeyPressed(keyboardControls[Keys.R]))
         {
+            weapon.IsAttacking = true;
             if (!weapon.AbilityMain.IsOnCooldown)
             {
                 this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
@@ -164,14 +173,16 @@ abstract partial class Character : AnimatedGameObject
             walkingdirection = MovementVector(this.movementSpeed, 0);
         }
 
-        if (inputHelper.IsKeyDown(keyboardControls[Keys.E])) 
+        if (inputHelper.IsKeyDown(keyboardControls[Keys.E]))
         {
             InteractCollisionChecker();
         }
 
     }
 
-    // Method that handles keyboard movement when the character is on ice
+    /// <summary>
+    /// Method for handling keyboard movement on ice
+    /// </summary>
     private void HandleKeyboardIceMovement(InputHelper inputHelper)
     {
         if (blockinput)
@@ -207,59 +218,64 @@ abstract partial class Character : AnimatedGameObject
         PlayAnimationDirection(iceSpeed);
     }
 
-    // Method that handles xbox movement and interaction
+    /// <summary>
+    /// Handles the XBOX movement for the player
+    /// </summary>
     private void HandleXboxMovement(InputHelper inputHelper)
     {
-        if (xboxControls != null) //xboxcontrols zijn niet ingeladen, dus wordt niet door xboxcontroller bestuurd.
+        if (inputHelper.ControllerConnected(relativePlayerNumber)) //Check if the controller is connected
         {
-            if (inputHelper.ControllerConnected(controllernumber)) //check of controller connected is
+            if (inputHelper.ButtonPressed(relativePlayerNumber, Buttons.A))
             {
-                //Attack and Main Ability
-                if (inputHelper.ButtonPressed(controllernumber, xboxControls[Buttons.A]))
-                {
-                    this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
-                    if (weapon.PreviousAttackHit)
-                        PlaySFX("attack_hit");
-                    else
-                        PlaySFX("attack_miss");
-                }
-                if (inputHelper.ButtonPressed(controllernumber, xboxControls[Buttons.B]))
-                {
-                    if (!weapon.AbilityMain.IsOnCooldown)
-                    {
-                        this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
-                        PlaySFX("basic_ability");
-                    }
-                    else
-                    {
-                        PlaySFX("ability_not_ready");
-                    }
-                }
-                //Interact button
-                if (inputHelper.ButtonPressed(controllernumber, xboxControls[Buttons.X]))
-                    InteractCollisionChecker();
-                if (inputHelper.ButtonPressed(controllernumber, xboxControls[Buttons.Y]))
-                {
-                    SwitchtoAIChecker();
-                    return;
-                }
-                //Movement
-                walkingdirection = inputHelper.WalkingDirection(controllernumber) * this.movementSpeed;
-                walkingdirection.Y = -walkingdirection.Y;
+                weapon.IsAttacking = true;
+                this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
+                if (weapon.PreviousAttackHit)
+                    PlaySFX("attack_hit");
+                else
+                    PlaySFX("attack_miss");
             }
+            if (inputHelper.ButtonPressed(relativePlayerNumber, Buttons.B))
+            {
+                if (!weapon.AbilityMain.IsOnCooldown)
+                {
+                    weapon.IsAttacking = true;
+                    this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
+                    PlaySFX("basic_ability");
+                }
+                else
+                {
+                    PlaySFX("ability_not_ready");
+                }
+            }
+            //Interact button
+            if (inputHelper.ButtonPressed(relativePlayerNumber, Buttons.X))
+                InteractCollisionChecker();
+            if (inputHelper.ButtonPressed(relativePlayerNumber, Buttons.Y))
+            {
+                SwitchtoAIChecker();
+                return;
+            }
+            //Movement
+            walkingdirection = inputHelper.WalkingDirection(relativePlayerNumber) * this.movementSpeed;
+            walkingdirection.Y = -walkingdirection.Y;
         }
+
     }
 
-    // Method that handles xbox movement when the character is on ice
+    /// <summary>
+    /// Method that handles XBOX input while the character is on ice
+    /// </summary>
     private void HandleXboxIceMovement(InputHelper inputHelper)
     {
+        // If the input is blocked we keep sliding
         if (blockinput)
         {
             if (this.iceSpeed != new Vector2(0, 0))
                 this.position += iceSpeed;
         }
-        else {
-            walkingdirection = inputHelper.WalkingDirection(controllernumber) * this.movementSpeed;
+        else
+        {
+            walkingdirection = inputHelper.WalkingDirection(relativePlayerNumber) * this.movementSpeed;
             walkingdirection.Y = -walkingdirection.Y;
             if (Math.Abs(walkingdirection.X) >= Math.Abs(walkingdirection.Y))
             {
@@ -291,16 +307,20 @@ abstract partial class Character : AnimatedGameObject
 
             }
         }
-        PlayAnimationDirection(iceSpeed);        
+        // play animations for the ice sliding direction;
+        PlayAnimationDirection(iceSpeed);
     }
 
-
+    /// <summary>
+    /// Checks if there is a targetable Character to switch to, and if there is it switches to that character
+    /// </summary>
     public void SwitchtoAIChecker()
     {
         GameObjectList playerList = GameWorld.Find("playerLIST") as GameObjectList;
         int targetPlayerNumber = this.playerNumber + 1;
-        for(int i = 1; i < 4; i++)
+        for (int i = 1; i < 4; i++)
         {
+            // There are  only 4 players, so if the target is 5 we go back to 1
             if (targetPlayerNumber > 4)
             {
                 targetPlayerNumber = 1;
@@ -320,22 +340,27 @@ abstract partial class Character : AnimatedGameObject
             targetPlayerNumber++;
         }
     }
+
+    /// <summary>
+    /// Method that gives the original player control over the target character
+    /// </summary>
+    /// <param name="targetCharacter">The character that the player will switch to control</param>
     public void SwitchToCharacter(Character targetCharacter)
     {
-        if (targetCharacter == this || !targetCharacter.SolidCollisionChecker() || targetCharacter.isOnIce)
+        // If the target character is the owner himself, or the target character is on a wrong position (due to how AI is handled) the switch will not commence
+        if (targetCharacter == this || !targetCharacter.SolidCollisionChecker() || targetCharacter.IsOnIceChecker())
         {
             PlaySFX("switch_wrong");
             return;
         }
         else
         {
+            // Switch control schemes
             if (this.xboxControlled)
             {
                 targetCharacter.xboxControlled = true;
-                targetCharacter.xboxControls = this.xboxControls;
-                targetCharacter.controllernumber = this.controllernumber;
-                this.xboxControls = null;
-                this.controllernumber = this.playerNumber;
+                targetCharacter.relativePlayerNumber = this.relativePlayerNumber;
+                this.relativePlayerNumber = this.playerNumber;
             }
             else
             {
@@ -349,34 +374,46 @@ abstract partial class Character : AnimatedGameObject
     }
 
 
-    //when called with the walkingdirection, it plays the correct animation with the movement.
+    /// <summary>
+    /// Method that plays the correct animation for the direction the character is walking in
+    /// </summary>
+    /// <param name="walkingdirection"></param>
     public void PlayAnimationDirection(Vector2 walkingdirection)
     {
-        if (Math.Abs(walkingdirection.X) > Math.Abs(walkingdirection.Y))
+        // The attack animations have priority over the walking animations, and thus if these are being played we just return from the method
+        if (!weapon.IsAttacking)
         {
-            if (walkingdirection.X > 0)
+            if (Math.Abs(walkingdirection.X) > Math.Abs(walkingdirection.Y))
             {
-                this.PlayAnimation("rightcycle");
-                this.Mirror = true;
+                if (walkingdirection.X > 0)
+                {
+                    this.PlayAnimation("rightcycle");
+                    this.Mirror = true;
+                }
+                else if (walkingdirection.X < 0)
+                {
+                    this.PlayAnimation("leftcycle");
+                    this.Mirror = false;
+                }
             }
-            else if (walkingdirection.X < 0)
+            else if (Math.Abs(walkingdirection.Y) > Math.Abs(walkingdirection.X))
             {
-                this.PlayAnimation("leftcycle");
-                this.Mirror = false;
+                if (walkingdirection.Y > 0)
+                {
+                    this.PlayAnimation("frontcycle");
+                }
+                else if (walkingdirection.Y < 0)
+                {
+                    this.PlayAnimation("backcycle");
+                }
             }
+            else
+                this.PlayAnimation("idle");
         }
-        else if (Math.Abs(walkingdirection.Y) > Math.Abs(walkingdirection.X))
-        {
-            if (walkingdirection.Y > 0)
-            {
-                this.PlayAnimation("frontcycle");
-            }
-            else if (walkingdirection.Y < 0)
-            {
-                this.PlayAnimation("backcycle");
-            }
-        }
-        else
-            this.PlayAnimation("idle");
+    }
+
+    public Vector2 WalkingDirection
+    {
+        get { return walkingdirection; }
     }
 }

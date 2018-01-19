@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 class Projectile : SpriteGameObject
 {
-    // bool for piercing, which means the projectile will not be deleted after hitting a monster
     protected bool piercing;
     protected int damage;
+    /// <summary>
+    /// Class for a Projectile NOTE: Only usable for characters at the moment
+    /// </summary>
+    /// <param name="damage">Amount of damage this projectile does when it hits something</param>
+    /// <param name="assetName">The assetname of this projectile (the image path)</param>
+    /// <param name="facingLeft">Bool that makes the projectile go left</param>
+    /// <param name="travellingSpeed">int that defines the speed of the projectile</param>
+    /// <param name="piercing">bool for piercing, which means the projectile will not be deleted after hitting a monster</param>
     protected Projectile(int damage, string assetName, bool facingLeft, Vector2 travellingSpeed, bool piercing = false) : base (assetName)
     {
         this.damage = damage;
@@ -24,7 +29,9 @@ class Projectile : SpriteGameObject
         CollisionChecker();
     }
 
-    // Checks collision with monsters and walls
+    /// <summary>
+    /// Method that checks collision with walls and monsters
+    /// </summary>
     protected void CollisionChecker()
     {
         GameObjectList projectileList = GameWorld.Find("projectileLIST") as GameObjectList;

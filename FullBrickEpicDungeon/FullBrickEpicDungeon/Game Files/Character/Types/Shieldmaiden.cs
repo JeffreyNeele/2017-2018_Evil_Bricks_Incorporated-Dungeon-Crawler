@@ -3,7 +3,7 @@ using System;
 
 class Shieldmaiden : Character
 {
-    public Shieldmaiden(int maidennr, Level currentLevel, int controlnr) : base(maidennr, currentLevel, controlnr, ClassType.ShieldMaiden, "Shieldmaiden")
+    public Shieldmaiden(int playerNumber, Level currentLevel) : base(playerNumber, currentLevel, "Shieldmaiden")
     {
         // Loads the idle animation
         // sets this characters base attributes, might be set in level later but for now it is in this constructors example.
@@ -11,9 +11,11 @@ class Shieldmaiden : Character
         this.baseattributes.Armour = 50;
         this.baseattributes.Attack = 10;
         this.baseattributes.Gold = 0;
-        attributes = baseattributes;
+        attributes.HP = baseattributes.HP;
+        attributes.Armour = baseattributes.Armour;
+        attributes.Attack = baseattributes.Attack;
+        attributes.Gold = baseattributes.Gold;
         weapon = new SwordAndShield(this);
-        //Healthbar healthbar = new Healthbar(content, this.position);
         string playerColor;
         switch (maidennr)
         {
@@ -34,6 +36,10 @@ class Shieldmaiden : Character
         LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_walk_front_" + playerColor + "@4", "frontcycle", true, 0.2F);
         LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_walk_left_" + playerColor + "@4", "leftcycle", true, 0.2F);
         LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_walk_right_" + playerColor + "@4", "rightcycle", true, 0.2F);
+        LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_attack_" + playerColor + "_down", "attack_downwards", false);
+        LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_attack_" + playerColor + "_up", "attack_upwards", false);
+        LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_attack_" + playerColor + "_left", "attack_fromleft", false);
+        LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_attack_" + playerColor + "_right", "attack_fromright", false);
         PlayAnimation("idle");
 
         characterSFX.Add("attack_hit", "Assets/SFX/Shieldmaiden/sword_hit");

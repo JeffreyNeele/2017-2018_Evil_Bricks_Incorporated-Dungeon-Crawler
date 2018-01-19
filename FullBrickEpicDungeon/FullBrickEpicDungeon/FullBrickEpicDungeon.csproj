@@ -45,7 +45,6 @@
     <Compile Include="Engine\Animation.cs" />
     <Compile Include="Engine\AssetManager.cs" />
     <Compile Include="Engine\Button.cs" />
-    <Compile Include="Engine\CameraHelper.cs" />
     <Compile Include="Engine\Circle.cs" />
     <Compile Include="Engine\Collision.cs" />
     <Compile Include="Engine\DrawingHelper.cs" />
@@ -62,7 +61,7 @@
     <Compile Include="Engine\ParticleEffects\DropParticleEffect.cs" />
     <Compile Include="Engine\ParticleEffects\FadeParticleEffect.cs" />
     <Compile Include="Engine\ParticleEffects\ParticleEffect.cs" />
-    <Compile Include="Engine\SettingsHelper.cs" />
+    <Compile Include="Engine\ControlGenerator.cs" />
     <Compile Include="Engine\Timer.cs" />
     <Compile Include="Game Files\Abilities\Base\Ability.cs" />
     <Compile Include="Game Files\Abilities\Base\SpecialAbility.cs" />
@@ -73,11 +72,9 @@
     <Compile Include="Game Files\BaseAttributes.cs" />
     <Compile Include="Game Files\Character\Base\CharacterInput.cs" />
     <Compile Include="Game Files\Character\Types\Shieldmaiden.cs" />
-    <Compile Include="Game Files\Enumerators.cs" />
-    <Compile Include="Game Files\Cutscenes\Type\1LarryShits.cs" />
     <Compile Include="Game Files\Cutscenes\Base\Cutscene.cs" />
+    <Compile Include="Game Files\Cutscenes\Base\CutsceneManager.cs" />
     <Compile Include="Game Files\Equipment\Base\Equipment.cs" />
-    <Compile Include="Game Files\Equipment\ShieldMaiden\IronArmour.cs" />
     <Compile Include="Game Files\Game states\CharacterSelection.cs" />
     <Compile Include="Game Files\Game states\ConversationState.cs" />
     <Compile Include="Game Files\Game states\CutsceneState.cs" />
@@ -85,17 +82,19 @@
     <Compile Include="Game Files\Game states\PlayingState.cs" />
     <Compile Include="Game Files\Game states\SettingsState.cs" />
     <Compile Include="Game Files\Game states\TitleMenu.cs" />
-    <Compile Include="Game Files\HUD\Conversation\Conversation.cs" />
-    <Compile Include="Game Files\HUD\Healthbars\Healthbar.cs" />
-    <Compile Include="Game Files\HUD\PlayerInformation\PlayerInformation.cs" />
-    <Compile Include="Game Files\Interactive objects\Base\DroppedItem.cs" />
-    <Compile Include="Game Files\Interactive objects\Base\InteractiveObject.cs" />
-    <Compile Include="Game Files\Interactive objects\Types\Handle.cs" />
+    <Compile Include="Game Files\HUD\Conversation.cs" />
+    <Compile Include="Game Files\Objects\Interactive objects\Base\InteractiveObject.cs" />
+    <Compile Include="Game Files\Objects\Interactive objects\Types\KeyItem.cs" />
+    <Compile Include="Game Files\Objects\Interactive objects\Types\Lock.cs" />
+    <Compile Include="Game Files\Objects\Openable objects\Base\OpenableObject.cs" />
+    <Compile Include="Game Files\Objects\Interactive objects\Types\Handle.cs" />
+    <Compile Include="Game Files\Objects\Openable objects\Types\Door.cs" />
+    <Compile Include="Game Files\Objects\Openable objects\Types\Trapdoor.cs" />
+    <Compile Include="Game Files\HUD\Healthbar.cs" />
     <Compile Include="Game Files\Level\LevelGameLoop.cs" />
     <Compile Include="Game Files\Level\LevelLoading.cs" />
     <Compile Include="Game Files\Level\LevelMain.cs" />
     <Compile Include="Game Files\Level\Tile.cs" />
-    <Compile Include="Game Files\Lightsources\Base\LightSource.cs" />
     <Compile Include="Game Files\Monsters\Base\Monster.cs" />
     <Compile Include="Game Files\BaseAI.cs" />
     <Compile Include="Game Files\Monsters\Base\AImonster.cs" />
@@ -103,12 +102,10 @@
     <Compile Include="Game Files\Monsters\Type\Dummy.cs" />
     <Compile Include="Game Files\Monsters\Type\LittlePenguin.cs" />
     <Compile Include="Game Files\Projectiles\Projectile.cs" />
-    <Compile Include="Game Files\Puzzle\Base\Puzzle.cs" />
-    <Compile Include="Game Files\Interactive objects\Types\Trap.cs" />
-    <Compile Include="Game Files\Shop\ShopMain.cs" />
-    <Compile Include="Game Files\Weapons\Base\Weapon.cs" />
+    <Compile Include="Game Files\Objects\Interactive objects\Types\Trap.cs" />
+    <Compile Include="Game Files\Weapons\Weapon.cs" />
     <Compile Include="Game Files\MainGame.cs" />
-    <Compile Include="Game Files\Weapons\Starter Weapons\SwordAndShield.cs" />
+    <Compile Include="Game Files\Weapons\SwordAndShield.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Engine\SpriteGameObject.cs" />
@@ -134,7 +131,6 @@
     </MonoGameContentReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Game Files\Weapons\Side Grades\" />
     <Folder Include="Libraries\" />
   </ItemGroup>
   <ItemGroup>
