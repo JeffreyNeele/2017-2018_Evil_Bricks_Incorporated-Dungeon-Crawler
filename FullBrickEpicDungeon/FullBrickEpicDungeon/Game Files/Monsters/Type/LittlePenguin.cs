@@ -5,16 +5,17 @@ class LittlePenguin : AImonster
 {
     float slideSpeed;
     Vector2 targetPos, movementVector;
+    int animationCheck = 0;
     float idleCounter;
     /// <summary>
     /// Class that defines a Penguin that slides around
     /// </summary>
     /// <param name="currentLevel">current level the penguin is in</param>
-    public LittlePenguin(Level currentLevel) : base(0f, currentLevel, "LittlePenguin")
+    public LittlePenguin(Level currentLevel) : base(0f, currentLevel, "LittlePenguin", 800)
     {
         this.baseattributes.HP = 80;
         this.baseattributes.Armour = 0;
-        this.baseattributes.Attack = 0;
+        this.baseattributes.Attack = 20;
         this.baseattributes.Gold = 75;
         attributes.HP = baseattributes.HP;
         attributes.Armour = baseattributes.Armour;
@@ -27,9 +28,15 @@ class LittlePenguin : AImonster
         //Because the penguin will be idle for a while after sliding, the movement vector will have to be set (0,0) from time to time
         movementVector = new Vector2(0, 0);
         idleCounter = 3;
-        //Load the animations, for now a bunny animation is taken.
-        LoadAnimation("Assets/Sprites/Enemies/bunny_default", "idle", false);
-        PlayAnimation("idle");
+        //Load the animations
+        LoadAnimation("Assets/Sprites/Enemies/PenguinSide@4", "sideWalk", true, 0.2f);
+        LoadAnimation("Assets/Sprites/Enemies/PenguinFront@4", "sideFront", true, 0.2f);
+        LoadAnimation("Assets/Sprites/Enemies/PenguinBack@4", "sideBack", true, 0.2f);
+        LoadAnimation("Assets/Sprites/Enemies/PenguinSlideUp@4", "slideUp", true, 0.2f);
+        LoadAnimation("Assets/Sprites/Enemies/PenguinSlideSide@4", "slideSide", true, 0.2f);
+        LoadAnimation("Assets/Sprites/Enemies/PenguinSlideDown@4", "slideDown", true, 0.2f);
+
+        PlayAnimation("sideFront");
     }
 
     /// <summary>
@@ -45,10 +52,41 @@ class LittlePenguin : AImonster
         {
             previousPos = Position;
             Position += movementVector;
+
+            if(Math.Abs(movementVector.X) > Math.Abs(movementVector.Y))
+            {
+                PlayAnimation("slideSide");
+                animationCheck = 3;
+                if (movementVector.X > 0)
+                    Mirror = false;
+                else
+                    Mirror = true;
+            }
+            else
+            {
+                if (movementVector.Y > 0)
+                {
+                    PlayAnimation("slideDown");
+                    animationCheck = 2;
+                }
+                else
+                {
+                    PlayAnimation("slideUp");
+                    animationCheck = 1;
+                }
+            }
             CheckCollision();
         }
         else if (idleCounter > 0)
+        {
             idleCounter -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (animationCheck == 1)
+                PlayAnimation("sideFront");
+            else if (animationCheck == 2)
+                PlayAnimation("sideBack");
+            else
+                PlayAnimation("sideWalk");
+        }
     }
 
     //The penguin is special in the way that it attacks when it is sliding from 1 point to another.

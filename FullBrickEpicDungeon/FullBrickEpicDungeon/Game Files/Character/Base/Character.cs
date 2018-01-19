@@ -54,7 +54,7 @@ abstract partial class Character : AnimatedGameObject
         this.iceSpeed = new Vector2(0, 0);
         this.movementSpeed = new Vector2(4, 4);
         // Make a new AI
-        AI = new BaseAI(this, 200F, currentLevel, false, 1, 700);
+        AI = new BaseAI(this, 200F, currentLevel, false, 700, 1);
         this.playerNumber = playerNumber;
         relativePlayerNumber = playerNumber;
         // Generates controls for the keyboard if the character is not controlled by xbox, keyboard is only used for 2 players so as a safeguard player 3 and 4 will become AI if this is called them.

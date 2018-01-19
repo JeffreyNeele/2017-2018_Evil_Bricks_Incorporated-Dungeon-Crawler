@@ -27,7 +27,7 @@ class BaseAI
     /// <param name="isMonster">Bool that determines whether this AI follows monster or player logic</param>
     /// <param name="idleTime">Amount of time an AI waits after attacking</param>
     /// <param name="sightRange">Distance of the LOS of the AI</param>
-    public BaseAI(AnimatedGameObject owner, float movementSpeed, Level currentLevel, bool isMonster = true, float idleTime = 1.4F, float sightRange = 200)
+    public BaseAI(AnimatedGameObject owner, float movementSpeed, Level currentLevel, bool isMonster = true, float sightRange = 200, float idleTime = 1.4F)
     {
         idleTimer = new Timer(idleTime)
         {
@@ -44,9 +44,7 @@ class BaseAI
         if (isMonster)
             targetList = currentLevel.GameWorld.Find("playerLIST") as GameObjectList;
         else
-            targetList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList;
-
-        
+            targetList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList; 
     }
 
     /// <summary>
