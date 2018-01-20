@@ -31,7 +31,7 @@ class Door : OpenableObject
         {
             if (keylock is Lock)
             {
-                if (keylock.Visible == false && this.BoundingBox.Intersects(keylock.BoundingBox))
+                if (keylock.Visible == false && this.Objectnumber == ((Lock)keylock).Objectnumber)
                 {
                     DoorOpen = true;
                     openUnlockedDoor(this);

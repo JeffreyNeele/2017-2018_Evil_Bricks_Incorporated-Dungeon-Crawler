@@ -160,6 +160,38 @@ partial class Level : GameObjectList
                     levelTileField.Add(doorbottomleft, (int)doorbottomleft.Position.X / 50, (int)doorbottomleft.Position.Y / 50);
                     levelTileField.Add(doorbottomright, (int)doorbottomright.Position.X / 50, (int)doorbottomright.Position.Y / 50);
                     break;
+                case "VDOOR":
+                    Door vdoorupperleft = new Door("Assets/Sprites/Tiles/VerticalDoorUpperLeft@2", "Door", 0)
+                    {
+                        Position = new Vector2(float.Parse(splitArray[1]) + 50, float.Parse(splitArray[2]) + 50),
+                        Objectnumber = int.Parse(splitArray[3])
+                    };
+                    Door vdoorupperright = new Door("Assets/Sprites/Tiles/VerticalDoorUpperRight@2", "Door", 0)
+                    {
+                        Position = new Vector2(float.Parse(splitArray[1]) + 50, float.Parse(splitArray[2])),
+                        Objectnumber = int.Parse(splitArray[3])
+                    };
+                    Door vdoormiddleleft = new Door("Assets/Sprites/Tiles/VerticalDoorMiddleLeft@2", "Door", 0)
+                    {
+                        Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]) + 50),
+                        Objectnumber = int.Parse(splitArray[3])
+                    };
+                    Door vdoorbottomleft = new Door("Assets/Sprites/Tiles/VerticalDoorBottomLeft@2", "Door", 0)
+                    {
+                        Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]) + 100),
+                        Objectnumber = int.Parse(splitArray[3])
+                    };
+                    Door vdoormiddleright = new Door("Assets/Sprites/Tiles/VerticalDoorMiddleRight@2", "Door", 0)
+                    {
+                        Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
+                        Objectnumber = int.Parse(splitArray[3])
+                    };
+                    levelTileField.Add(vdoorupperleft, (int)vdoorupperleft.Position.X / 50, (int)vdoorupperleft.Position.Y / 50);
+                    levelTileField.Add(vdoorupperright, (int)vdoorupperright.Position.X / 50, (int)vdoorupperright.Position.Y / 50);
+                    levelTileField.Add(vdoorbottomleft, (int)vdoorbottomleft.Position.X / 50, (int)vdoorbottomleft.Position.Y / 50);
+                    levelTileField.Add(vdoormiddleright, (int)vdoormiddleright.Position.X / 50, (int)vdoormiddleright.Position.Y / 50);
+                    levelTileField.Add(vdoormiddleleft, (int)vdoormiddleleft.Position.X / 50, (int)vdoormiddleleft.Position.Y / 50);
+                    break;
                 case "SHIELDMAIDEN":
                     ShieldMaidenLoader(splitArray);
                     break;
