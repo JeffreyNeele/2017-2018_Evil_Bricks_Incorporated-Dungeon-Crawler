@@ -387,7 +387,7 @@ abstract partial class Character : AnimatedGameObject
             {
                 this.PlayAnimation("idle");
             }
-            if (Math.Abs(walkingdirection.X) >= Math.Abs(walkingdirection.Y))
+            else if (Math.Abs(walkingdirection.X) >= Math.Abs(walkingdirection.Y))
             {
                 if (walkingdirection.X > 0)
                 {
