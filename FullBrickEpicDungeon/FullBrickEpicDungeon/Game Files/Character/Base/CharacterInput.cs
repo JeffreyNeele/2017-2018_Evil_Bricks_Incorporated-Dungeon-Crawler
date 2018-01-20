@@ -113,9 +113,9 @@ abstract partial class Character : AnimatedGameObject
         }
         if (inputHelper.KeyPressed(keyboardControls[Keys.R]))
         {
-            weapon.IsAttacking = true;
             if (!weapon.AbilityMain.IsOnCooldown)
             {
+                weapon.IsAttacking = true;
                 this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
                 PlaySFX("basic_ability");
             }
