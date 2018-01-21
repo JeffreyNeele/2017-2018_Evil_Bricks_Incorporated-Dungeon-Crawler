@@ -252,8 +252,10 @@ abstract partial class Character : AnimatedGameObject
                 }
             }
             //Interact button
-            if (inputHelper.ButtonPressed(controllerNumber, Buttons.Y))
+            if (inputHelper.IsButtonDown(controllerNumber, Buttons.Y))
+            {
                 InteractCollisionChecker();
+            }
             if (inputHelper.ButtonPressed(controllerNumber, Buttons.X))
             {
                 SwitchtoAIChecker();
@@ -279,9 +281,11 @@ abstract partial class Character : AnimatedGameObject
         }
         else
         {
-            if (inputHelper.ButtonPressed(controllerNumber, Buttons.Y))
+            //Interact button
+            if (inputHelper.IsButtonDown(controllerNumber, Buttons.Y))
+            {
                 InteractCollisionChecker();
-
+            }
             walkingdirection = inputHelper.WalkingDirection(controllerNumber) * this.movementSpeed;
             walkingdirection.Y = -walkingdirection.Y;
             if (Math.Abs(walkingdirection.X) >= Math.Abs(walkingdirection.Y))
