@@ -20,7 +20,8 @@ class Handle : InteractiveObject
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        countDownTimer.Update(gameTime);
+        if(ObjectNumberConnected != 99)
+            countDownTimer.Update(gameTime);
         if (countDownTimer.IsExpired)
         {
             this.Reset();
