@@ -410,7 +410,7 @@ abstract partial class Character : AnimatedGameObject
                 {
                     this.PlayAnimation("backcycle");
                 }
-            } 
+            }
         }
     }
 

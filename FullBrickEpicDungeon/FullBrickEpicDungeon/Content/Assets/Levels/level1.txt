@@ -30,6 +30,7 @@ KEY 400 300 BLUE 3
 LOCK 500 800 RED 1
 DOOR 900 700 1
 HANDLE 400 800 1
+PENGUIN 200 200
 ENDOFFILE
 
 note: this is not the actual tutorial level, more like a test level

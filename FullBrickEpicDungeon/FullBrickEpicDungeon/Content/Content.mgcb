@@ -853,42 +853,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/InteractiveObjects/NextLevelCombined@2.png
 
-#begin Assets/Sprites/InteractiveObjects/paladinkey1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/InteractiveObjects/paladinkey1.png
-
-#begin Assets/Sprites/Tiles/TileDoorFront@2.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/Tiles/TileDoorFront@2.png
-
-#begin Assets/Sprites/InteractiveObjects/DoorCombined@2.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/InteractiveObjects/DoorCombined@2.png
-
 #begin Assets/Sprites/Shieldmaiden/ShieldMaiden-Animation-Walk-Back@4.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1201,7 +1165,7 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Shieldmaiden/shieldmaiden_attack_orange_up.png
 
-#begin Assets/Sprites/InteractiveObjects/PaladinLock.png
+#begin Assets/Sprites/InteractiveObjects/AllKey1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1211,43 +1175,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Assets/Sprites/InteractiveObjects/PaladinLock.png
-
-#begin Assets/Sprites/InteractiveObjects/lightbringerkey1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/InteractiveObjects/lightbringerkey1.png
-
-#begin Assets/Sprites/InteractiveObjects/roguekey1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/InteractiveObjects/roguekey1.png
-
-#begin Assets/Sprites/InteractiveObjects/taismaniackey1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/InteractiveObjects/taismaniackey1.png
+/build:Assets/Sprites/InteractiveObjects/AllKey1.png
 
 #begin Assets/Sprites/InteractiveObjects/AllLock.png
 /importer:TextureImporter
@@ -1261,6 +1189,18 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/InteractiveObjects/AllLock.png
 
+#begin Assets/Sprites/InteractiveObjects/lightbringerkey1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/InteractiveObjects/lightbringerkey1.png
+
 #begin Assets/Sprites/InteractiveObjects/LightbringerLock.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1272,6 +1212,42 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/InteractiveObjects/LightbringerLock.png
+
+#begin Assets/Sprites/InteractiveObjects/paladinkey1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/InteractiveObjects/paladinkey1.png
+
+#begin Assets/Sprites/InteractiveObjects/PaladinLock.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/InteractiveObjects/PaladinLock.png
+
+#begin Assets/Sprites/InteractiveObjects/roguekey1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/InteractiveObjects/roguekey1.png
 
 #begin Assets/Sprites/InteractiveObjects/RogueLock.png
 /importer:TextureImporter
@@ -1297,7 +1273,7 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/InteractiveObjects/TalismaniacLock.png
 
-#begin Assets/Sprites/InteractiveObjects/AllKey1.png
+#begin Assets/Sprites/Tiles/DoorBottomLeft@2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1307,7 +1283,43 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Assets/Sprites/InteractiveObjects/AllKey1.png
+/build:Assets/Sprites/Tiles/DoorBottomLeft@2.png
+
+#begin Assets/Sprites/Tiles/DoorBottomRight@2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Tiles/DoorBottomRight@2.png
+
+#begin Assets/Sprites/Tiles/DoorUpperLeft@2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Tiles/DoorUpperLeft@2.png
+
+#begin Assets/Sprites/Tiles/DoorUpperRight@2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Tiles/DoorUpperRight@2.png
 
 #begin Assets/Levels/level5.txt
 /copy:Assets/Levels/level5.txt
@@ -1329,4 +1341,148 @@
 
 #begin Assets/Levels/level11.txt
 /copy:Assets/Levels/level11.txt
+
+#begin Assets/Sprites/Enemies/PenguinBack@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Enemies/PenguinBack@4.png
+
+#begin Assets/Sprites/Enemies/PenguinFront@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Enemies/PenguinFront@4.png
+
+#begin Assets/Sprites/Enemies/PenguinSide@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Enemies/PenguinSide@4.png
+
+#begin Assets/Sprites/Enemies/PenguinSlideDown@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Enemies/PenguinSlideDown@4.png
+
+#begin Assets/Sprites/Enemies/PenguinSlideSide@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Enemies/PenguinSlideSide@4.png
+
+#begin Assets/Sprites/Enemies/PenguinSlideUp@4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Enemies/PenguinSlideUp@4.png
+
+#begin Assets/Sprites/InteractiveObjects/talismaniackey1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/InteractiveObjects/talismaniackey1.png
+
+#begin Assets/Sprites/Tiles/VerticalDoorBottomLeft@2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Tiles/VerticalDoorBottomLeft@2.png
+
+#begin Assets/Sprites/Tiles/VerticalDoorMiddleLeft@2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Tiles/VerticalDoorMiddleLeft@2.png
+
+#begin Assets/Sprites/Tiles/VerticalDoorMiddleRight@2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Tiles/VerticalDoorMiddleRight@2.png
+
+#begin Assets/Sprites/Tiles/VerticalDoorUpperLeft@2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Tiles/VerticalDoorUpperLeft@2.png
+
+#begin Assets/Sprites/Tiles/VerticalDoorUpperRight@2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Tiles/VerticalDoorUpperRight@2.png
 

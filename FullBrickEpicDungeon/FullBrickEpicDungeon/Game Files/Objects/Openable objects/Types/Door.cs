@@ -31,12 +31,22 @@ class Door : OpenableObject
         {
             if (keylock is Lock)
             {
-                if (keylock.Visible == false && this.BoundingBox.Intersects(keylock.BoundingBox))
+                if (keylock.Visible == false && this.Objectnumber == ((Lock)keylock).Objectnumber)
                 {
                     DoorOpen = true;
+                    openUnlockedDoor(this);
                 }
             }
         }
+    }
+
+    public void openUnlockedDoor(Door openDoor)
+    {
+        GameObjectGrid tileField = GameWorld.Find("TileField") as GameObjectGrid;
+        foreach (var door in tileField.Objects)
+            if(door is Door)
+                if (((Door)door).Objectnumber == openDoor.Objectnumber && openDoor.DoorOpen)
+                    ((Door)door).DoorOpen = true;
     }
 }
 
