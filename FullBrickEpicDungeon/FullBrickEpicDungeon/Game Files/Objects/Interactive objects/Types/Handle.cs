@@ -49,6 +49,11 @@ class Handle : InteractiveObject
         {
             if (openableObject is OpenableObject)
             {
+                if(this.ObjectNumberConnected == 99)
+                {
+                    ((OpenableObject)openableObject).Open();
+                    continue;
+                }
                 if (((OpenableObject) openableObject).Objectnumber == handlenumber)
                 {
                     if(action == "open")
