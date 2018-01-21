@@ -13,9 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Assets/Conversations/conv_test.txt
-/copy:Assets/Conversations/conv_test.txt
-
 #begin Assets/Fonts/ConversationFont.xnb
 /copy:Assets/Fonts/ConversationFont.xnb
 
@@ -1485,4 +1482,10 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Tiles/VerticalDoorUpperRight@2.png
+
+#begin Assets/Conversations/LarryShits.txt
+/copy:Assets/Conversations/LarryShits.txt
+
+#begin Assets/Conversations/ThroneRoom.txt
+/copy:Assets/Conversations/ThroneRoom.txt
 
