@@ -17,7 +17,6 @@ abstract partial class Character : AnimatedGameObject
         if (playerControlled)
         {
             Vector2 previousPosition = this.position;
-            Vector2 previousWalkingDirection = new Vector2(0, 0);
             if (this.xboxControlled && !inputHelper.ControllerConnected(relativePlayerNumber))
             {
                 FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
@@ -46,10 +45,11 @@ abstract partial class Character : AnimatedGameObject
                     PlaySFX("walk");
                     stepSoundTimer.Reset();
                 }
-                previousWalkingDirection = walkingdirection;
+                if(walkingdirection != Vector2.Zero)
+                    previousWalkingDirection = walkingdirection;
                 // Play Animations
                 PlayAnimationDirection(walkingdirection);
-                weapon.SwordDirectionCheckerManager(walkingdirection);
+                weapon.SwordDirectionCheckerManager(previousWalkingDirection);
                 walkingdirection = Vector2.Zero;
                 base.HandleInput(inputHelper);
             }
@@ -383,7 +383,7 @@ abstract partial class Character : AnimatedGameObject
         // The attack animations have priority over the walking animations, and thus if these are being played we just return from the method
         if (!weapon.IsAttacking)
         {
-            if(walkingdirection == new Vector2(0, 0))
+            if(walkingdirection == Vector2.Zero)
                 this.PlayAnimation("idle");
             else if (Math.Abs(walkingdirection.X) >= Math.Abs(walkingdirection.Y))
             {

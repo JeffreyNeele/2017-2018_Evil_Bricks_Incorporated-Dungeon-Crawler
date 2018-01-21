@@ -199,7 +199,6 @@ abstract class Weapon : AnimatedGameObject
                 Position = new Vector2(Owner.Position.X + 30, Owner.Position.Y - 10);
                 PlayAnimation("attack_right");
                 owner.PlayAnimation("attack_fromright");
-                owner.Mirror = false;
                 break;
             default:
                 throw new ArgumentException("No direction given to play animations for");
