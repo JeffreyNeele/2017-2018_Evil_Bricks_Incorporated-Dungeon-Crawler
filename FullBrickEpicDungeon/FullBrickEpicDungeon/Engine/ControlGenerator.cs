@@ -10,7 +10,6 @@ public class ControlGenerator
     List<string> defaultControls = new List<string>();
     List<string> generatedControls = new List<string>();
 
-
     //Generates the keyboard dictionary -> defaultcontrols, actualcontrols
     public Dictionary<Keys, Keys> GenerateKeyboardControls(string path)
     {
@@ -31,27 +30,6 @@ public class ControlGenerator
 
         return controlScheme;
     }
-
-
-    //generates xbox controls -> originalxboxcontrols, actualcontrols
-    public Dictionary<Buttons, Buttons> GenerateXboxControls(string path)
-    {
-        path = "Content/" + path;        
-        ReadControlsFile("Content/Assets/Controls/XboxControls/defaultXboxcontrols.txt", path);
-
-        Dictionary<Buttons, Buttons> controlScheme = new Dictionary<Buttons, Buttons>();
-        for (int k = 0; k < defaultControls.Count; k++)
-        {
-            Buttons defaultkey = (Buttons)Enum.Parse(typeof(Buttons), defaultControls[k]);
-            Buttons newButtons = (Buttons)Enum.Parse(typeof(Buttons), generatedControls[k]);
-            controlScheme.Add(defaultkey, newButtons);
-        }
-        generatedControls.Clear();
-        defaultControls.Clear();
-        return controlScheme;
-    }
-
-
 
     //reads the control files
     public List<string> ReadControlsFile(string defaultFilePath, string generateFilePath)

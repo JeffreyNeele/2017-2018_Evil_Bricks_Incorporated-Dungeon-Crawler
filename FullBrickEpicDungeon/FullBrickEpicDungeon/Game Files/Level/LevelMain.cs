@@ -13,7 +13,7 @@ partial class Level : GameObjectList
     /// <param name="levelIndex">Relative level index</param>
     public Level(int levelIndex) : base(1)
     {
-        numberOfPlayers = FullBrickEpicDungeon.DungeonCrawler.numberOfPlayers;
+        numberOfPlayers = CharacterSelection.NumberOfPlayers;
         this.levelIndex = levelIndex;
         // assign the lists and add them
         playerList = new GameObjectList(5, "playerLIST");
@@ -35,3 +35,5 @@ partial class Level : GameObjectList
     }
 
 }
+
+

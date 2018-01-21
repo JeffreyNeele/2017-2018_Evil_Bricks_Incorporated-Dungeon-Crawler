@@ -113,9 +113,9 @@ abstract partial class Character : AnimatedGameObject
         }
         if (inputHelper.KeyPressed(keyboardControls[Keys.R]))
         {
-            weapon.IsAttacking = true;
             if (!weapon.AbilityMain.IsOnCooldown)
             {
+                weapon.IsAttacking = true;
                 this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
                 PlaySFX("basic_ability");
             }
@@ -223,9 +223,9 @@ abstract partial class Character : AnimatedGameObject
     /// </summary>
     private void HandleXboxMovement(InputHelper inputHelper)
     {
-        if (inputHelper.ControllerConnected(relativePlayerNumber)) //Check if the controller is connected
+        if (inputHelper.ControllerConnected(controllerNumber)) //Check if the controller is connected
         {
-            if (inputHelper.ButtonPressed(relativePlayerNumber, Buttons.A))
+            if (inputHelper.ButtonPressed(controllerNumber, Buttons.A))
             {
                 weapon.IsAttacking = true;
                 this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
@@ -234,7 +234,7 @@ abstract partial class Character : AnimatedGameObject
                 else
                     PlaySFX("attack_miss");
             }
-            if (inputHelper.ButtonPressed(relativePlayerNumber, Buttons.B))
+            if (inputHelper.ButtonPressed(controllerNumber, Buttons.B))
             {
                 if (!weapon.AbilityMain.IsOnCooldown)
                 {
@@ -248,15 +248,15 @@ abstract partial class Character : AnimatedGameObject
                 }
             }
             //Interact button
-            if (inputHelper.ButtonPressed(relativePlayerNumber, Buttons.X))
+            if (inputHelper.ButtonPressed(controllerNumber, Buttons.X))
                 InteractCollisionChecker();
-            if (inputHelper.ButtonPressed(relativePlayerNumber, Buttons.Y))
+            if (inputHelper.ButtonPressed(controllerNumber, Buttons.Y))
             {
                 SwitchtoAIChecker();
                 return;
             }
             //Movement
-            walkingdirection = inputHelper.WalkingDirection(relativePlayerNumber) * this.movementSpeed;
+            walkingdirection = inputHelper.WalkingDirection(controllerNumber) * this.movementSpeed;
             walkingdirection.Y = -walkingdirection.Y;
         }
 
@@ -275,7 +275,7 @@ abstract partial class Character : AnimatedGameObject
         }
         else
         {
-            walkingdirection = inputHelper.WalkingDirection(relativePlayerNumber) * this.movementSpeed;
+            walkingdirection = inputHelper.WalkingDirection(controllerNumber) * this.movementSpeed;
             walkingdirection.Y = -walkingdirection.Y;
             if (Math.Abs(walkingdirection.X) >= Math.Abs(walkingdirection.Y))
             {
@@ -359,8 +359,8 @@ abstract partial class Character : AnimatedGameObject
             if (this.xboxControlled)
             {
                 targetCharacter.xboxControlled = true;
-                targetCharacter.relativePlayerNumber = this.relativePlayerNumber;
-                this.relativePlayerNumber = this.playerNumber;
+                targetCharacter.controllerNumber = this.controllerNumber;
+                this.controllerNumber = this.playerNumber;
             }
             else
             {
@@ -384,7 +384,9 @@ abstract partial class Character : AnimatedGameObject
         if (!weapon.IsAttacking)
         {
             if(walkingdirection == Vector2.Zero)
+            {
                 this.PlayAnimation("idle");
+            }
             else if (Math.Abs(walkingdirection.X) >= Math.Abs(walkingdirection.Y))
             {
                 if (walkingdirection.X > 0)
@@ -398,7 +400,7 @@ abstract partial class Character : AnimatedGameObject
                     this.Mirror = false;
                 }
             }
-            else if (Math.Abs(walkingdirection.Y) > Math.Abs(walkingdirection.X))
+            else
             {
                 if (walkingdirection.Y > 0)
                 {

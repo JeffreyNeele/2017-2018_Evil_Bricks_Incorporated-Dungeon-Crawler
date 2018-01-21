@@ -17,13 +17,13 @@ abstract partial class Character : AnimatedGameObject
     protected Weapon weapon;
     // Vector2s for startposition, movementspeed and icespeed
     protected Vector2 startPosition, movementSpeed, iceSpeed;
-    protected int playerNumber, relativePlayerNumber;
+    protected int playerNumber, controllerNumber;
     protected bool playerControlled = true, hasAKey = false;
     protected Vector2 walkingdirection, previousWalkingDirection;
     protected BaseAI AI;
     protected Healthbar healthbar;
     //Constructor: sets up the controls given to the constructor for each player (xbox or keyboard)
-    protected Character(int playerNumber, Level currentLevel, string id = "") : base(0, id)
+    protected Character(int playerNumber, int controlsNumber, Level currentLevel, string id = "") : base(0, id)
     {
         attributes = new BaseAttributes();
         baseattributes = new BaseAttributes();
@@ -56,34 +56,42 @@ abstract partial class Character : AnimatedGameObject
         // Make a new AI
         AI = new BaseAI(this, 200F, currentLevel, false, 700, 1);
         this.playerNumber = playerNumber;
-        relativePlayerNumber = playerNumber;
+        controllerNumber = playerNumber;
+        ControlsInitializer(controlsNumber);
         // Generates controls for the keyboard if the character is not controlled by xbox, keyboard is only used for 2 players so as a safeguard player 3 and 4 will become AI if this is called them.
-        if (!xboxControlled)
-        {
-            if (playerNumber == 1)
-            {
-                keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/Controls/player1controls.txt");
-            }
-            else if (playerNumber == 2)
-            {
-                keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/Controls/player2controls.txt");
-            }
-            else
-            {
-                playerControlled = false;
-            }
-        }
 
     }
 
+    private void ControlsInitializer(int controlsNumber)
+    {
+        if (controlsNumber == 0)
+        {
+            xboxControlled = false;
+            keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/Controls/player1controls.txt");
+        }
+        else if (controlsNumber == 1)
+        {
+            xboxControlled = false;
+            keyboardControls = GameEnvironment.SettingsHelper.GenerateKeyboardControls("Assets/Controls/player2controls.txt");
+        }
+        else if (controlsNumber >= 2 && controlsNumber <= 5)
+        {
+            controllerNumber = controlsNumber - 1;
+            xboxControlled = true;
+        }
+        else
+        {
+            playerControlled = false;
+        }
+    }
 
 
-   /// <summary>
-   /// Calculates the movement vector for a character (this makes sure that going to a lateral direction is the same speed as going to a diagonal direction)
-   /// </summary>
-   /// <param name="movementSpeed">How fast the character moves</param>
-   /// <param name="angle">What angle/direction the character is moving to</param>
-   /// <returns></returns>
+    /// <summary>
+    /// Calculates the movement vector for a character (this makes sure that going to a lateral direction is the same speed as going to a diagonal direction)
+    /// </summary>
+    /// <param name="movementSpeed">How fast the character moves</param>
+    /// <param name="angle">What angle/direction the character is moving to</param>
+    /// <returns></returns>
     public Vector2 MovementVector(Vector2 movementSpeed, float angle)
     {
         float adjacent = movementSpeed.X;

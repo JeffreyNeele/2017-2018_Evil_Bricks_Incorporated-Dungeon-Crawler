@@ -282,13 +282,10 @@ partial class Level : GameObjectList
     /// <param name="textArray">array given by the Position loader</param>
     private void ShieldMaidenLoader(string[] textArray)
     {
-        Shieldmaiden shieldmaiden = new Shieldmaiden(int.Parse(textArray[3]), this);
-        // If there are no more real players left make the Character an AI
-        if (int.Parse(textArray[3]) > numberOfPlayers)
-        {
-            shieldmaiden.XBOXcontrolled = false; // sets the xbox controls to true or false, currently false
-            shieldmaiden.PlayerControlled = false;
-        }
+        int controlsNumber = CharacterSelection.Controls(int.Parse(textArray[3]));
+        Console.WriteLine("maiden" + int.Parse(textArray[3]) + "controlnr" + CharacterSelection.Controls(int.Parse(textArray[3])));
+        Shieldmaiden shieldmaiden = new Shieldmaiden(int.Parse(textArray[3]), controlsNumber, this);
+
         shieldmaiden.StartPosition = new Vector2(float.Parse(textArray[1]), float.Parse(textArray[2]));
         shieldmaiden.CurrentWeapon = new SwordAndShield(shieldmaiden);
         shieldmaiden.Reset();
