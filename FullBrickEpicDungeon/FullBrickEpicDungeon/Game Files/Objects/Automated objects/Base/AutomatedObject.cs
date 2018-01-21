@@ -13,7 +13,7 @@ abstract class AutomatedObject : SpriteGameObject
     protected GameObjectList players;
     protected Dictionary<Character, Timer> playersHit;
 
-    public AutomatedObject(string assetname, string id, int sheetIndex, Level level, int damage = 10) : base(assetname, 0)
+    public AutomatedObject(string assetname, string id, int sheetIndex, Level level, int damage = 20) : base(assetname, 0)
     {
         reloaded = true;
         triggered = false;
@@ -23,7 +23,6 @@ abstract class AutomatedObject : SpriteGameObject
 
     public override void Update(GameTime gameTime)
     {
-        base.Update(gameTime);
 
         //Update the timers
         duration.Update(gameTime);
@@ -39,7 +38,7 @@ abstract class AutomatedObject : SpriteGameObject
         if (duration.IsExpired && setupTimer.IsExpired && !reloaded)
         {
             reloaded = true;
-            sheetIndex = 0;
+            Sprite.SheetIndex = 0;
         }
 
         //If no timers are active, check for targets
@@ -55,12 +54,14 @@ abstract class AutomatedObject : SpriteGameObject
 
         if (Sprite.SheetIndex == 1 && playersHit != null)
             DamagePlayers();
+
+        base.Update(gameTime);
     }
 
     //The trigger of the trap
     protected virtual void TriggerTrap()
     {
-        sheetIndex = 1;
+        Sprite.SheetIndex = 1;
         duration.Reset();
         reloaded = false;
         triggered = false;
@@ -106,7 +107,8 @@ abstract class AutomatedObject : SpriteGameObject
 
         foreach (Character player in players.Children)
         {
-            if (BoundingBox.Intersects(player.BoundingBox))
+            Rectangle quarterBoundingBox = new Rectangle((int)player.BoundingBox.X, (int)(player.BoundingBox.Y + 0.75 * Height), player.Width, (int)(player.Height / 4));
+            if (BoundingBox.Intersects(quarterBoundingBox))
             {
                 return true;
             }
