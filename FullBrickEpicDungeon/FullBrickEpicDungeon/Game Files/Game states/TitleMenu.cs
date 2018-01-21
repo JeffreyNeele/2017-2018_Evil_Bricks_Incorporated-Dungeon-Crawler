@@ -49,8 +49,8 @@ class TitleMenuState : IGameLoopObject
         {
             GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
             FullBrickEpicDungeon.DungeonCrawler.mouseVisible = false;
-            //GameEnvironment.GameStateManager.SwitchTo("playingState");
-            GameEnvironment.GameStateManager.SwitchTo("characterSelection");
+            GameEnvironment.GameStateManager.SwitchTo("playingState");
+            //GameEnvironment.GameStateManager.SwitchTo("characterSelection");
         }
         if (settingsButton.Pressed)
         {
