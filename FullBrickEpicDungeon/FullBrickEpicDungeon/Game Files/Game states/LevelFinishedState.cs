@@ -18,7 +18,7 @@ class LevelFinishedState : GameObjectList
 
     public override void HandleInput(InputHelper inputHelper)
     {
-        if (inputHelper.KeyPressed(Keys.Space))
+        if (inputHelper.KeyPressed(Keys.E))
         {
             GameEnvironment.GameStateManager.SwitchTo("playingState");
             (playingState as PlayingState).GoToNextLevel();
@@ -29,6 +29,8 @@ class LevelFinishedState : GameObjectList
     {
         playingState.Update(gameTime);
         base.Update(gameTime);
+        GameEnvironment.GameStateManager.SwitchTo("playingState");
+        (playingState as PlayingState).GoToNextLevel();
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
