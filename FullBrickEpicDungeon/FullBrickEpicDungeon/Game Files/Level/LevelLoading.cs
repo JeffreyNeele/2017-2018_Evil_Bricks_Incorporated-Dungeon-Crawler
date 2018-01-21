@@ -238,7 +238,7 @@ protected void LevelInformationLoader(List<string> informationStringList)
             default:
                 throw new ArgumentException("The given color " + textArray[3] + " was not found in the switch statement!");
         }
-        lockitem.Position = new Vector2(float.Parse(textArray[1]), float.Parse(textArray[2]));
+        lockitem.Position = new Vector2(float.Parse(textArray[1]) + 20, float.Parse(textArray[2]) + 20);
         lockitem.Objectnumber = int.Parse(textArray[4]);
         if (lockitem != null)
             objectList.Add(lockitem);
