@@ -20,8 +20,8 @@ class LevelFinishedState : GameObjectList
     {
         if (inputHelper.KeyPressed(Keys.E))
         {
-            GameEnvironment.GameStateManager.SwitchTo("playingState");
             (playingState as PlayingState).GoToNextLevel();
+            GameEnvironment.GameStateManager.SwitchTo("playingState");
         }
     }
 
