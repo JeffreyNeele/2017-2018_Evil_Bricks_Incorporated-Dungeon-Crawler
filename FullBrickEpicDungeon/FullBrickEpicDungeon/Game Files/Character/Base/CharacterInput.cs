@@ -192,6 +192,10 @@ abstract partial class Character : AnimatedGameObject
         }
         else
         {
+            if (inputHelper.IsKeyDown(keyboardControls[Keys.E]))
+            {
+                InteractCollisionChecker();
+            }
             if (inputHelper.IsKeyDown(keyboardControls[Keys.W]))
             {
                 blockinput = true;
@@ -275,6 +279,9 @@ abstract partial class Character : AnimatedGameObject
         }
         else
         {
+            if (inputHelper.ButtonPressed(controllerNumber, Buttons.X))
+                InteractCollisionChecker();
+
             walkingdirection = inputHelper.WalkingDirection(controllerNumber) * this.movementSpeed;
             walkingdirection.Y = -walkingdirection.Y;
             if (Math.Abs(walkingdirection.X) >= Math.Abs(walkingdirection.Y))
