@@ -248,9 +248,11 @@ abstract partial class Character : AnimatedGameObject
                 }
             }
             //Interact button
-            if (inputHelper.ButtonPressed(controllerNumber, Buttons.X))
-                InteractCollisionChecker();
             if (inputHelper.ButtonPressed(controllerNumber, Buttons.Y))
+            {
+                InteractCollisionChecker();
+            }
+            if (inputHelper.ButtonPressed(controllerNumber, Buttons.X))
             {
                 SwitchtoAIChecker();
                 return;
