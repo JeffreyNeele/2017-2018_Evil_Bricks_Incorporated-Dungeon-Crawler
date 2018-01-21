@@ -29,8 +29,6 @@ class LevelFinishedState : GameObjectList
     {
         playingState.Update(gameTime);
         base.Update(gameTime);
-        GameEnvironment.GameStateManager.SwitchTo("playingState");
-        (playingState as PlayingState).GoToNextLevel();
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
