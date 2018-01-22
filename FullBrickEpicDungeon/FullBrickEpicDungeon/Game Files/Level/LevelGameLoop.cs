@@ -20,4 +20,9 @@ partial class Level : GameObjectList
     {
         base.HandleInput(inputHelper);
     }
+
+    public override void Reset()
+    {
+        base.Reset();
+    }
 }

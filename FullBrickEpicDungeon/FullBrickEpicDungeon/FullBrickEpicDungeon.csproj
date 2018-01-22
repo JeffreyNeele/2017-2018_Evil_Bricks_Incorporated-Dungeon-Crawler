@@ -78,11 +78,14 @@
     <Compile Include="Game Files\Game states\CharacterSelection.cs" />
     <Compile Include="Game Files\Game states\ConversationState.cs" />
     <Compile Include="Game Files\Game states\CutsceneState.cs" />
+    <Compile Include="Game Files\Game states\LevelFinishedState.cs" />
     <Compile Include="Game Files\Game states\PauseState.cs" />
     <Compile Include="Game Files\Game states\PlayingState.cs" />
     <Compile Include="Game Files\Game states\SettingsState.cs" />
     <Compile Include="Game Files\Game states\TitleMenu.cs" />
     <Compile Include="Game Files\HUD\Conversation.cs" />
+    <Compile Include="Game Files\Objects\Automated objects\Base\AutomatedObject.cs" />
+    <Compile Include="Game Files\Objects\Automated objects\Type\SpikeTrap.cs" />
     <Compile Include="Game Files\Objects\Interactive objects\Base\InteractiveObject.cs" />
     <Compile Include="Game Files\Objects\Interactive objects\Types\KeyItem.cs" />
     <Compile Include="Game Files\Objects\Interactive objects\Types\Lock.cs" />

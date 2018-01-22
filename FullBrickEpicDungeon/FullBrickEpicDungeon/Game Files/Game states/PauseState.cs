@@ -20,7 +20,6 @@ class PauseState : IGameLoopObject
     {
         // find the playing state
         playingState = GameEnvironment.GameStateManager.GetGameState("playingState");
-
         overlay = GameEnvironment.AssetManager.GetSprite("Assets/Sprites/Paused/overlay");
 
         // make buttons for the different assignments, eg return to menu
@@ -32,7 +31,7 @@ class PauseState : IGameLoopObject
 
     public void Update(GameTime gameTime)
     {
-
+        playingState = GameEnvironment.GameStateManager.GetGameState("playingState");
     }
 
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)

@@ -11,7 +11,7 @@ class Bunny : AImonster
         // Assign attributes (for tracking hp etc.) and baseattributes (for resetting)
         this.baseattributes.HP = 50;
         this.baseattributes.Armour = 5;
-        this.baseattributes.Attack = 50;
+        this.baseattributes.Attack = 30;
         this.baseattributes.Gold = 50;
         attributes.HP = baseattributes.HP;
         attributes.Armour = baseattributes.Armour;
