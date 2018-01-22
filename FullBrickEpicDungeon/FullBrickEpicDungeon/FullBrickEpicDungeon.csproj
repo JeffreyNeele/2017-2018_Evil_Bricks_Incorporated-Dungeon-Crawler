@@ -84,6 +84,7 @@
     <Compile Include="Game Files\Game states\SettingsState.cs" />
     <Compile Include="Game Files\Game states\TitleMenu.cs" />
     <Compile Include="Game Files\HUD\Conversation.cs" />
+    <Compile Include="Game Files\Monsters\Type\BossBunny.cs" />
     <Compile Include="Game Files\Objects\Automated objects\Base\AutomatedObject.cs" />
     <Compile Include="Game Files\Objects\Automated objects\Type\SpikeTrap.cs" />
     <Compile Include="Game Files\Objects\Interactive objects\Base\InteractiveObject.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Game Files\Monsters\Type\Bunny.cs" />
     <Compile Include="Game Files\Monsters\Type\Dummy.cs" />
     <Compile Include="Game Files\Monsters\Type\LittlePenguin.cs" />
+    <Compile Include="Game Files\Objects\Smashable objects\Teapot.cs" />
     <Compile Include="Game Files\Projectiles\Projectile.cs" />
     <Compile Include="Game Files\Objects\Interactive objects\Types\Trap.cs" />
     <Compile Include="Game Files\Weapons\Weapon.cs" />
