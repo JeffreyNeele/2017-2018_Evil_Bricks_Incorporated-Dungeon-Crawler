@@ -50,7 +50,8 @@ class TitleMenuState : IGameLoopObject
             GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
             FullBrickEpicDungeon.DungeonCrawler.mouseVisible = false;
             //GameEnvironment.GameStateManager.SwitchTo("playingState");
-            GameEnvironment.GameStateManager.SwitchTo("characterSelection");
+            //GameEnvironment.GameStateManager.SwitchTo("characterSelection");
+            GameEnvironment.GameStateManager.SwitchTo("cutscene");
         }
         if (settingsButton.Pressed)
         {
@@ -58,6 +59,8 @@ class TitleMenuState : IGameLoopObject
             GameEnvironment.GameStateManager.SwitchTo("settingsState");
         }
     }
+
+    public void Setup() { }
 
     public void Reset()
     {

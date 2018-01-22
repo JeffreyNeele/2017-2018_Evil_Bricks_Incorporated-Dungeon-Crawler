@@ -40,6 +40,8 @@ class PlayingState : IGameLoopObject
             GameEnvironment.GameStateManager.SwitchTo("conversation");
     }
 
+    public void Setup() { }
+
     public void Reset()
     {
         CurrentLevel.Reset();

@@ -35,10 +35,11 @@ namespace FullBrickEpicDungeon
             gameStateManager.AddGameState("titleMenu", new TitleMenuState());
             GameStateManager.AddGameState("settingsState", new SettingsState());
             gameStateManager.AddGameState("characterSelection", new CharacterSelection());
-            gameStateManager.AddGameState("playingState", new PlayingState());
+            gameStateManager.AddGameState("playingState", new PlayingState()); //Deze VERWIJDEREN ALS CHAR SELECTION IS GEACTIVEERD
             gameStateManager.AddGameState("levelFinishedState", new LevelFinishedState());
             GameStateManager.AddGameState("pauseState", new PauseState());
             gameStateManager.AddGameState("conversation", new ConversationState());
+            gameStateManager.AddGameState("cutscene", new CutsceneState());
             gameStateManager.SwitchTo("titleMenu");
         }
 

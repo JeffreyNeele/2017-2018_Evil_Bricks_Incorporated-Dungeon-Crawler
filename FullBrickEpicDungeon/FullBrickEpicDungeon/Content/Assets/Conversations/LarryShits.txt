@@ -1,23 +1,4 @@
-﻿Hi, this is a test
-Dragon: Welcome to my humble castle. Would you like a cup of tea?
-#1. Tea tastes like bird poop. I am sick of tea!
-#2. Well you could say that this is turning into a horrible par-tea.
-#3. Why the sudden hospitali-tea?
-Dragon: Sick of tea???? That is like being sick of breathing.
-Dragon: That was a horrible joke.
-Dragon: I am a gentleman of refined taste.
-Dragon: No tea then. You seem familiar. Have I met you before?
-#1. We met when Larry, our trusty mount, sat on his favourite toilet seat.
-#2. Only in my dreams. It involved some serious crap with Larry.
-#3. Your hat seems somewhat familiar... Is that Larrys birdshit on it?
-Dragon: ... 
-Dragon: I think I get the drift.
-Dragon: Oh no, is that still on it? I hate Larry, that unsanitary canary!
-Dragon: So where is your epic mount now huh?
-#1. Your mom is my epic mount
-#2. I have no clue. Do I look like mount cleverest?
-#3. You stupid? You captured him!
-Dragon: How dare you say something about my beautiful mother?
-Dragon: No you definitely do not look like that name would suit you
-Dragon: Now you are just being rude!
-Dragon: Goodbye!
+﻿On a bright and sunny day, the heroes set foot on a dragons den.
+Their trusty steed, Larry, landed to sit.
+It all seemed very peaceful when...
+The day turned to shit.

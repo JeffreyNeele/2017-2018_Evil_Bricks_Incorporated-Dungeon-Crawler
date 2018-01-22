@@ -68,6 +68,9 @@ class PauseState : IGameLoopObject
         }
     }
 
+
+    public void Setup() { }
+
     public void Reset()
     {
         continueButton.Reset();

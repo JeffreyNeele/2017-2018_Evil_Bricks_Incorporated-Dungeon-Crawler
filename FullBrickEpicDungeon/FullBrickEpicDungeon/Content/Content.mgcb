@@ -1486,9 +1486,6 @@
 #begin Assets/Conversations/LarryShits.txt
 /copy:Assets/Conversations/LarryShits.txt
 
-#begin Assets/Conversations/ThroneRoom.txt
-/copy:Assets/Conversations/ThroneRoom.txt
-
 #begin Assets/Cutscenes/ThroneRoom1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1560,4 +1557,25 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Level_Finished/level_completed.png
+
+#begin Assets/Conversations/LarryCaptured.txt
+/copy:Assets/Conversations/LarryCaptured.txt
+
+#begin Assets/Conversations/ThroneRoom2.txt
+/copy:Assets/Conversations/ThroneRoom2.txt
+
+#begin Assets/Cutscenes/LarryGetsCaptured.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Cutscenes/LarryGetsCaptured.png
+
+#begin Assets/Conversations/ThroneRoom1.txt
+/copy:Assets/Conversations/ThroneRoom1.txt
 

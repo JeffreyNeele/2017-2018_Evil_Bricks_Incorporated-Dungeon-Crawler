@@ -92,6 +92,7 @@ class CharacterSelection : GameObjectList
                 GameEnvironment.GameStateManager.AddGameState("playingState", new PlayingState());
                 GameEnvironment.GameStateManager.AddGameState("pauseState", new PauseState());
                 GameEnvironment.GameStateManager.AddGameState("conversation", new ConversationState());
+                GameEnvironment.GameStateManager.AddGameState("cutscene", new CutsceneState());
                 GameEnvironment.GameStateManager.SwitchTo("playingState");
             }
         }
