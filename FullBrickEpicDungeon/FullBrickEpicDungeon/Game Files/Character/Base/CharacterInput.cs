@@ -341,7 +341,8 @@ abstract partial class Character : AnimatedGameObject
             {
                 if (p.playerNumber == targetPlayerNumber)
                 {
-                    if (!p.PlayerControlled)
+                    //if the criteria are met we switch, otherwise we try another character instead
+                    if (!p.PlayerControlled && (!p.SolidCollisionChecker() || !p.IsDowned))
                     {
                         SwitchToCharacter(p);
                         return;
@@ -350,6 +351,8 @@ abstract partial class Character : AnimatedGameObject
             }
             targetPlayerNumber++;
         }
+
+        PlaySFX("switch_wrong");
     }
 
     /// <summary>
@@ -358,30 +361,21 @@ abstract partial class Character : AnimatedGameObject
     /// <param name="targetCharacter">The character that the player will switch to control</param>
     public void SwitchToCharacter(Character targetCharacter)
     {
-        // If the target character is the owner himself, or the target character is on a wrong position (due to how AI is handled) the switch will not commence
-        if (targetCharacter == this || !targetCharacter.SolidCollisionChecker() || targetCharacter.IsOnIceChecker())
+        // Switch control schemes
+        if (this.xboxControlled)
         {
-            PlaySFX("switch_wrong");
-            return;
+            targetCharacter.xboxControlled = true;
+            targetCharacter.controllerNumber = this.controllerNumber;
+            this.controllerNumber = this.playerNumber;
         }
         else
         {
-            // Switch control schemes
-            if (this.xboxControlled)
-            {
-                targetCharacter.xboxControlled = true;
-                targetCharacter.controllerNumber = this.controllerNumber;
-                this.controllerNumber = this.playerNumber;
-            }
-            else
-            {
-                targetCharacter.xboxControlled = false;
-                targetCharacter.keyboardControls = this.keyboardControls;
-                this.keyboardControls = null;
-            }
-            this.playerControlled = false;
-            targetCharacter.playerControlled = true;
+            targetCharacter.xboxControlled = false;
+            targetCharacter.keyboardControls = this.keyboardControls;
+            this.keyboardControls = null;
         }
+        this.playerControlled = false;
+        targetCharacter.playerControlled = true;
     }
 
 
