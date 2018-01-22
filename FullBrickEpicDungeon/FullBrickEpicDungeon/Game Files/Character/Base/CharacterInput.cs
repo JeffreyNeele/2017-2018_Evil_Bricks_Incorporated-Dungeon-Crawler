@@ -349,6 +349,8 @@ abstract partial class Character : AnimatedGameObject
                         SwitchToCharacter(p);
                         return;
                     }
+                    else
+                        continue;
                 }
             }
         }
@@ -387,6 +389,7 @@ abstract partial class Character : AnimatedGameObject
     public void PlayAnimationDirection(Vector2 walkingdirection)
     {
         // The attack animations have priority over the walking animations, and thus if these are being played we just return from the method
+        
         if (!weapon.IsAttacking)
         {
             if(walkingdirection == Vector2.Zero)
