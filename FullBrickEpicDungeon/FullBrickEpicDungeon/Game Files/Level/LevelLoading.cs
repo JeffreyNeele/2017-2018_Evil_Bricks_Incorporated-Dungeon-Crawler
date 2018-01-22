@@ -112,6 +112,7 @@ protected void LevelInformationLoader(List<string> informationStringList)
                     monsterList.Add(dummy);
                     break;
                 case "BUNNY":
+
                     Bunny bunny = new Bunny(this)
                     {
                         StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
