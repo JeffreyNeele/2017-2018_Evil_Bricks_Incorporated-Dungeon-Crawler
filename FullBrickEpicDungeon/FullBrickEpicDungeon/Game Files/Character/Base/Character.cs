@@ -19,7 +19,7 @@ abstract partial class Character : AnimatedGameObject
     protected Vector2 startPosition, movementSpeed, iceSpeed;
     protected int playerNumber, controllerNumber;
     protected bool playerControlled = true, hasAKey = false;
-    protected Vector2 walkingdirection;
+    protected Vector2 walkingdirection, previousWalkingDirection;
     protected BaseAI AI;
     protected Healthbar healthbar;
     //Constructor: sets up the controls given to the constructor for each player (xbox or keyboard)

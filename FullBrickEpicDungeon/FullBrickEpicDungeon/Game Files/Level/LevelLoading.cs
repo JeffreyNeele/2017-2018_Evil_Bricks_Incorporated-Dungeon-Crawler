@@ -74,11 +74,11 @@ partial class Level : GameObjectList
         }
     }
 
-    /// <summary>
-    /// Loads the level information
-    /// </summary>
-    /// <param name="informationStringList">given string list that corresponds to the level information</param>
-    protected void LevelInformationLoader(List<string> informationStringList)
+/// <summary>
+/// Loads the level information
+/// </summary>
+/// <param name="informationStringList">given string list that corresponds to the level information</param>
+protected void LevelInformationLoader(List<string> informationStringList)
     {
         this.id = "LEVEL_" + informationStringList[0];
     }
@@ -119,15 +119,21 @@ partial class Level : GameObjectList
                     bunny.Reset();
                     monsterList.Add(bunny);
                     break;
+                case "SPIKETRAP":
+                    AutomatedObject spikeTrap = new SpikeTrap("Assets/Sprites/InteractiveObjects/SpikeTrap@2", "spikeTrap", 0, this);
+                    spikeTrap.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));
+                    objectList.Add(spikeTrap);
+                    break;
                 case "HANDLE":
                     Handle handle = new Handle("Assets/Sprites/InteractiveObjects/handles@2", "Handle", 0)
                     {
                         Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
                     };
+                    handle.ObjectNumberConnected = int.Parse(splitArray[3]);
                     objectList.Add(handle);
                     break;
                 case "TRAPDOOR":
-                    Trapdoor trapdoor = new Trapdoor("Assets/Sprites/InteractiveObjects/NextLevelCombined@2", "Trapdoor", 0)
+                    Trapdoor trapdoor = new Trapdoor(TileType.DoorTile, "Assets/Sprites/InteractiveObjects/NextLevelCombined@2", "Trapdoor", 0, this)
                     {
                         Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
                         Objectnumber = int.Parse(splitArray[3])
@@ -163,7 +169,7 @@ partial class Level : GameObjectList
                 case "VDOOR":
                     Door vdoorupperleft = new Door("Assets/Sprites/Tiles/VerticalDoorUpperLeft@2", "Door", 0)
                     {
-                        Position = new Vector2(float.Parse(splitArray[1]) + 50, float.Parse(splitArray[2]) + 50),
+                        Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
                         Objectnumber = int.Parse(splitArray[3])
                     };
                     Door vdoorupperright = new Door("Assets/Sprites/Tiles/VerticalDoorUpperRight@2", "Door", 0)
@@ -183,7 +189,7 @@ partial class Level : GameObjectList
                     };
                     Door vdoormiddleright = new Door("Assets/Sprites/Tiles/VerticalDoorMiddleRight@2", "Door", 0)
                     {
-                        Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
+                        Position = new Vector2(float.Parse(splitArray[1]) + 50, float.Parse(splitArray[2]) + 50),
                         Objectnumber = int.Parse(splitArray[3])
                     };
                     levelTileField.Add(vdoorupperleft, (int)vdoorupperleft.Position.X / 50, (int)vdoorupperleft.Position.Y / 50);
