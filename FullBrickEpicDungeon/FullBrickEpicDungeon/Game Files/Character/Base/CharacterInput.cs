@@ -258,7 +258,7 @@ abstract partial class Character : AnimatedGameObject
             {
                 InteractCollisionChecker();
             }
-            if (inputHelper.ButtonPressed(controllerNumber, Buttons.X))
+            if (inputHelper.ButtonPressed(controllerNumber, Buttons.X) && switchCharacterTimer.IsExpired)
             {
                 SwitchtoAIChecker();
                 return;
