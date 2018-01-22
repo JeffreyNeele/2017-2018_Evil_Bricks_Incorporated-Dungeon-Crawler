@@ -42,7 +42,7 @@ class SwordAndShield : Weapon
         bool hit = false;
         foreach (Monster m in monsterObjectList.Children)
         {
-            if (mainAbility.MonsterHit.Count < 1 && m.CollidesWith(Owner))
+            if (mainAbility.MonsterHit.Count < 1 && m.CollidesWith(this))
             {
                 mainAbility.AttackHit(m, fieldList);
                 hit = true;

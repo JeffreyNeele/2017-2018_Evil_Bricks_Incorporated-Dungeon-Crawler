@@ -100,7 +100,7 @@ abstract class Weapon : AnimatedGameObject
         bool hit = false;
         foreach (Monster m in monsterObjectList.Children)
         {
-            if (m.CollidesWith(Owner))
+            if (m.CollidesWith(this))
             {
                 BasicAttack.AttackHit(m, fieldList);
                 hit = true;

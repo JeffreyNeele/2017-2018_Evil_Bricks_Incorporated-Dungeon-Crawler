@@ -329,8 +329,9 @@ abstract partial class Character : AnimatedGameObject
     {
         GameObjectList playerList = GameWorld.Find("playerLIST") as GameObjectList;
         int targetPlayerNumber = this.playerNumber + 1;
-        for (int i = 1; i < 4; i++)
+        for (int i = 0; i < 3; i++)
         {
+            targetPlayerNumber++;
             // There are  only 4 players, so if the target is 5 we go back to 1
             if (targetPlayerNumber > 4)
             {
@@ -348,7 +349,6 @@ abstract partial class Character : AnimatedGameObject
                     }
                 }
             }
-            targetPlayerNumber++;
         }
     }
 
