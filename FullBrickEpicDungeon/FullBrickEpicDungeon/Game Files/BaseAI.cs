@@ -161,7 +161,7 @@ class BaseAI
             foreach (Character target in targetList.Children)
             {
                 // If the target is down, we do not want to target it so we continue to the next iteration in the loop.
-                if (target.IsDowned)
+                if (target.IsDowned || FindPath(target.Position, this.owner.Position).Count == 0)
                 {
                     continue;
                 }
