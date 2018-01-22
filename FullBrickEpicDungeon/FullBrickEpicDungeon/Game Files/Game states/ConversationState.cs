@@ -98,8 +98,9 @@ class ConversationState : IGameLoopObject
 
                 //depending on which cutscene just completed, switch to the next cutscene or the next playingstate
                 switch(currentConversationNumber)
-                {
-                    case 3: GameEnvironment.GameStateManager.SwitchTo("playingState");
+                {   
+                    //after the ThroneRoom2 scene, the players play the game
+                    case (int)Conversationnames.ThroneRoom2: GameEnvironment.GameStateManager.SwitchTo("playingState");
                         break;
                     default: GameEnvironment.GameStateManager.SwitchTo("cutscene");
                         break;

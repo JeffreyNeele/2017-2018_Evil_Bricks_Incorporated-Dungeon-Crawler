@@ -91,9 +91,11 @@ class CharacterSelection : GameObjectList
             {
                 GameEnvironment.GameStateManager.AddGameState("playingState", new PlayingState());
                 GameEnvironment.GameStateManager.AddGameState("pauseState", new PauseState());
+                GameEnvironment.GameStateManager.AddGameState("levelFinishedState", new LevelFinishedState());
                 GameEnvironment.GameStateManager.AddGameState("conversation", new ConversationState());
                 GameEnvironment.GameStateManager.AddGameState("cutscene", new CutsceneState());
-                GameEnvironment.GameStateManager.SwitchTo("playingState");
+                //GameEnvironment.GameStateManager.SwitchTo("playingState");
+                GameEnvironment.GameStateManager.SwitchTo("cutscene");
             }
         }
         base.Update(gameTime);
@@ -348,7 +350,7 @@ class CharacterSelection : GameObjectList
         {
             if (!lockInSprite[i])
             {
-                launchCount = 2;
+                launchCount = (float)0.5;
                 return false;
             }
         }

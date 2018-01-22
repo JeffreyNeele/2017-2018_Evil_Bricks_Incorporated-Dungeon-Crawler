@@ -33,7 +33,6 @@ public CutsceneState()
         {
             Cutscene newcutscene = new Cutscene("Assets/Cutscenes/" + Enum.GetName(typeof(Cutscenenames), x));
             cutsceneList.Add(newcutscene);
-           // GameEnvironment.GameStateManager.SwitchTo("playingState");
         }
     }
 
@@ -52,13 +51,16 @@ public CutsceneState()
 
     public void HandleInput(InputHelper inputHelper)
     {
-       /* if (inputHelper.KeyPressed(Keys.Space)) //To skip the cutscene, press space
+        if (inputHelper.KeyPressed(Keys.Enter) || inputHelper.ButtonPressed(1, Buttons.Back)) //To skip the cutscene, press Enter or Back for player 1 on Xbox
         {
             GameEnvironment.GameStateManager.SwitchTo("playingState");
-        }*/
+        }
         
     }
 
+    /// <summary>
+    /// Wordt aangeroepen bij SwitchTo("cutscene")
+    /// </summary>
     public void Setup()
     {
         GameEnvironment.GameStateManager.SwitchTo("conversation");
