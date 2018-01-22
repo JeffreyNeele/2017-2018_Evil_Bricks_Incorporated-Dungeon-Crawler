@@ -20,7 +20,8 @@ class Handle : InteractiveObject
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        countDownTimer.Update(gameTime);
+        if(ObjectNumberConnected != 99)
+            countDownTimer.Update(gameTime);
         if (countDownTimer.IsExpired)
         {
             this.Reset();
@@ -45,10 +46,17 @@ class Handle : InteractiveObject
         //give "open" to open the corresponding object. Give "close" to close the corresponding object.
 
         GameObjectGrid tileField = GameWorld.Find("TileField") as GameObjectGrid;
+        GameObjectList objects = GameWorld.Find("objectLIST") as GameObjectList;
+
         foreach (var openableObject in tileField.Objects)
         {
             if (openableObject is OpenableObject)
             {
+                if(this.ObjectNumberConnected == 99)
+                {
+                    ((OpenableObject)openableObject).Open();
+                    continue;
+                }
                 if (((OpenableObject) openableObject).Objectnumber == handlenumber)
                 {
                     if(action == "open")
@@ -56,6 +64,26 @@ class Handle : InteractiveObject
 
                     if(action == "close")
                     ((OpenableObject)openableObject).Close();
+                }
+            }
+        }
+
+        foreach (var openableObject in objects.Children)
+        {
+            if (openableObject is OpenableObject)
+            {
+                if (this.ObjectNumberConnected == 99)
+                {
+                    ((OpenableObject)openableObject).Open();
+                    continue;
+                }
+                if (((OpenableObject)openableObject).Objectnumber == handlenumber)
+                {
+                    if (action == "open")
+                        ((OpenableObject)openableObject).Open();
+
+                    if (action == "close")
+                        ((OpenableObject)openableObject).Close();
                 }
             }
         }

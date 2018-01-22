@@ -17,7 +17,6 @@ abstract partial class Character : AnimatedGameObject
         if (playerControlled)
         {
             Vector2 previousPosition = this.position;
-            Vector2 previousWalkingDirection = new Vector2(0, 0);
             if (this.xboxControlled && !inputHelper.ControllerConnected(controllerNumber))
             {
                 FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
@@ -46,10 +45,11 @@ abstract partial class Character : AnimatedGameObject
                     PlaySFX("walk");
                     stepSoundTimer.Reset();
                 }
-                previousWalkingDirection = walkingdirection;
+                if(walkingdirection != Vector2.Zero)
+                    previousWalkingDirection = walkingdirection;
                 // Play Animations
                 PlayAnimationDirection(walkingdirection);
-                weapon.SwordDirectionCheckerManager(walkingdirection);
+                weapon.SwordDirectionCheckerManager(previousWalkingDirection);
                 walkingdirection = Vector2.Zero;
                 base.HandleInput(inputHelper);
             }
@@ -192,6 +192,10 @@ abstract partial class Character : AnimatedGameObject
         }
         else
         {
+            if (inputHelper.IsKeyDown(keyboardControls[Keys.E]))
+            {
+                InteractCollisionChecker();
+            }
             if (inputHelper.IsKeyDown(keyboardControls[Keys.W]))
             {
                 blockinput = true;
@@ -248,9 +252,11 @@ abstract partial class Character : AnimatedGameObject
                 }
             }
             //Interact button
-            if (inputHelper.ButtonPressed(controllerNumber, Buttons.X))
+            if (inputHelper.IsButtonDown(controllerNumber, Buttons.Y))
+            {
                 InteractCollisionChecker();
-            if (inputHelper.ButtonPressed(controllerNumber, Buttons.Y))
+            }
+            if (inputHelper.ButtonPressed(controllerNumber, Buttons.X))
             {
                 SwitchtoAIChecker();
                 return;
@@ -275,6 +281,11 @@ abstract partial class Character : AnimatedGameObject
         }
         else
         {
+            //Interact button
+            if (inputHelper.IsButtonDown(controllerNumber, Buttons.Y))
+            {
+                InteractCollisionChecker();
+            }
             walkingdirection = inputHelper.WalkingDirection(controllerNumber) * this.movementSpeed;
             walkingdirection.Y = -walkingdirection.Y;
             if (Math.Abs(walkingdirection.X) >= Math.Abs(walkingdirection.Y))
