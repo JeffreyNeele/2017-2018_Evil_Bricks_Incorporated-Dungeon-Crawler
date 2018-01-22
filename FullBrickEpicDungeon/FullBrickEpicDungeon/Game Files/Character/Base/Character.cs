@@ -37,7 +37,7 @@ abstract partial class Character : AnimatedGameObject
         // make a new healthbar
         healthbar = new Healthbar(this);
         // initialize all the timers
-        deathTimer = new Timer(10)
+        deathTimer = new Timer(7)
         {
             IsPaused = false
         };
