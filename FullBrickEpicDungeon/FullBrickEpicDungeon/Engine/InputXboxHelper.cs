@@ -42,6 +42,18 @@ public partial class InputHelper
         return CurrentState(playernumber).IsButtonDown(k) && PreviousState(playernumber).IsButtonUp(k);
     }
 
+    public bool AnyPlayerPressed(Buttons k)
+    {
+        for(int i = 1; i <= 4; i++)
+        {
+            if(CurrentState(i).IsButtonDown(k) && PreviousState(i).IsButtonUp(k))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public bool IsButtonDown(int playernumber, Buttons k)
     {
         return CurrentState(playernumber).IsButtonDown(k);

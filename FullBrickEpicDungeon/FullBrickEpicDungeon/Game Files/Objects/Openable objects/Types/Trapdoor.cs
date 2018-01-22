@@ -16,7 +16,7 @@ class Trapdoor : OpenableObject
     public override void Update(GameTime gameTime)
     {
         if (DetectAllPlayers() && this.Sprite.SheetIndex == 1)
-            (GameEnvironment.GameStateManager.CurrentGameState as PlayingState).GoToNextLevel();
+            GameEnvironment.GameStateManager.SwitchTo("levelFinishedState");
         base.Update(gameTime);
     }
 
@@ -26,8 +26,7 @@ class Trapdoor : OpenableObject
         int onTrapdoorCounter = 0;
         foreach (Character player in allPlayers.Children)
         {
-            Rectangle quarterBoundingBox = new Rectangle((int)player.BoundingBox.X, (int)(player.BoundingBox.Y + 0.75 * Height), player.Width, (int)(player.Height / 4));
-            if (this.BoundingBox.Intersects(quarterBoundingBox))
+            if (this.CollidesWith(player))
                 onTrapdoorCounter++;
         }
 
