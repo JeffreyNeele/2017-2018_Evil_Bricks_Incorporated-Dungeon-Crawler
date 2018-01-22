@@ -6,7 +6,7 @@ class BossBunny : AImonster
     /// Method that defines a Bunny, a bunny uses only basic AI so it isn't a big class
     /// </summary>
     /// <param name="currentLevel">Current level the bunny is in</param>
-    public BossBunny(Level currentLevel) : base(100F, currentLevel, "Bunny", 200)
+    public BossBunny(Level currentLevel) : base(100F, currentLevel, "BossBunny", 200)
     {
         // Assign attributes (for tracking hp etc.) and baseattributes (for resetting)
         this.baseattributes.HP = 200;
