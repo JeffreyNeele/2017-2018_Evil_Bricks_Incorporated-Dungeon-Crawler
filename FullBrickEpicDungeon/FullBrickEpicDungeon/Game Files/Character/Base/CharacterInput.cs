@@ -331,18 +331,17 @@ abstract partial class Character : AnimatedGameObject
         int targetPlayerNumber = this.playerNumber + 1;
         for (int i = 0; i < 4; i++)
         {
-            // There are  only 4 players, so if the target is 5 we go back to 1
-            if (targetPlayerNumber > 4)
+            if(targetPlayerNumber > 4)
             {
                 targetPlayerNumber = 1;
             }
-
+            // There are  only 4 players, so if the target is 5 we go back to 1
             foreach (Character p in playerList.Children)
             {
                 if (p.playerNumber == targetPlayerNumber)
                 {
                     //if the criteria are met we switch, otherwise we try another character instead
-                    if (!p.PlayerControlled && (!p.SolidCollisionChecker() || !p.IsDowned))
+                    if (!p.PlayerControlled && (p.SolidCollisionChecker() || !p.IsDowned))
                     {
                         SwitchToCharacter(p);
                         return;
