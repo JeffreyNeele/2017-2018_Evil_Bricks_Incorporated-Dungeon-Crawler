@@ -31,7 +31,7 @@ class Trapdoor : OpenableObject
                 onTrapdoorCounter++;
         }
 
-        if (onTrapdoorCounter >= 2)
+        if (onTrapdoorCounter >= CharacterSelection.NumberOfPlayers)
         {
             return true;
         }
