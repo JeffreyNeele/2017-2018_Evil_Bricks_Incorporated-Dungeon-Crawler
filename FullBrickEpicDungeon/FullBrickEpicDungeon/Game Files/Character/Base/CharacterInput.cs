@@ -124,7 +124,7 @@ abstract partial class Character : AnimatedGameObject
                 PlaySFX("ability_not_ready");
             }
         }
-        if (inputHelper.KeyPressed(keyboardControls[Keys.LeftShift]))
+        if (inputHelper.IsKeyDown(keyboardControls[Keys.LeftShift]))
         {
             SwitchtoAIChecker();
             return;
@@ -328,27 +328,27 @@ abstract partial class Character : AnimatedGameObject
     public void SwitchtoAIChecker()
     {
         GameObjectList playerList = GameWorld.Find("playerLIST") as GameObjectList;
-        int targetPlayerNumber = this.playerNumber + 1;
+        int targetPlayerNumber = this.playerNumber;
         for (int i = 0; i < 4; i++)
         {
-            if(targetPlayerNumber > 4)
+            targetPlayerNumber++;
+            if (targetPlayerNumber > 4)
             {
                 targetPlayerNumber = 1;
             }
             // There are  only 4 players, so if the target is 5 we go back to 1
             foreach (Character p in playerList.Children)
             {
-                if (p.playerNumber == targetPlayerNumber)
+                if (p.playerNumber == targetPlayerNumber && p != this)
                 {
                     //if the criteria are met we switch, otherwise we try another character instead
-                    if (!p.PlayerControlled && p.SolidCollisionChecker() && !p.IsDowned)
+                    if (!p.PlayerControlled && !p.IsDowned && p.SolidCollisionChecker())
                     {
                         SwitchToCharacter(p);
                         return;
                     }
                 }
             }
-            targetPlayerNumber++;
         }
         PlaySFX("switch_wrong");
     }
