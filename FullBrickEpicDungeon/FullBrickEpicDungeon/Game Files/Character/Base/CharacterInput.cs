@@ -16,6 +16,7 @@ abstract partial class Character : AnimatedGameObject
     {
         if (playerControlled)
         {
+            
             Vector2 previousPosition = this.position;
             if (this.xboxControlled && !inputHelper.ControllerConnected(controllerNumber))
             {
@@ -124,7 +125,8 @@ abstract partial class Character : AnimatedGameObject
                 PlaySFX("ability_not_ready");
             }
         }
-        if (inputHelper.IsKeyDown(keyboardControls[Keys.LeftShift]))
+
+        if (inputHelper.KeyPressed(keyboardControls[Keys.LeftShift]) && switchCharacterTimer.IsExpired)
         {
             SwitchtoAIChecker();
             return;
@@ -374,6 +376,7 @@ abstract partial class Character : AnimatedGameObject
         }
         this.playerControlled = false;
         targetCharacter.playerControlled = true;
+        targetCharacter.switchCharacterTimer.Reset();
     }
 
 
