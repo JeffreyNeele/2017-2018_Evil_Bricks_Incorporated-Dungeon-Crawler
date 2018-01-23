@@ -55,15 +55,18 @@ abstract class Weapon : AnimatedGameObject
             else if (idAnimation == idMainAbility)
                 AnimationMainCheck();
 
+        BasicAttack.Update(gameTime);
+        mainAbility.Update(gameTime);
+
         base.Update(gameTime);
     }
 
     // This is the base attack method of the weapon,, which will be also defined as an ability
     public virtual void Attack(GameObjectList monsterList, GameObjectGrid field)
     {
+        BasicAttack.Use();
         monsterObjectList = monsterList;
         fieldList = field;
-        BasicAttack.Use();
         idAnimation = idBaseAA;
         AnimationAttackCheck();
     }
@@ -76,9 +79,9 @@ abstract class Weapon : AnimatedGameObject
         if (!mainAbility.IsOnCooldown)
         {
             mainAbility.Use();
-            idAnimation = idMainAbility;
             monsterObjectList = monsterList;
             fieldList = field;
+            idAnimation = idMainAbility;
             AnimationMainCheck();
         }
     }
@@ -100,7 +103,7 @@ abstract class Weapon : AnimatedGameObject
         bool hit = false;
         foreach (Monster m in monsterObjectList.Children)
         {
-            if (m.CollidesWith(Owner))
+            if (m.BoundingBox.Intersects(this.BoundingBox))
             {
                 BasicAttack.AttackHit(m, fieldList);
                 hit = true;
