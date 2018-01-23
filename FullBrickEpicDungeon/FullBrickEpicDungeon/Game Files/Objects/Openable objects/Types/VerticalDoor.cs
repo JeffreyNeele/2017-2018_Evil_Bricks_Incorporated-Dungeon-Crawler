@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 class VerticalDoor : Door
 {
-    public VerticalDoor(string assetname, string id, int sheetIndex) : base(assetname, id, sheetIndex)
+    public VerticalDoor(string assetname, Level level, string id, int sheetIndex) : base(assetname, level, id, sheetIndex)
     {
     }
 
