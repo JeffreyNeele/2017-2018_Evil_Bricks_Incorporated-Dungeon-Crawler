@@ -105,6 +105,7 @@
     <Compile Include="Game Files\Monsters\Type\Bunny.cs" />
     <Compile Include="Game Files\Monsters\Type\Dummy.cs" />
     <Compile Include="Game Files\Monsters\Type\LittlePenguin.cs" />
+    <Compile Include="Game Files\Objects\Openable objects\Types\VerticalDoor.cs" />
     <Compile Include="Game Files\Objects\Smashable objects\Teapot.cs" />
     <Compile Include="Game Files\Projectiles\Projectile.cs" />
     <Compile Include="Game Files\Objects\Interactive objects\Types\Trap.cs" />

@@ -145,21 +145,25 @@ protected void LevelInformationLoader(List<string> informationStringList)
                     Door doorupperleft = new Door("Assets/Sprites/Tiles/DoorBottomRight@2", "Door", 0)
                     {
                         Position = new Vector2(float.Parse(splitArray[1]) + 50, float.Parse(splitArray[2]) + 50),
+                        upperLeftPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
                         Objectnumber = int.Parse(splitArray[3])
                     };
                     Door doorupperright = new Door("Assets/Sprites/Tiles/DoorUpperRight@2", "Door", 0)
                     {
                         Position = new Vector2(float.Parse(splitArray[1]) + 50, float.Parse(splitArray[2])),
+                        upperLeftPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
                         Objectnumber = int.Parse(splitArray[3])
                     };
                     Door doorbottomleft = new Door("Assets/Sprites/Tiles/DoorBottomLeft@2", "Door", 0)
                     {
                         Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]) + 50),
+                        upperLeftPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
                         Objectnumber = int.Parse(splitArray[3])
                     };
                     Door doorbottomright = new Door("Assets/Sprites/Tiles/DoorUpperleft@2", "Door", 0)
                     {
                         Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
+                        upperLeftPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
                         Objectnumber = int.Parse(splitArray[3])
                     };
                     levelTileField.Add(doorupperleft, (int)doorupperleft.Position.X / 50, (int)doorupperleft.Position.Y / 50);
@@ -168,29 +172,34 @@ protected void LevelInformationLoader(List<string> informationStringList)
                     levelTileField.Add(doorbottomright, (int)doorbottomright.Position.X / 50, (int)doorbottomright.Position.Y / 50);
                     break;
                 case "VDOOR":
-                    Door vdoorupperleft = new Door("Assets/Sprites/Tiles/VerticalDoorUpperLeft@2", "Door", 0)
+                    Door vdoorupperleft = new VerticalDoor("Assets/Sprites/Tiles/VerticalDoorUpperLeft@2", "Door", 0)
                     {
                         Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
+                        upperLeftPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
                         Objectnumber = int.Parse(splitArray[3])
                     };
-                    Door vdoorupperright = new Door("Assets/Sprites/Tiles/VerticalDoorUpperRight@2", "Door", 0)
+                    Door vdoorupperright = new VerticalDoor("Assets/Sprites/Tiles/VerticalDoorUpperRight@2", "Door", 0)
                     {
                         Position = new Vector2(float.Parse(splitArray[1]) + 50, float.Parse(splitArray[2])),
+                        upperLeftPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
                         Objectnumber = int.Parse(splitArray[3])
                     };
-                    Door vdoormiddleleft = new Door("Assets/Sprites/Tiles/VerticalDoorMiddleLeft@2", "Door", 0)
+                    Door vdoormiddleleft = new VerticalDoor("Assets/Sprites/Tiles/VerticalDoorMiddleLeft@2", "Door", 0)
                     {
                         Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]) + 50),
+                        upperLeftPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
                         Objectnumber = int.Parse(splitArray[3])
                     };
-                    Door vdoorbottomleft = new Door("Assets/Sprites/Tiles/VerticalDoorBottomLeft@2", "Door", 0)
+                    Door vdoorbottomleft = new VerticalDoor("Assets/Sprites/Tiles/VerticalDoorBottomLeft@2", "Door", 0)
                     {
                         Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]) + 100),
+                        upperLeftPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
                         Objectnumber = int.Parse(splitArray[3])
                     };
-                    Door vdoormiddleright = new Door("Assets/Sprites/Tiles/VerticalDoorMiddleRight@2", "Door", 0)
+                    Door vdoormiddleright = new VerticalDoor("Assets/Sprites/Tiles/VerticalDoorMiddleRight@2", "Door", 0)
                     {
                         Position = new Vector2(float.Parse(splitArray[1]) + 50, float.Parse(splitArray[2]) + 50),
+                        upperLeftPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
                         Objectnumber = int.Parse(splitArray[3])
                     };
                     levelTileField.Add(vdoorupperleft, (int)vdoorupperleft.Position.X / 50, (int)vdoorupperleft.Position.Y / 50);
@@ -274,7 +283,7 @@ protected void LevelInformationLoader(List<string> informationStringList)
             default:
                 throw new ArgumentException("The given color " + textArray[3] + " was not found in the switch statement!");
         }
-        key.Position = new Vector2(float.Parse(textArray[1]), float.Parse(textArray[2]));
+        key.Position = new Vector2(float.Parse(textArray[1]) + 10, float.Parse(textArray[2]) + 10);
         key.Objectnumber = int.Parse(textArray[4]);
         if (key != null)
             objectList.Add(key);
