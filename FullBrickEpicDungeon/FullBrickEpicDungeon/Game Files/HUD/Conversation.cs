@@ -11,6 +11,7 @@ class Conversation : GameObjectList
     int convIndex = 0, compensation = 0; //convIndex is regel in het bestand
     //compensation is als keuze is geweest, de extra regels die hij moet overslaan na weergegeven antwoord.
     SpriteGameObject marker = new SpriteGameObject("Assets/Sprites/Conversation Boxes/arrow", 1, "", 10, false);
+    SpriteGameObject conversationFrame;
 
     bool PreviousLineWasChoice = false;
 
@@ -65,7 +66,7 @@ class Conversation : GameObjectList
     /// </summary>
     public void ShowConversationBox()
     {
-        SpriteGameObject conversationFrame = new SpriteGameObject("Assets/Sprites/Conversation Boxes/conversationbox1", 0, "", 10, false);
+        conversationFrame = new SpriteGameObject("Assets/Sprites/Conversation Boxes/conversationbox1", 0, "", 10, false);
         Position = new Vector2(GameEnvironment.Screen.X / 2 - conversationFrame.Width / 2, GameEnvironment.Screen.Y * 3 / 4);
         Add(conversationFrame);
         TextGameObject currentText = new TextGameObject("Assets/Fonts/ConversationFont", 0, "currentlydisplayedtext")
