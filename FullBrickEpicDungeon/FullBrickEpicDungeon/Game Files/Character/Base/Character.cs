@@ -22,6 +22,7 @@ abstract partial class Character : AnimatedGameObject
     protected Vector2 walkingdirection, previousWalkingDirection;
     protected BaseAI AI;
     protected Healthbar healthbar;
+    protected KeyItem characterKey = null;
     //Constructor: sets up the controls given to the constructor for each player (xbox or keyboard)
     protected Character(int playerNumber, int controlsNumber, Level currentLevel, string id = "") : base(0, id)
     {
