@@ -172,7 +172,7 @@ class Conversation : GameObjectList
         }
 
         // Moves the marker up or down depending on the key that was pressed
-        if (inputHelper.KeyPressed(Keys.Down) || inputHelper.ButtonPressed(1, Buttons.DPadDown))
+        if (inputHelper.KeyPressed(Keys.Down) || inputHelper.ButtonPressed(1, Buttons.DPadDown) || inputHelper.MenuDirection(1,false,true).Y < 0)
         {
             if (marker.Position.Y < bottomChoiceHeight + offsetMarker)
             {
@@ -180,7 +180,7 @@ class Conversation : GameObjectList
             }
 
         }
-        if (inputHelper.KeyPressed(Keys.Up) || inputHelper.ButtonPressed(1, Buttons.DPadUp))
+        if (inputHelper.KeyPressed(Keys.Up) || inputHelper.ButtonPressed(1, Buttons.DPadUp) || inputHelper.MenuDirection(1, false, true).Y > 0)
         {
             if (marker.Position.Y > upperChoicePos.Y + offsetMarker)
             {
