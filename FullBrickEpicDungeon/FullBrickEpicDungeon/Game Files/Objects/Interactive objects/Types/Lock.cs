@@ -9,7 +9,7 @@ class Lock : InteractiveObject
 
     protected override void Interact(Character targetCharacter)
     {
-        if (targetCharacter.HasAKey == true && this.Objectnumber == targetCharacter.PlayerNumber || targetCharacter.HasAKey == true && this.Objectnumber == 5)
+        if (targetCharacter.HasAKey == true && (this.Objectnumber == targetCharacter.PlayerNumber || this.Objectnumber == 5))
         {
             this.visible = false;
         }
