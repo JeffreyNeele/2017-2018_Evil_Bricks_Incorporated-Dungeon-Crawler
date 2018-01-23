@@ -69,5 +69,12 @@ class Door : OpenableObject
         get { return positionUpperLeft; }
         set { positionUpperLeft = value; }
     }
+
+    public bool openDoor
+    {
+        get { return DoorOpen; }
+        set { DoorOpen = value; }
+    }
+
 }
 
