@@ -75,6 +75,8 @@ class Handle : InteractiveObject
                 if (this.ObjectNumberConnected == 99)
                 {
                     ((OpenableObject)openableObject).Open();
+                    if (openableObject is Door)
+                        ((Door)openableObject).openDoor = true;
                     continue;
                 }
                 if (((OpenableObject)openableObject).Objectnumber == handlenumber)
