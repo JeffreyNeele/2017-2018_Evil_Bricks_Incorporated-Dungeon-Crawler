@@ -18,7 +18,7 @@ abstract partial class Character : AnimatedGameObject
     // Vector2s for startposition, movementspeed and icespeed
     protected Vector2 startPosition, movementSpeed, iceSpeed;
     protected int playerNumber, controllerNumber;
-    protected bool playerControlled = true, hasAKey = false;
+    protected bool playerControlled = true;
     protected Vector2 walkingdirection, previousWalkingDirection;
     protected BaseAI AI;
     protected Healthbar healthbar;
@@ -249,10 +249,10 @@ abstract partial class Character : AnimatedGameObject
                 {
                     intObj_cast.TargetCharacter = this;
                     intObj_cast.IsInteracting = true;
-                    // if the intobj is a key set hasakey to true
-                    if (intObj is KeyItem)
+                    // if the intobj is a key set the carried key to that key
+                    if (intObj is KeyItem && characterKey == null)
                     {
-                        HasAKey = true;
+                        carriedKey = (KeyItem)intObj;
                     }
                 }
             }
@@ -342,11 +342,6 @@ abstract partial class Character : AnimatedGameObject
     /// <summary>
     /// Character properties
     /// </summary>
-    public bool HasAKey
-    {
-        get { return hasAKey; }
-        set { hasAKey = value; }
-    }
     // returns the startPosition of the character. Will be newly set when entering a level
     public Vector2 StartPosition
     {
@@ -387,5 +382,11 @@ abstract partial class Character : AnimatedGameObject
     {
         get { return xboxControlled; }
         set { xboxControlled = value; }
+    }
+
+    public KeyItem carriedKey
+    {
+        get { return characterKey; }
+        set { characterKey = value; }
     }
 }
