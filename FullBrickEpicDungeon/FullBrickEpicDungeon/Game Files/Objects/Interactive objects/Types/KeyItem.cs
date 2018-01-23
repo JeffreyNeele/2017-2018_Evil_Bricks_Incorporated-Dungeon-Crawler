@@ -28,18 +28,14 @@ class KeyItem : InteractiveObject
         {
             if (used)
                 continue;
-
             if(keylock is Lock)
                 if(((Lock)keylock).Objectnumber == this.Objectnumber && keylock.BoundingBox.Intersects(TargetCharacter.BoundingBox))
                 {
                     keylock.Visible = false;
                     this.visible = false;
                     used = true;
-
                 }
-
         }
-
         if (used)
         {
             TargetCharacter.carriedKey = null;

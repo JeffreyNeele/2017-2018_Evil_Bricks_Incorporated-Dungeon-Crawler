@@ -22,7 +22,7 @@ class Trapdoor : OpenableObject
 
     public bool DetectAllPlayers()
     {
-        allPlayers = GameWorld.Find("playerLIST") as GameObjectList;
+        allPlayers = currentlevel.GameWorld.Find("playerLIST") as GameObjectList;
         int onTrapdoorCounter = 0;
         foreach (Character player in allPlayers.Children)
         {
