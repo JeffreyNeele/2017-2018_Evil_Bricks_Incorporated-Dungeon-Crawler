@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 abstract partial class Character : AnimatedGameObject
 {
     // variables for Timers
-    private Timer deathTimer, reviveTimer, stepSoundTimer, hitTimer;
+    private Timer deathTimer, reviveTimer, stepSoundTimer, hitTimer, switchCharacterTimer;
     // Dictionary for SFX paths
     protected Dictionary<string, string> characterSFX;
     // attributes for the character
@@ -37,7 +37,7 @@ abstract partial class Character : AnimatedGameObject
         // make a new healthbar
         healthbar = new Healthbar(this);
         // initialize all the timers
-        deathTimer = new Timer(10)
+        deathTimer = new Timer(7)
         {
             IsPaused = false
         };
@@ -47,6 +47,10 @@ abstract partial class Character : AnimatedGameObject
         };
         reviveTimer = new Timer(3);
         hitTimer = new Timer(0.5f)
+        {
+            IsExpired = true
+        };
+        switchCharacterTimer = new Timer(0.1f)
         {
             IsExpired = true
         };
@@ -116,6 +120,7 @@ abstract partial class Character : AnimatedGameObject
             // Timer updates
             reviveTimer.Update(gameTime);
             stepSoundTimer.Update(gameTime);
+            switchCharacterTimer.Update(gameTime);
             // Updates the weapon and healthbar
             this.weapon.Update(gameTime);
             healthbar.Update(gameTime);
@@ -149,6 +154,7 @@ abstract partial class Character : AnimatedGameObject
         }
         else
         {
+            PlayAnimation("die");
             // Updates the death timer and if it expires, the character gets reset and loses some gold
             deathTimer.Update(gameTime);
             if (deathTimer.IsExpired)
