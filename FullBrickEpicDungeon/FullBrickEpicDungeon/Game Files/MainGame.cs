@@ -40,7 +40,7 @@ namespace FullBrickEpicDungeon
             //Kan niet in plaats van in Characterselection hier aangemaakt worden, omdat dan de keuze niet goed wordt doorgegeven aan playingstate
             //als ik daar alleen playingstate zou zetten, is de volgorde niet meer goed.
             /*
-            gameStateManager.AddGameState("playingState", new PlayingState()); //Deze VERWIJDEREN ALS CHAR SELECTION IS GEACTIVEERD
+            gameStateManager.AddGameState("playingState", new PlayingState()); //Deze alinea VERWIJDEREN ALS CHAR SELECTION IS GEACTIVEERD
             gameStateManager.AddGameState("levelFinishedState", new LevelFinishedState());
             GameStateManager.AddGameState("pauseState", new PauseState());
             gameStateManager.AddGameState("conversation", new ConversationState());

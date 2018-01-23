@@ -1,4 +1,5 @@
-﻿Dragon: Welcome to my humble castle. Would you like a cup of tea?
+﻿Dragon: Welcome to my humble castle. I am Mr Tiberius Stormwind of Draconia.
+Dragon: Would you like a cup of tea?
 #1. Tea tastes like bird poop. I am sick of tea!
 #2. Well you could say that this is turning into a horrible par-tea.
 #3. Why the sudden hospitali-tea?
@@ -17,5 +18,5 @@ Dragon: So where is your epic mount now huh?
 #2. I have no clue. Do I look like mount cleverest?
 #3. You stupid? You captured him!
 Dragon: How dare you say something about my beautiful mother?
-Dragon: No you definitely do not look like that name would suit you. While you're down, get some schooling.
+Dragon: No you definitely do not look like that name would suit you.
 Dragon: Now you are just being rude!

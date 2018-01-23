@@ -13,9 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Assets/Fonts/ConversationFont.xnb
-/copy:Assets/Fonts/ConversationFont.xnb
-
 #begin Assets/Sprites/Conversation Boxes/ConversationBox1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1578,4 +1575,11 @@
 
 #begin Assets/Conversations/ThroneRoom1.txt
 /copy:Assets/Conversations/ThroneRoom1.txt
+
+#begin Assets/Fonts/ConversationFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Assets/Fonts/ConversationFont.spritefont
 

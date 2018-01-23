@@ -15,8 +15,9 @@ class Conversation : GameObjectList
     bool PreviousLineWasChoice = false;
 
     Vector2 upperChoicePos;
-    const int choiceSeperation = 20;
+    const int choiceSeperation = 35;
     float bottomChoiceHeight;
+    int offsetMarker;
 
     /// <summary>
     /// Class that makes a Conversation box with possible choices / story
@@ -32,8 +33,9 @@ class Conversation : GameObjectList
         LoadConversation(path);
         ShowConversationBox();
         Add(marker);
+        offsetMarker = -5;
 
-        marker.Position = upperChoicePos;
+        marker.Position = new Vector2(upperChoicePos.X, upperChoicePos.Y + offsetMarker);
         marker.Visible = false;   
     }
 
@@ -70,7 +72,7 @@ class Conversation : GameObjectList
         {
             Color = Color.White,
             Text = textLines[convIndex],
-            Position = new Vector2(100, conversationFrame.Height / 2)
+            Position = new Vector2(100, conversationFrame.Height / 2 - 20)
         };
         displayedText.Add(currentText);
     }
@@ -98,17 +100,17 @@ class Conversation : GameObjectList
                 if (PreviousLineWasChoice)
                 {
 
-                    if (marker.Position.Y == upperChoicePos.Y)
+                    if (marker.Position.Y == upperChoicePos.Y + offsetMarker)
                     {
                         convIndex++;
                         compensation = 2;
                     }
-                    else if (marker.Position.Y == upperChoicePos.Y + choiceSeperation && convIndex < textLines.Count - 2)
+                    else if (marker.Position.Y == upperChoicePos.Y + offsetMarker + choiceSeperation && convIndex < textLines.Count - 2)
                     {
                         convIndex += 2;
                         compensation = 1;
                     }
-                    else if (marker.Position.Y == bottomChoiceHeight && convIndex < textLines.Count - 3)
+                    else if (marker.Position.Y == bottomChoiceHeight + offsetMarker && convIndex < textLines.Count - 3)
                     {
                         convIndex += 3;
                     }
@@ -132,7 +134,7 @@ class Conversation : GameObjectList
                     {
                         TextGameObject currentText = new TextGameObject("Assets/Fonts/ConversationFont", 0, "currentlydisplayedtext")
                         {
-                            Position = new Vector2(100, i * choiceSeperation + 80),
+                            Position = new Vector2(100, i * choiceSeperation + upperChoicePos.Y),
                             Text = textLines[convIndex]
                         };
                         displayedText.Add(currentText);
@@ -149,7 +151,7 @@ class Conversation : GameObjectList
                     TextGameObject currentText = new TextGameObject("Assets/Fonts/ConversationFont", 0, "currentlydisplayedtext")
                     {
                         Text = textLines[convIndex],
-                        Position = new Vector2(100, 114)
+                        Position = new Vector2(100, conversationFrame.Height / 2 - 20)
                     };
                     displayedText.Add(currentText);
                 }
@@ -171,7 +173,7 @@ class Conversation : GameObjectList
         // Moves the marker up or down depending on the key that was pressed
         if (inputHelper.KeyPressed(Keys.Down) || inputHelper.ButtonPressed(1, Buttons.DPadDown))
         {
-            if (marker.Position.Y < bottomChoiceHeight)
+            if (marker.Position.Y < bottomChoiceHeight + offsetMarker)
             {
                 marker.Position += new Vector2(0, choiceSeperation);
             }
@@ -179,7 +181,7 @@ class Conversation : GameObjectList
         }
         if (inputHelper.KeyPressed(Keys.Up) || inputHelper.ButtonPressed(1, Buttons.DPadUp))
         {
-            if (marker.Position.Y > upperChoicePos.Y)
+            if (marker.Position.Y > upperChoicePos.Y + offsetMarker)
             {
                 marker.Position -= new Vector2(0, choiceSeperation);
             }
