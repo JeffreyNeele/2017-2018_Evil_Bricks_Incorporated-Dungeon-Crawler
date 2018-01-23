@@ -2,9 +2,10 @@
 class KeyItem : InteractiveObject
 {
     int objectnumber;
-
+    bool used;
     public KeyItem(string assetname, string id, int sheetIndex) : base(assetname, id, sheetIndex)
     {
+        used = false;
     }
 
     protected override void Interact(Character targetCharacter)
@@ -15,24 +16,33 @@ class KeyItem : InteractiveObject
             this.position.X = targetCharacter.Position.X - 12;
             this.position.Y = targetCharacter.Position.Y - 115;
         }
+    }
 
-
-        if (targetCharacter.HasAKey == true)
+    public void useKey()
+    {
+        GameObjectList objectList = GameWorld.Find("objectLIST") as GameObjectList;
+        foreach (var keylock in objectList.Children)
         {
-            GameObjectList objectList = GameWorld.Find("objectLIST") as GameObjectList;
-            foreach (var keylock in objectList.Children)
+            if (used)
+                continue;
+
+            if (keylock is Lock && ((Lock)keylock).Objectnumber == this.Objectnumber && keylock.BoundingBox.Intersects(TargetCharacter.BoundingBox))
             {
-                if (keylock is Lock && ((Lock)keylock).Objectnumber == this.Objectnumber)
-                {
-                    if (keylock.Visible == false)
-                    {
-                        this.visible = false;
-                    }
-                }
+                keylock.Visible = false;
+                this.visible = false;
+                used = true;
 
             }
+
+        }
+
+        if (used)
+        {
+            TargetCharacter.carriedKey = null;
+            objectList.Remove(this);
         }
     }
+
     public int Objectnumber
     {
         get { return this.objectnumber; }

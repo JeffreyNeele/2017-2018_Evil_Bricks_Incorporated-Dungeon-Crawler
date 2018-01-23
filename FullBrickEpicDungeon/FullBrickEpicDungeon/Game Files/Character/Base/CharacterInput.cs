@@ -177,6 +177,8 @@ abstract partial class Character : AnimatedGameObject
 
         if (inputHelper.IsKeyDown(keyboardControls[Keys.E]))
         {
+            if (carriedKey != null)
+                carriedKey.useKey();
             InteractCollisionChecker();
         }
 
@@ -256,6 +258,8 @@ abstract partial class Character : AnimatedGameObject
             //Interact button
             if (inputHelper.IsButtonDown(controllerNumber, Buttons.Y))
             {
+                if (carriedKey != null)
+                    carriedKey.useKey();
                 InteractCollisionChecker();
             }
             if (inputHelper.ButtonPressed(controllerNumber, Buttons.X) && switchCharacterTimer.IsExpired)
