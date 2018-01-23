@@ -31,7 +31,7 @@ class VerticalDoor : Door
             int left = (int)upperLeftPosition.X;
             int top = (int)upperLeftPosition.Y;
             if (sprite.SheetIndex == 0)
-                return new Rectangle(left, top, 100, 50);
+                return new Rectangle(left, top, 100, 85);
             else
                 return BoundingBox;
         }
