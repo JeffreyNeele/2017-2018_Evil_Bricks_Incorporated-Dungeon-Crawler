@@ -247,12 +247,20 @@ abstract partial class Character : AnimatedGameObject
                 InteractiveObject intObj_cast = intObj as InteractiveObject;
                 if (intObj_cast.CollidesWith(this))
                 {
-                    intObj_cast.TargetCharacter = this;
-                    intObj_cast.IsInteracting = true;
                     // if the intobj is a key set the carried key to that key
-                    if (intObj is KeyItem && characterKey == null)
+                    if (intObj is KeyItem)
                     {
-                        carriedKey = (KeyItem)intObj;
+                        if (!((KeyItem)intObj).keyOwned && characterKey == null && (((KeyItem)intObj).Objectnumber == playerNumber || ((KeyItem)intObj).Objectnumber == 5))
+                        {
+                            intObj_cast.TargetCharacter = this;
+                            intObj_cast.IsInteracting = true;
+                            carriedKey = (KeyItem)intObj;
+                        }
+                    }
+                    if(intObj is Handle)
+                    {
+                        intObj_cast.TargetCharacter = this;
+                        intObj_cast.IsInteracting = true;
                     }
                 }
             }

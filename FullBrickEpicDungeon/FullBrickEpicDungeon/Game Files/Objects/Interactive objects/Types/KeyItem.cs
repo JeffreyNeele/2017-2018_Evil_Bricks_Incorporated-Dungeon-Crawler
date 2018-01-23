@@ -52,6 +52,11 @@ class KeyItem : InteractiveObject
         get { return this.objectnumber; }
         set { objectnumber = value; }
     }
+
+    public bool keyOwned
+    {
+        get { return taken; }
+    }
 }
 
 
