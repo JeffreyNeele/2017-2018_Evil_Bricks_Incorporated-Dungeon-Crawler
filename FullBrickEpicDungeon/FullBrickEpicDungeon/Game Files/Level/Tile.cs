@@ -45,25 +45,30 @@ class Tile : SpriteGameObject
             // Doors are special as in that they can be open (and passable for AI and players) OR they can be closed (and not passable) as such we check here if the door is passable
             else if (type == TileType.DoorTile)
             {
-                if(this is VerticalDoor)
-                {
-                    if ((this as VerticalDoor).sprite.SheetIndex == 0)
-                        return true;
-                    else if ((this as VerticalDoor).sprite.SheetIndex == 1 && this.BoundingBox.Intersects((this as VerticalDoor).BoundingBox))
-                        return true;
-                    else
-                        return false;
-                }
-                else if ((this as Door).sprite.SheetIndex == 0)
-                {
-                    return true;
-                }
-                else
-                    return false;
+                return DoorTileChecker();
             }
             else
                 return false;
             }
                
+    }
+
+    private bool DoorTileChecker()
+    {
+        if (this is VerticalDoor)
+        {
+            if ((this as VerticalDoor).sprite.SheetIndex == 0)
+                return true;
+            else if ((this as VerticalDoor).sprite.SheetIndex == 1 && this.BoundingBox.Intersects((this as VerticalDoor).BoundingBox))
+                return true;
+            else
+                return false;
+        }
+        else if ((this as Door).sprite.SheetIndex == 0)
+        {
+            return true;
+        }
+        else
+            return false;
     }
 }
