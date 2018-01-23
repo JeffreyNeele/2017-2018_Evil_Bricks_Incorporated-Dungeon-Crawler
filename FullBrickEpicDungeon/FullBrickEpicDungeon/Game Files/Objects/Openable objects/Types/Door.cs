@@ -6,7 +6,7 @@
 class Door : OpenableObject
 {
     private bool DoorOpen = false;
-
+    protected Vector2 positionUpperLeft;
 
     /// <param name="assetname">Path to be able to load in the sprite</param>
     /// <param name="id">defined id to be able to find the door</param>
@@ -48,6 +48,26 @@ class Door : OpenableObject
             if(door is Door)
                 if (((Door)door).Objectnumber == openDoor.Objectnumber && openDoor.DoorOpen)
                     ((Door)door).DoorOpen = true;
+    }
+
+    //Bounding Box voor de collisie. Als de deur open is, moet er geen collisie zijn.
+    public override Rectangle BoundingBox
+    {
+        get
+        {
+            int left = (int)upperLeftPosition.X;
+            int top = (int)upperLeftPosition.Y;
+            if (sprite.SheetIndex == 0)
+                return new Rectangle(left, top, 100, 100);
+            else
+                return new Rectangle(left, top, 0, 0);
+        }
+    }
+
+    public Vector2 upperLeftPosition
+    {
+        get { return positionUpperLeft; }
+        set { positionUpperLeft = value; }
     }
 }
 

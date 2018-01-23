@@ -46,46 +46,50 @@ class LittlePenguin : AImonster
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        if (AI.CurrentTarget != null && idleCounter <= 0 && movementVector == new Vector2(0, 0))
-            SlideDirection();
-        else if (movementVector != new Vector2(0, 0))
+        
+        if(attributes.HP > 0)
         {
-            previousPos = Position;
-            Position += movementVector;
+            if (AI.CurrentTarget != null && idleCounter <= 0 && movementVector == new Vector2(0, 0))
+                SlideDirection();
+            else if (movementVector != new Vector2(0, 0))
+            {
+                previousPos = Position;
+                Position += movementVector;
 
-            if(Math.Abs(movementVector.X) > Math.Abs(movementVector.Y))
-            {
-                PlayAnimation("slideSide");
-                animationCheck = 3;
-                if (movementVector.X > 0)
-                    Mirror = false;
-                else
-                    Mirror = true;
-            }
-            else
-            {
-                if (movementVector.Y > 0)
+                if (Math.Abs(movementVector.X) > Math.Abs(movementVector.Y))
                 {
-                    PlayAnimation("slideDown");
-                    animationCheck = 2;
+                    PlayAnimation("slideSide");
+                    animationCheck = 3;
+                    if (movementVector.X > 0)
+                        Mirror = false;
+                    else
+                        Mirror = true;
                 }
                 else
                 {
-                    PlayAnimation("slideUp");
-                    animationCheck = 1;
+                    if (movementVector.Y > 0)
+                    {
+                        PlayAnimation("slideDown");
+                        animationCheck = 2;
+                    }
+                    else
+                    {
+                        PlayAnimation("slideUp");
+                        animationCheck = 1;
+                    }
                 }
+                CheckCollision();
             }
-            CheckCollision();
-        }
-        else if (idleCounter > 0)
-        {
-            idleCounter -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (animationCheck == 1)
-                PlayAnimation("sideFront");
-            else if (animationCheck == 2)
-                PlayAnimation("sideBack");
-            else
-                PlayAnimation("sideWalk");
+            else if (idleCounter > 0)
+            {
+                idleCounter -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (animationCheck == 1)
+                    PlayAnimation("sideFront");
+                else if (animationCheck == 2)
+                    PlayAnimation("sideBack");
+                else
+                    PlayAnimation("sideWalk");
+            }
         }
     }
 
@@ -105,7 +109,7 @@ class LittlePenguin : AImonster
         GameObjectGrid field = GameWorld.Find("TileField") as GameObjectGrid;
         GameObjectList players = GameWorld.Find("playerLIST") as GameObjectList;
 
-        Rectangle tileBoundingBox = new Rectangle((int)this.BoundingBox.X, (int)(this.BoundingBox.Y + 0.75 * Height), this.Width, (int)(this.Height / 4));
+        Rectangle tileBoundingBox = new Rectangle((int)(this.BoundingBox.X + 0.25 * Width), (int)(this.BoundingBox.Y + 0.75 * Height), (int)(this.Width * 0.5), (int)(this.Height * 0.25));
         //First check if monster collides with player
         foreach (Character player in players.Children)
             if (this.BoundingBox.Intersects(player.BoundingBox) && !playersHit.Contains(player))
@@ -121,6 +125,13 @@ class LittlePenguin : AImonster
                 idleCounter = 3;
                 // TargetRandomObject (currently removed but might add back later, but as a local method?
             }
+            else if (tile is VerticalDoor)
+                    if (tileBoundingBox.Intersects(((VerticalDoor)tile).BoundingBox2))
+                    {
+                        movementVector = new Vector2(0, 0);
+                        Position = previousPos;
+                        idleCounter = 3;
+                    }
         }
     }
 

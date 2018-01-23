@@ -267,6 +267,9 @@ abstract partial class Character : AnimatedGameObject
             {
                 return false;
             }
+            if (tile is VerticalDoor)
+                if(quarterBoundingBox.Intersects(((VerticalDoor)tile).BoundingBox2))
+                return false;
         }
         return true;
     }
