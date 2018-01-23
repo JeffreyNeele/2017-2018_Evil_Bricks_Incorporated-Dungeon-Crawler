@@ -27,7 +27,7 @@ class KeyItem : InteractiveObject
                 continue;
 
             if(keylock is Lock)
-                if(((Lock)keylock).Objectnumber == this.Objectnumber && keylock.BoundingBox.Intersects(TargetCharacter.BoundingBox))
+                if(((Lock)keylock).Objectnumber == this.Objectnumber && keylock.BoundingBox.Intersects(TargetCharacter.BoundingBox) && TargetCharacter.carriedKey != null)
                 {
                     keylock.Visible = false;
                     this.visible = false;
