@@ -49,7 +49,7 @@ class Tile : SpriteGameObject
                 {
                     if ((this as VerticalDoor).sprite.SheetIndex == 0)
                         return true;
-                    else if ((this as VerticalDoor).sprite.SheetIndex == 1 && this.BoundingBox.Intersects((this as VerticalDoor).BoundingBox2))
+                    else if ((this as VerticalDoor).sprite.SheetIndex == 1 && this.BoundingBox.Intersects((this as VerticalDoor).BoundingBox))
                         return true;
                     else
                         return false;
