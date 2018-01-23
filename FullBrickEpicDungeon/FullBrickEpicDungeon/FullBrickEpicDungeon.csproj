@@ -108,7 +108,6 @@
     <Compile Include="Game Files\Objects\Openable objects\Types\VerticalDoor.cs" />
     <Compile Include="Game Files\Objects\Smashable objects\Teapot.cs" />
     <Compile Include="Game Files\Projectiles\Projectile.cs" />
-    <Compile Include="Game Files\Objects\Interactive objects\Types\Trap.cs" />
     <Compile Include="Game Files\Weapons\Weapon.cs" />
     <Compile Include="Game Files\MainGame.cs" />
     <Compile Include="Game Files\Weapons\SwordAndShield.cs" />

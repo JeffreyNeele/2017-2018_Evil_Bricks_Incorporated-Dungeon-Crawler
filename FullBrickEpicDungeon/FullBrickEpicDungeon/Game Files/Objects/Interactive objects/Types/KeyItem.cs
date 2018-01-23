@@ -3,9 +3,11 @@ class KeyItem : InteractiveObject
 {
     int objectnumber;
     bool used;
+    bool taken;
     public KeyItem(string assetname, Level currentlevel, string id, int sheetIndex) : base(assetname, currentlevel, id, sheetIndex)
     {
         used = false;
+        taken = false;
     }
 
     protected override void Interact(Character targetCharacter)
@@ -15,6 +17,7 @@ class KeyItem : InteractiveObject
         {
             this.position.X = targetCharacter.Position.X - 12;
             this.position.Y = targetCharacter.Position.Y - 115;
+            taken = true;
         }
     }
 

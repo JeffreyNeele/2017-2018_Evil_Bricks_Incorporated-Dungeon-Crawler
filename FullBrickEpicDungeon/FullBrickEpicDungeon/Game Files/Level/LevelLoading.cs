@@ -231,19 +231,19 @@ protected void LevelInformationLoader(List<string> informationStringList)
         switch (textArray[3])
         {
             case "RED":
-                lockitem = new Lock("Assets/Sprites/InteractiveObjects/PaladinLock", "redlock", 0);
+                lockitem = new Lock("Assets/Sprites/InteractiveObjects/PaladinLock", this, "redlock", 0);
                 break;
             case "BLUE":
-                lockitem = new Lock("Assets/Sprites/InteractiveObjects/LightbringerLock", "bluelock", 0);
+                lockitem = new Lock("Assets/Sprites/InteractiveObjects/LightbringerLock", this, "bluelock", 0);
                 break;
             case "GREEN":
-                lockitem = new Lock("Assets/Sprites/InteractiveObjects/RogueLock", "greenlock", 0);
+                lockitem = new Lock("Assets/Sprites/InteractiveObjects/RogueLock", this, "greenlock", 0);
                 break;
             case "ORANGE":
-                lockitem = new Lock("Assets/Sprites/InteractiveObjects/TalismaniacLock", "orangelock", 0);
+                lockitem = new Lock("Assets/Sprites/InteractiveObjects/TalismaniacLock", this, "orangelock", 0);
                 break;
             case "ALL":
-                lockitem = new Lock("Assets/Sprites/InteractiveObjects/AllLock", "alllock", 0);
+                lockitem = new Lock("Assets/Sprites/InteractiveObjects/AllLock", this, "alllock", 0);
                 break;
             default:
                 throw new ArgumentException("The given color " + textArray[3] + " was not found in the switch statement!");
