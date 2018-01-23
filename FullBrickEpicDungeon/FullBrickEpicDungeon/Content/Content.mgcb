@@ -13,12 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Assets/Conversations/conv_test.txt
-/copy:Assets/Conversations/conv_test.txt
-
-#begin Assets/Fonts/ConversationFont.xnb
-/copy:Assets/Fonts/ConversationFont.xnb
-
 #begin Assets/Sprites/Conversation Boxes/ConversationBox1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1486,6 +1480,45 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Tiles/VerticalDoorUpperRight@2.png
 
+#begin Assets/Conversations/LarryShits.txt
+/copy:Assets/Conversations/LarryShits.txt
+
+#begin Assets/Cutscenes/ThroneRoom1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Cutscenes/ThroneRoom1.png
+
+#begin Assets/Cutscenes/LarryShits.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Cutscenes/LarryShits.png
+
+#begin Assets/Cutscenes/ThroneRoom2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Cutscenes/ThroneRoom2.png
+
 #begin Assets/Sprites/InteractiveObjects/SpikeTrap@2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1497,6 +1530,106 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/InteractiveObjects/SpikeTrap@2.png
+
+#begin Assets/Sprites/Level_Finished/brown_overlay.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Level_Finished/brown_overlay.png
+
+#begin Assets/Sprites/Level_Finished/level_completed.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Level_Finished/level_completed.png
+
+#begin Assets/Sprites/Shieldmaiden/shieldmaiden_die_blue@2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Shieldmaiden/shieldmaiden_die_blue@2.png
+
+#begin Assets/Sprites/Shieldmaiden/shieldmaiden_die_default@2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Shieldmaiden/shieldmaiden_die_default@2.png
+
+#begin Assets/Sprites/Shieldmaiden/shieldmaiden_die_green@2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Shieldmaiden/shieldmaiden_die_green@2.png
+
+#begin Assets/Sprites/Shieldmaiden/shieldmaiden_die_orange@2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Shieldmaiden/shieldmaiden_die_orange@2.png
+
+#begin Assets/Conversations/LarryCaptured.txt
+/copy:Assets/Conversations/LarryCaptured.txt
+
+#begin Assets/Conversations/ThroneRoom2.txt
+/copy:Assets/Conversations/ThroneRoom2.txt
+
+#begin Assets/Cutscenes/LarryGetsCaptured.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Cutscenes/LarryGetsCaptured.png
+
+#begin Assets/Conversations/ThroneRoom1.txt
+/copy:Assets/Conversations/ThroneRoom1.txt
+
+#begin Assets/Fonts/ConversationFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Assets/Fonts/ConversationFont.spritefont
 
 #begin Assets/Sprites/Enemies/BossRabbitAttack@5.png
 /importer:TextureImporter

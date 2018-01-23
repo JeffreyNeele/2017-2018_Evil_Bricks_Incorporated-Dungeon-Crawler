@@ -98,8 +98,6 @@ class BaseAI
     /// <param name="gameTime">Current game time</param>
     private void AIAttackManager(GameTime gameTime)
     {
-        //moves into the target
-        MoveToPosition(targetedObject.Position, (float)gameTime.ElapsedGameTime.TotalSeconds);
         // if the AI is inside the target it attacks
         if (targetedObject.BoundingBox.Contains(owner.Position))
         {
@@ -114,6 +112,8 @@ class BaseAI
             }
             idleTimer.Reset();
         }
+        else
+            MoveToPosition(targetedObject.Position, (float)gameTime.ElapsedGameTime.TotalSeconds);
     }
 
     /// <summary>
@@ -161,7 +161,7 @@ class BaseAI
             foreach (Character target in targetList.Children)
             {
                 // If the target is down, we do not want to target it so we continue to the next iteration in the loop.
-                if (target.IsDowned)
+                if (target.IsDowned || FindPath(target.Position, this.owner.Position).Count == 0)
                 {
                     continue;
                 }
@@ -199,14 +199,14 @@ class BaseAI
         Point gridStartPosition = new Point((int)startPosition.X / levelGrid.CellWidth, (int)startPosition.Y / levelGrid.CellHeight);
         Point gridEndPosition = new Point((int)endPosition.X / levelGrid.CellWidth, (int)(endPosition.Y / levelGrid.CellHeight));
 
-        // With the library, generate a new Grid and block the tiles that are marked as solid
+        // With the library, generate a new Grid and block the tiles that are marked as solid or as ice
         Grid pathGrid = new Grid(levelGrid.Columns, levelGrid.Rows);
         for (int x = 0; x < levelGrid.Columns; x++)
         {
             for (int y = 0; y < levelGrid.Rows; y++)
             {
                 Tile currenttile = levelGrid.Objects[x, y] as Tile;
-                if (currenttile.IsSolid)
+                if (currenttile.IsSolid || currenttile.Type == TileType.Ice)
                 {
                     pathGrid.BlockCell(new Position(x, y));
                 }

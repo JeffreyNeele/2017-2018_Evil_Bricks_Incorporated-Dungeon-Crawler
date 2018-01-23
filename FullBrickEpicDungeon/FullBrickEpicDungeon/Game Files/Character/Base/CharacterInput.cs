@@ -16,6 +16,7 @@ abstract partial class Character : AnimatedGameObject
     {
         if (playerControlled)
         {
+            
             Vector2 previousPosition = this.position;
             if (this.xboxControlled && !inputHelper.ControllerConnected(controllerNumber))
             {
@@ -124,7 +125,8 @@ abstract partial class Character : AnimatedGameObject
                 PlaySFX("ability_not_ready");
             }
         }
-        if (inputHelper.KeyPressed(keyboardControls[Keys.LeftShift]))
+
+        if (inputHelper.KeyPressed(keyboardControls[Keys.LeftShift]) && switchCharacterTimer.IsExpired)
         {
             SwitchtoAIChecker();
             return;
@@ -256,7 +258,7 @@ abstract partial class Character : AnimatedGameObject
             {
                 InteractCollisionChecker();
             }
-            if (inputHelper.ButtonPressed(controllerNumber, Buttons.X))
+            if (inputHelper.ButtonPressed(controllerNumber, Buttons.X) && switchCharacterTimer.IsExpired)
             {
                 SwitchtoAIChecker();
                 return;
@@ -328,28 +330,31 @@ abstract partial class Character : AnimatedGameObject
     public void SwitchtoAIChecker()
     {
         GameObjectList playerList = GameWorld.Find("playerLIST") as GameObjectList;
-        int targetPlayerNumber = this.playerNumber + 1;
-        for (int i = 1; i < 4; i++)
+        int targetPlayerNumber = this.playerNumber;
+        for (int i = 0; i < 4; i++)
         {
-            // There are  only 4 players, so if the target is 5 we go back to 1
+            targetPlayerNumber++;
             if (targetPlayerNumber > 4)
             {
                 targetPlayerNumber = 1;
             }
-
+            // There are  only 4 players, so if the target is 5 we go back to 1
             foreach (Character p in playerList.Children)
             {
-                if (p.playerNumber == targetPlayerNumber)
+                if (p.playerNumber == targetPlayerNumber && p != this)
                 {
-                    if (!p.PlayerControlled)
+                    //if the criteria are met we switch, otherwise we try another character instead
+                    if (!p.PlayerControlled && !p.IsDowned && p.SolidCollisionChecker())
                     {
                         SwitchToCharacter(p);
                         return;
                     }
+                    else
+                        continue;
                 }
             }
-            targetPlayerNumber++;
         }
+        PlaySFX("switch_wrong");
     }
 
     /// <summary>
@@ -358,30 +363,22 @@ abstract partial class Character : AnimatedGameObject
     /// <param name="targetCharacter">The character that the player will switch to control</param>
     public void SwitchToCharacter(Character targetCharacter)
     {
-        // If the target character is the owner himself, or the target character is on a wrong position (due to how AI is handled) the switch will not commence
-        if (targetCharacter == this || !targetCharacter.SolidCollisionChecker() || targetCharacter.IsOnIceChecker())
+        // Switch control schemes
+        if (this.xboxControlled)
         {
-            PlaySFX("switch_wrong");
-            return;
+            targetCharacter.xboxControlled = true;
+            targetCharacter.controllerNumber = this.controllerNumber;
+            this.controllerNumber = this.playerNumber;
         }
         else
         {
-            // Switch control schemes
-            if (this.xboxControlled)
-            {
-                targetCharacter.xboxControlled = true;
-                targetCharacter.controllerNumber = this.controllerNumber;
-                this.controllerNumber = this.playerNumber;
-            }
-            else
-            {
-                targetCharacter.xboxControlled = false;
-                targetCharacter.keyboardControls = this.keyboardControls;
-                this.keyboardControls = null;
-            }
-            this.playerControlled = false;
-            targetCharacter.playerControlled = true;
+            targetCharacter.xboxControlled = false;
+            targetCharacter.keyboardControls = this.keyboardControls;
+            this.keyboardControls = null;
         }
+        this.playerControlled = false;
+        targetCharacter.playerControlled = true;
+        targetCharacter.switchCharacterTimer.Reset();
     }
 
 
@@ -392,6 +389,7 @@ abstract partial class Character : AnimatedGameObject
     public void PlayAnimationDirection(Vector2 walkingdirection)
     {
         // The attack animations have priority over the walking animations, and thus if these are being played we just return from the method
+        
         if (!weapon.IsAttacking)
         {
             if(walkingdirection == Vector2.Zero)

@@ -26,12 +26,11 @@ class Trapdoor : OpenableObject
         int onTrapdoorCounter = 0;
         foreach (Character player in allPlayers.Children)
         {
-            Rectangle quarterBoundingBox = new Rectangle((int)player.BoundingBox.X, (int)(player.BoundingBox.Y + 0.75 * Height), player.Width, (int)(player.Height / 4));
-            if (this.BoundingBox.Intersects(quarterBoundingBox))
+            if (this.CollidesWith(player))
                 onTrapdoorCounter++;
         }
 
-        if (onTrapdoorCounter == 4)
+        if (onTrapdoorCounter >= CharacterSelection.NumberOfPlayers)
         {
             return true;
         }

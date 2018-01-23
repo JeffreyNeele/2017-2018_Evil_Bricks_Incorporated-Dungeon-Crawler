@@ -15,7 +15,7 @@ class PlayingState : IGameLoopObject
     /// </summary>
     public PlayingState()
     {
-        currentLevelIndex = 6;
+        currentLevelIndex = 1;
         levelList = new List<Level>();
         // Loads the levels from all level files
         LoadLevels(10);
@@ -36,7 +36,11 @@ class PlayingState : IGameLoopObject
             FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
             GameEnvironment.GameStateManager.SwitchTo("pauseState");
         }
+        if (inputHelper.KeyPressed(Keys.C))
+            GameEnvironment.GameStateManager.SwitchTo("conversation");
     }
+
+    public void Setup() { }
 
     public void Reset()
     {

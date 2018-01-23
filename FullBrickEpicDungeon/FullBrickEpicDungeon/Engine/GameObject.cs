@@ -14,7 +14,7 @@ public abstract class GameObject : IGameLoopObject
         this.layer = layer;
         this.id = id;
         position = Vector2.Zero;
-        velocity = Vector2.Zero; 
+        velocity = Vector2.Zero;
         visible = true;
     }
 
@@ -30,6 +30,11 @@ public abstract class GameObject : IGameLoopObject
     public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
     }
+
+    /// <summary>
+    /// Method which gets called at the SwitchTo gamestates command.
+    /// </summary>
+    public virtual void Setup(){ }
 
     public virtual void Reset()
     {

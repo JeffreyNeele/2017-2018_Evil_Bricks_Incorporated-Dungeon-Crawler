@@ -1,5 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
+using System.IO;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 class TitleMenuState : IGameLoopObject
 {
@@ -45,12 +49,13 @@ class TitleMenuState : IGameLoopObject
         // Updates the input for the start and settingsbutton
         startButton.HandleInput(inputHelper);
         settingsButton.HandleInput(inputHelper);
-        if (startButton.Pressed)
+        if (startButton.Pressed || inputHelper.ButtonPressed(1, Buttons.A))
         {
             GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
             FullBrickEpicDungeon.DungeonCrawler.mouseVisible = false;
             //GameEnvironment.GameStateManager.SwitchTo("playingState");
             GameEnvironment.GameStateManager.SwitchTo("characterSelection");
+            //GameEnvironment.GameStateManager.SwitchTo("cutscene");
         }
         if (settingsButton.Pressed)
         {
@@ -58,6 +63,8 @@ class TitleMenuState : IGameLoopObject
             GameEnvironment.GameStateManager.SwitchTo("settingsState");
         }
     }
+
+    public void Setup() { }
 
     public void Reset()
     {

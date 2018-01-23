@@ -7,34 +7,43 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-class LevelFinishedState : GameObjectList
+class LevelFinishedState : IGameLoopObject
 {
     protected IGameLoopObject playingState;
+    Texture2D overlay, plaque;
     public LevelFinishedState()
     {
+        overlay = GameEnvironment.AssetManager.GetSprite("Assets/Sprites/Level_Finished/brown_overlay");
+        plaque = GameEnvironment.AssetManager.GetSprite("Assets/Sprites/Level_Finished/level_completed");
         playingState = GameEnvironment.GameStateManager.GetGameState("playingState");
-
     }
 
-    public override void HandleInput(InputHelper inputHelper)
+    public void HandleInput(InputHelper inputHelper)
     {
-        if (inputHelper.KeyPressed(Keys.E))
+        if (inputHelper.KeyPressed(Keys.E) || inputHelper.AnyPlayerPressed(Buttons.Y))
         {
-            (playingState as PlayingState).GoToNextLevel();
             GameEnvironment.GameStateManager.SwitchTo("playingState");
+            (GameEnvironment.GameStateManager.CurrentGameState as PlayingState).GoToNextLevel();
         }
     }
 
-    public override void Update(GameTime gameTime)
+    public void Update(GameTime gameTime)
     {
-        playingState.Update(gameTime);
-        base.Update(gameTime);
+        playingState = GameEnvironment.GameStateManager.GetGameState("playingState");
     }
 
-    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         playingState.Draw(gameTime, spriteBatch);
-        base.Draw(gameTime, spriteBatch);
+        spriteBatch.Draw(overlay, Vector2.Zero, Color.White);
+        spriteBatch.Draw(plaque, Vector2.Zero, Color.White);
+    }
+
+    public void Setup() { }
+
+    public void Reset()
+    {
+
     }
 }
 

@@ -30,6 +30,7 @@ public class GameStateManager : IGameLoopObject
         {
             previousGameState = currentGameState;
             currentGameState = gameStates[name];
+            currentGameState.Setup();
         }
         else
         {
@@ -42,6 +43,14 @@ public class GameStateManager : IGameLoopObject
         get
         {
             return currentGameState;
+        }
+    }
+
+    public IGameLoopObject PreviousGameState
+    {
+        get
+        {
+            return previousGameState;
         }
     }
 
@@ -68,6 +77,8 @@ public class GameStateManager : IGameLoopObject
             currentGameState.Draw(gameTime, spriteBatch);
         }
     }
+
+    public void Setup() { }
 
     public void Reset()
     {
