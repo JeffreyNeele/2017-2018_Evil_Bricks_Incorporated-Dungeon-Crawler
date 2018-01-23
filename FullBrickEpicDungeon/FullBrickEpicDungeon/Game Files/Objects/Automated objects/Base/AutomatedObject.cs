@@ -12,9 +12,11 @@ abstract class AutomatedObject : SpriteGameObject
     protected int trapDamage;
     protected GameObjectList players;
     protected Dictionary<Character, Timer> playersHit;
+    protected Level currentlevel;
 
-    public AutomatedObject(string assetname, string id, int sheetIndex, Level level, int damage = 20) : base(assetname, 0)
+    public AutomatedObject(string assetname, string id, int sheetIndex, Level currentlevel, int damage = 20) : base(assetname, 0)
     {
+        this.currentlevel = currentlevel;
         reloaded = true;
         triggered = false;
         trapDamage = damage;
@@ -69,7 +71,7 @@ abstract class AutomatedObject : SpriteGameObject
 
     protected virtual void DamagePlayers()
     {
-        players = GameWorld.Find("playerLIST") as GameObjectList;
+        players =  currentlevel.GameWorld.Find("playerLIST") as GameObjectList;
 
         foreach (Character player in players.Children)
         {
@@ -87,7 +89,7 @@ abstract class AutomatedObject : SpriteGameObject
 
     protected virtual void UpdatePlayerTrapStatus(GameTime gameTime)
     {
-        players = GameWorld.Find("playerLIST") as GameObjectList;
+        players = currentlevel.GameWorld.Find("playerLIST") as GameObjectList;
 
         foreach (Character player in players.Children)
         {
@@ -103,7 +105,7 @@ abstract class AutomatedObject : SpriteGameObject
     //Checks if any players are walking on the trap. If so, activate the setup timer, readying the trap
     protected virtual bool TargetCheck()
     {
-        players = GameWorld.Find("playerLIST") as GameObjectList;
+        players = currentlevel.GameWorld.Find("playerLIST") as GameObjectList;
 
         foreach (Character player in players.Children)
         {

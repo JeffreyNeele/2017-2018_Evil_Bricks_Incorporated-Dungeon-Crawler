@@ -3,7 +3,7 @@ class KeyItem : InteractiveObject
 {
     int objectnumber;
     bool used;
-    public KeyItem(string assetname, string id, int sheetIndex) : base(assetname, id, sheetIndex)
+    public KeyItem(string assetname, Level currentlevel, string id, int sheetIndex) : base(assetname, currentlevel, id, sheetIndex)
     {
         used = false;
     }
@@ -20,7 +20,7 @@ class KeyItem : InteractiveObject
 
     public void useKey()
     {
-        GameObjectList objectList = GameWorld.Find("objectLIST") as GameObjectList;
+        GameObjectList objectList = currentlevel.GameWorld.Find("objectLIST") as GameObjectList;
         foreach (var keylock in objectList.Children)
         {
             if (used)

@@ -6,14 +6,16 @@
 abstract class InteractiveObject : SpriteGameObject
 {
     protected bool interacting;
-    Character targetCharacter;
+    protected Character targetCharacter;
+    protected Level currentlevel;
 
     /// <param name="assetName">Path to the sprite to load in the object</param>
     /// <param name="id">id to be able to find the object</param>
     /// <param name="sheetIndex">Defines which picture of the animation will be shown</param>
     /// <param name="layer">The layer where the interactive object will be placed</param>
-    protected InteractiveObject(string assetName, string id, int sheetIndex, int layer = 2) : base(assetName, layer, id, sheetIndex)
+    protected InteractiveObject(string assetName, Level currentlevel, string id, int sheetIndex, int layer = 2) : base(assetName, layer, id, sheetIndex)
     {
+        this.currentlevel = currentlevel;
         interacting = false;
         targetCharacter = null;
     }

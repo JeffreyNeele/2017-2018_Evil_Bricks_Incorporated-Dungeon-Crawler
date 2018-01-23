@@ -3,10 +3,12 @@
     {
     //this is an abstract class for for instance doors, trapdoors, chests, etc.
 
+    protected Level currentlevel;
     int objectnumber;
     //TileType type, string assetname, int layer = 0, string id = ""
-    protected OpenableObject(TileType type, string assetName, string id, int sheetIndex, int layer = 2) : base(type, assetName, layer, id, sheetIndex)
+    protected OpenableObject(TileType type, string assetName, Level currentlevel, string id, int sheetIndex) : base(type, assetName, 2, id, sheetIndex)
     {
+        this.currentlevel = currentlevel;
     }
     public void Open()
     {

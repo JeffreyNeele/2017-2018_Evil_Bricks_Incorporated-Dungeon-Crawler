@@ -106,8 +106,8 @@ class LittlePenguin : AImonster
     public void CheckCollision()
     {
         //Take the grid to check for all tiles that are solid or doors, and player list for collision with players
-        GameObjectGrid field = GameWorld.Find("TileField") as GameObjectGrid;
-        GameObjectList players = GameWorld.Find("playerLIST") as GameObjectList;
+        GameObjectGrid field = currentLevel.GameWorld.Find("TileField") as GameObjectGrid;
+        GameObjectList players = currentLevel.GameWorld.Find("playerLIST") as GameObjectList;
 
         Rectangle tileBoundingBox = new Rectangle((int)(this.BoundingBox.X + 0.25 * Width), (int)(this.BoundingBox.Y + 0.75 * Height), (int)(this.Width * 0.5), (int)(this.Height * 0.25));
         //First check if monster collides with player
@@ -144,7 +144,7 @@ class LittlePenguin : AImonster
     {
 
         //Take the position of the target
-        GameObjectList players = GameWorld.Find("playerLIST") as GameObjectList;
+        GameObjectList players = currentLevel.GameWorld.Find("playerLIST") as GameObjectList;
         foreach(Character player in players.Children)
             if(player == AI.CurrentTarget)
             {

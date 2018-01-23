@@ -11,7 +11,7 @@ class Door : OpenableObject
     /// <param name="assetname">Path to be able to load in the sprite</param>
     /// <param name="id">defined id to be able to find the door</param>
     /// <param name="sheetIndex">Defines which picture of the animation will be shown</param>
-    public Door(string assetname, string id, int sheetIndex) : base(TileType.DoorTile, assetname, id, sheetIndex)
+    public Door(string assetname, Level currentlevel, string id, int sheetIndex) : base(TileType.DoorTile, assetname, currentlevel, id, sheetIndex)
     {
     }
 
@@ -26,7 +26,7 @@ class Door : OpenableObject
     //Check if the door still has any locks on it
     public void DoorLockedChecker()
     {
-        GameObjectList objectList = GameWorld.Find("objectLIST") as GameObjectList;
+        GameObjectList objectList = currentlevel.GameWorld.Find("objectLIST") as GameObjectList;
         foreach (var keylock in objectList.Children)
         {
             if (keylock is Lock)

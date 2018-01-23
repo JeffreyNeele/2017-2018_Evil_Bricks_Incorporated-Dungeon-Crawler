@@ -11,7 +11,7 @@ class Handle : InteractiveObject
     /// <param name="assetname">Path to be able to load in the sprite</param>
     /// <param name="id">defined id to be able to find the door</param>
     /// <param name="sheetIndex">Defines which picture of the animation will be shown</param>
-    public Handle(string assetname, string id, int sheetIndex) : base(assetname, id, sheetIndex)
+    public Handle(string assetname, Level currentlevel, string id, int sheetIndex) : base(assetname, currentlevel,  id, sheetIndex)
     {
         countDownTimer = new Timer((float)0.2);
     }
@@ -45,8 +45,8 @@ class Handle : InteractiveObject
         //Checks which objects has the same objectnumber as this handlenumber and opens or closes the corresponding objects.
         //give "open" to open the corresponding object. Give "close" to close the corresponding object.
 
-        GameObjectGrid tileField = GameWorld.Find("TileField") as GameObjectGrid;
-        GameObjectList objects = GameWorld.Find("objectLIST") as GameObjectList;
+        GameObjectGrid tileField = currentlevel.GameWorld.Find("TileField") as GameObjectGrid;
+        GameObjectList objects = currentlevel.GameWorld.Find("objectLIST") as GameObjectList;
 
         foreach (var openableObject in tileField.Objects)
         {
