@@ -78,6 +78,7 @@
     <Compile Include="Game Files\Game states\CharacterSelection.cs" />
     <Compile Include="Game Files\Game states\ConversationState.cs" />
     <Compile Include="Game Files\Game states\CutsceneState.cs" />
+    <Compile Include="Game Files\Game states\GameOverState.cs" />
     <Compile Include="Game Files\Game states\LevelFinishedState.cs" />
     <Compile Include="Game Files\Game states\PauseState.cs" />
     <Compile Include="Game Files\Game states\PlayingState.cs" />

@@ -61,7 +61,7 @@ public CutsceneState()
     /// <summary>
     /// Wordt aangeroepen bij SwitchTo("cutscene")
     /// </summary>
-    public void Setup()
+    public void Initialize()
     {
         GameEnvironment.GameStateManager.SwitchTo("conversation");
     }

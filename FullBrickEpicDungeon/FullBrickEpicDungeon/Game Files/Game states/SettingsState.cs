@@ -84,7 +84,7 @@ class SettingsState : IGameLoopObject
         }
     }
 
-    public void Setup() { }
+    public void Initialize() { }
 
     /// <summary>
     /// Resets thed settings menu
