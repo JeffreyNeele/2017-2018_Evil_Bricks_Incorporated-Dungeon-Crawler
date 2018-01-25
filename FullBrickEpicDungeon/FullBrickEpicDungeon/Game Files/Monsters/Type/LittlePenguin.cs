@@ -15,7 +15,7 @@ class LittlePenguin : AImonster
     {
         this.baseattributes.HP = 80;
         this.baseattributes.Armour = 0;
-        this.baseattributes.Attack = 20;
+        this.baseattributes.Attack = 40;
         this.baseattributes.Gold = 75;
         attributes.HP = baseattributes.HP;
         attributes.Armour = baseattributes.Armour;
@@ -100,6 +100,15 @@ class LittlePenguin : AImonster
 
     }
 
+    public void ResetPenguin()
+    {
+        movementVector = new Vector2(0, 0);
+        Position = previousPos;
+        idleCounter = 3;
+        playersHit.Clear();
+        AI.CurrentTarget = null;
+    }
+
     /// <summary>
     /// Collision checker for the Penguin
     /// </summary>
@@ -119,19 +128,10 @@ class LittlePenguin : AImonster
         foreach (Tile tile in field.Objects)
         {
             if (tile.IsSolid && tileBoundingBox.Intersects(tile.BoundingBox))
-            {
-                movementVector = new Vector2(0, 0);
-                Position = previousPos;
-                idleCounter = 3;
-                // TargetRandomObject (currently removed but might add back later, but as a local method?
-            }
+                ResetPenguin();
             else if (tile is VerticalDoor)
-                    if (tileBoundingBox.Intersects(((VerticalDoor)tile).BoundingBox2))
-                    {
-                        movementVector = new Vector2(0, 0);
-                        Position = previousPos;
-                        idleCounter = 3;
-                    }
+                if (tileBoundingBox.Intersects(((VerticalDoor)tile).BoundingBox2))
+                    ResetPenguin();
         }
     }
 
