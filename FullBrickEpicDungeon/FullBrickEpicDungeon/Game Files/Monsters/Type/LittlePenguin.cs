@@ -1,17 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 class LittlePenguin : AImonster
 {
-    float slideSpeed;
+    float slideSpeed, lineOfSight;
     Vector2 targetPos, movementVector;
     int animationCheck = 0;
-    float idleCounter;
+    Timer idleTimer;
+    List<Character> targetList;
     /// <summary>
     /// Class that defines a Penguin that slides around
     /// </summary>
     /// <param name="currentLevel">current level the penguin is in</param>
-    public LittlePenguin(Level currentLevel) : base(0f, currentLevel, "LittlePenguin", 800)
+    public LittlePenguin(Level currentLevel, float sightRange = 800) : base(0f, currentLevel, "LittlePenguin", sightRange)
     {
         this.baseattributes.HP = 80;
         this.baseattributes.Armour = 0;
@@ -24,10 +26,13 @@ class LittlePenguin : AImonster
 
         //The total speed of movement of the penguin
         slideSpeed = 10f;
+        lineOfSight = sightRange;
+        targetList = new List<Character>();
 
         //Because the penguin will be idle for a while after sliding, the movement vector will have to be set (0,0) from time to time
         movementVector = new Vector2(0, 0);
-        idleCounter = 3;
+        idleTimer = new Timer(3f);
+        idleTimer.IsPaused = false;
         //Load the animations
         LoadAnimation("Assets/Sprites/Enemies/PenguinSide@4", "sideWalk", true, 0.2f);
         LoadAnimation("Assets/Sprites/Enemies/PenguinFront@4", "sideFront", true, 0.2f);
@@ -49,7 +54,10 @@ class LittlePenguin : AImonster
         
         if(attributes.HP > 0)
         {
-            if (AI.CurrentTarget != null && idleCounter <= 0 && movementVector == new Vector2(0, 0))
+            if (AI.CurrentTarget == null)
+                chooseNewTarget();
+
+            if (AI.CurrentTarget != null && idleTimer.IsExpired && movementVector == new Vector2(0, 0))
                 SlideDirection();
             else if (movementVector != new Vector2(0, 0))
             {
@@ -80,9 +88,9 @@ class LittlePenguin : AImonster
                 }
                 CheckCollision();
             }
-            else if (idleCounter > 0)
+            else if (!idleTimer.IsExpired)
             {
-                idleCounter -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                idleTimer.Update(gameTime);
                 if (animationCheck == 1)
                     PlayAnimation("sideFront");
                 else if (animationCheck == 2)
@@ -104,9 +112,10 @@ class LittlePenguin : AImonster
     {
         movementVector = new Vector2(0, 0);
         Position = previousPos;
-        idleCounter = 3;
+        idleTimer.Reset();
         playersHit.Clear();
         AI.CurrentTarget = null;
+        chooseNewTarget();
     }
 
     /// <summary>
@@ -153,6 +162,40 @@ class LittlePenguin : AImonster
 
         Vector2 differencePos = targetPos - position;
         movementVector = GetMovementVector(differencePos);
+    }
+
+    Random random = new Random();
+    public void chooseNewTarget()
+    {
+        targetList.Clear();
+        GameObjectList players = currentLevel.GameWorld.Find("playerLIST") as GameObjectList;
+        foreach (Character player in players.Children)
+        {
+            if (player.Attributes.HP == 0)
+                continue;
+            Vector2 differencePos = targetPos - position;
+            totalDistance = (float)Math.Sqrt(differencePos.X * differencePos.X + differencePos.Y * differencePos.Y);
+            if (totalDistance <= lineOfSight)
+                targetList.Add(player);
+        }
+
+        if(targetList.Count > 0)
+        {
+            int casinoNumber = 0;
+            int check = 0;
+
+            foreach(Character player in targetList)
+            {
+                casinoNumber = random.Next(0, 201);
+                if(casinoNumber > check)
+                {
+                    check = casinoNumber;
+                    AI.CurrentTarget = player;
+                }
+            }
+
+        }
+
     }
 
     /// <summary>
