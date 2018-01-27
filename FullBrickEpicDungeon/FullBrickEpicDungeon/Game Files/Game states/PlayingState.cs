@@ -15,7 +15,7 @@ class PlayingState : IGameLoopObject
     /// </summary>
     public PlayingState()
     {
-        currentLevelIndex = 4;
+        currentLevelIndex = 2;
         levelArray = new Level[9]; //10 levels
     }
 
@@ -58,11 +58,13 @@ class PlayingState : IGameLoopObject
     }
 
 
+
     public void GoToNextLevel()
     {
         CurrentLevel.Reset();
         if (currentLevelIndex >= levelArray.Length - 1)
         {
+            ResetLevelIndex();
             // if all the levels are over switch to the title state
             GameEnvironment.GameStateManager.SwitchTo("titleMenu");
         }
@@ -70,6 +72,11 @@ class PlayingState : IGameLoopObject
         {
             currentLevelIndex++;
         }
+    }
+
+    public void ResetLevelIndex()
+    {
+        currentLevelIndex = 2;
     }
 
     // returns the current level being used in the state

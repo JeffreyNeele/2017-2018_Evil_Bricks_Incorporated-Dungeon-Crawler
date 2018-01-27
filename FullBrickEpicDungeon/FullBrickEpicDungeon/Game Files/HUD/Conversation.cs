@@ -111,7 +111,11 @@ class Conversation : GameObjectList
 
 
 
-
+    public void Reset()
+    {
+        convIndex = 0;
+        PreviousLineWasChoice = false;
+    }
 
 
     /// <summary>

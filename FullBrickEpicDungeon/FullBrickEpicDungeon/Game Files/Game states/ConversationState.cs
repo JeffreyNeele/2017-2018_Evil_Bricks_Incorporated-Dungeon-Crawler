@@ -110,14 +110,17 @@ class ConversationState : IGameLoopObject
 
     public void Reset()
     {
+        conversationList.Clear();
+        currentConversationNumber = 0;
+        LoadConversations();
         CurrentConversation.Reset();
+
     }
 
 
 
     public void GoToNextConversation()
     {
-        CurrentConversation.Reset();
         if (currentConversationNumber >= conversationList.Count)
         {
             throw new IndexOutOfRangeException("There is no conversation file left, although you are trying to start another one.");   
@@ -132,24 +135,25 @@ class ConversationState : IGameLoopObject
 
         else if (!prevPlaying) //conversation came from a cutsceneState
         {
-            CurrentConversation.Reset();
             //load next cutscene for next time it starts.
             (GameEnvironment.GameStateManager.GetGameState("cutscene") as CutsceneState).GoToNextCutscene();
+            currentConversationNumber++;
 
             //depending on which cutscene just completed, switch to the next cutscene or the next playingstate
-            switch (currentConversationNumber)
+            switch (currentConversationNumber-1)
             {
                 //after the ThroneRoom2 scene, the players play the game
                 case (int)Conversationnames.ThroneRoom2:
                     (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).Reset();
                     GameEnvironment.GameStateManager.SwitchTo("playingState");
+                    Reset();
                     break;
                 default:
                     GameEnvironment.GameStateManager.SwitchTo("cutscene");
                     break;
             }
         }
-            currentConversationNumber++;
+            
     }
 
 
