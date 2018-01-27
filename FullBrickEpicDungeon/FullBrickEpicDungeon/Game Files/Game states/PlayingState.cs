@@ -17,8 +17,6 @@ class PlayingState : IGameLoopObject
     {
         currentLevelIndex = 4;
         levelArray = new Level[9]; //10 levels
-        // Loads the levels from all level files
-        //LoadLevels(10);
     }
 
     /// <summary>
@@ -59,20 +57,6 @@ class PlayingState : IGameLoopObject
         CurrentLevel.Draw(gameTime, spriteBatch);
     }
 
-
-    //TO DO
-    /// <summary>
-    /// Loads the levels into the level list
-    /// </summary>
-    /// <param name="levelAmount">total amount of levels</param>
-    /*public void LoadLevels(int levelAmount)
-    {
-        for(int x = 1; x <= levelAmount; x++)
-        {
-            Level newlevel = new Level(x);
-            levelList.Add(newlevel);
-        }
-    }*/
 
     public void GoToNextLevel()
     {

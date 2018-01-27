@@ -12,6 +12,9 @@ class ConversationState : IGameLoopObject
     int currentConversationNumber = 0;
     bool prevPlaying;
 
+
+
+
     /// <summary>
     /// State for if a conversation state is being displayed
     /// </summary>
@@ -37,16 +40,29 @@ class ConversationState : IGameLoopObject
         }
     }
 
+
+
+
+
     public void Update(GameTime gameTime)
     {
         CurrentConversation.Update(gameTime);
     }
+
+
+
+
 
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         drawOverState.Draw(gameTime, spriteBatch);
         CurrentConversation.Draw(gameTime, spriteBatch);
     }
+
+
+
+
+
 
     public void HandleInput(InputHelper inputHelper)
     {
@@ -62,6 +78,10 @@ class ConversationState : IGameLoopObject
             }
         }
     }
+
+
+
+
 
     public void Initialize()
     {
@@ -84,10 +104,16 @@ class ConversationState : IGameLoopObject
         }
     }
 
+
+
+
+
     public void Reset()
     {
         CurrentConversation.Reset();
     }
+
+
 
     public void GoToNextConversation()
     {
@@ -124,8 +150,10 @@ class ConversationState : IGameLoopObject
             }
         }
             currentConversationNumber++;
-        
     }
+
+
+
 
     private Conversation CurrentConversation
     {
