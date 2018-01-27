@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
@@ -22,13 +23,11 @@ class TitleMenuState : MenuState
     protected override void FillButtonList()
     {
         // load a settings and start button
-        startButton = new Button("Assets/Sprites/Menu/StartButton", 1);
+        startButton = new Button("Assets/Sprites/Menu/StartButton");
         buttonList.Add(startButton);
-        //startButton.Position = new Vector2((GameEnvironment.Screen.X / 2 - startButton.Width / 2), (GameEnvironment.Screen.Y * 3 / 4 - startButton.Height / 2));
 
         settingsButton = new Button("Assets/Sprites/Menu/SettingsButton");
         buttonList.Add(settingsButton);
-        //settingsButton.Position = new Vector2(GameEnvironment.Screen.X - settingsButton.Width, 0);
 
         quitButton = new Button("Assets/Sprites/Menu/SettingsButton");
         buttonList.Add(quitButton);
@@ -47,65 +46,33 @@ class TitleMenuState : MenuState
 
         base.Draw(gameTime, spriteBatch);
     }
-    //update and handleinput deleted
-
-  
 
 
-    protected override void HandleMouseInput(InputHelper inputHelper)
+    /// <summary>
+    /// if the button is pressed (which is handled in MenuState) this method executes what happens
+    /// </summary>
+    protected override void ButtonPressedHandler()
     {
-        // Updates the input for the start and settingsbutton
-        startButton.HandleInput(inputHelper);
-        settingsButton.HandleInput(inputHelper);
-        //Pressed automatically becomes true when someone clicks the button.
-
-        base.HandleMouseInput(inputHelper);
-    }
-
-    protected override void PressButton()
-    {
-        for (int index = 0; index < buttonList.Count; index++)
+        //check for each button in the buttonlist if it is pressed.
+        for (int buttonnr = 0; buttonnr < buttonList.Count; buttonnr++)
         {
-            if (marker.Position.Y == buttonList[index].Position.Y + offsetMarker.Y)
+            if (buttonList[buttonnr].Pressed)
             {
-                switch (index)
-                {
-                    case 0:
-                        startButton.Pressed = true;
-                        break;
-                    case 1:
-                        settingsButton.Pressed = true;
-                        break;
-                    case 2:
-                        quitButton.Pressed = true;
-                        break;
-                        //Pressed wordt automatisch weer op false gezet door de ButtonInputHandler van de muis.
-                }
+                GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
 
-                ButtonPressedHandler();
+                switch (buttonnr)
+                {
+                    case 0: //Start button pressed
+                        FullBrickEpicDungeon.DungeonCrawler.mouseVisible = false;
+                        GameEnvironment.GameStateManager.SwitchTo("characterSelection");
+                        break;
+                    case 1: //Settings button pressed
+                        GameEnvironment.GameStateManager.SwitchTo("settingsState");
+                        break;
+                    default: throw new IndexOutOfRangeException("Buttonbehaviour not defined. Buttonnumber in buttonList: " + buttonnr);
+
+                }
             }
         }
     }
-
-    protected override void ButtonPressedHandler()
-    {
-            if (startButton.Pressed)
-            {
-                GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
-                FullBrickEpicDungeon.DungeonCrawler.mouseVisible = false;
-                GameEnvironment.GameStateManager.SwitchTo("characterSelection");
-            }
-            if (settingsButton.Pressed)
-            {
-                GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
-                GameEnvironment.GameStateManager.SwitchTo("settingsState");
-            }
-    }
-
-    public override void Reset()
-    {
-        startButton.Reset();
-    }
-
-    
 }

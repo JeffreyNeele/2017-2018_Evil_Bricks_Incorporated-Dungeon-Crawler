@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 abstract class MenuState : IGameLoopObject
     {
@@ -41,14 +42,16 @@ abstract class MenuState : IGameLoopObject
 
     protected virtual void FillButtonList()
     {
-       
+
         //set button positions
         for (int i = 0; i < buttonList.Count; i++)
         {
             buttonList[i].Position = new Vector2(GameEnvironment.Screen.X / 2 - buttonList[0].Width / 2, 250 + i * buttonSeparation);
         }
+
         offsetMarker = new Vector2(-marker.Width, buttonList[0].Height / 2 - marker.Height / 2);
-        marker.Position = new Vector2(buttonList[0].Position.X - offsetMarker.X, buttonList[0].Position.Y - offsetMarker.Y);
+        marker.Position = new Vector2(buttonList[0].Position.X + offsetMarker.X, buttonList[0].Position.Y + offsetMarker.Y);
+
     }
 
     public virtual void Update(GameTime gameTime)
@@ -72,6 +75,11 @@ abstract class MenuState : IGameLoopObject
     /// </summary>
     public virtual void HandleInput(InputHelper inputHelper)
     {
+        foreach (Button button in buttonList)
+        {
+            button.HandleInput(inputHelper);
+        }
+
         HandleMouseInput(inputHelper);
         HandleKeyboardInput(inputHelper);
 
@@ -141,7 +149,14 @@ abstract class MenuState : IGameLoopObject
 
     protected virtual void PressButton()
     {
-        //sets the button.Pressed true or false behaviour. buttons differs Per menu
+        for (int index = 0; index < buttonList.Count; index++)
+        {
+            if (marker.Position.Y == buttonList[index].Position.Y + offsetMarker.Y)
+            {
+                buttonList[index].Pressed = true;
+                ButtonPressedHandler();
+            }
+        }
     }
 
     protected virtual void ButtonPressedHandler()

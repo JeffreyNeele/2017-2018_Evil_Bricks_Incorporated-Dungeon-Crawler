@@ -59,7 +59,10 @@ public CutsceneState()
         GameEnvironment.GameStateManager.SwitchTo("conversation");
     }
 
-    public void Reset() {}
+    public void Reset()
+    {
+        currentCutsceneNumber = 0;
+    }
 
     public void GoToNextCutscene()
     {
@@ -72,9 +75,11 @@ public CutsceneState()
         {
             //bij 3 zijn ze door het luik gestort. Dan moet hij naar playingstate. Standaard wordt ervanuit gegaan dat er nog een cutscene komt.
             case 3:
+                    
                     (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).Reset();
                     GameEnvironment.GameStateManager.SwitchTo("playingState"); 
                     currentCutsceneNumber++;
+                    Reset(); //The last Cutscene resets the cutscenes.
                 break;
             default: currentCutsceneNumber++;
                 break;

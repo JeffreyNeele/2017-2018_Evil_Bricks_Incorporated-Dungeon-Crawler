@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using System;
 
 //State that pauses the game
 class PauseState : MenuState
@@ -33,7 +32,7 @@ class PauseState : MenuState
 
     public override void Update(GameTime gameTime)
     {
-        playingState = GameEnvironment.GameStateManager.GetGameState("playingState");
+        //playingState = GameEnvironment.GameStateManager.GetGameState("playingState");
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -47,56 +46,33 @@ class PauseState : MenuState
     }
 
 
-    private void HandleMouseInput(InputHelper inputHelper)
+
+    protected override void ButtonPressedHandler()
     {
-        continueButton.HandleInput(inputHelper);
-        quitButton.HandleInput(inputHelper);
-        if (continueButton.Pressed)
+        //check for each button in the buttonlist if it is pressed.
+        for (int buttonnr = 0; buttonnr < buttonList.Count; buttonnr++)
         {
-            GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
-            FullBrickEpicDungeon.DungeonCrawler.mouseVisible = false;
-            GameEnvironment.GameStateManager.SwitchTo("playingState");
-        }
-
-        else if (quitButton.Pressed)
-        {
-            GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
-            playingState.Reset();
-            FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
-            GameEnvironment.GameStateManager.SwitchTo("titleMenu");
-        }
-    }
-
-
-    protected override void PressButton()
-    {
-        for (int index = 0; index < buttonList.Count; index++)
-        {
-            if (marker.Position.Y == buttonList[index].Position.Y + offsetMarker.Y)
+            if (buttonList[buttonnr].Pressed)
             {
-                switch (index)
-                {
-                    case 0:
-                        continueButton.Pressed = true;
-                        break;
-                    case 1:
-                        quitButton.Pressed = true;
-                        break;
-                    //Pressed wordt automatisch weer op false gezet door de ButtonInputHandler van de muis.
-                    default: throw new System.Exception("Button behaviour not specified. Number in buttonList: " + index);
-                }
+                GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
 
-                ButtonPressedHandler();
+                switch (buttonnr)
+                {
+                    case 0: //Continue button pressed
+                        (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).Reset();
+                        GameEnvironment.GameStateManager.SwitchTo("playingState");
+                        break;
+                    case 1: //Quit button pressed
+
+                        FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
+                        (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).ResetLevelIndex();
+                        GameEnvironment.GameStateManager.SwitchTo("titleMenu");
+                        break;
+                    default: throw new IndexOutOfRangeException("Buttonbehaviour not defined. Buttonnumber in buttonList: " + buttonnr);
+
+                }
             }
         }
-    }
-
-    public void Initialize() { }
-
-    public void Reset()
-    {
-        continueButton.Reset();
-        quitButton.Reset();
     }
 }
 
