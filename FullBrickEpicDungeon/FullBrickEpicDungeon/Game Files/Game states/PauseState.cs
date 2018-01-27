@@ -69,7 +69,7 @@ class PauseState : IGameLoopObject
     }
 
 
-    public void Setup() { }
+    public void Initialize() { }
 
     public void Reset()
     {

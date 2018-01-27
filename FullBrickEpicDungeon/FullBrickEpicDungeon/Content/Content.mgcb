@@ -1715,3 +1715,15 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Cutscenes/LarryGetsCaptured.png
 
+#begin Assets/Sprites/Gameover/red_overlay.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Gameover/red_overlay.png
+

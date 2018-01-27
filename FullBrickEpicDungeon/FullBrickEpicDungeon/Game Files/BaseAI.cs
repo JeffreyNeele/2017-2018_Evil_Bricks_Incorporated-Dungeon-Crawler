@@ -289,8 +289,9 @@ class BaseAI
         get { return owner; }
     }
 
-    public SpriteGameObject CurrentTarget
+    public AnimatedGameObject CurrentTarget
     {
         get { return targetedObject; }
+        set { targetedObject = value; }
     }
 }

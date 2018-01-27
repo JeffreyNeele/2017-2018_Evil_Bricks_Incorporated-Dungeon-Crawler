@@ -62,12 +62,7 @@ class ConversationState : IGameLoopObject
         }
     }
 
-
-    /// <summary>
-    /// Only gets called during the SwitchTo Method of the GameStateManager.
-    /// Enables drawing over the playing or cutscene state.
-    /// </summary>
-    public void Setup()
+    public void Initialize()
     {
         IGameLoopObject prevGameState = GameEnvironment.GameStateManager.PreviousGameState as IGameLoopObject;
         // draw over the playingstate if it was in playingstate

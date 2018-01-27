@@ -8,6 +8,18 @@ partial class Level : GameObjectList
 {
     public override void Update(GameTime gameTime)
     {
+        int downedCount = 0;
+        foreach(Character c in playerList.Children)
+        {
+            if (c.IsDowned)
+                downedCount++;
+        }
+        if(downedCount >= 4)
+        {
+            GameEnvironment.GameStateManager.SwitchTo("gameOverState");
+        }
+
+
         base.Update(gameTime);
     }
 

@@ -38,7 +38,7 @@ class PlayingState : IGameLoopObject
         }
     }
 
-    public void Setup() { }
+    public void Initialize() { }
 
     public void Reset()
     {
