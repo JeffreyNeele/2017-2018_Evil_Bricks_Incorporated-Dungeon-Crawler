@@ -40,14 +40,13 @@ class PlayingState : IGameLoopObject
 
     public void Initialize()
     {
-            Level newlevel = new Level(currentLevelIndex);
-            levelArray[currentLevelIndex] = newlevel;
     }
 
 
     public void Reset()
     {
-        CurrentLevel.Reset();
+        Level newlevel = new Level(currentLevelIndex);
+        levelArray[currentLevelIndex] = newlevel;
     }
 
     public void Update(GameTime gameTime)

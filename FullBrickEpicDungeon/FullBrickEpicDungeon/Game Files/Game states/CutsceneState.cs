@@ -71,7 +71,9 @@ public CutsceneState()
         switch(currentCutsceneNumber)
         {
             //bij 3 zijn ze door het luik gestort. Dan moet hij naar playingstate. Standaard wordt ervanuit gegaan dat er nog een cutscene komt.
-            case 3: GameEnvironment.GameStateManager.SwitchTo("playingState"); 
+            case 3:
+                    (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).Reset();
+                    GameEnvironment.GameStateManager.SwitchTo("playingState"); 
                     currentCutsceneNumber++;
                 break;
             default: currentCutsceneNumber++;

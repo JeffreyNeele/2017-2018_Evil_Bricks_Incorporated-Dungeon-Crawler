@@ -30,7 +30,7 @@ public class GameStateManager : IGameLoopObject
         {
             previousGameState = currentGameState;
             currentGameState = gameStates[name];
-             currentGameState.Initialize();
+            currentGameState.Initialize();
         }
         else
         {

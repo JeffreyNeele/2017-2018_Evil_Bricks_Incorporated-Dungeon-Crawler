@@ -57,6 +57,7 @@ class ConversationState : IGameLoopObject
         {
             if (inputHelper.KeyPressed(Keys.Enter) || inputHelper.ButtonPressed(1, Buttons.Back)) //To skip the cutscene, press Enter or Back for player 1 on Xbox
             {
+                (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).Reset();
                 GameEnvironment.GameStateManager.SwitchTo("playingState");
             }
         }
@@ -95,27 +96,33 @@ class ConversationState : IGameLoopObject
         {
             throw new IndexOutOfRangeException("There is no conversation file left, although you are trying to start another one.");   
         }
-         //if the conversation is finished, start up the next event
-       
-            if(prevPlaying) //conversation came from playingstate
+        //if the conversation is finished, start up the next event
+
+        if (prevPlaying) //conversation came from playingstate
+        {
+            (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).Reset();
             GameEnvironment.GameStateManager.SwitchTo("playingState");
+        }
 
-            else if (!prevPlaying) //conversation came from a cutsceneState
+        else if (!prevPlaying) //conversation came from a cutsceneState
+        {
+            CurrentConversation.Reset();
+            //load next cutscene for next time it starts.
+            (GameEnvironment.GameStateManager.GetGameState("cutscene") as CutsceneState).GoToNextCutscene();
+
+            //depending on which cutscene just completed, switch to the next cutscene or the next playingstate
+            switch (currentConversationNumber)
             {
-                CurrentConversation.Reset();
-                //load next cutscene for next time it starts.
-                (GameEnvironment.GameStateManager.GetGameState("cutscene") as CutsceneState).GoToNextCutscene(); 
-
-                //depending on which cutscene just completed, switch to the next cutscene or the next playingstate
-                switch(currentConversationNumber)
-                {   
-                    //after the ThroneRoom2 scene, the players play the game
-                    case (int)Conversationnames.ThroneRoom2: GameEnvironment.GameStateManager.SwitchTo("playingState");
-                        break;
-                    default: GameEnvironment.GameStateManager.SwitchTo("cutscene");
-                        break;
-                }
+                //after the ThroneRoom2 scene, the players play the game
+                case (int)Conversationnames.ThroneRoom2:
+                    (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).Reset();
+                    GameEnvironment.GameStateManager.SwitchTo("playingState");
+                    break;
+                default:
+                    GameEnvironment.GameStateManager.SwitchTo("cutscene");
+                    break;
             }
+        }
             currentConversationNumber++;
         
     }
