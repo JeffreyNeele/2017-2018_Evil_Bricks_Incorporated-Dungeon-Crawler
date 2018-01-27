@@ -15,7 +15,7 @@ class LittlePenguin : AImonster
     {
         this.baseattributes.HP = 80;
         this.baseattributes.Armour = 0;
-        this.baseattributes.Attack = 20;
+        this.baseattributes.Attack = 60;
         this.baseattributes.Gold = 75;
         attributes.HP = baseattributes.HP;
         attributes.Armour = baseattributes.Armour;

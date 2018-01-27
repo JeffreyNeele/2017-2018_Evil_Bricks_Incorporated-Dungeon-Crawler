@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System;
+using Microsoft.Xna.Framework.Input;
 
 class ConversationState : IGameLoopObject
 {
@@ -16,13 +17,14 @@ class ConversationState : IGameLoopObject
     /// </summary>
     public ConversationState()
     {
-
         LoadConversations();
-        //conversation = new Conversation("Assets/Conversations/conv_test.txt");
     }
 
+
+
+
     /// <summary>
-    /// Loads the levels into the level list
+    /// Loads the conversations into the conversation list
     /// </summary>
     /// <param name="conversationAmount">total amount of levels</param>
     public void LoadConversations()
@@ -49,8 +51,22 @@ class ConversationState : IGameLoopObject
     public void HandleInput(InputHelper inputHelper)
     {
         CurrentConversation.HandleInput(inputHelper);
+
+        //Only during a Cutscene you are able to skip a conversation. In playingstate you may or may not anger monsters, so you cannot skip
+        if ((GameEnvironment.GameStateManager.PreviousGameState as IGameLoopObject) == GameEnvironment.GameStateManager.GetGameState("cutscene"))
+        {
+            if (inputHelper.KeyPressed(Keys.Enter) || inputHelper.ButtonPressed(1, Buttons.Back)) //To skip the cutscene, press Enter or Back for player 1 on Xbox
+            {
+                GameEnvironment.GameStateManager.SwitchTo("playingState");
+            }
+        }
     }
 
+
+    /// <summary>
+    /// Only gets called during the SwitchTo Method of the GameStateManager.
+    /// Enables drawing over the playing or cutscene state.
+    /// </summary>
     public void Setup()
     {
         IGameLoopObject prevGameState = GameEnvironment.GameStateManager.PreviousGameState as IGameLoopObject;
@@ -60,16 +76,16 @@ class ConversationState : IGameLoopObject
             prevPlaying = true;
             drawOverState = GameEnvironment.GameStateManager.GetGameState("playingState");
         }
-
-
         //draw over cutscene if previousstate was cutscene
-        if ((GameEnvironment.GameStateManager.PreviousGameState as IGameLoopObject) == GameEnvironment.GameStateManager.GetGameState("cutscene"))
+        else if ((GameEnvironment.GameStateManager.PreviousGameState as IGameLoopObject) == GameEnvironment.GameStateManager.GetGameState("cutscene"))
         {
             prevPlaying = false;
             drawOverState = GameEnvironment.GameStateManager.GetGameState("cutscene");
         }
-
-        // loads the conversation
+        else
+        {
+            throw new Exception("Cutscene cannot be called from this GameState" + GameEnvironment.GameStateManager.PreviousGameState);
+        }
     }
 
     public void Reset()
@@ -82,8 +98,7 @@ class ConversationState : IGameLoopObject
         CurrentConversation.Reset();
         if (currentConversationNumber >= conversationList.Count)
         {
-            throw new IndexOutOfRangeException("There is no conversation left, although you are trying to make one.");   
-            //There are no conversations left
+            throw new IndexOutOfRangeException("There is no conversation file left, although you are trying to start another one.");   
         }
          //if the conversation is finished, start up the next event
        

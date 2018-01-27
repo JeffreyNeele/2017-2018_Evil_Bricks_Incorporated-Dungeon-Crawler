@@ -2,15 +2,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-using System.IO;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using System;
 
 
 class CutsceneState : IGameLoopObject
 {
-    //IGameLoopObject conversation;
     int currentCutsceneNumber = 0;
     List<Cutscene> cutsceneList = new List<Cutscene>();
     enum Cutscenenames {LarryShits,LarryGetsCaptured,ThroneRoom1,ThroneRoom2};
@@ -23,10 +19,12 @@ class CutsceneState : IGameLoopObject
 public CutsceneState()
     {
         LoadCutScenes();
-        //conversation = GameEnvironment.GameStateManager.GetGameState("conversation");
-
     }
 
+
+    /// <summary>
+    /// Loads all cutscenes named in Cutscenenames
+    /// </summary>
     public void LoadCutScenes()
     {
         for (int x = 0; x < Enum.GetNames(typeof(Cutscenenames)).Length; x++)
@@ -39,22 +37,17 @@ public CutsceneState()
 
     public void Update(GameTime gameTime)
     {
-        //conversation.Update(gameTime);
         CurrentCutscene.Update(gameTime);
     }
 
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
-        //conversation.Draw(gameTime, spriteBatch);
         CurrentCutscene.Draw(gameTime, spriteBatch);
     }
 
     public void HandleInput(InputHelper inputHelper)
     {
-        if (inputHelper.KeyPressed(Keys.Enter) || inputHelper.ButtonPressed(1, Buttons.Back)) //To skip the cutscene, press Enter or Back for player 1 on Xbox
-        {
-            GameEnvironment.GameStateManager.SwitchTo("playingState");
-        }
+
         
     }
 
