@@ -42,7 +42,7 @@ namespace FullBrickEpicDungeon
             GameStateManager.AddGameState("conversation", new ConversationState());
             GameStateManager.AddGameState("cutscene", new CutsceneState());
 
-            gameStateManager.SwitchTo("titleMenu");
+            GameStateManager.SwitchTo("titleMenu");
         }
 
         /// <summary>
