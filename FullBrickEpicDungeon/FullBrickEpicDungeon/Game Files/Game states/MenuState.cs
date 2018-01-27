@@ -40,6 +40,10 @@ abstract class MenuState : IGameLoopObject
 
     }
 
+
+    /// <summary>
+    /// Gives positions to buttons and marker
+    /// </summary>
     protected virtual void FillButtonList()
     {
 
@@ -58,6 +62,9 @@ abstract class MenuState : IGameLoopObject
     {
     }
 
+    /// <summary>
+    /// Draws all the buttons in a list
+    /// </summary>
     public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         // draw the buttons
@@ -71,7 +78,7 @@ abstract class MenuState : IGameLoopObject
     }
 
     /// <summary>
-    /// Handles input for the pause state
+    /// Handles input for the Menu Gamestates
     /// </summary>
     public virtual void HandleInput(InputHelper inputHelper)
     {
@@ -94,6 +101,10 @@ abstract class MenuState : IGameLoopObject
 
     }
 
+
+    /// <summary>
+    /// Handles XboxInput for Menu Gamestates
+    /// </summary>
     protected virtual void HandleXboxInput(InputHelper inputHelper, int controllernumber)
     {
         //moves the marker up or down depending on the key that was pressed, the Dpad or the Thumbstick.
@@ -120,7 +131,7 @@ abstract class MenuState : IGameLoopObject
     protected virtual void HandleKeyboardInput(InputHelper inputHelper)
     {
         //moves the marker up or down depending on the key that was pressed, the Dpad or the Thumbstick.
-        if (inputHelper.KeyPressed(Keys.Down))
+        if (inputHelper.KeyPressed(Keys.Down) || inputHelper.KeyPressed(Keys.S))
         {
             if (marker.Position.Y < buttonList[buttonList.Count - 1].Position.Y + offsetMarker.Y)
             {
@@ -128,14 +139,14 @@ abstract class MenuState : IGameLoopObject
             }
 
         }
-        else if (inputHelper.KeyPressed(Keys.Up))
+        else if (inputHelper.KeyPressed(Keys.Up) || inputHelper.KeyPressed(Keys.W))
         {
             if (marker.Position.Y > buttonList[0].Position.Y + offsetMarker.Y)
             {
                 marker.Position -= new Vector2(0, buttonSeparation);
             }
         }
-        if (inputHelper.KeyPressed(Keys.Space))
+        if (inputHelper.KeyPressed(Keys.Space) || inputHelper.KeyPressed(Keys.Enter))
         {
             PressButton();
         }
@@ -147,6 +158,10 @@ abstract class MenuState : IGameLoopObject
         ButtonPressedHandler();
     }
 
+
+    /// <summary>
+    /// Sets a button.Pressed is true if the button has been selected by the marker and A (Xbox), Space or Enter is pressed.
+    /// </summary>
     protected virtual void PressButton()
     {
         for (int index = 0; index < buttonList.Count; index++)
@@ -159,6 +174,9 @@ abstract class MenuState : IGameLoopObject
         }
     }
 
+    /// <summary>
+    /// sets button excecution. differs per menu
+    /// </summary>
     protected virtual void ButtonPressedHandler()
     {
        //sets button excecution. differs per menu
