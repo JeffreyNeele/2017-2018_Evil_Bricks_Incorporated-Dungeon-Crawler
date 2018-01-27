@@ -336,6 +336,7 @@ class CharacterSelection : GameObjectList
             borderSprites[player].GetColor = lockInColor[(characterSelectIndex[player] - 1) * 2];
             readySprite[player].PlayAnimation("notReady");
         }
+            GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
     }
 
 

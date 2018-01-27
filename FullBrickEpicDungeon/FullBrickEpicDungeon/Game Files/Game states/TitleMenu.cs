@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 class TitleMenuState : MenuState
 {
-    Button startButton, settingsButton, quitButton;
+    Button startButton, settingsButton;
     Texture2D background;
 
 
@@ -29,11 +29,9 @@ class TitleMenuState : MenuState
         settingsButton = new Button("Assets/Sprites/Menu/SettingsButton");
         buttonList.Add(settingsButton);
 
-        quitButton = new Button("Assets/Sprites/Menu/SettingsButton");
-        buttonList.Add(quitButton);
-
         base.FillButtonList();
     }
+
 
 
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using Microsoft.Xna.Framework.Input;
 
 //State that pauses the game
 class PauseState : MenuState
@@ -35,6 +36,16 @@ class PauseState : MenuState
         //playingState = GameEnvironment.GameStateManager.GetGameState("playingState");
     }
 
+    protected override void HandleXboxInput(InputHelper inputHelper, int controllernumber)
+    {
+        base.HandleXboxInput(inputHelper, controllernumber);
+        if (inputHelper.ButtonPressed(controllernumber, Buttons.B))
+        {
+            buttonList[0].Pressed = true; //Continue if B is pressed.
+            ButtonPressedHandler();
+        }
+    }
+
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         // we draw the playingstate but we do not update it because we want the pause state to be an overlay.
@@ -54,7 +65,7 @@ class PauseState : MenuState
         {
             if (buttonList[buttonnr].Pressed)
             {
-                GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
+                    GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
 
                 switch (buttonnr)
                 {

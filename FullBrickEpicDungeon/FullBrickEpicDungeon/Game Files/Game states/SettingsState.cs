@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using Microsoft.Xna.Framework.Input;
 
 class SettingsState : MenuState
 {
@@ -16,6 +17,9 @@ class SettingsState : MenuState
        
     }
 
+
+
+
     protected override void FillButtonList()
     {
         // Load the buttons for the SFX toggler, music toggler and the back button.
@@ -27,6 +31,17 @@ class SettingsState : MenuState
         buttonList.Add(back);
 
         base.FillButtonList();
+    }
+
+    protected override void HandleXboxInput(InputHelper inputHelper, int controllernumber)
+    {
+        
+        if (inputHelper.ButtonPressed(controllernumber, Buttons.B))
+        {
+            buttonList[2].Pressed = true; //Back to main menu if B is pressed.
+            ButtonPressedHandler();
+        }
+        base.HandleXboxInput(inputHelper, controllernumber);
     }
 
     /// <summary>
