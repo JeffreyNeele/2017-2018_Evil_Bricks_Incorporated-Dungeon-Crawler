@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 class PlayingState : IGameLoopObject 
 {
     // level list
-    protected List<Level> levelList;
+    protected Level[] levelArray;
     // current level that is being used
     protected int currentLevelIndex;
 
@@ -16,9 +16,9 @@ class PlayingState : IGameLoopObject
     public PlayingState()
     {
         currentLevelIndex = 4;
-        levelList = new List<Level>();
+        levelArray = new Level[9]; //10 levels
         // Loads the levels from all level files
-        LoadLevels(10);
+        //LoadLevels(10);
     }
 
     /// <summary>
@@ -38,7 +38,12 @@ class PlayingState : IGameLoopObject
         }
     }
 
-    public void Initialize() { }
+    public void Initialize()
+    {
+            Level newlevel = new Level(currentLevelIndex);
+            levelArray[currentLevelIndex] = newlevel;
+    }
+
 
     public void Reset()
     {
@@ -55,23 +60,25 @@ class PlayingState : IGameLoopObject
         CurrentLevel.Draw(gameTime, spriteBatch);
     }
 
+
+    //TO DO
     /// <summary>
     /// Loads the levels into the level list
     /// </summary>
     /// <param name="levelAmount">total amount of levels</param>
-    public void LoadLevels(int levelAmount)
+    /*public void LoadLevels(int levelAmount)
     {
         for(int x = 1; x <= levelAmount; x++)
         {
             Level newlevel = new Level(x);
             levelList.Add(newlevel);
         }
-    }
+    }*/
 
     public void GoToNextLevel()
     {
         CurrentLevel.Reset();
-        if (currentLevelIndex >= levelList.Count - 1)
+        if (currentLevelIndex >= levelArray.Length - 1)
         {
             // if all the levels are over switch to the title state
             GameEnvironment.GameStateManager.SwitchTo("titleMenu");
@@ -85,7 +92,7 @@ class PlayingState : IGameLoopObject
     // returns the current level being used in the state
     public Level CurrentLevel
     {
-        get { return levelList[currentLevelIndex]; }
+        get { return levelArray[currentLevelIndex]; }
     }
 
 }

@@ -298,9 +298,7 @@ protected void LevelInformationLoader(List<string> informationStringList)
     private void ShieldMaidenLoader(string[] textArray)
     {
         int controlsNumber = CharacterSelection.Controls(int.Parse(textArray[3]));
-        Console.WriteLine("maiden" + int.Parse(textArray[3]) + "controlnr" + CharacterSelection.Controls(int.Parse(textArray[3])));
         Shieldmaiden shieldmaiden = new Shieldmaiden(int.Parse(textArray[3]), controlsNumber, this);
-
         shieldmaiden.StartPosition = new Vector2(float.Parse(textArray[1]), float.Parse(textArray[2]));
         shieldmaiden.CurrentWeapon = new SwordAndShield(shieldmaiden);
         shieldmaiden.Reset();

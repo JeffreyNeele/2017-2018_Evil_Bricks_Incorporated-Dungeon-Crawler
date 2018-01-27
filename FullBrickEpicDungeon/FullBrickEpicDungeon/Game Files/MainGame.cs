@@ -35,6 +35,11 @@ namespace FullBrickEpicDungeon
             gameStateManager.AddGameState("titleMenu", new TitleMenuState());
             GameStateManager.AddGameState("settingsState", new SettingsState());
             gameStateManager.AddGameState("characterSelection", new CharacterSelection());
+            GameEnvironment.GameStateManager.AddGameState("playingState", new PlayingState());
+            GameEnvironment.GameStateManager.AddGameState("pauseState", new PauseState());
+            GameEnvironment.GameStateManager.AddGameState("levelFinishedState", new LevelFinishedState());
+            GameEnvironment.GameStateManager.AddGameState("conversation", new ConversationState());
+            GameEnvironment.GameStateManager.AddGameState("cutscene", new CutsceneState());
 
             //Weghalen als characterselection eenmaal definitief aan staat, anders maakt hij al deze dingen opnieuw aan TO DO
             //Kan niet in plaats van in Characterselection hier aangemaakt worden, omdat dan de keuze niet goed wordt doorgegeven aan playingstate
