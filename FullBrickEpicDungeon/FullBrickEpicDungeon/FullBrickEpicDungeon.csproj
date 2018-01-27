@@ -78,6 +78,7 @@
     <Compile Include="Game Files\Game states\CharacterSelection.cs" />
     <Compile Include="Game Files\Game states\ConversationState.cs" />
     <Compile Include="Game Files\Game states\CutsceneState.cs" />
+    <Compile Include="Game Files\Game states\GameOverState.cs" />
     <Compile Include="Game Files\Game states\LevelFinishedState.cs" />
     <Compile Include="Game Files\Game states\PauseState.cs" />
     <Compile Include="Game Files\Game states\PlayingState.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Game Files\Game states\TitleMenu.cs" />
     <Compile Include="Game Files\HUD\Conversation.cs" />
     <Compile Include="Game Files\Monsters\Type\BossBunny.cs" />
+    <Compile Include="Game Files\Monsters\Type\BossPenguin.cs" />
     <Compile Include="Game Files\Objects\Automated objects\Base\AutomatedObject.cs" />
     <Compile Include="Game Files\Objects\Automated objects\Type\SpikeTrap.cs" />
     <Compile Include="Game Files\Objects\Interactive objects\Base\InteractiveObject.cs" />
@@ -108,7 +110,6 @@
     <Compile Include="Game Files\Objects\Openable objects\Types\VerticalDoor.cs" />
     <Compile Include="Game Files\Objects\Smashable objects\Teapot.cs" />
     <Compile Include="Game Files\Projectiles\Projectile.cs" />
-    <Compile Include="Game Files\Objects\Interactive objects\Types\Trap.cs" />
     <Compile Include="Game Files\Weapons\Weapon.cs" />
     <Compile Include="Game Files\MainGame.cs" />
     <Compile Include="Game Files\Weapons\SwordAndShield.cs" />

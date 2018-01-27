@@ -3,7 +3,7 @@ class Lock : InteractiveObject
 {
     int objectnumber = 0;
 
-    public Lock(string assetname, string id, int sheetIndex) : base(assetname, id, sheetIndex)
+    public Lock(string assetname, Level level, string id, int sheetIndex) : base(assetname, level, id, sheetIndex)
     {
     }
 

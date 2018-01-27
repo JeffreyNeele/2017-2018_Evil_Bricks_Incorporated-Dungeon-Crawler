@@ -36,11 +36,9 @@ class PlayingState : IGameLoopObject
             FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
             GameEnvironment.GameStateManager.SwitchTo("pauseState");
         }
-        if (inputHelper.KeyPressed(Keys.C))
-            GameEnvironment.GameStateManager.SwitchTo("conversation");
     }
 
-    public void Setup() { }
+    public void Initialize() { }
 
     public void Reset()
     {

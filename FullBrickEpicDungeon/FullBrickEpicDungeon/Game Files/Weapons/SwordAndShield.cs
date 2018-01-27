@@ -11,7 +11,7 @@ class SwordAndShield : Weapon
     public SwordAndShield(Character owner) : base(owner, "Swordandshield", "putassetnamehere")
     {
         // properties for attack and amount of gold the weapon costs
-        AttackDamage = 5;
+        AttackDamage = 10;
         GoldWorth = 0;
 
         LoadAnimation("Assets/Sprites/Weapons/SwordUp", "attack_up", false, 0.2f);

@@ -126,7 +126,7 @@ protected void LevelInformationLoader(List<string> informationStringList)
                     objectList.Add(spikeTrap);
                     break;
                 case "HANDLE":
-                    Handle handle = new Handle("Assets/Sprites/InteractiveObjects/handles@2", "Handle", 0)
+                    Handle handle = new Handle("Assets/Sprites/InteractiveObjects/handles@2", this, "Handle", 0)
                     {
                         Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
                     };
@@ -142,25 +142,25 @@ protected void LevelInformationLoader(List<string> informationStringList)
                     objectList.Add(trapdoor);
                     break;
                 case "DOOR":
-                    Door doorupperleft = new Door("Assets/Sprites/Tiles/DoorBottomRight@2", "Door", 0)
+                    Door doorupperleft = new Door("Assets/Sprites/Tiles/DoorBottomRight@2", this, "Door", 0)
                     {
                         Position = new Vector2(float.Parse(splitArray[1]) + 50, float.Parse(splitArray[2]) + 50),
                         upperLeftPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
                         Objectnumber = int.Parse(splitArray[3])
                     };
-                    Door doorupperright = new Door("Assets/Sprites/Tiles/DoorUpperRight@2", "Door", 0)
+                    Door doorupperright = new Door("Assets/Sprites/Tiles/DoorUpperRight@2", this, "Door", 0)
                     {
                         Position = new Vector2(float.Parse(splitArray[1]) + 50, float.Parse(splitArray[2])),
                         upperLeftPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
                         Objectnumber = int.Parse(splitArray[3])
                     };
-                    Door doorbottomleft = new Door("Assets/Sprites/Tiles/DoorBottomLeft@2", "Door", 0)
+                    Door doorbottomleft = new Door("Assets/Sprites/Tiles/DoorBottomLeft@2", this, "Door", 0)
                     {
                         Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]) + 50),
                         upperLeftPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
                         Objectnumber = int.Parse(splitArray[3])
                     };
-                    Door doorbottomright = new Door("Assets/Sprites/Tiles/DoorUpperleft@2", "Door", 0)
+                    Door doorbottomright = new Door("Assets/Sprites/Tiles/DoorUpperleft@2", this, "Door", 0)
                     {
                         Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
                         upperLeftPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
@@ -172,31 +172,31 @@ protected void LevelInformationLoader(List<string> informationStringList)
                     levelTileField.Add(doorbottomright, (int)doorbottomright.Position.X / 50, (int)doorbottomright.Position.Y / 50);
                     break;
                 case "VDOOR":
-                    Door vdoorupperleft = new VerticalDoor("Assets/Sprites/Tiles/VerticalDoorUpperLeft@2", "Door", 0)
+                    Door vdoorupperleft = new VerticalDoor("Assets/Sprites/Tiles/VerticalDoorUpperLeft@2", this, "Door", 0)
                     {
                         Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
                         upperLeftPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
                         Objectnumber = int.Parse(splitArray[3])
                     };
-                    Door vdoorupperright = new VerticalDoor("Assets/Sprites/Tiles/VerticalDoorUpperRight@2", "Door", 0)
+                    Door vdoorupperright = new VerticalDoor("Assets/Sprites/Tiles/VerticalDoorUpperRight@2", this, "Door", 0)
                     {
                         Position = new Vector2(float.Parse(splitArray[1]) + 50, float.Parse(splitArray[2])),
                         upperLeftPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
                         Objectnumber = int.Parse(splitArray[3])
                     };
-                    Door vdoormiddleleft = new VerticalDoor("Assets/Sprites/Tiles/VerticalDoorMiddleLeft@2", "Door", 0)
+                    Door vdoormiddleleft = new VerticalDoor("Assets/Sprites/Tiles/VerticalDoorMiddleLeft@2", this, "Door", 0)
                     {
                         Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]) + 50),
                         upperLeftPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
                         Objectnumber = int.Parse(splitArray[3])
                     };
-                    Door vdoorbottomleft = new VerticalDoor("Assets/Sprites/Tiles/VerticalDoorBottomLeft@2", "Door", 0)
+                    Door vdoorbottomleft = new VerticalDoor("Assets/Sprites/Tiles/VerticalDoorBottomLeft@2", this, "Door", 0)
                     {
                         Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]) + 100),
                         upperLeftPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
                         Objectnumber = int.Parse(splitArray[3])
                     };
-                    Door vdoormiddleright = new VerticalDoor("Assets/Sprites/Tiles/VerticalDoorMiddleRight@2", "Door", 0)
+                    Door vdoormiddleright = new VerticalDoor("Assets/Sprites/Tiles/VerticalDoorMiddleRight@2", this, "Door", 0)
                     {
                         Position = new Vector2(float.Parse(splitArray[1]) + 50, float.Parse(splitArray[2]) + 50),
                         upperLeftPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2])),
@@ -231,19 +231,19 @@ protected void LevelInformationLoader(List<string> informationStringList)
         switch (textArray[3])
         {
             case "RED":
-                lockitem = new Lock("Assets/Sprites/InteractiveObjects/PaladinLock", "redlock", 0);
+                lockitem = new Lock("Assets/Sprites/InteractiveObjects/PaladinLock", this, "redlock", 0);
                 break;
             case "BLUE":
-                lockitem = new Lock("Assets/Sprites/InteractiveObjects/LightbringerLock", "bluelock", 0);
+                lockitem = new Lock("Assets/Sprites/InteractiveObjects/LightbringerLock", this, "bluelock", 0);
                 break;
             case "GREEN":
-                lockitem = new Lock("Assets/Sprites/InteractiveObjects/RogueLock", "greenlock", 0);
+                lockitem = new Lock("Assets/Sprites/InteractiveObjects/RogueLock", this, "greenlock", 0);
                 break;
             case "ORANGE":
-                lockitem = new Lock("Assets/Sprites/InteractiveObjects/TalismaniacLock", "orangelock", 0);
+                lockitem = new Lock("Assets/Sprites/InteractiveObjects/TalismaniacLock", this, "orangelock", 0);
                 break;
             case "ALL":
-                lockitem = new Lock("Assets/Sprites/InteractiveObjects/AllLock", "alllock", 0);
+                lockitem = new Lock("Assets/Sprites/InteractiveObjects/AllLock", this, "alllock", 0);
                 break;
             default:
                 throw new ArgumentException("The given color " + textArray[3] + " was not found in the switch statement!");
@@ -266,19 +266,19 @@ protected void LevelInformationLoader(List<string> informationStringList)
         switch (textArray[3])
         {
             case "RED":
-                key = new KeyItem("Assets/Sprites/InteractiveObjects/paladinkey1", "redkey", 0);
+                key = new KeyItem("Assets/Sprites/InteractiveObjects/paladinkey1", this, "redkey", 0);
                 break;
             case "BLUE":
-                key = new KeyItem("Assets/Sprites/InteractiveObjects/lightbringerkey1", "bluekey", 0);
+                key = new KeyItem("Assets/Sprites/InteractiveObjects/lightbringerkey1", this, "bluekey", 0);
                 break;
             case "GREEN":
-                key = new KeyItem("Assets/Sprites/InteractiveObjects/roguekey1", "greenkey", 0);
+                key = new KeyItem("Assets/Sprites/InteractiveObjects/roguekey1", this, "greenkey", 0);
                 break;
             case "ORANGE":
-                key = new KeyItem("Assets/Sprites/InteractiveObjects/talismaniackey1", "orangekey", 0);
+                key = new KeyItem("Assets/Sprites/InteractiveObjects/talismaniackey1", this, "orangekey", 0);
                 break;
             case "ALL":
-                key = new KeyItem("Assets/Sprites/InteractiveObjects/AllKey1", "allkey", 0);
+                key = new KeyItem("Assets/Sprites/InteractiveObjects/AllKey1", this, "allkey", 0);
                 break;
             default:
                 throw new ArgumentException("The given color " + textArray[3] + " was not found in the switch statement!");

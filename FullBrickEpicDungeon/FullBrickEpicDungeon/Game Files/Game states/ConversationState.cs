@@ -51,7 +51,7 @@ class ConversationState : IGameLoopObject
         CurrentConversation.HandleInput(inputHelper);
     }
 
-    public void Setup()
+    public void Initialize()
     {
         IGameLoopObject prevGameState = GameEnvironment.GameStateManager.PreviousGameState as IGameLoopObject;
         // draw over the playingstate if it was in playingstate

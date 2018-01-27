@@ -1321,17 +1321,11 @@
 #begin Assets/Levels/level6.txt
 /copy:Assets/Levels/level6.txt
 
-#begin Assets/Levels/level7.txt
-/copy:Assets/Levels/level7.txt
-
 #begin Assets/Levels/level8.txt
 /copy:Assets/Levels/level8.txt
 
 #begin Assets/Levels/level9.txt
 /copy:Assets/Levels/level9.txt
-
-#begin Assets/Levels/level10.txt
-/copy:Assets/Levels/level10.txt
 
 #begin Assets/Levels/level11.txt
 /copy:Assets/Levels/level11.txt
@@ -1609,18 +1603,6 @@
 #begin Assets/Conversations/ThroneRoom2.txt
 /copy:Assets/Conversations/ThroneRoom2.txt
 
-#begin Assets/Cutscenes/LarryGetsCaptured.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Cutscenes/LarryGetsCaptured.png
-
 #begin Assets/Conversations/ThroneRoom1.txt
 /copy:Assets/Conversations/ThroneRoom1.txt
 
@@ -1714,4 +1696,34 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/SmashableObjects/Teapot_red.png
+
+#begin Assets/Levels/level15.txt
+/copy:Assets/Levels/level15.txt
+
+#begin Assets/Levels/level7.txt
+/copy:Assets/Levels/level7.txt
+
+#begin Assets/Cutscenes/LarryGetsCaptured.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Cutscenes/LarryGetsCaptured.png
+
+#begin Assets/Sprites/Gameover/red_overlay.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Gameover/red_overlay.png
 

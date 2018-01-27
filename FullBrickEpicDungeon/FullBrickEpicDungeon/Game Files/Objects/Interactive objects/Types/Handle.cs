@@ -55,6 +55,8 @@ class Handle : InteractiveObject
                 if(this.ObjectNumberConnected == 99)
                 {
                     ((OpenableObject)openableObject).Open();
+                    if (openableObject is Door)
+                        ((Door)openableObject).openDoor = true;
                     continue;
                 }
                 if (((OpenableObject) openableObject).Objectnumber == handlenumber)
@@ -66,6 +68,7 @@ class Handle : InteractiveObject
                     ((OpenableObject)openableObject).Close();
                 }
             }
+
         }
 
         foreach (var openableObject in objects.Children)
@@ -75,8 +78,6 @@ class Handle : InteractiveObject
                 if (this.ObjectNumberConnected == 99)
                 {
                     ((OpenableObject)openableObject).Open();
-                    if (openableObject is Door)
-                        ((Door)openableObject).openDoor = true;
                     continue;
                 }
                 if (((OpenableObject)openableObject).Objectnumber == handlenumber)
@@ -88,6 +89,10 @@ class Handle : InteractiveObject
                         ((OpenableObject)openableObject).Close();
                 }
             }
+
+            if (openableObject is Lock)
+                if (this.ObjectNumberConnected == 99)
+                    ((Lock)openableObject).Visible = false;
         }
     }
 

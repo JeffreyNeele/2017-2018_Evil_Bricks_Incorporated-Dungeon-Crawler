@@ -39,7 +39,7 @@ class LevelFinishedState : IGameLoopObject
         spriteBatch.Draw(plaque, Vector2.Zero, Color.White);
     }
 
-    public void Setup() { }
+    public void Initialize() { }
 
     public void Reset()
     {
