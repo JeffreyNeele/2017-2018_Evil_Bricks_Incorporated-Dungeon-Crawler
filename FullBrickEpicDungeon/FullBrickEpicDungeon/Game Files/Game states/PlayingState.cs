@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 
-class PlayingState : IGameLoopObject 
+class PlayingState : IGameLoopObject
 {
     // level list
     protected Level[] levelArray;
@@ -25,8 +25,8 @@ class PlayingState : IGameLoopObject
     public void HandleInput(InputHelper inputHelper)
     {
         CurrentLevel.HandleInput(inputHelper);
-
-        if (inputHelper.KeyPressed(Keys.Space))
+        
+        if (inputHelper.KeyPressed(Keys.Space) || inputHelper.AnyPlayerPressed(Buttons.Start))
         {
             if(FullBrickEpicDungeon.DungeonCrawler.SFX)
                 GameEnvironment.AssetManager.PlaySound("Assets/SFX/pause");

@@ -71,7 +71,7 @@ class ConversationState : IGameLoopObject
         //Only during a Cutscene you are able to skip a conversation. In playingstate you may or may not anger monsters, so you cannot skip
         if ((GameEnvironment.GameStateManager.PreviousGameState as IGameLoopObject) == GameEnvironment.GameStateManager.GetGameState("cutscene"))
         {
-            if (inputHelper.KeyPressed(Keys.Enter) || inputHelper.ButtonPressed(1, Buttons.Back)) //To skip the cutscene, press Enter or Back for player 1 on Xbox
+            if (inputHelper.KeyPressed(Keys.Enter) || inputHelper.AnyPlayerPressed(Buttons.Back)) //To skip the cutscene, press Enter or Back for player 1 on Xbox
             {
                 (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).Reset();
                 GameEnvironment.GameStateManager.SwitchTo("playingState");

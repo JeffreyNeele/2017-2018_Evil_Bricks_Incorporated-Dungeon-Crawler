@@ -42,7 +42,7 @@ class PauseState : MenuState
     protected override void HandleXboxInput(InputHelper inputHelper, int controllernumber)
     {
         base.HandleXboxInput(inputHelper, controllernumber);
-        if (inputHelper.ButtonPressed(controllernumber, Buttons.B))
+        if (inputHelper.ButtonPressed(controllernumber, Buttons.B)|| inputHelper.ButtonPressed(controllernumber, Buttons.Start))
         {
             buttonList[0].Pressed = true; //Continue if B is pressed.
             ButtonPressedHandler();
