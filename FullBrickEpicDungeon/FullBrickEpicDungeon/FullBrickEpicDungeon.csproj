@@ -80,6 +80,7 @@
     <Compile Include="Game Files\Game states\CutsceneState.cs" />
     <Compile Include="Game Files\Game states\GameOverState.cs" />
     <Compile Include="Game Files\Game states\LevelFinishedState.cs" />
+    <Compile Include="Game Files\Game states\MenuState.cs" />
     <Compile Include="Game Files\Game states\PauseState.cs" />
     <Compile Include="Game Files\Game states\PlayingState.cs" />
     <Compile Include="Game Files\Game states\SettingsState.cs" />
