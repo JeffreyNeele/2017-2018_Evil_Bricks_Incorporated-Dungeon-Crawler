@@ -26,11 +26,11 @@ partial class Level : GameObjectList
             line = fileReader.ReadLine();
         }
         fileReader.Close();
-        int previousline = 0;
         // a list for the currently stored lines in a for loop
         List<string> storedLines = new List<string>();
         // list that loads the level information
-        for (int i = previousline + 1; i < fileLines.Count; i++)
+
+        for(int i = 0; i < fileLines.Count; i++)
         {
             // if we reach TILES this means that the qualification for the next for loop has been reached and we dont need any more information for this loop
             if (fileLines[i] == "TILES")
@@ -39,38 +39,24 @@ partial class Level : GameObjectList
                 LevelInformationLoader(storedLines);
                 // clear the stored lines for the next for loop in our list
                 storedLines.Clear();
-                // set the previousline to what this for loop ended on so that the next for loop doesn't receive information it doesn't need
-                previousline = i;
-                break;
             }
-            storedLines.Add(fileLines[i]);
-        }
 
-        // Load the tile field from the file
-        for (int i = previousline + 1; i < fileLines.Count; i++)
-        {
-            if(fileLines[i] == "POSITION")
+            else if (fileLines[i] == "POSITION")
             {
                 // set the levels tileField to the LoadTiles method returned tileField
                 levelTileField = LoadTiles(storedLines);
                 Add(levelTileField);
                 storedLines.Clear();
-                previousline = i;
-                break;
             }
-            storedLines.Add(fileLines[i]);
-        }
 
-        // Loads position and characters etc.
-        for (int i = previousline + 1; i < fileLines.Count; i++)
-        {
-            if (fileLines[i] == "ENDOFFILE")
+            else if (fileLines[i] == "ENDOFFILE")
             {
                 LevelPositionLoader(storedLines);
                 storedLines.Clear();
-                break;
             }
-            storedLines.Add(fileLines[i]);
+            else
+                storedLines.Add(fileLines[i]);
+
         }
     }
 
