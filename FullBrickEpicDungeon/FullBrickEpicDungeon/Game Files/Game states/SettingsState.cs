@@ -44,6 +44,12 @@ class SettingsState : MenuState
         base.HandleXboxInput(inputHelper, controllernumber);
     }
 
+    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    {
+        spriteBatch.Draw(settingsBackground, Vector2.Zero, Color.White);
+        base.Draw(gameTime, spriteBatch);
+    }
+
     /// <summary>
     /// if the button is pressed (which is handled in MenuState) this method executes what happens
     /// </summary>
