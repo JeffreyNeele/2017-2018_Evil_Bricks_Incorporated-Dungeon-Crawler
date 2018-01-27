@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 class PauseState : MenuState
 {
     protected IGameLoopObject playingState;
-    protected Button continueButton, quitButton;
+    protected Button continueButton, settingsButton, quitButton;
     protected Texture2D overlay;
     /// <summary>
     /// Class that defines a Pause state
@@ -22,10 +22,13 @@ class PauseState : MenuState
     protected override void FillButtonList()
     {
         // make buttons for the different assignments, eg return to menu
-        continueButton = new Button("Assets/Sprites/Paused/Continue", 99);
+        continueButton = new Button("Assets/Sprites/Paused/Continue");
         buttonList.Add(continueButton);
 
-        quitButton = new Button("Assets/Sprites/Paused/ReturnToMenu", 99);
+        settingsButton = new Button("Assets/Sprites/Menu/SettingsButton");
+        buttonList.Add(settingsButton);
+
+        quitButton = new Button("Assets/Sprites/Paused/ReturnToMenu");
         buttonList.Add(quitButton);
 
         base.FillButtonList(); //gives positions to the buttons and the marker
@@ -73,7 +76,10 @@ class PauseState : MenuState
                         (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).Reset();
                         GameEnvironment.GameStateManager.SwitchTo("playingState");
                         break;
-                    case 1: //Quit button pressed
+                    case 1: //Settings button pressed
+                        GameEnvironment.GameStateManager.SwitchTo("settingsState");
+                        break;
+                    case 2: //Quit button pressed
 
                         FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
                         (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).ResetLevelIndex();

@@ -7,6 +7,7 @@ class SettingsState : MenuState
 {
     private Texture2D settingsBackground;
     protected Button SFX, music, back;
+    bool prevPause;
     /// <summary>
     /// Class that displays a settings screen.
     /// </summary>
@@ -88,6 +89,9 @@ class SettingsState : MenuState
                     case 2: //Back
                         if (back.Pressed)
                         {
+                            if(prevPause)
+                                GameEnvironment.GameStateManager.SwitchTo("pauseState");
+                            if (!prevPause)
                             GameEnvironment.GameStateManager.SwitchTo("titleMenu");
                         }
                         break;
@@ -95,6 +99,24 @@ class SettingsState : MenuState
                 }
                 GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
             }
+        }
+    }
+    public override void Initialize()
+    {
+        IGameLoopObject prevGameState = GameEnvironment.GameStateManager.PreviousGameState as IGameLoopObject;
+        // draw over the playingstate if it was in playingstate
+        if (prevGameState == GameEnvironment.GameStateManager.GetGameState("pauseState"))
+        {
+            prevPause = true;
+        }
+        //draw over cutscene if previousstate was cutscene
+        else if (prevGameState == GameEnvironment.GameStateManager.GetGameState("titleMenu"))
+        {
+            prevPause = false;
+        }
+        else
+        {
+            throw new Exception("Cutscene cannot be called from this GameState" + GameEnvironment.GameStateManager.PreviousGameState);
         }
     }
 
