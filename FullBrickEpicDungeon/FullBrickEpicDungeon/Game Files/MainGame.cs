@@ -8,6 +8,7 @@ namespace FullBrickEpicDungeon
     /// <summary>
     /// Main Game file of our game
     /// </summary>
+
     public class DungeonCrawler : GameEnvironment
     {
 
@@ -31,22 +32,18 @@ namespace FullBrickEpicDungeon
             ApplyResolutionSettings();
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            // TODO: use this.Content to load your game content here
-            gameStateManager.AddGameState("titleMenu", new TitleMenuState());
+
+
+            GameStateManager.AddGameState("titleMenu", new TitleMenuState());
             GameStateManager.AddGameState("settingsState", new SettingsState());
-            gameStateManager.AddGameState("characterSelection", new CharacterSelection());
-
-            //Weghalen als characterselection eenmaal definitief aan staat, anders maakt hij al deze dingen opnieuw aan TO DO
-            //Kan niet in plaats van in Characterselection hier aangemaakt worden, omdat dan de keuze niet goed wordt doorgegeven aan playingstate
-            //als ik daar alleen playingstate zou zetten, is de volgorde niet meer goed.
-            /*
-            gameStateManager.AddGameState("playingState", new PlayingState()); //Deze alinea VERWIJDEREN ALS CHAR SELECTION IS GEACTIVEERD
-            gameStateManager.AddGameState("levelFinishedState", new LevelFinishedState());
+            GameStateManager.AddGameState("characterSelection", new CharacterSelection());
+            GameStateManager.AddGameState("playingState", new PlayingState());
             GameStateManager.AddGameState("pauseState", new PauseState());
-            gameStateManager.AddGameState("conversation", new ConversationState());
-            gameStateManager.AddGameState("cutscene", new CutsceneState());*/
+            GameStateManager.AddGameState("levelFinishedState", new LevelFinishedState());
+            GameStateManager.AddGameState("conversation", new ConversationState());
+            GameStateManager.AddGameState("cutscene", new CutsceneState());
 
-            gameStateManager.SwitchTo("titleMenu");
+            GameStateManager.SwitchTo("titleMenu");
         }
 
         /// <summary>
@@ -77,9 +74,9 @@ namespace FullBrickEpicDungeon
             else
                 IsMouseVisible = false;
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            // TODO: Add your update logic here
+   
             base.Update(gameTime);
         }
 

@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 
-//Spelers kunnen in deze state connecten met de game (met xbox controller of toetsenbord).
-//Daarna is het mogelijk om een character te kiezen. Uitgangspunt is dat een character maar één keer gekozen kan worden.
+/// <summary>
+///Spelers kunnen in deze state connecten met de game (met xbox controller of toetsenbord).
+///Daarna is het mogelijk om een character te kiezen. Uitgangspunt is dat een character maar één keer gekozen kan worden.
+/// </summary>
 class CharacterSelection : GameObjectList
 {
     AnimatedGameObject[] characterSprites = new AnimatedGameObject[4];
@@ -89,12 +88,6 @@ class CharacterSelection : GameObjectList
             launchCount -= (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (launchCount <= 0)
             {
-                GameEnvironment.GameStateManager.AddGameState("playingState", new PlayingState());
-                GameEnvironment.GameStateManager.AddGameState("pauseState", new PauseState());
-                GameEnvironment.GameStateManager.AddGameState("levelFinishedState", new LevelFinishedState());
-                GameEnvironment.GameStateManager.AddGameState("conversation", new ConversationState());
-                GameEnvironment.GameStateManager.AddGameState("cutscene", new CutsceneState());
-                //GameEnvironment.GameStateManager.SwitchTo("playingState");
                 GameEnvironment.GameStateManager.SwitchTo("cutscene");
             }
         }
@@ -308,7 +301,12 @@ class CharacterSelection : GameObjectList
 
 
 
-    //Checks if it is possible to lock in
+
+    /// <summary>
+    ///  //Checks if it is possible to lock in
+    /// </summary>
+    /// <param name="index">shieldmaidencolor(number) that wants to lock in</param>
+    /// <returns></returns>
     public bool CheckLockIn(int index)
     {
         for (int i = 0; i < lockInSprite.Length; i++)
@@ -338,11 +336,15 @@ class CharacterSelection : GameObjectList
             borderSprites[player].GetColor = lockInColor[(characterSelectIndex[player] - 1) * 2];
             readySprite[player].PlayAnimation("notReady");
         }
+            GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
     }
 
 
 
-    //Checks if all the players are locked in with their character.
+    /// <summary>
+    /// Checks if all the players are locked in with their character.
+    /// </summary>
+    /// <returns></returns>
     public bool AllReadyCheck()
     {
 
@@ -361,7 +363,13 @@ class CharacterSelection : GameObjectList
         return false;
     }
 
-    //yields the an array with the numbers of shieldmaiden numbers chosen in order.
+
+    /// <summary>
+    /// yields the an array with the numbers of shieldmaiden numbers chosen in order.
+    /// </summary>
+    /// <param name="maiden">maidennumber written in LevelLoading level?.txt</param>
+    /// <returns></returns>
+
     public static int Controls(int maiden)
     {
         for (int border = 0; border < 4; border++)

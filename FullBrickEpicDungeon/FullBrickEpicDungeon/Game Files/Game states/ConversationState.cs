@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System;
+using Microsoft.Xna.Framework.Input;
 
 class ConversationState : IGameLoopObject
 {
@@ -11,18 +12,22 @@ class ConversationState : IGameLoopObject
     int currentConversationNumber = 0;
     bool prevPlaying;
 
+
+
+
     /// <summary>
     /// State for if a conversation state is being displayed
     /// </summary>
     public ConversationState()
     {
-
         LoadConversations();
-        //conversation = new Conversation("Assets/Conversations/conv_test.txt");
     }
 
+
+
+
     /// <summary>
-    /// Loads the levels into the level list
+    /// Loads the conversations into the conversation list
     /// </summary>
     /// <param name="conversationAmount">total amount of levels</param>
     public void LoadConversations()
@@ -35,10 +40,18 @@ class ConversationState : IGameLoopObject
         }
     }
 
+
+
+
+
     public void Update(GameTime gameTime)
     {
         CurrentConversation.Update(gameTime);
     }
+
+
+
+
 
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
@@ -46,10 +59,29 @@ class ConversationState : IGameLoopObject
         CurrentConversation.Draw(gameTime, spriteBatch);
     }
 
+
+
+
+
+
     public void HandleInput(InputHelper inputHelper)
     {
         CurrentConversation.HandleInput(inputHelper);
+
+        //Only during a Cutscene you are able to skip a conversation. In playingstate you may or may not anger monsters, so you cannot skip
+        if ((GameEnvironment.GameStateManager.PreviousGameState as IGameLoopObject) == GameEnvironment.GameStateManager.GetGameState("cutscene"))
+        {
+            if (inputHelper.KeyPressed(Keys.Enter) || inputHelper.AnyPlayerPressed(Buttons.Back)) //To skip the cutscene, press Enter or Back for player 1 on Xbox
+            {
+                (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).Reset();
+                GameEnvironment.GameStateManager.SwitchTo("playingState");
+            }
+        }
     }
+
+
+
+
 
     public void Initialize()
     {
@@ -60,55 +92,72 @@ class ConversationState : IGameLoopObject
             prevPlaying = true;
             drawOverState = GameEnvironment.GameStateManager.GetGameState("playingState");
         }
-
-
         //draw over cutscene if previousstate was cutscene
-        if ((GameEnvironment.GameStateManager.PreviousGameState as IGameLoopObject) == GameEnvironment.GameStateManager.GetGameState("cutscene"))
+        else if ((GameEnvironment.GameStateManager.PreviousGameState as IGameLoopObject) == GameEnvironment.GameStateManager.GetGameState("cutscene"))
         {
             prevPlaying = false;
             drawOverState = GameEnvironment.GameStateManager.GetGameState("cutscene");
         }
-
-        // loads the conversation
+        else
+        {
+            throw new Exception("Cutscene cannot be called from this GameState" + GameEnvironment.GameStateManager.PreviousGameState);
+        }
     }
+
+
+
+
 
     public void Reset()
     {
+        conversationList.Clear();
+        currentConversationNumber = 0;
+        LoadConversations();
         CurrentConversation.Reset();
+
     }
+
+
 
     public void GoToNextConversation()
     {
-        CurrentConversation.Reset();
         if (currentConversationNumber >= conversationList.Count)
         {
-            throw new IndexOutOfRangeException("There is no conversation left, although you are trying to make one.");   
-            //There are no conversations left
+            throw new IndexOutOfRangeException("There is no conversation file left, although you are trying to start another one.");   
         }
-         //if the conversation is finished, start up the next event
-       
-            if(prevPlaying) //conversation came from playingstate
+        //if the conversation is finished, start up the next event
+
+        if (prevPlaying) //conversation came from playingstate
+        {
+            (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).Reset();
             GameEnvironment.GameStateManager.SwitchTo("playingState");
+        }
 
-            else if (!prevPlaying) //conversation came from a cutsceneState
-            {
-                CurrentConversation.Reset();
-                //load next cutscene for next time it starts.
-                (GameEnvironment.GameStateManager.GetGameState("cutscene") as CutsceneState).GoToNextCutscene(); 
-
-                //depending on which cutscene just completed, switch to the next cutscene or the next playingstate
-                switch(currentConversationNumber)
-                {   
-                    //after the ThroneRoom2 scene, the players play the game
-                    case (int)Conversationnames.ThroneRoom2: GameEnvironment.GameStateManager.SwitchTo("playingState");
-                        break;
-                    default: GameEnvironment.GameStateManager.SwitchTo("cutscene");
-                        break;
-                }
-            }
+        else if (!prevPlaying) //conversation came from a cutsceneState
+        {
+            //load next cutscene for next time it starts.
+            (GameEnvironment.GameStateManager.GetGameState("cutscene") as CutsceneState).GoToNextCutscene();
             currentConversationNumber++;
-        
+
+            //depending on which cutscene just completed, switch to the next cutscene or the next playingstate
+            switch (currentConversationNumber-1)
+            {
+                //after the ThroneRoom2 scene, the players play the game
+                case (int)Conversationnames.ThroneRoom2:
+                    (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).Reset();
+                    GameEnvironment.GameStateManager.SwitchTo("playingState");
+                    Reset();
+                    break;
+                default:
+                    GameEnvironment.GameStateManager.SwitchTo("cutscene");
+                    break;
+            }
+        }
+            
     }
+
+
+
 
     private Conversation CurrentConversation
     {

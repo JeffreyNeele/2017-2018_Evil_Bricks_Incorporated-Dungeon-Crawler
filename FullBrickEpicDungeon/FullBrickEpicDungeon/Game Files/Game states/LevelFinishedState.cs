@@ -22,8 +22,10 @@ class LevelFinishedState : IGameLoopObject
     {
         if (inputHelper.KeyPressed(Keys.E) || inputHelper.AnyPlayerPressed(Buttons.Y))
         {
+            (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).GoToNextLevel();
+            (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).Reset();
             GameEnvironment.GameStateManager.SwitchTo("playingState");
-            (GameEnvironment.GameStateManager.CurrentGameState as PlayingState).GoToNextLevel();
+
         }
     }
 

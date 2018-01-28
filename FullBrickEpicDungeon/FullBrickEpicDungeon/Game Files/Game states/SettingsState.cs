@@ -1,98 +1,123 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using Microsoft.Xna.Framework.Input;
 
-class SettingsState : IGameLoopObject
+class SettingsState : MenuState
 {
     private Texture2D settingsBackground;
     protected Button SFX, music, back;
+    bool prevPause;
     /// <summary>
     /// Class that displays a settings screen.
     /// </summary>
-    public SettingsState()
+    public SettingsState() : base()
     {
         // Load the background
         settingsBackground = GameEnvironment.AssetManager.GetSprite("Assets/Sprites/Settings/settingsbackground");
+       
+    }
+
+
+
+
+    protected override void FillButtonList()
+    {
         // Load the buttons for the SFX toggler, music toggler and the back button.
         SFX = new Button("Assets/Sprites/Settings/sfxbutton@2");
-        SFX.Position = new Vector2(GameEnvironment.Screen.X / 2 - SFX.Width / 2, 250);
+        buttonList.Add(SFX);
         music = new Button("Assets/Sprites/Settings/musicbutton@2");
-        music.Position = new Vector2(GameEnvironment.Screen.X / 2 - music.Width / 2, 400);
+        buttonList.Add(music);
         back = new Button("Assets/Sprites/Settings/ReturnToMenu");
-        back.Position = new Vector2(GameEnvironment.Screen.X / 2 - back.Width / 2, GameEnvironment.Screen.Y - (back.Height + 100));
+        buttonList.Add(back);
+
+        base.FillButtonList();
     }
 
-    public void Update(GameTime gameTime)
+    protected override void HandleXboxInput(InputHelper inputHelper, int controllernumber)
     {
-
+        
+        if (inputHelper.ButtonPressed(controllernumber, Buttons.B))
+        {
+            buttonList[2].Pressed = true; //Back to main menu if B is pressed.
+            ButtonPressedHandler();
+        }
+        base.HandleXboxInput(inputHelper, controllernumber);
     }
-    /// <summary>
-    /// Draws the settings menu
-    /// </summary>
-    public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+
+    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         spriteBatch.Draw(settingsBackground, Vector2.Zero, Color.White);
-        SFX.Draw(gameTime, spriteBatch);
-        music.Draw(gameTime, spriteBatch);
-        back.Draw(gameTime, spriteBatch);
+        base.Draw(gameTime, spriteBatch);
     }
 
     /// <summary>
-    /// Handles input for the settings menu
+    /// if the button is pressed (which is handled in MenuState) this method executes what happens
     /// </summary>
-    public void HandleInput(InputHelper inputHelper)
+    protected override void ButtonPressedHandler()
     {
-        // handle input for the buttons
-        SFX.HandleInput(inputHelper);
-        music.HandleInput(inputHelper);
-        back.HandleInput(inputHelper);
-        // If the back button is pressed return to the title menu
-        if (back.Pressed)
+        for (int buttonnr = 0; buttonnr < buttonList.Count; buttonnr++)
         {
-            GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
-            GameEnvironment.GameStateManager.SwitchTo("titleMenu");
-        }
-        // if the SFX button is pressed, switch to the opposite sprite and set the correct global SFX variable
-        if (SFX.Pressed)
-        {
-            GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
-            if (SFX.Sprite.SheetIndex == 0)
+            if (buttonList[buttonnr].Pressed)
             {
-                FullBrickEpicDungeon.DungeonCrawler.SFX = false;
-                SFX.Sprite.SheetIndex = 1;
-            }
-            else
-            {
-                FullBrickEpicDungeon.DungeonCrawler.SFX = true;
-                SFX.Sprite.SheetIndex = 0;
-            }
-               
-        }
-        // same thing for the music button
-        if (music.Pressed)
-        {
-            GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
-            if (music.Sprite.SheetIndex == 0)
-            {
-                FullBrickEpicDungeon.DungeonCrawler.music = false;
-                music.Sprite.SheetIndex = 1;
-            }
-            else
-            {
-                FullBrickEpicDungeon.DungeonCrawler.music = true;
-                music.Sprite.SheetIndex = 0;
+                switch (buttonnr)
+                {
+                    case 0: //SFX
+                        if (SFX.Sprite.SheetIndex == 0)
+                        {
+                            FullBrickEpicDungeon.DungeonCrawler.SFX = false;
+                            SFX.Sprite.SheetIndex = 1;
+                        }
+                        else
+                        {
+                            FullBrickEpicDungeon.DungeonCrawler.SFX = true;
+                            SFX.Sprite.SheetIndex = 0;
+                        }
+                        break;
+                    case 1: //Music
+                        if (music.Sprite.SheetIndex == 0)
+                        {
+                            FullBrickEpicDungeon.DungeonCrawler.music = false;
+                            music.Sprite.SheetIndex = 1;
+                        }
+                        else
+                        {
+                            FullBrickEpicDungeon.DungeonCrawler.music = true;
+                            music.Sprite.SheetIndex = 0;
+                        }
+                        break;
+                    case 2: //Back
+                        if (back.Pressed)
+                        {
+                            if(prevPause)
+                                GameEnvironment.GameStateManager.SwitchTo("pauseState");
+                            if (!prevPause)
+                            GameEnvironment.GameStateManager.SwitchTo("titleMenu");
+                        }
+                        break;
+                    default: throw new IndexOutOfRangeException("Buttonbehaviour not defined. Buttonnumber in buttonList: " + buttonnr);
+                }
+                GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
             }
         }
     }
-
-    public void Initialize() { }
-
-    /// <summary>
-    /// Resets thed settings menu
-    /// </summary>
-    public void Reset()
+    public override void Initialize()
     {
-        SFX.Reset();
-        music.Reset();
-        back.Reset();
+        IGameLoopObject prevGameState = GameEnvironment.GameStateManager.PreviousGameState as IGameLoopObject;
+        // draw over the playingstate if it was in playingstate
+        if (prevGameState == GameEnvironment.GameStateManager.GetGameState("pauseState"))
+        {
+            prevPause = true;
+        }
+        //draw over cutscene if previousstate was cutscene
+        else if (prevGameState == GameEnvironment.GameStateManager.GetGameState("titleMenu"))
+        {
+            prevPause = false;
+        }
+        else
+        {
+            throw new Exception("Cutscene cannot be called from this GameState" + GameEnvironment.GameStateManager.PreviousGameState);
+        }
     }
+
 }
