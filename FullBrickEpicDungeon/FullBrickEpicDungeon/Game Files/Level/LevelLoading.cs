@@ -49,6 +49,13 @@ partial class Level : GameObjectList
                 storedLines.Clear();
             }
 
+            //else if (fileLines[i] == "HINT")
+            //{
+            //    // displays the hint on the top of the screen
+            //    HintTextDisplayer(storedLines);
+            //    storedLines.Clear();
+            //}
+
             else if (fileLines[i] == "ENDOFFILE")
             {
                 LevelPositionLoader(storedLines);
@@ -368,4 +375,20 @@ protected void LevelInformationLoader(List<string> informationStringList)
         }
         return tileField;
     }
+
+    private void HintTextDisplayer(List<string> text)
+    {
+        GameObjectList hintField = new GameObjectList(100);
+        Add(hintField);
+        string hint = text[1];
+        //SpriteGameObject hintFrame = new SpriteGameObject("Overlays/spr_frame_hint", 1);
+        hintField.Position = new Vector2((GameEnvironment.Screen.X /*- hintFrame.Width*/) / 2, 10);
+        //hintField.Add(hintFrame);
+        TextGameObject hintText = new TextGameObject("Assets/Fonts/ConversationFont.spritefont", 100);
+        hintText.Text = hint;
+        hintText.Position = new Vector2(120, 25);
+        hintText.Color = Color.Black;
+        hintField.Add(hintText);
+    }
+
 }
