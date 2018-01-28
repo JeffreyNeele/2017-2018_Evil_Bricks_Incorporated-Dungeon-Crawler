@@ -20,9 +20,10 @@ abstract partial class Character : AnimatedGameObject
             Vector2 previousPosition = this.position;
             if (this.xboxControlled && !inputHelper.ControllerConnected(controllerNumber))
             {
-                FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
                 // will replace with another gamestate that tells you to reconnect your controller
+                (GameEnvironment.GameStateManager.GetGameState("characterSelection") as CharacterSelection).ControllerNrDisconnected = controllerNumber;
                 GameEnvironment.GameStateManager.SwitchTo("pauseState");
+               
             }
 
             // Handle normal movement

@@ -31,13 +31,13 @@ class PlayingState : IGameLoopObject
             if(FullBrickEpicDungeon.DungeonCrawler.SFX)
                 GameEnvironment.AssetManager.PlaySound("Assets/SFX/pause");
 
-            FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
             GameEnvironment.GameStateManager.SwitchTo("pauseState");
         }
     }
 
     public void Initialize()
     {
+        FullBrickEpicDungeon.DungeonCrawler.mouseVisible = false;
     }
 
 

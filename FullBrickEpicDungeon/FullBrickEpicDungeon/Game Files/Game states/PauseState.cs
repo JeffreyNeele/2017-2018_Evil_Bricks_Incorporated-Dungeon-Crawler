@@ -6,17 +6,32 @@ using Microsoft.Xna.Framework.Input;
 //State that pauses the game
 class PauseState : MenuState
 {
-    protected IGameLoopObject playingState;
+    protected PlayingState playingState;
+    protected CharacterSelection characterSelection;
     protected Button continueButton, settingsButton, quitButton;
     protected Texture2D overlay;
+    TextGameObject disconnectedText;
+
     /// <summary>
     /// Class that defines a Pause state
     /// </summary>
-    public PauseState() :base()
+    public PauseState() : base()
     {
         // find the playing state
-        playingState = GameEnvironment.GameStateManager.GetGameState("playingState");
+        playingState = GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState;
+        characterSelection = GameEnvironment.GameStateManager.GetGameState("characterSelection") as CharacterSelection;
+
         overlay = GameEnvironment.AssetManager.GetSprite("Assets/Sprites/Paused/overlay");
+
+        FullBrickEpicDungeon.DungeonCrawler.mouseVisible = false;
+
+
+        disconnectedText = new TextGameObject("Assets/Fonts/ConversationFont", 0, "disconnectedtext")
+        {
+            Color = Color.White,
+            Text = "Controller " + characterSelection.ControllerNrDisconnected + " has disconnected, reconnect the controller to continue or:",   
+        };
+        disconnectedText.Position = new Vector2(GameEnvironment.Screen.X / 2 - 960, 150);
     }
 
     protected override void FillButtonList()
@@ -42,11 +57,17 @@ class PauseState : MenuState
     protected override void HandleXboxInput(InputHelper inputHelper, int controllernumber)
     {
         base.HandleXboxInput(inputHelper, controllernumber);
-        if (inputHelper.ButtonPressed(controllernumber, Buttons.B)|| inputHelper.ButtonPressed(controllernumber, Buttons.Start))
+        if (inputHelper.ButtonPressed(controllernumber, Buttons.B) || inputHelper.ButtonPressed(controllernumber, Buttons.Start))
         {
             buttonList[0].Pressed = true; //Continue if B is pressed.
             ButtonPressedHandler();
         }
+    }
+
+    public override void HandleInput(InputHelper inputHelper)
+    {
+        base.HandleInput(inputHelper);
+        CheckControllerConnected(inputHelper);
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -55,6 +76,11 @@ class PauseState : MenuState
         playingState.Draw(gameTime, spriteBatch);
         //draw the overlay
         spriteBatch.Draw(overlay, Vector2.Zero, Color.White);
+
+        if (characterSelection.ControllerNrDisconnected != -1) //als er een controller disconnected is
+        {
+            disconnectedText.Draw(gameTime, spriteBatch);
+        }
 
         base.Draw(gameTime, spriteBatch);
     }
@@ -68,7 +94,7 @@ class PauseState : MenuState
         {
             if (buttonList[buttonnr].Pressed)
             {
-                    GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
+                GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
 
                 switch (buttonnr)
                 {
@@ -80,8 +106,6 @@ class PauseState : MenuState
                         GameEnvironment.GameStateManager.SwitchTo("settingsState");
                         break;
                     case 2: //Quit button pressed
-
-                        FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
                         (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).ResetLevelIndex();
                         GameEnvironment.GameStateManager.SwitchTo("titleMenu");
                         break;
@@ -91,5 +115,22 @@ class PauseState : MenuState
             }
         }
     }
+
+    protected void CheckControllerConnected(InputHelper inputHelper)
+    {
+        for (int xboxcontroller = 1; xboxcontroller <= 4; xboxcontroller++)
+        {
+            if (inputHelper.ControllerConnected(xboxcontroller) && characterSelection.ControllerNrDisconnected == xboxcontroller)
+            {
+                buttonList[0].Pressed = true; //continue if the controller has reconnected
+                ButtonPressedHandler();
+                characterSelection.ControllerNrDisconnected = -1; //no controller is disconnected.
+            }
+        }
+
+
+    }
+
+
 }
 

@@ -182,7 +182,10 @@ abstract class MenuState : IGameLoopObject
        //sets button excecution. differs per menu
     }
 
-    public virtual void Initialize() { }
+    public virtual void Initialize()
+    {
+            FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
+    }
 
     public virtual void Reset()
     {

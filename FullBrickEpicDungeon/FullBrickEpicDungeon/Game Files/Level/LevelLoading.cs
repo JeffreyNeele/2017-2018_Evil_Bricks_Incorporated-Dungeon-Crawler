@@ -291,6 +291,7 @@ protected void LevelInformationLoader(List<string> informationStringList)
         playerList.Add(shieldmaiden);
     }
 
+
     /// <summary>
     /// Method that loads all tiles into the tilefield
     /// </summary>

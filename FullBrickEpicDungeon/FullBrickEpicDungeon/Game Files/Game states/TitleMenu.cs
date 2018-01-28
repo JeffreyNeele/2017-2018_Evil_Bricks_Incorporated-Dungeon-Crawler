@@ -61,7 +61,6 @@ class TitleMenuState : MenuState
                 switch (buttonnr)
                 {
                     case 0: //Start button pressed
-                        FullBrickEpicDungeon.DungeonCrawler.mouseVisible = false;
                         GameEnvironment.GameStateManager.SwitchTo("characterSelection");
                         break;
                     case 1: //Settings button pressed
