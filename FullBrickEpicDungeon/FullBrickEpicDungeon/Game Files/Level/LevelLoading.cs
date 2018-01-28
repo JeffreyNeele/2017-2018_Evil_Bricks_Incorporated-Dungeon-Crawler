@@ -94,7 +94,10 @@ protected void LevelInformationLoader(List<string> informationStringList)
                         StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
                     };
                     penguin.Reset();
-                    monsterList.Add(penguin);
+                    if (splitArray.Length == 4)
+                        addHandleSummon(penguin, int.Parse(splitArray[3]));
+                    else
+                        monsterList.Add(penguin);
                     break;
                 case "DUMMY":
                     Monster dummy = new Dummy("Assets/Sprites/Enemies/Dummy", this)
@@ -111,7 +114,10 @@ protected void LevelInformationLoader(List<string> informationStringList)
                         StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
                     };
                     bunny.Reset();
-                    monsterList.Add(bunny);
+                    if (splitArray.Length == 4)
+                        addHandleSummon(bunny, int.Parse(splitArray[3]));
+                    else
+                        monsterList.Add(bunny);
                     break;
                 case "SPIKETRAP":
                     AutomatedObject spikeTrap = new SpikeTrap("Assets/Sprites/InteractiveObjects/SpikeTrap@2", "spikeTrap", 0, this);
@@ -124,6 +130,9 @@ protected void LevelInformationLoader(List<string> informationStringList)
                         Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
                     };
                     handle.ObjectNumberConnected = int.Parse(splitArray[3]);
+                    if (splitArray.Length == 5)
+                        if (int.Parse(splitArray[4]) == 1)
+                            handle.ableToSummon = true;
                     objectList.Add(handle);
                     break;
                 case "TRAPDOOR":
@@ -296,6 +305,17 @@ protected void LevelInformationLoader(List<string> informationStringList)
         shieldmaiden.CurrentWeapon = new SwordAndShield(shieldmaiden);
         shieldmaiden.Reset();
         playerList.Add(shieldmaiden);
+    }
+
+    private void addHandleSummon(Monster monster, int objNumber)
+    {
+        foreach (var obj in objectList.Children)
+            if (obj is Handle)
+                if (((Handle)obj).ObjectNumberConnected == objNumber)
+                {
+                    ((Handle)obj).handleSummon.Add(monster);
+                    return;
+                }
     }
 
     /// <summary>
