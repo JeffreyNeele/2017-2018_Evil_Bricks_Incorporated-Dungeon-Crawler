@@ -19,7 +19,7 @@ abstract partial class Character : AnimatedGameObject
         {
             
             Vector2 previousPosition = this.position;
-            if (this.xboxControlled && !inputHelper.ControllerConnected(controllerNumber))
+            if (this.xboxControlled && playerControlled && !inputHelper.ControllerConnected(controllerNumber))
             {
                 // will replace with another gamestate that tells you to reconnect your controller
                 ControllerNrDisconnected = controllerNumber;
@@ -455,10 +455,40 @@ abstract partial class Character : AnimatedGameObject
         GameObjectList playerList = (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).CurrentLevel.GameWorld.Find("playerLIST") as GameObjectList;
         foreach (Character p in playerList.Children)
         {
-            if (p.controllerNumber == controllernumber)
+            if (p.controlsnumber == controllernumber)
             {
-                p.playerControlled = false;
+                p.controlsnumber = -1;
+                p.ControlsInitializer(p.controlsnumber);
             }
         }
+    }
+
+    static public void ConnectController(int controllernumber)
+    {
+        GameObjectList playerList = (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).CurrentLevel.GameWorld.Find("playerLIST") as GameObjectList;
+        foreach (Character p in playerList.Children)
+        {
+            if (p.controlsnumber == -1)
+            {
+                p.controlsnumber = controllernumber;
+                p.ControlsInitializer(p.controlsnumber);
+                p.playerControlled = true;
+                break;
+            }
+            
+        }
+    }
+
+    static public bool ControllerConnected(int controllernumber)
+    {
+        GameObjectList playerList = (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).CurrentLevel.GameWorld.Find("playerLIST") as GameObjectList;
+        foreach (Character p in playerList.Children)
+        {
+            if (p.controlsnumber == controllernumber)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
