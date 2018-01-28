@@ -240,12 +240,14 @@ class BaseAI
         Circle lineOfSight = new Circle(sightRange, owner.Origin);
         foreach(AnimatedGameObject obj in targetList.Children)
         {
-            if (lineOfSight.CollidesWithRectangle(obj, owner))
-            {
-                targets.Add(obj);
-            }
+            if((isMonster && obj is Character) || (!isMonster && obj is Monster))
+                if (lineOfSight.CollidesWithRectangle(obj, owner))
+                {
+                    targets.Add(obj);
+                }
         }
-        TargetClosest(targets);
+        //TargetClosest(targets);
+        TargetRandomNearby(targets);
     }
 
     /// <summary>
@@ -269,6 +271,34 @@ class BaseAI
             }
         }
 
+    }
+    Random random = new Random();
+    int highestChance, chance;
+    public void TargetRandomNearby(List<AnimatedGameObject> targets)
+    {
+        highestChance = 0;
+        chance = 0;
+        foreach(AnimatedGameObject target in targets)
+        {
+            if (isMonster)
+            {
+                if (((Character)target).Attributes.HP == 0)
+                    continue;
+            }
+
+            else
+            {
+                if (((Monster)target).Attributes.HP == 0)
+                    continue;
+            }
+
+            chance = random.Next(0, 51);
+            if (chance > highestChance)
+            {
+                targetedObject = target;
+                highestChance = chance;
+            }
+        }
     }
 
     /// <summary>
