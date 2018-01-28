@@ -8,6 +8,7 @@ abstract partial class Character : AnimatedGameObject
 {
     protected Dictionary<Keys, Keys> keyboardControls;
     protected bool xboxControlled, isGliding = false, blockinput = false;
+    static protected int controllerNrDisconnected = -1;
 
     /// <summary>
     /// Method for handling input for the character
@@ -21,7 +22,7 @@ abstract partial class Character : AnimatedGameObject
             if (this.xboxControlled && !inputHelper.ControllerConnected(controllerNumber))
             {
                 // will replace with another gamestate that tells you to reconnect your controller
-                (GameEnvironment.GameStateManager.GetGameState("characterSelection") as CharacterSelection).ControllerNrDisconnected = controllerNumber;
+                ControllerNrDisconnected = controllerNumber;
                 GameEnvironment.GameStateManager.SwitchTo("pauseState");
                
             }
@@ -391,6 +392,8 @@ abstract partial class Character : AnimatedGameObject
     }
 
 
+
+
     /// <summary>
     /// Method that plays the correct animation for the direction the character is walking in
     /// </summary>
@@ -435,5 +438,27 @@ abstract partial class Character : AnimatedGameObject
     public Vector2 WalkingDirection
     {
         get { return walkingdirection; }
+    }
+
+    static public int ControllerNrDisconnected
+    {
+        get { return controllerNrDisconnected; }
+        set { controllerNrDisconnected = value; }
+    }
+
+    /// <summary>
+    /// Method that sets a controller to AI.
+    /// </summary>
+    /// <param name="targetCharacter">The character that the player will switch to control</param>
+    static public void DisconnectController(int controllernumber)
+    {
+        GameObjectList playerList = (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).CurrentLevel.GameWorld.Find("playerLIST") as GameObjectList;
+        foreach (Character p in playerList.Children)
+        {
+            if (p.controllerNumber == controllernumber)
+            {
+                p.playerControlled = false;
+            }
+        }
     }
 }

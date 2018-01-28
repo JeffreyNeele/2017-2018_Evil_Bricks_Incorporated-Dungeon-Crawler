@@ -7,10 +7,10 @@ using Microsoft.Xna.Framework.Input;
 class PauseState : MenuState
 {
     protected PlayingState playingState;
-    protected CharacterSelection characterSelection;
-    protected Button continueButton, settingsButton, quitButton;
+    protected Button continueButton, disconnectController, settingsButton, quitButton;
     protected Texture2D overlay;
     TextGameObject disconnectedText;
+    bool voluntaryDisconnect = false;
 
     /// <summary>
     /// Class that defines a Pause state
@@ -18,8 +18,8 @@ class PauseState : MenuState
     public PauseState() : base()
     {
         // find the playing state
+        
         playingState = GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState;
-        characterSelection = GameEnvironment.GameStateManager.GetGameState("characterSelection") as CharacterSelection;
 
         overlay = GameEnvironment.AssetManager.GetSprite("Assets/Sprites/Paused/overlay");
 
@@ -29,9 +29,9 @@ class PauseState : MenuState
         disconnectedText = new TextGameObject("Assets/Fonts/ConversationFont", 0, "disconnectedtext")
         {
             Color = Color.White,
-            Text = "Controller " + characterSelection.ControllerNrDisconnected + " has disconnected, reconnect the controller to continue or:",   
-        };
-        disconnectedText.Position = new Vector2(GameEnvironment.Screen.X / 2 - 960, 150);
+            Text = "Controller " + Character.ControllerNrDisconnected + " has disconnected, reconnect the controller to continue or select disconnect",
+            Position = new Vector2(GameEnvironment.Screen.X / 2 - 560, 150)
+    };
     }
 
     protected override void FillButtonList()
@@ -39,6 +39,9 @@ class PauseState : MenuState
         // make buttons for the different assignments, eg return to menu
         continueButton = new Button("Assets/Sprites/Paused/Continue");
         buttonList.Add(continueButton);
+
+        disconnectController = new Button("Assets/Sprites/Menu/SettingsButton");
+        buttonList.Add(disconnectController);
 
         settingsButton = new Button("Assets/Sprites/Menu/SettingsButton");
         buttonList.Add(settingsButton);
@@ -62,6 +65,22 @@ class PauseState : MenuState
             buttonList[0].Pressed = true; //Continue if B is pressed.
             ButtonPressedHandler();
         }
+        if(voluntaryDisconnect)
+        {
+            for(int controller = 1; controller <= 4; controller++)
+            {
+                if (inputHelper.ButtonPressed(controller, Buttons.Y))
+                {
+                    Character.DisconnectController(controller);
+                    voluntaryDisconnect = false;
+                    disconnectedText.Text = "Controller " + Character.ControllerNrDisconnected + " has disconnected, reconnect the controller to continue or select disconnect";   
+                }
+                if (inputHelper.ButtonPressed(controller, Buttons.B))
+                {
+                    voluntaryDisconnect = false;
+                }
+            }
+        }
     }
 
     public override void HandleInput(InputHelper inputHelper)
@@ -77,7 +96,7 @@ class PauseState : MenuState
         //draw the overlay
         spriteBatch.Draw(overlay, Vector2.Zero, Color.White);
 
-        if (characterSelection.ControllerNrDisconnected != -1) //als er een controller disconnected is
+        if (Character.ControllerNrDisconnected != -1 || voluntaryDisconnect) //als er een controller disconnected is of iemand wil vrijwillig disconnecten
         {
             disconnectedText.Draw(gameTime, spriteBatch);
         }
@@ -99,13 +118,23 @@ class PauseState : MenuState
                 switch (buttonnr)
                 {
                     case 0: //Continue button pressed
-                        (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).Reset();
                         GameEnvironment.GameStateManager.SwitchTo("playingState");
                         break;
-                    case 1: //Settings button pressed
+                    case 1: //Disconnect controller button
+                        if (Character.ControllerNrDisconnected != -1) //a controller is disconnected
+                        {
+                            Character.DisconnectController(Character.ControllerNrDisconnected);
+                        }
+                        else //no controller is disconnected
+                        {
+                            disconnectedText.Text = "Press interact on the controller you wish to deconnect. Or press B to go back";
+                            voluntaryDisconnect = true;
+                        }
+                        break;
+                    case 2: //Settings button pressed
                         GameEnvironment.GameStateManager.SwitchTo("settingsState");
                         break;
-                    case 2: //Quit button pressed
+                    case 3: //Quit button pressed
                         (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).ResetLevelIndex();
                         GameEnvironment.GameStateManager.SwitchTo("titleMenu");
                         break;
@@ -120,11 +149,11 @@ class PauseState : MenuState
     {
         for (int xboxcontroller = 1; xboxcontroller <= 4; xboxcontroller++)
         {
-            if (inputHelper.ControllerConnected(xboxcontroller) && characterSelection.ControllerNrDisconnected == xboxcontroller)
+            if (inputHelper.ControllerConnected(xboxcontroller) && Character.ControllerNrDisconnected == xboxcontroller)
             {
                 buttonList[0].Pressed = true; //continue if the controller has reconnected
                 ButtonPressedHandler();
-                characterSelection.ControllerNrDisconnected = -1; //no controller is disconnected.
+                Character.ControllerNrDisconnected = -1; //no controller is disconnected.
             }
         }
 

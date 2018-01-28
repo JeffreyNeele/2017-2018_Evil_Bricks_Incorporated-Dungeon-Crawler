@@ -24,8 +24,6 @@ class CharacterSelection : GameObjectList
     bool[] keyboardjoined = new bool[2];
     bool[] xboxjoined = new bool[4];
 
-    protected int controllerNrDisconnected = -1;
-
 
     //left in this is 1,2,3,4,5,6. (0,1 for keyboard, 2-5 for xbox. Dictionary translates to the number of the playerborder the player joined in.
     static Dictionary<int, int> playerborder = new Dictionary<int, int>();
@@ -390,34 +388,8 @@ class CharacterSelection : GameObjectList
     }
 
 
-
-    public void ReloadPlayerControls()
-    {
-        for (int player = 1; player <= 4; player++)
-        {
-            GameObjectList playerList = GameWorld.Find("playerLIST") as GameObjectList;
-            
-            int controlsNumber = CharacterSelection.Controls(player);
-            Shieldmaiden shieldmaiden = new Shieldmaiden(player, controlsNumber, (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).CurrentLevel);
-            shieldmaiden.StartPosition = new Vector2(float.Parse(textArray[1]), float.Parse(textArray[2]));
-            shieldmaiden.CurrentWeapon = new SwordAndShield(shieldmaiden);
-            shieldmaiden.Reset();
-            playerList.Children[player] = shieldmaiden;
-        }
-    }
-
-
     public static int NumberOfPlayers
     {
         get { return playersjoined; }
     }
-
-    public int ControllerNrDisconnected
-    {
-        get { return controllerNrDisconnected; }
-        set { controllerNrDisconnected = value; }
-    }
-
-
-
 }
