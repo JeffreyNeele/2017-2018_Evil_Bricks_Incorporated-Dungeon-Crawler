@@ -7,9 +7,7 @@ using Microsoft.Xna.Framework.Input;
 class PauseState : MenuState
 {
     protected PlayingState playingState;
-    protected Button continueButton, disconnectController, connectController, settingsButton, quitButton;
-    protected IGameLoopObject playingState;
-    protected Button continueButton, settingsButton, quitButton, resetButton, creditsButton;
+    protected Button continueButton, resetButton, disconnectController, connectController, settingsButton, creditsButton, quitButton;
     protected Texture2D overlay;
 
     TextGameObject connectText;
@@ -70,13 +68,6 @@ class PauseState : MenuState
 
         base.FillButtonList(); //gives positions to the buttons and the marker
     }
-
-    public override void Update(GameTime gameTime)
-    {
-        //playingState = GameEnvironment.GameStateManager.GetGameState("playingState");
-    }
-
-
 
 
     protected override void HandleKeyboardInput(InputHelper inputHelper)
@@ -216,11 +207,11 @@ class PauseState : MenuState
                     case 0: //Continue button pressed
                         GameEnvironment.GameStateManager.SwitchTo("playingState");
                         break;
-                    case 1:
+                    case 1: //reset level pressed
                         (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).Reset();
                         GameEnvironment.GameStateManager.SwitchTo("playingState");
                         break;
-                    case 1: //Disconnect controller button
+                    case 2: //Disconnect controller button
                         if (Character.ControllerNrDisconnected != -1) //a controller is disconnected
                         {
                             Character.DisconnectController(Character.ControllerNrDisconnected);
@@ -231,19 +222,17 @@ class PauseState : MenuState
                             voluntaryDisconnect = true;
                         }
                         break;
-                    case 2: //connect controller pressed
+                    case 3: //connect controller pressed
                         connectText.Text = "Press interact on a keyboard or Xbox Controller to join that controller. Or Xbox press B Keyboard press Left to go back";
                         connectState = true;
                         break;
-                    case 3: //Settings button pressed
+                    case 4: //Settings button pressed
                         GameEnvironment.GameStateManager.SwitchTo("settingsState");
                         break;
-                    case 3:
+                    case 5:
                         GameEnvironment.GameStateManager.SwitchTo("creditsState");
                         break;
-                    case 4: //Quit button pressed
-
-                        FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
+                    case 6: //Quit button pressed
                         (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).ResetLevelIndex();
                         GameEnvironment.GameStateManager.SwitchTo("titleMenu");
                         break;
