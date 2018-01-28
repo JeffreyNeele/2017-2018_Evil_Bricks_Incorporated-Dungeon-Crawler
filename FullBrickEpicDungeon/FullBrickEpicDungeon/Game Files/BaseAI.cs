@@ -53,14 +53,14 @@ class BaseAI
     /// <param name="gameTime">current game time</param>
     public void Update(GameTime gameTime)
     {
-        // if the targetedObject is null, the AI targets an object as soon as it enters it's line of sight
-        if (targetedObject == null)
-        {
+        //find a target if the current target is null
+        if(targetedObject == null)
             LineOfSightChecker(sightRange);
-        }
         // if the AI is not waiting for the idleTimer to expire it enters this code block
         else if (idleTimer.IsExpired)
         {
+            //Keep checking if there is a target closer than the current target
+            LineOfSightChecker(sightRange);
             // generate a waypointlist towards the target
             List<Vector2> waypointList = FindPath(targetedObject.Position + new Vector2(0, (targetedObject.Height / 4) + 1), owner.Position);
             // checks if the AI is already at it's target
@@ -266,8 +266,12 @@ class BaseAI
 
             if (closestTargetDistance == 0 || targetDistance < closestTargetDistance)
             {
-                closestTargetDistance = targetDistance;
-                targetedObject = target;
+                // If a target is found we check if the target is reachable.
+                if(FindPath(target.Position, owner.Position).Count > 0)
+                {
+                    closestTargetDistance = targetDistance;
+                    targetedObject = target;
+                }
             }
         }
 
