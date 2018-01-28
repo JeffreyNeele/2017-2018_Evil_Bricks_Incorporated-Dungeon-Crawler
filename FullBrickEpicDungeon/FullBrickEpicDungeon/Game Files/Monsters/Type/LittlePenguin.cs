@@ -40,8 +40,8 @@ class LittlePenguin : AImonster
         LoadAnimation("Assets/Sprites/Enemies/PenguinSlideUp@4", "slideUp", true, 0.2f);
         LoadAnimation("Assets/Sprites/Enemies/PenguinSlideSide@4", "slideSide", true, 0.2f);
         LoadAnimation("Assets/Sprites/Enemies/PenguinSlideDown@4", "slideDown", true, 0.2f);
-
         PlayAnimation("sideFront");
+        AI.RandomTargeting = true;
     }
 
     /// <summary>
@@ -54,9 +54,6 @@ class LittlePenguin : AImonster
         
         if(attributes.HP > 0)
         {
-            if (AI.CurrentTarget == null)
-                chooseNewTarget();
-
             if (AI.CurrentTarget != null && idleTimer.IsExpired && movementVector == new Vector2(0, 0))
                 SlideDirection();
             else if (movementVector != new Vector2(0, 0))
@@ -115,7 +112,6 @@ class LittlePenguin : AImonster
         idleTimer.Reset();
         playersHit.Clear();
         AI.CurrentTarget = null;
-        chooseNewTarget();
     }
 
     /// <summary>
@@ -162,40 +158,6 @@ class LittlePenguin : AImonster
 
         Vector2 differencePos = targetPos - position;
         movementVector = GetMovementVector(differencePos);
-    }
-
-    Random random = new Random();
-    public void chooseNewTarget()
-    {
-        targetList.Clear();
-        GameObjectList players = currentLevel.GameWorld.Find("playerLIST") as GameObjectList;
-        foreach (Character player in players.Children)
-        {
-            if (player.Attributes.HP == 0)
-                continue;
-            Vector2 differencePos = targetPos - position;
-            totalDistance = (float)Math.Sqrt(differencePos.X * differencePos.X + differencePos.Y * differencePos.Y);
-            if (totalDistance <= lineOfSight)
-                targetList.Add(player);
-        }
-
-        if(targetList.Count > 0)
-        {
-            int casinoNumber = 0;
-            int check = 0;
-
-            foreach(Character player in targetList)
-            {
-                casinoNumber = random.Next(0, 201);
-                if(casinoNumber > check)
-                {
-                    check = casinoNumber;
-                    AI.CurrentTarget = player;
-                }
-            }
-
-        }
-
     }
 
     /// <summary>

@@ -60,7 +60,7 @@ abstract partial class Character : AnimatedGameObject
         this.iceSpeed = new Vector2(0, 0);
         this.movementSpeed = new Vector2(4, 4);
         // Make a new AI
-        AI = new BaseAI(this, 200F, currentLevel, false, 700, 1);
+        AI = new BaseAI(this, 200F, currentLevel, false, 300, 1);
         this.playerNumber = playerNumber;
         controllerNumber = playerNumber;
         ControlsInitializer(controlsNumber);

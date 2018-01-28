@@ -76,6 +76,7 @@
     <Compile Include="Game Files\Equipment\Base\Equipment.cs" />
     <Compile Include="Game Files\Game states\CharacterSelection.cs" />
     <Compile Include="Game Files\Game states\ConversationState.cs" />
+    <Compile Include="Game Files\Game states\CreditsState.cs" />
     <Compile Include="Game Files\Game states\CutsceneState.cs" />
     <Compile Include="Game Files\Game states\GameOverState.cs" />
     <Compile Include="Game Files\Game states\LevelFinishedState.cs" />

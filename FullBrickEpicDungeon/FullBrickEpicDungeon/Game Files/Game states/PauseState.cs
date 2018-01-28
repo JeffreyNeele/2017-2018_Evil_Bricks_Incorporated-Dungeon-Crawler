@@ -8,6 +8,8 @@ class PauseState : MenuState
 {
     protected PlayingState playingState;
     protected Button continueButton, disconnectController, connectController, settingsButton, quitButton;
+    protected IGameLoopObject playingState;
+    protected Button continueButton, settingsButton, quitButton, resetButton, creditsButton;
     protected Texture2D overlay;
 
     TextGameObject connectText;
@@ -48,6 +50,9 @@ class PauseState : MenuState
         continueButton = new Button("Assets/Sprites/Paused/Continue");
         buttonList.Add(continueButton);
 
+        resetButton = new Button("Assets/Sprites/Paused/reset_level");
+        buttonList.Add(resetButton);
+
         disconnectController = new Button("Assets/Sprites/Menu/SettingsButton");
         buttonList.Add(disconnectController);
 
@@ -56,6 +61,9 @@ class PauseState : MenuState
 
         settingsButton = new Button("Assets/Sprites/Menu/SettingsButton");
         buttonList.Add(settingsButton);
+
+        creditsButton = new Button("Assets/Sprites/Paused/credits");
+        buttonList.Add(creditsButton);
 
         quitButton = new Button("Assets/Sprites/Paused/ReturnToMenu");
         buttonList.Add(quitButton);
@@ -208,6 +216,10 @@ class PauseState : MenuState
                     case 0: //Continue button pressed
                         GameEnvironment.GameStateManager.SwitchTo("playingState");
                         break;
+                    case 1:
+                        (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).Reset();
+                        GameEnvironment.GameStateManager.SwitchTo("playingState");
+                        break;
                     case 1: //Disconnect controller button
                         if (Character.ControllerNrDisconnected != -1) //a controller is disconnected
                         {
@@ -226,7 +238,12 @@ class PauseState : MenuState
                     case 3: //Settings button pressed
                         GameEnvironment.GameStateManager.SwitchTo("settingsState");
                         break;
+                    case 3:
+                        GameEnvironment.GameStateManager.SwitchTo("creditsState");
+                        break;
                     case 4: //Quit button pressed
+
+                        FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
                         (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).ResetLevelIndex();
                         GameEnvironment.GameStateManager.SwitchTo("titleMenu");
                         break;

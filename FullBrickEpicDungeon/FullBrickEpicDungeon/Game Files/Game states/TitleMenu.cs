@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 class TitleMenuState : MenuState
 {
-    Button startButton, settingsButton;
+    Button startButton, settingsButton, creditsButton;
     Texture2D background;
 
 
@@ -28,6 +28,7 @@ class TitleMenuState : MenuState
 
         settingsButton = new Button("Assets/Sprites/Menu/SettingsButton");
         buttonList.Add(settingsButton);
+
 
         base.FillButtonList();
     }
@@ -66,6 +67,7 @@ class TitleMenuState : MenuState
                     case 1: //Settings button pressed
                         GameEnvironment.GameStateManager.SwitchTo("settingsState");
                         break;
+
                     default: throw new IndexOutOfRangeException("Buttonbehaviour not defined. Buttonnumber in buttonList: " + buttonnr);
 
                 }
