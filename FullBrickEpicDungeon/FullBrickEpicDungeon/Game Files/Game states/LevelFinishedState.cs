@@ -9,13 +9,20 @@ using Microsoft.Xna.Framework.Input;
 
 class LevelFinishedState : IGameLoopObject
 {
-    protected IGameLoopObject playingState;
+    protected PlayingState playingState;
     Texture2D overlay, plaque;
+    TextGameObject levelTimeDisplay;
     public LevelFinishedState()
     {
         overlay = GameEnvironment.AssetManager.GetSprite("Assets/Sprites/Level_Finished/brown_overlay");
         plaque = GameEnvironment.AssetManager.GetSprite("Assets/Sprites/Level_Finished/level_completed");
-        playingState = GameEnvironment.GameStateManager.GetGameState("playingState");
+        playingState = (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState);
+        levelTimeDisplay = new TextGameObject("Assets/Fonts/ConversationFont")
+        {
+            Text = "Time: " + playingState.LevelTime.Minutes.ToString() + " : " + playingState.LevelTime.Seconds.ToString(),
+            Position = new Vector2(GameEnvironment.Screen.X / 2 + 270, 760),
+            Color = Color.Black
+        };
     }
 
     public void HandleInput(InputHelper inputHelper)
@@ -31,7 +38,8 @@ class LevelFinishedState : IGameLoopObject
 
     public void Update(GameTime gameTime)
     {
-        playingState = GameEnvironment.GameStateManager.GetGameState("playingState");
+        levelTimeDisplay.Update(gameTime);
+        playingState = (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState);
     }
 
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -39,13 +47,15 @@ class LevelFinishedState : IGameLoopObject
         playingState.Draw(gameTime, spriteBatch);
         spriteBatch.Draw(overlay, Vector2.Zero, Color.White);
         spriteBatch.Draw(plaque, Vector2.Zero, Color.White);
+        levelTimeDisplay.Draw(gameTime, spriteBatch);
     }
 
     public void Initialize() { }
 
     public void Reset()
     {
-
+        levelTimeDisplay.Reset();
+        levelTimeDisplay.Text = "Time: " + playingState.LevelTime.Minutes.ToString() + " : " + playingState.LevelTime.Seconds.ToString();
     }
 }
 
