@@ -60,7 +60,7 @@ abstract partial class Character : AnimatedGameObject
         this.iceSpeed = new Vector2(0, 0);
         this.movementSpeed = new Vector2(4, 4);
         // Make a new AI
-        AI = new BaseAI(this, 200F, currentLevel, false, 300, 1);
+        AI = new BaseAI(this, 200F, currentLevel, false, 600, 1);
         this.playerNumber = playerNumber;
         controllerNumber = playerNumber;
         ControlsInitializer(controlsNumber);
@@ -276,16 +276,15 @@ abstract partial class Character : AnimatedGameObject
     public bool SolidCollisionChecker()
     {
         GameObjectGrid Field = GameWorld.Find("TileField") as GameObjectGrid;
-        // Define a quarter bounding box (the feet plus part of the legs) for isometric collision
-        Rectangle quarterBoundingBox = new Rectangle((int)this.BoundingBox.X, (int)(this.BoundingBox.Y + 0.75 * Height), this.Width, (int)(this.Height / 4));
+
         foreach (Tile tile in Field.Objects)
         {
-            if (tile.IsSolid && quarterBoundingBox.Intersects(tile.BoundingBox))
+            if (tile.IsSolid && IsometricBoundingBox.Intersects(tile.BoundingBox))
             {
                 return false;
             }
             if (tile is VerticalDoor)
-                if(quarterBoundingBox.Intersects(((VerticalDoor)tile).BoundingBox2))
+                if(IsometricBoundingBox.Intersects(((VerticalDoor)tile).BoundingBox2))
                 return false;
         }
         return true;
@@ -368,6 +367,10 @@ abstract partial class Character : AnimatedGameObject
     {
         get { return weapon; }
         set { weapon = value; }
+    }
+    public Rectangle IsometricBoundingBox
+    {
+        get { return new Rectangle((int)this.BoundingBox.X, (int)(this.BoundingBox.Y + 0.75 * Height), this.Width, (int)(this.Height / 4)); }
     }
     // returns the attributes of the character
     public BaseAttributes Attributes

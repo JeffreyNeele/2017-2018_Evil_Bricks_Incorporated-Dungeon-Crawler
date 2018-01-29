@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 class PauseState : MenuState
 {
     protected PlayingState playingState;
-    protected Button continueButton, resetButton, disconnectController, connectController, settingsButton, quitButton, returnToMenuButton, controlsButton;
+    protected Button continueButton, resetButton, disconnectController, connectController, settingsButton, returnToMenuButton, controlsButton;
     protected Texture2D overlay;
     enum ConnectionStates { Disconnected, VoluntaryDisconnect, Connect};
     int ConnectionState = 0;
@@ -59,14 +59,12 @@ class PauseState : MenuState
         settingsButton = new Button("Assets/Sprites/Menu/SettingsButton");
         buttonList.Add(settingsButton);
 
-        returnToMenuButton = new Button("Assets/Sprites/Paused/ReturnToMenu");
-        buttonList.Add(returnToMenuButton);
-        controlsButton = new Button("Assets/Sprites/Menu/SettingsButton");
+        controlsButton = new Button("Assets/Sprites/Paused/controls");
         buttonList.Add(controlsButton);
 
-        quitButton = new Button("Assets/Credits/credits");
-        buttonList.Add(quitButton);
-
+        returnToMenuButton = new Button("Assets/Sprites/Paused/ReturnToMenu");
+        buttonList.Add(returnToMenuButton);
+        
 
         //set button positions
         for (int i = 1; i < 4; i++)
@@ -364,14 +362,11 @@ class PauseState : MenuState
                         GameEnvironment.GameStateManager.SwitchTo("settingsState");
                         break;
                     case 5: // go to menu
-                        (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).ResetLevelIndex();
-                        GameEnvironment.GameStateManager.SwitchTo("titleMenu");
-                        break;
-                    case 6:
                         GameEnvironment.GameStateManager.SwitchTo("controlsInfoState");
                         break;
-                    case 7: //Quit button pressed
-                        FullBrickEpicDungeon.DungeonCrawler.exitGame = true;
+                    case 6:
+                        (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).ResetLevelIndex();
+                        GameEnvironment.GameStateManager.SwitchTo("titleMenu");
                         break;
                     default: throw new IndexOutOfRangeException("Buttonbehaviour not defined. Buttonnumber in buttonList: " + buttonnr);
 
