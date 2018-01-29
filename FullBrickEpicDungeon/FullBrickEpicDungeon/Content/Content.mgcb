@@ -1327,6 +1327,9 @@
 #begin Assets/Levels/level9.txt
 /copy:Assets/Levels/level9.txt
 
+#begin Assets/Levels/level11.txt
+/copy:Assets/Levels/level11.txt
+
 #begin Assets/Sprites/Enemies/PenguinBack@4.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1786,8 +1789,4 @@
 
 #begin Assets/Levels/level12.txt
 /copy:Assets/Levels/level12.txt
-
-
-#begin Assets/Levels/level10.txt
-/copy:Assets/Levels/level10.txt
 

@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Input;
 
 class CreditsState : MenuState
 {
-    private Texture2D settingsBackground, creditsBackground;
+    private Texture2D creditsBackground;
     protected Button back;
     bool prevPause;
     /// <summary>
