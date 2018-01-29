@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Input;
 
 class CreditsState : MenuState
 {
-    private Texture2D settingsBackground;
+    private Texture2D settingsBackground, creditsBackground;
     protected Button back;
     bool prevPause;
     /// <summary>
@@ -14,7 +14,7 @@ class CreditsState : MenuState
     public CreditsState() : base()
     {
         // Load the background
-        settingsBackground = GameEnvironment.AssetManager.GetSprite("Assets/Sprites/Settings/settingsbackground");
+        creditsBackground = GameEnvironment.AssetManager.GetSprite("Assets/Credits/Achtergrond");
         // vervangen door een goeie achtergrond !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
     }
 
@@ -26,7 +26,7 @@ class CreditsState : MenuState
         // Load the button the back button.
         back = new Button("Assets/Sprites/Settings/ReturnToMenu");
             buttonList.Add(back);
-        //set button positions
+        //set button positions 
         back.Position = new Vector2(GameEnvironment.Screen.X / 2 - back.Width / 2, 850);
         // align the marker
         offsetMarker = new Vector2(-marker.Width, back.Height / 2 - marker.Height / 2);
@@ -48,8 +48,8 @@ class CreditsState : MenuState
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
-        // vervangen door een goeie achtergornd met credits ipv settings. !!!!!
-        spriteBatch.Draw(settingsBackground, Vector2.Zero, Color.White);
+        // vervangen door een goeie achtergrond met credits ipv settings. !!!!!
+        spriteBatch.Draw(creditsBackground, Vector2.Zero, Color.White);
         base.Draw(gameTime, spriteBatch);
     }
 
