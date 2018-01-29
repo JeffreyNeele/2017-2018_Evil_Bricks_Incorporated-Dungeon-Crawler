@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 using System;
 
@@ -56,6 +56,8 @@ public CutsceneState()
     /// </summary>
     public void Initialize()
     {
+        if(FullBrickEpicDungeon.DungeonCrawler.music && MediaPlayer.State == MediaState.Stopped)
+            GameEnvironment.AssetManager.PlayMusic("Assets/Music/cutscene");
         GameEnvironment.GameStateManager.SwitchTo("conversation");
     }
 

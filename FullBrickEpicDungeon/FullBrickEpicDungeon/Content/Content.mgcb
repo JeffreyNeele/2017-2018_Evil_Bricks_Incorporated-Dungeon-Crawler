@@ -1790,6 +1790,24 @@
 #begin Assets/Levels/level12.txt
 /copy:Assets/Levels/level12.txt
 
+#begin Assets/Music/cutscene.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Assets/Music/cutscene.mp3
+
+#begin Assets/Music/ingame.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Assets/Music/ingame.mp3
+
+#begin Assets/Music/menu.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Assets/Music/menu.mp3
+
 #begin Assets/Credits/CreditText.txt
 /copy:Assets/Credits/CreditText.txt
 

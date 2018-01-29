@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 
 // Class that generates controls from files
-public class ControlGenerator
+public class ControlsGenerator
     {
     StreamReader fileReader;
     List<string> defaultControls = new List<string>();

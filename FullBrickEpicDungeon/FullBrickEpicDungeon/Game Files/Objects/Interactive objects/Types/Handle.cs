@@ -16,6 +16,7 @@ class Handle : InteractiveObject
     /// <param name="sheetIndex">Defines which picture of the animation will be shown</param>
     public Handle(string assetname, Level currentlevel, string id, int sheetIndex, bool summonAbility = false) : base(assetname, currentlevel,  id, sheetIndex)
     {
+        PerPixelCollisionDetection = false;
         countDownTimer = new Timer((float)0.2);
         summonList = new List<Monster>();
         summoningHandle = summonAbility;
