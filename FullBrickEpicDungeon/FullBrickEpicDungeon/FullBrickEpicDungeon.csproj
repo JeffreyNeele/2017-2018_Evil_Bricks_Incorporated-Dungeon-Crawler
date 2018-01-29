@@ -147,10 +147,6 @@
       <Project>{b9c572ad-526e-48c0-9b64-582cd83515eb}</Project>
       <Name>Roy-T.AStar</Name>
     </ProjectReference>
-    <ProjectReference Include="Libraries\Penumbra\Source\MonoGame.Penumbra.WindowsDX.csproj">
-      <Project>{b021f95c-38bc-493a-bb92-c3c575e4b50f}</Project>
-      <Name>MonoGame.Penumbra.WindowsDX</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
