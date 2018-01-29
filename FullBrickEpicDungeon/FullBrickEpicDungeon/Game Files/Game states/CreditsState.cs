@@ -125,7 +125,7 @@ class CreditsState : MenuState
                 Color = Color.Black,
                 Text = creditLines[i],
             };
-            creditline.Position = new Vector2(GameEnvironment.Screen.X / 2 - creditline.Size.X / 2, 50 + i * 70);
+            creditline.Position = new Vector2(GameEnvironment.Screen.X / 2 - creditline.Size.X / 2, 200 + i * 50);
             credits.Add(creditline);
         }
     }
