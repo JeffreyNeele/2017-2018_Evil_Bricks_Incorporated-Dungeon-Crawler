@@ -2,38 +2,27 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Microsoft.Xna.Framework.Input;
-using System.Collections.Generic;
-using System.IO;
 
-class CreditsState : MenuState
+class ControlsInfoState : MenuState
 {
-    private Texture2D creditsBackground;
+    private Texture2D controlsBackground;
     protected Button back;
     bool prevPause;
-    SpriteGameObject conversationFrame;
-    GameObjectList credits;
-
-
     /// <summary>
     /// Class that displays a settings screen.
     /// </summary>
-    public CreditsState() : base()
+    public ControlsInfoState() : base()
     {
         // Load the background
-        creditsBackground = GameEnvironment.AssetManager.GetSprite("Assets/Credits/Achtergrond");
-        credits = new GameObjectList(99);
-        // vervangen door een goeie achtergrond !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        LoadCredits("Assets/Credits/CreditText.txt");
+        controlsBackground = GameEnvironment.AssetManager.GetSprite("Assets/Sprites/Settings/ControlsSetup");
     }
-
-
-
+    
 
     protected override void FillButtonList()
     {
         // Load the button the back button.
         back = new Button("Assets/Sprites/Settings/ReturnToMenu");
-            buttonList.Add(back);
+        buttonList.Add(back);
         //set button positions 
         back.Position = new Vector2(GameEnvironment.Screen.X / 2 - back.Width / 2, 850);
         // align the marker
@@ -57,16 +46,10 @@ class CreditsState : MenuState
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         // vervangen door een goeie achtergrond met credits ipv settings. !!!!!
-        spriteBatch.Draw(creditsBackground, Vector2.Zero, Color.White);
-        credits.Draw(gameTime, spriteBatch);
+        spriteBatch.Draw(controlsBackground, Vector2.Zero, Color.White);
         base.Draw(gameTime, spriteBatch);
     }
 
-    public override void Update(GameTime gameTime)
-    {
-        credits.Update(gameTime);
-        base.Update(gameTime);
-    }
     /// <summary>
     /// if the button is pressed (which is handled in MenuState) this method executes what happens
     /// </summary>
@@ -95,53 +78,21 @@ class CreditsState : MenuState
     }
     public override void Initialize()
     {
-
-    }
-
-
-    public void LoadCredits(string path)
-    {
-            // call with "Assets/Credits/CreditText" //
-        path = "Content/" + path;
-        List<string> textLines = new List<string>();
-        StreamReader fileReader = new StreamReader(path);
-        string line = fileReader.ReadLine();
-        int width = line.Length;
-        while (line != null)
+        IGameLoopObject prevGameState = GameEnvironment.GameStateManager.PreviousGameState as IGameLoopObject;
+        // draw over the playingstate if it was in playingstate
+        if (prevGameState == GameEnvironment.GameStateManager.GetGameState("pauseState"))
         {
-            textLines.Add(line);
-            line = fileReader.ReadLine();
+            prevPause = true;
         }
-        ShowCredits(textLines);
-    }
-
-
-    private void ShowCredits(List<string> creditLines)
-    {
-        for(int i = 0; i < creditLines.Count; i++)
+        //draw over cutscene if previousstate was cutscene
+        else if (prevGameState == GameEnvironment.GameStateManager.GetGameState("titleMenu"))
         {
-            TextGameObject creditline = new TextGameObject("Assets/Fonts/ConversationFont")
-            {
-                Color = Color.Black,
-                Text = creditLines[i],
-            };
-            creditline.Position = new Vector2(GameEnvironment.Screen.X / 2 - creditline.Size.X / 2, 50 + i * 70);
-            credits.Add(creditline);
+            prevPause = false;
+        }
+        else
+        {
+            throw new Exception("Cutscene cannot be called from this GameState" + GameEnvironment.GameStateManager.PreviousGameState);
         }
     }
-
-    //public void ShowCredit()
-    //{
-    //    conversationFrame = new SpriteGameObject("Assets/Sprites/Conversation Boxes/conversationbox1", 0, "", 10, false);
-    //    Position = new Vector2(GameEnvironment.Screen.X / 2 - conversationFrame.Width / 2, GameEnvironment.Screen.Y * 3 / 4);
-    //    Add(conversationFrame);
-    //    TextGameObject currentText = new TextGameObject("Assets/Fonts/ConversationFont", 0, "currentlydisplayedtext")
-    //    {
-    //        Color = Color.White,
-    //        Text = textLines[convIndex],
-    //        Position = new Vector2(100, conversationFrame.Height / 2 - 20)
-    //    };
-    //    displayedText.Add(currentText);
-    //}
 
 }

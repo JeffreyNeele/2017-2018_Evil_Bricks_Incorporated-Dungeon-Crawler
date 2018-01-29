@@ -35,6 +35,10 @@ class TitleMenuState : MenuState
         quitButton = new Button("Assets/Sprites/Menu/SettingsButton");
         buttonList.Add(quitButton);
 
+        creditsButton = new Button("Assets/Sprites/Paused/credits");
+        buttonList.Add(creditsButton);
+
+
         base.FillButtonList();
     }
 
