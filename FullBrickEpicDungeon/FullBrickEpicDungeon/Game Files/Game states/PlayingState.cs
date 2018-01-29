@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
@@ -7,6 +7,7 @@ class PlayingState : IGameLoopObject
 {
     // level list
     protected Level[] levelArray;
+    private TimeSpan levelTimer;
     // current level that is being used
     protected int currentLevelIndex;
 
@@ -31,27 +32,28 @@ class PlayingState : IGameLoopObject
             if(FullBrickEpicDungeon.DungeonCrawler.SFX)
                 GameEnvironment.AssetManager.PlaySound("Assets/SFX/pause");
 
-            FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
             GameEnvironment.GameStateManager.SwitchTo("pauseState");
         }
     }
 
     public void Initialize()
     {
+        FullBrickEpicDungeon.DungeonCrawler.mouseVisible = false;
     }
 
 
     public void Reset()
     {
+        levelTimer = TimeSpan.Zero;
         Level newlevel = new Level(currentLevelIndex);
         levelArray[currentLevelIndex] = newlevel;
     }
 
     public void Update(GameTime gameTime)
     {
+        levelTimer += gameTime.ElapsedGameTime;
         CurrentLevel.Update(gameTime);
     }
-
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         CurrentLevel.Draw(gameTime, spriteBatch);
@@ -83,6 +85,12 @@ class PlayingState : IGameLoopObject
     public Level CurrentLevel
     {
         get { return levelArray[currentLevelIndex]; }
+    }
+
+    public TimeSpan LevelTime
+    {
+        get { return levelTimer; }
+        set { levelTimer = value; }
     }
 
 }

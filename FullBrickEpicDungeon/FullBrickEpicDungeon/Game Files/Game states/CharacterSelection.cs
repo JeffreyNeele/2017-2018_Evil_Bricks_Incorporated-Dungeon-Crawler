@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 
+
 /// <summary>
 ///Spelers kunnen in deze state connecten met de game (met xbox controller of toetsenbord).
 ///Daarna is het mogelijk om een character te kiezen. Uitgangspunt is dat een character maar één keer gekozen kan worden.
@@ -23,7 +24,6 @@ class CharacterSelection : GameObjectList
     static int playersjoined = 0;
     bool[] keyboardjoined = new bool[2];
     bool[] xboxjoined = new bool[4];
-
 
 
     //left in this is 1,2,3,4,5,6. (0,1 for keyboard, 2-5 for xbox. Dictionary translates to the number of the playerborder the player joined in.
@@ -74,6 +74,8 @@ class CharacterSelection : GameObjectList
             controlSprites[i].Position = new Vector2(GameEnvironment.Screen.X / 4 * i + 40, 450);
             Add(controlSprites[i]);
         }
+
+
     }
 
 
@@ -386,9 +388,9 @@ class CharacterSelection : GameObjectList
 
     }
 
+
     public static int NumberOfPlayers
     {
         get { return playersjoined; }
     }
-
 }

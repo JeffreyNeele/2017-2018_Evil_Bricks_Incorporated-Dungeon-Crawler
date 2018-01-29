@@ -111,7 +111,7 @@ class Conversation : GameObjectList
 
 
 
-    public void Reset()
+    public override void Reset()
     {
         convIndex = 0;
         PreviousLineWasChoice = false;

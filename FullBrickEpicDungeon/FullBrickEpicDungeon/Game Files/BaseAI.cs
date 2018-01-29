@@ -13,7 +13,7 @@ class BaseAI
     // variables that define the owner of the object, and the currently targeted object
     protected AnimatedGameObject targetedObject, owner;
     protected float sightRange, movementSpeed;
-    protected bool isMonster, isAttacking;
+    protected bool isMonster, isAttacking, randomTargeting;
     protected Level currentLevel;
     protected Vector2 direction;
     protected Timer idleTimer;
@@ -44,7 +44,8 @@ class BaseAI
         if (isMonster)
             targetList = currentLevel.GameWorld.Find("playerLIST") as GameObjectList;
         else
-            targetList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList; 
+            targetList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList;
+        randomTargeting = false;
     }
 
     /// <summary>
@@ -246,8 +247,10 @@ class BaseAI
                     targets.Add(obj);
                 }
         }
-        //TargetClosest(targets);
-        TargetRandomNearby(targets);
+        if(randomTargeting)
+            TargetRandomNearby(targets);
+        else
+            TargetClosest(targets);
     }
 
     /// <summary>
@@ -311,6 +314,12 @@ class BaseAI
     public bool IsAttacking
     {
         get { return isAttacking; }
+    }
+
+    public bool RandomTargeting
+    {
+        get { return randomTargeting; }
+        set { randomTargeting = value; }
     }
     public float AImovementSpeed
     {

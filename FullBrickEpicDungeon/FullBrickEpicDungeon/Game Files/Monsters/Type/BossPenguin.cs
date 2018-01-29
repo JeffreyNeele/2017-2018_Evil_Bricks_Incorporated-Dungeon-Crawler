@@ -30,6 +30,7 @@ class BossPenguin : AImonster
 
         //Movementspeed of the BossPenguin
         movementSpeed = 0f;
+        AI.RandomTargeting = true;
     }
 
     public override void Update(GameTime gameTime)

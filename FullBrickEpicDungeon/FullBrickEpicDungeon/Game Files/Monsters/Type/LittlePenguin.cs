@@ -40,8 +40,8 @@ class LittlePenguin : AImonster
         LoadAnimation("Assets/Sprites/Enemies/PenguinSlideUp@4", "slideUp", true, 0.2f);
         LoadAnimation("Assets/Sprites/Enemies/PenguinSlideSide@4", "slideSide", true, 0.2f);
         LoadAnimation("Assets/Sprites/Enemies/PenguinSlideDown@4", "slideDown", true, 0.2f);
-
         PlayAnimation("sideFront");
+        AI.RandomTargeting = true;
     }
 
     /// <summary>
