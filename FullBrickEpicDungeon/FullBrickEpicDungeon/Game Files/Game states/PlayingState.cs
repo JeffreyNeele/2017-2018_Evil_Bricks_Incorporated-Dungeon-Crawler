@@ -38,7 +38,7 @@ class PlayingState : IGameLoopObject
             GameEnvironment.GameStateManager.SwitchTo("pauseState");
         }
 
-        if (inputHelper.KeyPressed(Keys.OemTilde) || inputHelper.ButtonPressed(1, Buttons.DPadDown))
+        if (inputHelper.KeyPressed(Keys.OemTilde) || inputHelper.ButtonPressed(1, Buttons.LeftShoulder))
         {
             cheats = !cheats;
         }
