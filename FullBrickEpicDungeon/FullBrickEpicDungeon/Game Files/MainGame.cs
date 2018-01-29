@@ -12,7 +12,7 @@ namespace FullBrickEpicDungeon
     public class DungeonCrawler : GameEnvironment
     {
 
-        public static bool SFX = true, music = true, mouseVisible = true;
+        public static bool SFX = true, music = true, mouseVisible = true, exitGame = false;
         //SpriteGameObject conversationFrame;
         public DungeonCrawler()
         {
@@ -44,6 +44,7 @@ namespace FullBrickEpicDungeon
             GameStateManager.AddGameState("conversation", new ConversationState());
             GameStateManager.AddGameState("cutscene", new CutsceneState());
             gameStateManager.AddGameState("gameOverState", new GameOverState());
+            GameStateManager.AddGameState("controlsInfoState", new ControlsInfoState());
             GameStateManager.SwitchTo("titleMenu");
         }
 
@@ -75,9 +76,9 @@ namespace FullBrickEpicDungeon
             else
                 IsMouseVisible = false;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (exitGame)
                 Exit();
-   
+
             base.Update(gameTime);
         }
 

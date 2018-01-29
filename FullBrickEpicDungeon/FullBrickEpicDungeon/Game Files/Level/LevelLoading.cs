@@ -105,7 +105,10 @@ protected void LevelInformationLoader(List<string> informationStringList)
                         StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
                     };
                     dummy.Reset();
-                    monsterList.Add(dummy);
+                    if (splitArray.Length == 4)
+                        addHandleSummon(dummy, int.Parse(splitArray[3]));
+                    else
+                        monsterList.Add(dummy);
                     break;
                 case "BUNNY":
                     Bunny bunny = new Bunny(this)
@@ -128,6 +131,17 @@ protected void LevelInformationLoader(List<string> informationStringList)
                         addHandleSummon(bossBunny, int.Parse(splitArray[3]));
                     else
                         monsterList.Add(bossBunny);
+                    break;
+                case "BOSSPENGUIN":
+                    BossPenguin bossPenguin = new BossPenguin(this)
+                    {
+                        StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
+                    };
+                    bossPenguin.Reset();
+                    if (splitArray.Length == 4)
+                        addHandleSummon(bossPenguin, int.Parse(splitArray[3]));
+                    else
+                        monsterList.Add(bossPenguin);
                     break;
                 case "SPIKETRAP":
                     AutomatedObject spikeTrap = new SpikeTrap("Assets/Sprites/InteractiveObjects/SpikeTrap@2", "spikeTrap", 0, this);

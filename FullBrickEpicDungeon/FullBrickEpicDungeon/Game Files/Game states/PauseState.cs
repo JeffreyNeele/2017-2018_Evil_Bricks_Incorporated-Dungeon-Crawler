@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 class PauseState : MenuState
 {
     protected PlayingState playingState;
-    protected Button continueButton, resetButton, disconnectController, connectController, settingsButton, creditsButton, quitButton;
+    protected Button continueButton, resetButton, disconnectController, connectController, settingsButton, quitButton, returnToMenuButton, controlsButton;
     protected Texture2D overlay;
     enum ConnectionStates { Disconnected, VoluntaryDisconnect, Connect};
     int ConnectionState = 0;
@@ -50,20 +50,23 @@ class PauseState : MenuState
         resetButton = new Button("Assets/Sprites/Paused/reset_level");
         buttonList.Add(resetButton);
 
-        disconnectController = new Button("Assets/Sprites/Menu/SettingsButton");
+        disconnectController = new Button("Assets/Sprites/Paused/disconnect");
         buttonList.Add(disconnectController);
 
-        connectController = new Button("Assets/Sprites/Menu/SettingsButton");
+        connectController = new Button("Assets/Sprites/Paused/connect");
         buttonList.Add(connectController);
 
         settingsButton = new Button("Assets/Sprites/Menu/SettingsButton");
         buttonList.Add(settingsButton);
 
-        creditsButton = new Button("Assets/Credits/credits");
-        buttonList.Add(creditsButton);
+        returnToMenuButton = new Button("Assets/Sprites/Paused/ReturnToMenu");
+        buttonList.Add(returnToMenuButton);
+        controlsButton = new Button("Assets/Sprites/Menu/SettingsButton");
+        buttonList.Add(controlsButton);
 
-        quitButton = new Button("Assets/Sprites/Paused/ReturnToMenu");
+        quitButton = new Button("Assets/Credits/credits");
         buttonList.Add(quitButton);
+
 
         //set button positions
         for (int i = 1; i < 4; i++)
@@ -360,12 +363,15 @@ class PauseState : MenuState
                     case 4: //Settings button pressed
                         GameEnvironment.GameStateManager.SwitchTo("settingsState");
                         break;
-                    case 5:
-                        GameEnvironment.GameStateManager.SwitchTo("creditsState");
-                        break;
-                    case 6: //Quit button pressed
+                    case 5: // go to menu
                         (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).ResetLevelIndex();
                         GameEnvironment.GameStateManager.SwitchTo("titleMenu");
+                        break;
+                    case 6:
+                        GameEnvironment.GameStateManager.SwitchTo("controlsInfoState");
+                        break;
+                    case 7: //Quit button pressed
+                        FullBrickEpicDungeon.DungeonCrawler.exitGame = true;
                         break;
                     default: throw new IndexOutOfRangeException("Buttonbehaviour not defined. Buttonnumber in buttonList: " + buttonnr);
 
