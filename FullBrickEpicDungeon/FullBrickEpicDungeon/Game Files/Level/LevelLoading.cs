@@ -105,7 +105,10 @@ protected void LevelInformationLoader(List<string> informationStringList)
                         StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
                     };
                     dummy.Reset();
-                    monsterList.Add(dummy);
+                    if (splitArray.Length == 4)
+                        addHandleSummon(dummy, int.Parse(splitArray[3]));
+                    else
+                        monsterList.Add(dummy);
                     break;
                 case "BUNNY":
                     Bunny bunny = new Bunny(this)
