@@ -10,14 +10,17 @@ class PlayingState : IGameLoopObject
     private TimeSpan levelTimer;
     // current level that is being used
     protected int currentLevelIndex;
+    // amount of levels in the game
+    protected const int numberOfLevels = 11;
+    protected bool cheats;
 
     /// <summary>
     /// A state that defines the playing state of the game
     /// </summary>
     public PlayingState()
     {
-        currentLevelIndex = 2;
-        levelArray = new Level[12]; //10 levels
+        currentLevelIndex = 1;
+        levelArray = new Level[numberOfLevels + 1]; //10 levels
     }
 
     /// <summary>
@@ -35,22 +38,29 @@ class PlayingState : IGameLoopObject
             GameEnvironment.GameStateManager.SwitchTo("pauseState");
         }
 
-        if (inputHelper.KeyPressed(Keys.OemTilde))
+        if (inputHelper.KeyPressed(Keys.OemTilde) || inputHelper.ButtonPressed(1, Buttons.DPadDown))
         {
-            cheats = true;
+            cheats = !cheats;
+        }
+        if (cheats)
+        {
+            CheatsHandler(inputHelper);
         }
         
-            if(inputHelper.KeyPressed(Keys.F2) || inputHelper.ButtonPressed(1, Buttons.X))
-            {
-                currentLevelIndex--;
-                this.Reset();
-            }
-            else if((inputHelper.KeyPressed(Keys.F3) || inputHelper.ButtonPressed(1, Buttons.B)))
-            {
-                currentLevelIndex++;
-                this.Reset();
-            }
-        
+    }
+
+    private void CheatsHandler(InputHelper inputHelper)
+    {
+        if((inputHelper.KeyPressed(Keys.F1) || inputHelper.ButtonPressed(1, Buttons.DPadLeft)) && currentLevelIndex > 1)
+        {
+            currentLevelIndex--;
+            this.Reset();
+        }
+        else if ((inputHelper.KeyPressed(Keys.F2) || inputHelper.ButtonPressed(1, Buttons.DPadRight)) && currentLevelIndex < numberOfLevels)
+        {
+            currentLevelIndex++;
+            this.Reset();
+        }
     }
 
     public void Initialize()
