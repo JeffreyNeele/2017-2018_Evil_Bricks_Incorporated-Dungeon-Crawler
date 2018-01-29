@@ -9,13 +9,13 @@ class PlayingState : IGameLoopObject
     protected List<Level> levelList;
     // current level that is being used
     protected int currentLevelIndex;
-
+    protected bool cheats = false;
     /// <summary>
     /// A state that defines the playing state of the game
     /// </summary>
     public PlayingState()
     {
-        currentLevelIndex = 4;
+        currentLevelIndex = 5;
         levelList = new List<Level>();
         // Loads the levels from all level files
         LoadLevels(10);
@@ -36,6 +36,23 @@ class PlayingState : IGameLoopObject
             FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
             GameEnvironment.GameStateManager.SwitchTo("pauseState");
         }
+
+        if (inputHelper.KeyPressed(Keys.OemTilde))
+        {
+            cheats = true;
+        }
+        
+            if(inputHelper.KeyPressed(Keys.F2) || inputHelper.ButtonPressed(1, Buttons.X))
+            {
+                currentLevelIndex--;
+                this.Reset();
+            }
+            else if((inputHelper.KeyPressed(Keys.F3) || inputHelper.ButtonPressed(1, Buttons.B)))
+            {
+                currentLevelIndex++;
+                this.Reset();
+            }
+        
     }
 
     public void Initialize() { }

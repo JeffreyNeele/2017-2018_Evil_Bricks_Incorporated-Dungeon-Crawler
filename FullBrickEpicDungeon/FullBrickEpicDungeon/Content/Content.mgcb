@@ -1327,9 +1327,6 @@
 #begin Assets/Levels/level9.txt
 /copy:Assets/Levels/level9.txt
 
-#begin Assets/Levels/level11.txt
-/copy:Assets/Levels/level11.txt
-
 #begin Assets/Sprites/Enemies/PenguinBack@4.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1726,4 +1723,7 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Gameover/red_overlay.png
+
+#begin Assets/Levels/level10.txt
+/copy:Assets/Levels/level10.txt
 
