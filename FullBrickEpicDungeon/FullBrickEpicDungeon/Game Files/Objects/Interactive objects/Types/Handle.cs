@@ -124,19 +124,19 @@ class Handle : InteractiveObject
             if (summonList[i] is LittlePenguin)
             {
                 Monster monster = new LittlePenguin(currentlevel);
-                monster.Position = summonList[i].Position;
+                monster.Position = new Vector2(summonList[i].Position.X, summonList[i].Position.Y);
                 monsters.Add(monster);
             }
             else if(summonList[i] is Bunny)
             {
                 Monster monster = new Bunny(currentlevel);
-                monster.Position = summonList[i].Position;
+                monster.Position = new Vector2(summonList[i].Position.X, summonList[i].Position.Y);
                 monsters.Add(monster);
             }
             else if(summonList[i] is BossBunny)
             {
                 Monster monster = new BossBunny(currentlevel);
-                monster.Position = summonList[i].Position;
+                monster.Position = new Vector2(summonList[i].Position.X, summonList[i].Position.Y);
                 monsters.Add(monster);
             }
         }

@@ -1763,3 +1763,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Paused/reset_level.png
 
+#begin Assets/Levels/level12.txt
+/copy:Assets/Levels/level12.txt
+
