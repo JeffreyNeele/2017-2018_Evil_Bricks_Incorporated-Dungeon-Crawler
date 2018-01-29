@@ -354,8 +354,10 @@ abstract partial class Character : AnimatedGameObject
                 if (p.playerNumber == targetPlayerNumber && p != this)
                 {
                     //if the criteria are met we switch, otherwise we try another character instead
-                    if (!p.PlayerControlled && !p.IsDowned && p.SolidCollisionChecker())
+                    if (!p.PlayerControlled && !p.IsDowned)
                     {
+                        if (!p.SolidCollisionChecker())
+                            p.AI.GetOutWallChecker();
                         SwitchToCharacter(p);
                         return;
                     }
