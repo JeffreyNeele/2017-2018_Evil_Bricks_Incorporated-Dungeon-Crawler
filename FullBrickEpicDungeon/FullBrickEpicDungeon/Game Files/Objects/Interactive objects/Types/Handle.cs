@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 /// <summary>
 /// Class to define a handle object
@@ -7,13 +8,17 @@ class Handle : InteractiveObject
 {
     Timer countDownTimer;
     int handlenumber = 0;
+    bool summoningHandle, alreadySummoned;
+    List<Monster> summonList;
 
     /// <param name="assetname">Path to be able to load in the sprite</param>
     /// <param name="id">defined id to be able to find the door</param>
     /// <param name="sheetIndex">Defines which picture of the animation will be shown</param>
-    public Handle(string assetname, Level currentlevel, string id, int sheetIndex) : base(assetname, currentlevel,  id, sheetIndex)
+    public Handle(string assetname, Level currentlevel, string id, int sheetIndex, bool summonAbility = false) : base(assetname, currentlevel,  id, sheetIndex)
     {
         countDownTimer = new Timer((float)0.2);
+        summonList = new List<Monster>();
+        summoningHandle = summonAbility;
     }
 
     //Update the countdownTimer. If countdownTimer is expired, objects that the handle affects are closed
@@ -35,6 +40,8 @@ class Handle : InteractiveObject
         //verandert de hendel sprite naar aan stand
         this.sprite.SheetIndex = 1;
         ActivateCorrObject("open"); //opent de bijbehorende objecten
+        if(!alreadySummoned && summoningHandle)
+            SummonMonsters();
         interacting = false;
         StartResetTimer();
     }
@@ -109,10 +116,48 @@ class Handle : InteractiveObject
         countDownTimer.IsPaused = false;
     }
 
+    public void SummonMonsters()
+    {
+        GameObjectList monsters = currentlevel.GameWorld.Find("monsterLIST") as GameObjectList;
+        for (int i = 0; i < summonList.Count; i++)
+        {
+            if (summonList[i] is LittlePenguin)
+            {
+                Monster monster = new LittlePenguin(currentlevel);
+                monster.Position = new Vector2(summonList[i].Position.X, summonList[i].Position.Y);
+                monsters.Add(monster);
+            }
+            else if(summonList[i] is Bunny)
+            {
+                Monster monster = new Bunny(currentlevel);
+                monster.Position = new Vector2(summonList[i].Position.X, summonList[i].Position.Y);
+                monsters.Add(monster);
+            }
+            else if(summonList[i] is BossBunny)
+            {
+                Monster monster = new BossBunny(currentlevel);
+                monster.Position = new Vector2(summonList[i].Position.X, summonList[i].Position.Y);
+                monsters.Add(monster);
+            }
+        }
+        alreadySummoned = true;
+    }
+
     public int ObjectNumberConnected
     {
         get { return this.handlenumber; }
         set { handlenumber = value; }
+    }
+
+    public List<Monster> handleSummon
+    {
+        get { return summonList; }
+    }
+
+    public bool ableToSummon
+    {
+        get { return summoningHandle; }
+        set { summoningHandle = value; }
     }
 
 }

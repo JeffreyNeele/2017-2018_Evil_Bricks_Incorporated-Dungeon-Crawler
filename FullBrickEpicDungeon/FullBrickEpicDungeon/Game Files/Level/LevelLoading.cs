@@ -26,11 +26,11 @@ partial class Level : GameObjectList
             line = fileReader.ReadLine();
         }
         fileReader.Close();
-        int previousline = 0;
         // a list for the currently stored lines in a for loop
         List<string> storedLines = new List<string>();
         // list that loads the level information
-        for (int i = previousline + 1; i < fileLines.Count; i++)
+
+        for(int i = 0; i < fileLines.Count; i++)
         {
             // if we reach TILES this means that the qualification for the next for loop has been reached and we dont need any more information for this loop
             if (fileLines[i] == "TILES")
@@ -39,38 +39,31 @@ partial class Level : GameObjectList
                 LevelInformationLoader(storedLines);
                 // clear the stored lines for the next for loop in our list
                 storedLines.Clear();
-                // set the previousline to what this for loop ended on so that the next for loop doesn't receive information it doesn't need
-                previousline = i;
-                break;
             }
-            storedLines.Add(fileLines[i]);
-        }
 
-        // Load the tile field from the file
-        for (int i = previousline + 1; i < fileLines.Count; i++)
-        {
-            if(fileLines[i] == "POSITION")
+            else if (fileLines[i] == "POSITION")
             {
                 // set the levels tileField to the LoadTiles method returned tileField
                 levelTileField = LoadTiles(storedLines);
                 Add(levelTileField);
                 storedLines.Clear();
-                previousline = i;
-                break;
             }
-            storedLines.Add(fileLines[i]);
-        }
 
-        // Loads position and characters etc.
-        for (int i = previousline + 1; i < fileLines.Count; i++)
-        {
-            if (fileLines[i] == "ENDOFFILE")
+            //else if (fileLines[i] == "HINT")
+            //{
+            //    // displays the hint on the top of the screen
+            //    HintTextDisplayer(storedLines);
+            //    storedLines.Clear();
+            //}
+
+            else if (fileLines[i] == "ENDOFFILE")
             {
                 LevelPositionLoader(storedLines);
                 storedLines.Clear();
-                break;
             }
-            storedLines.Add(fileLines[i]);
+            else
+                storedLines.Add(fileLines[i]);
+
         }
     }
 
@@ -101,7 +94,10 @@ protected void LevelInformationLoader(List<string> informationStringList)
                         StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
                     };
                     penguin.Reset();
-                    monsterList.Add(penguin);
+                    if (splitArray.Length == 4)
+                        addHandleSummon(penguin, int.Parse(splitArray[3]));
+                    else
+                        monsterList.Add(penguin);
                     break;
                 case "DUMMY":
                     Monster dummy = new Dummy("Assets/Sprites/Enemies/Dummy", this)
@@ -112,13 +108,26 @@ protected void LevelInformationLoader(List<string> informationStringList)
                     monsterList.Add(dummy);
                     break;
                 case "BUNNY":
-
                     Bunny bunny = new Bunny(this)
                     {
                         StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
                     };
                     bunny.Reset();
-                    monsterList.Add(bunny);
+                    if (splitArray.Length == 4)
+                        addHandleSummon(bunny, int.Parse(splitArray[3]));
+                    else
+                        monsterList.Add(bunny);
+                    break;
+                case "BOSSBUNNY":
+                    BossBunny bossBunny = new BossBunny(this)
+                    {
+                        StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
+                    };
+                    bossBunny.Reset();
+                    if (splitArray.Length == 4)
+                        addHandleSummon(bossBunny, int.Parse(splitArray[3]));
+                    else
+                        monsterList.Add(bossBunny);
                     break;
                 case "SPIKETRAP":
                     AutomatedObject spikeTrap = new SpikeTrap("Assets/Sprites/InteractiveObjects/SpikeTrap@2", "spikeTrap", 0, this);
@@ -131,6 +140,9 @@ protected void LevelInformationLoader(List<string> informationStringList)
                         Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
                     };
                     handle.ObjectNumberConnected = int.Parse(splitArray[3]);
+                    if (splitArray.Length == 5)
+                        if (int.Parse(splitArray[4]) == 1)
+                            handle.ableToSummon = true;
                     objectList.Add(handle);
                     break;
                 case "TRAPDOOR":
@@ -298,13 +310,22 @@ protected void LevelInformationLoader(List<string> informationStringList)
     private void ShieldMaidenLoader(string[] textArray)
     {
         int controlsNumber = CharacterSelection.Controls(int.Parse(textArray[3]));
-        Console.WriteLine("maiden" + int.Parse(textArray[3]) + "controlnr" + CharacterSelection.Controls(int.Parse(textArray[3])));
         Shieldmaiden shieldmaiden = new Shieldmaiden(int.Parse(textArray[3]), controlsNumber, this);
-
         shieldmaiden.StartPosition = new Vector2(float.Parse(textArray[1]), float.Parse(textArray[2]));
         shieldmaiden.CurrentWeapon = new SwordAndShield(shieldmaiden);
         shieldmaiden.Reset();
         playerList.Add(shieldmaiden);
+    }
+
+    private void addHandleSummon(Monster monster, int objNumber)
+    {
+        foreach (var obj in objectList.Children)
+            if (obj is Handle)
+                if (((Handle)obj).ObjectNumberConnected == objNumber)
+                {
+                    ((Handle)obj).handleSummon.Add(monster);
+                    return;
+                }
     }
 
     /// <summary>
@@ -384,4 +405,20 @@ protected void LevelInformationLoader(List<string> informationStringList)
         }
         return tileField;
     }
+
+    private void HintTextDisplayer(List<string> text)
+    {
+        GameObjectList hintField = new GameObjectList(100);
+        Add(hintField);
+        string hint = text[1];
+        //SpriteGameObject hintFrame = new SpriteGameObject("Overlays/spr_frame_hint", 1);
+        hintField.Position = new Vector2((GameEnvironment.Screen.X /*- hintFrame.Width*/) / 2, 10);
+        //hintField.Add(hintFrame);
+        TextGameObject hintText = new TextGameObject("Assets/Fonts/ConversationFont.spritefont", 100);
+        hintText.Text = hint;
+        hintText.Position = new Vector2(120, 25);
+        hintText.Color = Color.Black;
+        hintField.Add(hintText);
+    }
+
 }

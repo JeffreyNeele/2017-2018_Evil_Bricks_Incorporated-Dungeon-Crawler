@@ -3,13 +3,20 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
+/// <summary>
+/// Displays and handles the Conversation displayed in ConversationState.
+/// <param name="textLines"> all the lines from the text file are added to this list</param>
+/// <param name="currentChoices">list for the currently displayed choices</param>
+/// <param name="convIndex">huidige regel in de textLines</param>
+/// <param name="compensation">als er een choice is geweest, de extra regels die overgeslagen moeten na weergegeven antwoord.</param>
+/// </summary>
 class Conversation : GameObjectList
 {
-    List<string> textLines; //all the lines from the text file are added to this list
-    GameObjectList displayedText; // Gameobjectlist for the currently displayed text
-    List<string> currentChoices = new List<string>(); // list for the currently displayed choices
-    int convIndex = 0, compensation = 0; //convIndex is regel in het bestand
-    //compensation is als keuze is geweest, de extra regels die hij moet overslaan na weergegeven antwoord.
+    List<string> textLines; 
+    GameObjectList displayedText;
+    List<string> currentChoices = new List<string>(); 
+    int convIndex = 0, compensation = 0; 
+    
     SpriteGameObject marker = new SpriteGameObject("Assets/Sprites/Conversation Boxes/arrow", 1, "", 10, false);
     SpriteGameObject conversationFrame;
 
@@ -20,8 +27,11 @@ class Conversation : GameObjectList
     float bottomChoiceHeight;
     int offsetMarker;
 
+
+
+
     /// <summary>
-    /// Class that makes a Conversation box with possible choices / story
+    /// Constructor, constructs the conversationbox with first line/choice.
     /// </summary>
     /// <param name="path">the path the Conversation file is at</param>
     public Conversation(string path)
@@ -33,12 +43,80 @@ class Conversation : GameObjectList
         Add(displayedText);
         LoadConversation(path);
         ShowConversationBox();
+
         Add(marker);
         offsetMarker = -5;
-
         marker.Position = new Vector2(upperChoicePos.X, upperChoicePos.Y + offsetMarker);
         marker.Visible = false;   
     }
+
+   
+
+
+
+    public override void Update(GameTime gameTime)
+    {
+        base.Update(gameTime);
+    }
+
+
+
+
+    /// <summary>
+    /// Handles the input for the conversation box
+    /// </summary>
+    /// <param name="inputHelper">input helper</param>
+    public override void HandleInput(InputHelper inputHelper)
+    {
+
+        base.HandleInput(inputHelper);
+
+
+        // Displays next conversation or answer if a choice is made
+        if (inputHelper.KeyPressed(Keys.Space) || inputHelper.ButtonPressed(1, Buttons.A))
+        {
+
+
+            //Check if the last line is not yet reached.
+            if (convIndex < textLines.Count - 1)
+            {
+                ShowNextLineOrAnswer();
+            }
+            //if the last line is reached, reset the convIndex and stop the program.
+            else
+            {
+                convIndex = 0;
+                // stops the conversation box from displaying itself and switches back to the playing state
+                (GameEnvironment.GameStateManager.CurrentGameState as ConversationState).GoToNextConversation();
+            }
+        }
+
+        //moves the marker up or down depending on the key that was pressed, the Dpad or the Thumbstick.
+        if (inputHelper.KeyPressed(Keys.Down) || inputHelper.ButtonPressed(1, Buttons.DPadDown) || inputHelper.MenuDirection(1,false,true).Y < 0)
+        {
+            if (marker.Position.Y < bottomChoiceHeight + offsetMarker)
+            {
+                marker.Position += new Vector2(0, choiceSeperation);
+            }
+
+        }
+        if (inputHelper.KeyPressed(Keys.Up) || inputHelper.ButtonPressed(1, Buttons.DPadUp) || inputHelper.MenuDirection(1, false, true).Y > 0)
+        {
+            if (marker.Position.Y > upperChoicePos.Y + offsetMarker)
+            {
+                marker.Position -= new Vector2(0, choiceSeperation);
+            }
+        }
+    }
+
+
+
+    public override void Reset()
+    {
+        convIndex = 0;
+        PreviousLineWasChoice = false;
+    }
+
 
     /// <summary>
     /// Loads a Conversation from a path
@@ -80,120 +158,116 @@ class Conversation : GameObjectList
 
 
 
-    public override void Update(GameTime gameTime)
-    {
-        base.Update(gameTime);
-    }
+
 
     /// <summary>
-    /// Handles the input for the conversation box
+    /// First part increases convIndex correctly, then displays the nextline correctly.
     /// </summary>
-    /// <param name="inputHelper">input helper</param>
-    public override void HandleInput(InputHelper inputHelper)
+    private void ShowNextLineOrAnswer()
     {
+        HandlePrevChoice();
+        WriteLineOrAnswer();
+    }
 
-        base.HandleInput(inputHelper);
-        // Moves the conversation index forward appropiately 
-        if (inputHelper.KeyPressed(Keys.Space) || inputHelper.ButtonPressed(1, Buttons.A))
+
+
+
+
+    /// <summary>
+    /// Increases the convIndex depending on de previous choice made or increases it by 1 if previous line was no choice.
+    /// </summary>
+    private void HandlePrevChoice()
+    {
+        if (PreviousLineWasChoice)
         {
-            if (convIndex < textLines.Count - 1)
+
+            if (marker.Position.Y == upperChoicePos.Y + offsetMarker)
             {
-                if (PreviousLineWasChoice)
-                {
-
-                    if (marker.Position.Y == upperChoicePos.Y + offsetMarker)
-                    {
-                        convIndex++;
-                        compensation = 2;
-                    }
-                    else if (marker.Position.Y == upperChoicePos.Y + offsetMarker + choiceSeperation && convIndex < textLines.Count - 2)
-                    {
-                        convIndex += 2;
-                        compensation = 1;
-                    }
-                    else if (marker.Position.Y == bottomChoiceHeight + offsetMarker && convIndex < textLines.Count - 3)
-                    {
-                        convIndex += 3;
-                    }
-                }
-                else if (!PreviousLineWasChoice)
-                {
-                    convIndex++;
-                }
-                displayedText.Clear();
-                PreviousLineWasChoice = false;
-
-
-
-
-                if (textLines[convIndex].StartsWith("#")) //a # signifies that there is a choice in the text file
-                {
-
-                    marker.Visible = true;
-                    PreviousLineWasChoice = true;
-                    for (int i = 0; i < 3; i++)
-                    {
-                        TextGameObject currentText = new TextGameObject("Assets/Fonts/ConversationFont", 0, "currentlydisplayedtext")
-                        {
-                            Position = new Vector2(100, i * choiceSeperation + upperChoicePos.Y),
-                            Text = textLines[convIndex]
-                        };
-                        displayedText.Add(currentText);
-
-                        if (convIndex < textLines.Count - 1 && i < 2)
-                        {
-                            convIndex += 1;
-                        }
-                    }
-                }
-                else
-                {
-                    marker.Visible = false;
-                    TextGameObject currentText = new TextGameObject("Assets/Fonts/ConversationFont", 0, "currentlydisplayedtext")
-                    {
-                        Text = textLines[convIndex],
-                        Position = new Vector2(100, conversationFrame.Height / 2 - 20)
-                    };
-                    displayedText.Add(currentText);
-                }
-                if (compensation > 0 && convIndex < textLines.Count - compensation)
-                {
-                    convIndex += compensation;
-                    compensation = 0;
-                }
-
+                convIndex++;
+                compensation = 2;
             }
-            else
+            else if (marker.Position.Y == upperChoicePos.Y + offsetMarker + choiceSeperation && convIndex < textLines.Count - 2)
             {
-                convIndex = 0;
-                // stops the conversation box from displaying itself and switches back to the playing state
-                (GameEnvironment.GameStateManager.CurrentGameState as ConversationState).GoToNextConversation();
+                convIndex += 2;
+                compensation = 1;
+            }
+            else if (marker.Position.Y == bottomChoiceHeight + offsetMarker && convIndex < textLines.Count - 3)
+            {
+                convIndex += 3;
             }
         }
-
-        // Moves the marker up or down depending on the key that was pressed
-        if (inputHelper.KeyPressed(Keys.Down) || inputHelper.ButtonPressed(1, Buttons.DPadDown) || inputHelper.MenuDirection(1,false,true).Y < 0)
+        else if (!PreviousLineWasChoice)
         {
-            if (marker.Position.Y < bottomChoiceHeight + offsetMarker)
-            {
-                marker.Position += new Vector2(0, choiceSeperation);
-            }
-
+            convIndex++;
         }
-        if (inputHelper.KeyPressed(Keys.Up) || inputHelper.ButtonPressed(1, Buttons.DPadUp) || inputHelper.MenuDirection(1, false, true).Y > 0)
+        displayedText.Clear();
+        PreviousLineWasChoice = false;
+    }
+
+
+
+
+
+
+
+
+    /// <summary>
+    /// Writes the line choice or answer of the current convIndex
+    /// </summary>
+    private void WriteLineOrAnswer()
+    {
+        if (textLines[convIndex].StartsWith("#")) //a # signifies that there is a choice in the text file
         {
-            if (marker.Position.Y > upperChoicePos.Y + offsetMarker)
+            WriteChoices();
+        }
+        else
+        {
+            marker.Visible = false;
+            TextGameObject currentText = new TextGameObject("Assets/Fonts/ConversationFont", 0, "currentlydisplayedtext")
             {
-                marker.Position -= new Vector2(0, choiceSeperation);
+                Text = textLines[convIndex],
+                Position = new Vector2(100, conversationFrame.Height / 2 - 20)
+            };
+            displayedText.Add(currentText);
+        }
+        if (compensation > 0 && convIndex < textLines.Count - compensation)
+        {
+            convIndex += compensation;
+            compensation = 0;
+        }
+    }
+
+
+
+
+
+
+
+
+    /// <summary>
+    /// only gets called when the coming three lines are choices. Writes down 3 choices.
+    /// </summary>
+    private void WriteChoices()
+    {
+        marker.Visible = true;
+        PreviousLineWasChoice = true;
+        for (int i = 0; i < 3; i++)
+        {
+            TextGameObject currentText = new TextGameObject("Assets/Fonts/ConversationFont", 0, "currentlydisplayedtext")
+            {
+                Position = new Vector2(100, i * choiceSeperation + upperChoicePos.Y),
+                Text = textLines[convIndex]
+            };
+            displayedText.Add(currentText);
+
+            if (convIndex < textLines.Count - 1 && i < 2)
+            {
+                convIndex += 1;
             }
         }
     }
 
-   /* public override void Reset()
-    {
-        PreviousLineWasChoice = false;
-        base.Reset();
-    }*/
+
 }
 
 

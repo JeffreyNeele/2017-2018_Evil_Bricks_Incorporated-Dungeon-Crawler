@@ -1694,12 +1694,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/SmashableObjects/Teapot_red.png
 
-#begin Assets/Levels/level15.txt
-/copy:Assets/Levels/level15.txt
-
-#begin Assets/Levels/level7.txt
-/copy:Assets/Levels/level7.txt
-
 #begin Assets/Cutscenes/LarryGetsCaptured.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1723,6 +1717,76 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Gameover/red_overlay.png
+
+#begin Assets/Levels/level10.txt
+/copy:Assets/Levels/level10.txt
+
+#begin Assets/Levels/level7.txt
+/copy:Assets/Levels/level7.txt
+
+#begin Assets/Sprites/Gameover/gameover_plaque.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Gameover/gameover_plaque.png
+
+#begin Assets/Sprites/Paused/credits.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Paused/credits.png
+
+#begin Assets/Sprites/Paused/reset_level.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Paused/reset_level.png
+
+#begin Assets/Credits/credits.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Credits/credits.png
+
+#begin Assets/Credits/Achtergrond.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Credits/Achtergrond.jpg
+
+#begin Assets/Levels/level12.txt
+/copy:Assets/Levels/level12.txt
+
 
 #begin Assets/Levels/level10.txt
 /copy:Assets/Levels/level10.txt

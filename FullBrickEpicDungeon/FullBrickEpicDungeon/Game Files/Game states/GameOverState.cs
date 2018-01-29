@@ -10,7 +10,7 @@ class GameOverState : IGameLoopObject
     public GameOverState()
     {
         overlay = GameEnvironment.AssetManager.GetSprite("Assets/Sprites/Gameover/red_overlay");
-        plaque =  GameEnvironment.AssetManager.GetSprite("Assets/Sprites/Gameover/red_overlay");
+        plaque =  GameEnvironment.AssetManager.GetSprite("Assets/Sprites/Gameover/gameover_plaque");
         playingState = GameEnvironment.GameStateManager.GetGameState("playingState");
         quitButton = new Button("Assets/Sprites/Paused/ReturnToMenu");
         quitButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - quitButton.Width / 2, 500);

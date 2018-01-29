@@ -26,6 +26,7 @@ class Button : SpriteGameObject
     public bool Pressed
     {
         get { return isPressed; }
+        set { isPressed = true; } //to set manually for keyboard or Xbox input
     }
 
 }

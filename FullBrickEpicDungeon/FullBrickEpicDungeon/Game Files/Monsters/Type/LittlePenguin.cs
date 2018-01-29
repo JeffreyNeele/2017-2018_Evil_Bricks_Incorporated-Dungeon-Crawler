@@ -1,21 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 class LittlePenguin : AImonster
 {
-    float slideSpeed;
+    float slideSpeed, lineOfSight;
     Vector2 targetPos, movementVector;
     int animationCheck = 0;
-    float idleCounter;
+    Timer idleTimer;
+    List<Character> targetList;
     /// <summary>
     /// Class that defines a Penguin that slides around
     /// </summary>
     /// <param name="currentLevel">current level the penguin is in</param>
-    public LittlePenguin(Level currentLevel) : base(0f, currentLevel, "LittlePenguin", 800)
+    public LittlePenguin(Level currentLevel, float sightRange = 800) : base(0f, currentLevel, "LittlePenguin", sightRange)
     {
         this.baseattributes.HP = 80;
         this.baseattributes.Armour = 0;
-        this.baseattributes.Attack = 20;
+        this.baseattributes.Attack = 40;
         this.baseattributes.Gold = 75;
         attributes.HP = baseattributes.HP;
         attributes.Armour = baseattributes.Armour;
@@ -24,10 +26,13 @@ class LittlePenguin : AImonster
 
         //The total speed of movement of the penguin
         slideSpeed = 10f;
+        lineOfSight = sightRange;
+        targetList = new List<Character>();
 
         //Because the penguin will be idle for a while after sliding, the movement vector will have to be set (0,0) from time to time
         movementVector = new Vector2(0, 0);
-        idleCounter = 3;
+        idleTimer = new Timer(3f);
+        idleTimer.IsPaused = false;
         //Load the animations
         LoadAnimation("Assets/Sprites/Enemies/PenguinSide@4", "sideWalk", true, 0.2f);
         LoadAnimation("Assets/Sprites/Enemies/PenguinFront@4", "sideFront", true, 0.2f);
@@ -35,8 +40,8 @@ class LittlePenguin : AImonster
         LoadAnimation("Assets/Sprites/Enemies/PenguinSlideUp@4", "slideUp", true, 0.2f);
         LoadAnimation("Assets/Sprites/Enemies/PenguinSlideSide@4", "slideSide", true, 0.2f);
         LoadAnimation("Assets/Sprites/Enemies/PenguinSlideDown@4", "slideDown", true, 0.2f);
-
         PlayAnimation("sideFront");
+        AI.RandomTargeting = true;
     }
 
     /// <summary>
@@ -49,7 +54,7 @@ class LittlePenguin : AImonster
         
         if(attributes.HP > 0)
         {
-            if (AI.CurrentTarget != null && idleCounter <= 0 && movementVector == new Vector2(0, 0))
+            if (AI.CurrentTarget != null && idleTimer.IsExpired && movementVector == new Vector2(0, 0))
                 SlideDirection();
             else if (movementVector != new Vector2(0, 0))
             {
@@ -80,9 +85,9 @@ class LittlePenguin : AImonster
                 }
                 CheckCollision();
             }
-            else if (idleCounter > 0)
+            else if (!idleTimer.IsExpired)
             {
-                idleCounter -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                idleTimer.Update(gameTime);
                 if (animationCheck == 1)
                     PlayAnimation("sideFront");
                 else if (animationCheck == 2)
@@ -98,6 +103,15 @@ class LittlePenguin : AImonster
     public override void Attack()
     {
 
+    }
+
+    public void ResetPenguin()
+    {
+        movementVector = new Vector2(0, 0);
+        Position = previousPos;
+        idleTimer.Reset();
+        playersHit.Clear();
+        AI.CurrentTarget = null;
     }
 
     /// <summary>
@@ -119,19 +133,10 @@ class LittlePenguin : AImonster
         foreach (Tile tile in field.Objects)
         {
             if (tile.IsSolid && tileBoundingBox.Intersects(tile.BoundingBox))
-            {
-                movementVector = new Vector2(0, 0);
-                Position = previousPos;
-                idleCounter = 3;
-                // TargetRandomObject (currently removed but might add back later, but as a local method?
-            }
+                ResetPenguin();
             else if (tile is VerticalDoor)
-                    if (tileBoundingBox.Intersects(((VerticalDoor)tile).BoundingBox2))
-                    {
-                        movementVector = new Vector2(0, 0);
-                        Position = previousPos;
-                        idleCounter = 3;
-                    }
+                if (tileBoundingBox.Intersects(((VerticalDoor)tile).BoundingBox2))
+                    ResetPenguin();
         }
     }
 

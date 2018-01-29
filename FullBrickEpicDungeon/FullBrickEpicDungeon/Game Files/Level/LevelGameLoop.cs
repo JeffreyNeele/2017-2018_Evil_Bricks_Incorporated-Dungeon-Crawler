@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 /// <summary>
@@ -35,6 +36,7 @@ partial class Level : GameObjectList
 
     public override void Reset()
     {
+        ((GameEnvironment.GameStateManager.GetGameState("playingState")) as PlayingState).LevelTime = TimeSpan.Zero;
         base.Reset();
     }
 }

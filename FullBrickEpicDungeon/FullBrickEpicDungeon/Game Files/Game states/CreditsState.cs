@@ -3,19 +3,19 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Microsoft.Xna.Framework.Input;
 
-class SettingsState : MenuState
+class CreditsState : MenuState
 {
-    private Texture2D settingsBackground;
-    protected Button SFX, music, back;
+    private Texture2D settingsBackground, creditsBackground;
+    protected Button back;
     bool prevPause;
     /// <summary>
     /// Class that displays a settings screen.
     /// </summary>
-    public SettingsState() : base()
+    public CreditsState() : base()
     {
         // Load the background
-        settingsBackground = GameEnvironment.AssetManager.GetSprite("Assets/Sprites/Settings/settingsbackground");
-       
+        creditsBackground = GameEnvironment.AssetManager.GetSprite("Assets/Credits/Achtergrond");
+        // vervangen door een goeie achtergrond !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
     }
 
 
@@ -23,20 +23,21 @@ class SettingsState : MenuState
 
     protected override void FillButtonList()
     {
-        // Load the buttons for the SFX toggler, music toggler and the back button.
-        SFX = new Button("Assets/Sprites/Settings/sfxbutton@2");
-        buttonList.Add(SFX);
-        music = new Button("Assets/Sprites/Settings/musicbutton@2");
-        buttonList.Add(music);
+        // Load the button the back button.
         back = new Button("Assets/Sprites/Settings/ReturnToMenu");
-        buttonList.Add(back);
+            buttonList.Add(back);
+        //set button positions 
+        back.Position = new Vector2(GameEnvironment.Screen.X / 2 - back.Width / 2, 850);
+        // align the marker
+        offsetMarker = new Vector2(-marker.Width, back.Height / 2 - marker.Height / 2);
+        marker.Position = new Vector2(back.Position.X + offsetMarker.X, back.Position.Y + offsetMarker.Y);
 
-        base.FillButtonList();
+
     }
 
     protected override void HandleXboxInput(InputHelper inputHelper, int controllernumber)
     {
-        
+
         if (inputHelper.ButtonPressed(controllernumber, Buttons.B))
         {
             buttonList[2].Pressed = true; //Back to main menu if B is pressed.
@@ -47,7 +48,8 @@ class SettingsState : MenuState
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(settingsBackground, Vector2.Zero, Color.White);
+        // vervangen door een goeie achtergrond met credits ipv settings. !!!!!
+        spriteBatch.Draw(creditsBackground, Vector2.Zero, Color.White);
         base.Draw(gameTime, spriteBatch);
     }
 
@@ -62,37 +64,13 @@ class SettingsState : MenuState
             {
                 switch (buttonnr)
                 {
-                    case 0: //SFX
-                        if (SFX.Sprite.SheetIndex == 0)
-                        {
-                            FullBrickEpicDungeon.DungeonCrawler.SFX = false;
-                            SFX.Sprite.SheetIndex = 1;
-                        }
-                        else
-                        {
-                            FullBrickEpicDungeon.DungeonCrawler.SFX = true;
-                            SFX.Sprite.SheetIndex = 0;
-                        }
-                        break;
-                    case 1: //Music
-                        if (music.Sprite.SheetIndex == 0)
-                        {
-                            FullBrickEpicDungeon.DungeonCrawler.music = false;
-                            music.Sprite.SheetIndex = 1;
-                        }
-                        else
-                        {
-                            FullBrickEpicDungeon.DungeonCrawler.music = true;
-                            music.Sprite.SheetIndex = 0;
-                        }
-                        break;
-                    case 2: //Back
+                    case 0: //Back
                         if (back.Pressed)
                         {
-                            if(prevPause)
+                            if (prevPause)
                                 GameEnvironment.GameStateManager.SwitchTo("pauseState");
                             if (!prevPause)
-                            GameEnvironment.GameStateManager.SwitchTo("titleMenu");
+                                GameEnvironment.GameStateManager.SwitchTo("titleMenu");
                         }
                         break;
                     default: throw new IndexOutOfRangeException("Buttonbehaviour not defined. Buttonnumber in buttonList: " + buttonnr);

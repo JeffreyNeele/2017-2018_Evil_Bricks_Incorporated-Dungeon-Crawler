@@ -16,7 +16,11 @@ class Trapdoor : OpenableObject
     public override void Update(GameTime gameTime)
     {
         if (DetectAllPlayers() && this.Sprite.SheetIndex == 1)
+        {
+            GameEnvironment.GameStateManager.GetGameState("levelFinishedState").Reset();
             GameEnvironment.GameStateManager.SwitchTo("levelFinishedState");
+        }
+           
         base.Update(gameTime);
     }
 

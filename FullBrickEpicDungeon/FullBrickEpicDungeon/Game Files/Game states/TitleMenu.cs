@@ -1,72 +1,77 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
-class TitleMenuState : IGameLoopObject
+class TitleMenuState : MenuState
 {
-    Button startButton, settingsButton;
+    Button startButton, settingsButton, creditsButton;
     Texture2D background;
+
 
     /// <summary>
     /// Class that defines the Title Menu of the game
     /// </summary>
-    public TitleMenuState()
+    public TitleMenuState() : base()
     {
         // load the background
-        background = GameEnvironment.AssetManager.GetSprite("Assets/Sprites/Menu/LarrySketch");
+        background = GameEnvironment.AssetManager.GetSprite("Assets/Cutscenes/LarryShits");
+    }
 
+
+    protected override void FillButtonList()
+    {
         // load a settings and start button
-        startButton = new Button("Assets/Sprites/Menu/StartButton", 1);
-        startButton.Position = new Vector2((GameEnvironment.Screen.X / 2 - startButton.Width / 2), (GameEnvironment.Screen.Y * 3 / 4 - startButton.Height / 2));
+        startButton = new Button("Assets/Sprites/Menu/StartButton");
+        buttonList.Add(startButton);
 
         settingsButton = new Button("Assets/Sprites/Menu/SettingsButton");
-        settingsButton.Position = new Vector2(GameEnvironment.Screen.X - settingsButton.Width, 0);
+        buttonList.Add(settingsButton);
+
+
+        base.FillButtonList();
     }
+
+
+
 
     /// <summary>
     /// Draws the title menu
     /// </summary>
-    public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         spriteBatch.Draw(background, Vector2.Zero, Color.White);
-        startButton.Draw(gameTime, spriteBatch);
-        settingsButton.Draw(gameTime, spriteBatch);
+
+        base.Draw(gameTime, spriteBatch);
     }
 
-    public void Update(GameTime gameTime)
-    {
-
-    }
 
     /// <summary>
-    /// Handles the input for the title menu
+    /// if the button is pressed (which is handled in MenuState) this method executes what happens
     /// </summary>
-    public void HandleInput(InputHelper inputHelper)
+    protected override void ButtonPressedHandler()
     {
-        // Updates the input for the start and settingsbutton
-        startButton.HandleInput(inputHelper);
-        settingsButton.HandleInput(inputHelper);
-        if (startButton.Pressed || inputHelper.ButtonPressed(1, Buttons.A))
+        //check for each button in the buttonlist if it is pressed.
+        for (int buttonnr = 0; buttonnr < buttonList.Count; buttonnr++)
         {
-            GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
-            FullBrickEpicDungeon.DungeonCrawler.mouseVisible = false;
-            //GameEnvironment.GameStateManager.SwitchTo("playingState");
-            GameEnvironment.GameStateManager.SwitchTo("characterSelection");
-            //GameEnvironment.GameStateManager.SwitchTo("cutscene");
-        }
-        if (settingsButton.Pressed)
-        {
-            GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
-            GameEnvironment.GameStateManager.SwitchTo("settingsState");
+            if (buttonList[buttonnr].Pressed)
+            {
+                GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
+
+                switch (buttonnr)
+                {
+                    case 0: //Start button pressed
+                        GameEnvironment.GameStateManager.SwitchTo("characterSelection");
+                        break;
+                    case 1: //Settings button pressed
+                        GameEnvironment.GameStateManager.SwitchTo("settingsState");
+                        break;
+
+                    default: throw new IndexOutOfRangeException("Buttonbehaviour not defined. Buttonnumber in buttonList: " + buttonnr);
+
+                }
+            }
         }
     }
-
-    public void Initialize() { }
-
-    public void Reset()
-    {
-        startButton.Reset();
-    }
-
-    
 }

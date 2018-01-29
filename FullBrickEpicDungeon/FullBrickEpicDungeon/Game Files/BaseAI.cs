@@ -13,7 +13,7 @@ class BaseAI
     // variables that define the owner of the object, and the currently targeted object
     protected AnimatedGameObject targetedObject, owner;
     protected float sightRange, movementSpeed;
-    protected bool isMonster, isAttacking;
+    protected bool isMonster, isAttacking, randomTargeting;
     protected Level currentLevel;
     protected Vector2 direction;
     protected Timer idleTimer;
@@ -44,7 +44,8 @@ class BaseAI
         if (isMonster)
             targetList = currentLevel.GameWorld.Find("playerLIST") as GameObjectList;
         else
-            targetList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList; 
+            targetList = currentLevel.GameWorld.Find("monsterLIST") as GameObjectList;
+        randomTargeting = false;
     }
 
     /// <summary>
@@ -53,14 +54,14 @@ class BaseAI
     /// <param name="gameTime">current game time</param>
     public void Update(GameTime gameTime)
     {
-        // if the targetedObject is null, the AI targets an object as soon as it enters it's line of sight
-        if (targetedObject == null)
-        {
+        //find a target if the current target is null
+        if(targetedObject == null)
             LineOfSightChecker(sightRange);
-        }
         // if the AI is not waiting for the idleTimer to expire it enters this code block
         else if (idleTimer.IsExpired)
         {
+            //Keep checking if there is a target closer than the current target
+            LineOfSightChecker(sightRange);
             // generate a waypointlist towards the target
             List<Vector2> waypointList = FindPath(targetedObject.Position + new Vector2(0, (targetedObject.Height / 4) + 1), owner.Position);
             // checks if the AI is already at it's target
@@ -240,12 +241,16 @@ class BaseAI
         Circle lineOfSight = new Circle(sightRange, owner.Origin);
         foreach(AnimatedGameObject obj in targetList.Children)
         {
-            if (lineOfSight.CollidesWithRectangle(obj, owner))
-            {
-                targets.Add(obj);
-            }
+            if((isMonster && obj is Character) || (!isMonster && obj is Monster))
+                if (lineOfSight.CollidesWithRectangle(obj, owner))
+                {
+                    targets.Add(obj);
+                }
         }
-        TargetClosest(targets);
+        if(randomTargeting)
+            TargetRandomNearby(targets);
+        else
+            TargetClosest(targets);
     }
 
     /// <summary>
@@ -264,11 +269,43 @@ class BaseAI
 
             if (closestTargetDistance == 0 || targetDistance < closestTargetDistance)
             {
-                closestTargetDistance = targetDistance;
-                targetedObject = target;
+                // If a target is found we check if the target is reachable.
+                if(FindPath(target.Position, owner.Position).Count > 0)
+                {
+                    closestTargetDistance = targetDistance;
+                    targetedObject = target;
+                }
             }
         }
 
+    }
+    Random random = new Random();
+    int highestChance, chance;
+    public void TargetRandomNearby(List<AnimatedGameObject> targets)
+    {
+        highestChance = 0;
+        chance = 0;
+        foreach(AnimatedGameObject target in targets)
+        {
+            if (isMonster)
+            {
+                if (((Character)target).Attributes.HP == 0)
+                    continue;
+            }
+
+            else
+            {
+                if (((Monster)target).Attributes.HP == 0)
+                    continue;
+            }
+
+            chance = random.Next(0, 51);
+            if (chance > highestChance)
+            {
+                targetedObject = target;
+                highestChance = chance;
+            }
+        }
     }
 
     /// <summary>
@@ -277,6 +314,12 @@ class BaseAI
     public bool IsAttacking
     {
         get { return isAttacking; }
+    }
+
+    public bool RandomTargeting
+    {
+        get { return randomTargeting; }
+        set { randomTargeting = value; }
     }
     public float AImovementSpeed
     {
@@ -289,8 +332,9 @@ class BaseAI
         get { return owner; }
     }
 
-    public SpriteGameObject CurrentTarget
+    public AnimatedGameObject CurrentTarget
     {
         get { return targetedObject; }
+        set { targetedObject = value; }
     }
 }

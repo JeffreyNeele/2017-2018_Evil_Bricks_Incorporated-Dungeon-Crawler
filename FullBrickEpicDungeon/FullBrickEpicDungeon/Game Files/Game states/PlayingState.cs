@@ -1,24 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 
-class PlayingState : IGameLoopObject 
+class PlayingState : IGameLoopObject
 {
     // level list
-    protected List<Level> levelList;
+    protected Level[] levelArray;
+    private TimeSpan levelTimer;
     // current level that is being used
     protected int currentLevelIndex;
-    protected bool cheats = false;
+
     /// <summary>
     /// A state that defines the playing state of the game
     /// </summary>
     public PlayingState()
     {
-        currentLevelIndex = 5;
-        levelList = new List<Level>();
-        // Loads the levels from all level files
-        LoadLevels(10);
+        currentLevelIndex = 2;
+        levelArray = new Level[12]; //10 levels
     }
 
     /// <summary>
@@ -27,13 +26,12 @@ class PlayingState : IGameLoopObject
     public void HandleInput(InputHelper inputHelper)
     {
         CurrentLevel.HandleInput(inputHelper);
-
-        if (inputHelper.KeyPressed(Keys.Space))
+        
+        if (inputHelper.KeyPressed(Keys.Space) || inputHelper.AnyPlayerPressed(Buttons.Start))
         {
             if(FullBrickEpicDungeon.DungeonCrawler.SFX)
                 GameEnvironment.AssetManager.PlaySound("Assets/SFX/pause");
 
-            FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
             GameEnvironment.GameStateManager.SwitchTo("pauseState");
         }
 
@@ -55,41 +53,37 @@ class PlayingState : IGameLoopObject
         
     }
 
-    public void Initialize() { }
+    public void Initialize()
+    {
+        FullBrickEpicDungeon.DungeonCrawler.mouseVisible = false;
+    }
+
 
     public void Reset()
     {
-        CurrentLevel.Reset();
+        levelTimer = TimeSpan.Zero;
+        Level newlevel = new Level(currentLevelIndex);
+        levelArray[currentLevelIndex] = newlevel;
     }
 
     public void Update(GameTime gameTime)
     {
+        levelTimer += gameTime.ElapsedGameTime;
         CurrentLevel.Update(gameTime);
     }
-
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         CurrentLevel.Draw(gameTime, spriteBatch);
     }
 
-    /// <summary>
-    /// Loads the levels into the level list
-    /// </summary>
-    /// <param name="levelAmount">total amount of levels</param>
-    public void LoadLevels(int levelAmount)
-    {
-        for(int x = 1; x <= levelAmount; x++)
-        {
-            Level newlevel = new Level(x);
-            levelList.Add(newlevel);
-        }
-    }
+
 
     public void GoToNextLevel()
     {
         CurrentLevel.Reset();
-        if (currentLevelIndex >= levelList.Count - 1)
+        if (currentLevelIndex >= levelArray.Length - 1)
         {
+            ResetLevelIndex();
             // if all the levels are over switch to the title state
             GameEnvironment.GameStateManager.SwitchTo("titleMenu");
         }
@@ -99,10 +93,21 @@ class PlayingState : IGameLoopObject
         }
     }
 
+    public void ResetLevelIndex()
+    {
+        currentLevelIndex = 2;
+    }
+
     // returns the current level being used in the state
     public Level CurrentLevel
     {
-        get { return levelList[currentLevelIndex]; }
+        get { return levelArray[currentLevelIndex]; }
+    }
+
+    public TimeSpan LevelTime
+    {
+        get { return levelTimer; }
+        set { levelTimer = value; }
     }
 
 }
