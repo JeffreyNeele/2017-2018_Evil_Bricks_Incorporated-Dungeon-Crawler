@@ -12,7 +12,7 @@ abstract class MenuState : IGameLoopObject
     protected SpriteGameObject marker;
     protected Vector2 offsetMarker;
     protected int buttonSeparation = 250;
-    int buttonIndex = 0;
+    protected int buttonIndex = 0;
 
     //toetsenbord controls dictionary van player 0 en 1 in de dictionary hiervoor
     protected Dictionary<Keys, Keys> keyboardControls1;
@@ -171,7 +171,7 @@ abstract class MenuState : IGameLoopObject
     {
         for (int index = 0; index < buttonList.Count; index++)
         {
-            if (marker.Position.Y == buttonList[index].Position.Y + offsetMarker.Y)
+            if (marker.Position == buttonList[index].Position + offsetMarker)
             {
                 buttonList[index].Pressed = true;
                 ButtonPressedHandler();
