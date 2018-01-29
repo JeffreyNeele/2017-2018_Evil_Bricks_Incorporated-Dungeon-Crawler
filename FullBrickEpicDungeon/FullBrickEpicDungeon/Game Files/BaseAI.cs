@@ -55,8 +55,11 @@ class BaseAI
     public void Update(GameTime gameTime)
     {
         //find a target if the current target is null
-        if(targetedObject == null)
+        if (targetedObject == null)
+        {
             LineOfSightChecker(sightRange);
+        }
+
         // if the AI is not waiting for the idleTimer to expire it enters this code block
         else if (idleTimer.IsExpired)
         {

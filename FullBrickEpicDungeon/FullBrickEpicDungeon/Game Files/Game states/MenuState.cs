@@ -61,6 +61,7 @@ abstract class MenuState : IGameLoopObject
 
     public virtual void Update(GameTime gameTime)
     {
+        
     }
 
     /// <summary>
