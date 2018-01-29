@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 class PauseState : MenuState
 {
     protected PlayingState playingState;
-    protected Button continueButton, resetButton, disconnectController, connectController, settingsButton, creditsButton, quitButton;
+    protected Button continueButton, resetButton, disconnectController, connectController, settingsButton, quitButton, returnToMenuButton;
     protected Texture2D overlay;
     enum ConnectionStates { Disconnected, VoluntaryDisconnect, Connect};
     int ConnectionState = 0;
@@ -59,10 +59,10 @@ class PauseState : MenuState
         settingsButton = new Button("Assets/Sprites/Menu/SettingsButton");
         buttonList.Add(settingsButton);
 
-        creditsButton = new Button("Assets/Credits/credits");
-        buttonList.Add(creditsButton);
+        returnToMenuButton = new Button("Assets/Sprites/Paused/ReturnToMenu");
+        buttonList.Add(returnToMenuButton);
 
-        quitButton = new Button("Assets/Sprites/Paused/ReturnToMenu");
+        quitButton = new Button("Assets/Credits/credits");
         buttonList.Add(quitButton);
 
         //set button positions
@@ -360,12 +360,12 @@ class PauseState : MenuState
                     case 4: //Settings button pressed
                         GameEnvironment.GameStateManager.SwitchTo("settingsState");
                         break;
-                    case 5:
-                        GameEnvironment.GameStateManager.SwitchTo("creditsState");
-                        break;
-                    case 6: //Quit button pressed
+                    case 5: // go to menu
                         (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).ResetLevelIndex();
                         GameEnvironment.GameStateManager.SwitchTo("titleMenu");
+                        break;
+                    case 6: //Quit button pressed
+                        FullBrickEpicDungeon.DungeonCrawler.exitGame = true;
                         break;
                     default: throw new IndexOutOfRangeException("Buttonbehaviour not defined. Buttonnumber in buttonList: " + buttonnr);
 
