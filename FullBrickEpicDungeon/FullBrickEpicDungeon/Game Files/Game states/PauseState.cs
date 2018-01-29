@@ -47,6 +47,7 @@ class PauseState : MenuState
         // make buttons for the different assignments, eg return to menu
         continueButton = new Button("Assets/Sprites/Paused/Continue");
         buttonList.Add(continueButton);
+        continueButton.Position = new Vector2(GameEnvironment.Screen.X / 2 - buttonList[0].Width / 2, 250);
 
         resetButton = new Button("Assets/Sprites/Paused/reset_level");
         buttonList.Add(resetButton);
@@ -66,7 +67,18 @@ class PauseState : MenuState
         quitButton = new Button("Assets/Sprites/Paused/ReturnToMenu");
         buttonList.Add(quitButton);
 
-        base.FillButtonList(); //gives positions to the buttons and the marker
+        //set button positions
+        for (int i = 1; i < 4; i++)
+        {
+            buttonList[i].Position = new Vector2(GameEnvironment.Screen.X / 2 - buttonList[0].Width / 2 - 100, 250 + i * buttonSeparation);
+        }
+        for (int i = 4; i < 7; i++)
+        {
+            buttonList[i].Position = new Vector2(GameEnvironment.Screen.X / 2 - buttonList[0].Width / 2 + 100, 250 + i * buttonSeparation);
+        }
+
+        offsetMarker = new Vector2(-marker.Width, buttonList[0].Height / 2 - marker.Height / 2);
+        marker.Position = new Vector2(buttonList[0].Position.X + offsetMarker.X, buttonList[0].Position.Y + offsetMarker.Y);
     }
 
 

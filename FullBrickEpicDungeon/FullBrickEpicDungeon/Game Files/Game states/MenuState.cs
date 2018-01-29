@@ -12,6 +12,7 @@ abstract class MenuState : IGameLoopObject
     protected SpriteGameObject marker;
     protected Vector2 offsetMarker;
     protected int buttonSeparation = 250;
+    int buttonIndex = 0;
 
     //toetsenbord controls dictionary van player 0 en 1 in de dictionary hiervoor
     protected Dictionary<Keys, Keys> keyboardControls1;
@@ -110,16 +111,18 @@ abstract class MenuState : IGameLoopObject
         //moves the marker up or down depending on the key that was pressed, the Dpad or the Thumbstick.
         if (inputHelper.ButtonPressed(controllernumber, Buttons.DPadDown) || inputHelper.MenuDirection(controllernumber, false, true).Y < 0)
         {
-            if (marker.Position.Y < buttonList[buttonList.Count - 1].Position.Y + offsetMarker.Y)
+            if (buttonIndex < buttonList.Count - 1)
             {
-                marker.Position += new Vector2(0, buttonSeparation);
+                buttonIndex++;
+                marker.Position = new Vector2(buttonList[buttonIndex].Position.X + offsetMarker.X, buttonList[buttonIndex].Position.Y + offsetMarker.Y);
             }
         }
         else if (inputHelper.ButtonPressed(controllernumber, Buttons.DPadUp) || inputHelper.MenuDirection(controllernumber, false, true).Y > 0)
         {
-            if (marker.Position.Y > buttonList[0].Position.Y + offsetMarker.Y)
+            if (buttonIndex > 0)
             {
-                marker.Position -= new Vector2(0, buttonSeparation);
+                buttonIndex--;
+                marker.Position = new Vector2(buttonList[buttonIndex].Position.X + offsetMarker.X, buttonList[buttonIndex].Position.Y + offsetMarker.Y);
             }
         }
         if (inputHelper.ButtonPressed(controllernumber, Buttons.A))
@@ -133,17 +136,19 @@ abstract class MenuState : IGameLoopObject
         //moves the marker up or down depending on the key that was pressed, the Dpad or the Thumbstick.
         if (inputHelper.KeyPressed(Keys.Down) || inputHelper.KeyPressed(Keys.S))
         {
-            if (marker.Position.Y < buttonList[buttonList.Count - 1].Position.Y + offsetMarker.Y)
+            if (buttonIndex < buttonList.Count - 1)
             {
-                marker.Position += new Vector2(0, buttonSeparation);
+                buttonIndex++;
+                marker.Position = new Vector2(buttonList[buttonIndex].Position.X + offsetMarker.X, buttonList[buttonIndex].Position.Y + offsetMarker.Y);
             }
 
         }
         else if (inputHelper.KeyPressed(Keys.Up) || inputHelper.KeyPressed(Keys.W))
         {
-            if (marker.Position.Y > buttonList[0].Position.Y + offsetMarker.Y)
+            if (buttonIndex > 0)
             {
-                marker.Position -= new Vector2(0, buttonSeparation);
+                buttonIndex--;
+                marker.Position = new Vector2(buttonList[buttonIndex].Position.X + offsetMarker.X, buttonList[buttonIndex].Position.Y + offsetMarker.Y);
             }
         }
         if (inputHelper.KeyPressed(Keys.Space) || inputHelper.KeyPressed(Keys.Enter))
