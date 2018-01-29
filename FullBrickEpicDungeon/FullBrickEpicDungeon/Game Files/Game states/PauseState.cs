@@ -59,7 +59,7 @@ class PauseState : MenuState
         settingsButton = new Button("Assets/Sprites/Menu/SettingsButton");
         buttonList.Add(settingsButton);
 
-        creditsButton = new Button("Assets/Sprites/Paused/credits");
+        creditsButton = new Button("Assets/Credits/credits");
         buttonList.Add(creditsButton);
 
         quitButton = new Button("Assets/Sprites/Paused/ReturnToMenu");
