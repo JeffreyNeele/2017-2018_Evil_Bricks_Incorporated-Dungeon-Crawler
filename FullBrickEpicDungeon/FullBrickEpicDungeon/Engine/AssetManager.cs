@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
-using System.IO;
 
 public class AssetManager
 {
@@ -29,6 +28,7 @@ public class AssetManager
 
     public void PlayMusic(string assetName, bool repeat = true)
     {
+        MediaPlayer.Volume = 0.4f;
         MediaPlayer.IsRepeating = repeat;
         MediaPlayer.Play(contentManager.Load<Song>(assetName));
     }

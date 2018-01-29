@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 
 class PlayingState : IGameLoopObject
 {
@@ -66,6 +67,9 @@ class PlayingState : IGameLoopObject
     public void Initialize()
     {
         FullBrickEpicDungeon.DungeonCrawler.mouseVisible = false;
+        MediaPlayer.Stop();
+        if(FullBrickEpicDungeon.DungeonCrawler.music)
+            GameEnvironment.AssetManager.PlayMusic("Assets/Music/ingame");
     }
 
 

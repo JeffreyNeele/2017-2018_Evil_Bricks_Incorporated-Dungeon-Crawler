@@ -273,7 +273,7 @@ abstract partial class Character : AnimatedGameObject
     /// Checks whether a character collides with a tile
     /// </summary>
     /// <returns>whether the position the character is going is valid</returns>
-    private bool SolidCollisionChecker()
+    public bool SolidCollisionChecker()
     {
         GameObjectGrid Field = GameWorld.Find("TileField") as GameObjectGrid;
         // Define a quarter bounding box (the feet plus part of the legs) for isometric collision
