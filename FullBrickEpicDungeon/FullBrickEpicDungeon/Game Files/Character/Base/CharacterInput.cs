@@ -491,4 +491,10 @@ abstract partial class Character : AnimatedGameObject
         }
         return false;
     }
+
+    public Vector2 PreviousDirection
+    {
+        get { return previousWalkingDirection; }
+    }
+
 }

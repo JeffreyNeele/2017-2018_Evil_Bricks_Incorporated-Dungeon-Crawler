@@ -243,6 +243,9 @@ protected void LevelInformationLoader(List<string> informationStringList)
                 case "LOCK":
                     LockLoader(splitArray);
                     break;
+                case "TEACUP":
+                    TeacupLoader(splitArray);
+                    break;
             }
         }
     }
@@ -316,6 +319,36 @@ protected void LevelInformationLoader(List<string> informationStringList)
         else
             throw new ArgumentNullException("added key was null");
     }
+
+    /// <summary>
+    /// Loads the correct color of teacup into the level
+    /// </summary>
+    /// <param name="textArray">array given by the Position loader</param>
+    private void TeacupLoader(string[] textArray)
+    {
+        Teacup teacup = null;
+        switch (textArray[3])
+        {
+            case "RED":
+                teacup = new Teacup("Assets/Sprites/InteractiveObjects/Teapot Red", "redteacup", 0);
+                break;
+            case "GREEN":
+                teacup = new Teacup("Assets/Sprites/InteractiveObjects/Teapot Green", "greenteacup", 0);
+                break;
+            case "BLUE":
+                teacup = new Teacup("Assets/Sprites/InteractiveObjects/Teapot Blue", "blueteacup", 0);
+                break;
+            default:
+                throw new ArgumentException("The given color " + textArray[3] + " was not found in the switch statement!");
+        }
+        teacup.Position = new Vector2(float.Parse(textArray[1]), float.Parse(textArray[2]));
+        teacup.Objectnumber = int.Parse(textArray[4]);
+        if (teacup != null)
+            objectList.Add(teacup);
+        else
+            throw new ArgumentNullException("added teacup was null");
+    }
+
 
     /// <summary>
     /// Loads the Characters into the level
@@ -407,6 +440,9 @@ protected void LevelInformationLoader(List<string> informationStringList)
                         break;
                     case 8:
                         newtile = new Tile(TileType.Grass, "Assets/Sprites/Tiles/TileGrass1");
+                        break;
+                    case 9:
+                        newtile = new Tile(TileType.TeacupGoal, "Assets/Sprites/Tiles/TeacupGoal");
                         break;
                     case 99:
                         newtile = new Tile(TileType.BasicTile, "Assets/Sprites/Tiles/BasicTile1");
