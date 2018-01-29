@@ -2,12 +2,18 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
+using System.IO;
 
 class CreditsState : MenuState
 {
     private Texture2D creditsBackground;
     protected Button back;
     bool prevPause;
+    SpriteGameObject conversationFrame;
+    GameObjectList credits;
+
+
     /// <summary>
     /// Class that displays a settings screen.
     /// </summary>
@@ -15,7 +21,9 @@ class CreditsState : MenuState
     {
         // Load the background
         creditsBackground = GameEnvironment.AssetManager.GetSprite("Assets/Credits/Achtergrond");
-        // vervangen door een goeie achtergrond !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
+        credits = new GameObjectList(99);
+        // vervangen door een goeie achtergrond !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        LoadCredits("Assets/Credits/CreditText.txt");
     }
 
 
@@ -50,9 +58,15 @@ class CreditsState : MenuState
     {
         // vervangen door een goeie achtergrond met credits ipv settings. !!!!!
         spriteBatch.Draw(creditsBackground, Vector2.Zero, Color.White);
+        credits.Draw(gameTime, spriteBatch);
         base.Draw(gameTime, spriteBatch);
     }
 
+    public override void Update(GameTime gameTime)
+    {
+        credits.Update(gameTime);
+        base.Update(gameTime);
+    }
     /// <summary>
     /// if the button is pressed (which is handled in MenuState) this method executes what happens
     /// </summary>
@@ -81,21 +95,53 @@ class CreditsState : MenuState
     }
     public override void Initialize()
     {
-        IGameLoopObject prevGameState = GameEnvironment.GameStateManager.PreviousGameState as IGameLoopObject;
-        // draw over the playingstate if it was in playingstate
-        if (prevGameState == GameEnvironment.GameStateManager.GetGameState("pauseState"))
+
+    }
+
+
+    public void LoadCredits(string path)
+    {
+            // call with "Assets/Credits/CreditText" //
+        path = "Content/" + path;
+        List<string> textLines = new List<string>();
+        StreamReader fileReader = new StreamReader(path);
+        string line = fileReader.ReadLine();
+        int width = line.Length;
+        while (line != null)
         {
-            prevPause = true;
+            textLines.Add(line);
+            line = fileReader.ReadLine();
         }
-        //draw over cutscene if previousstate was cutscene
-        else if (prevGameState == GameEnvironment.GameStateManager.GetGameState("titleMenu"))
+        ShowCredits(textLines);
+    }
+
+
+    private void ShowCredits(List<string> creditLines)
+    {
+        for(int i = 0; i < creditLines.Count; i++)
         {
-            prevPause = false;
-        }
-        else
-        {
-            throw new Exception("Cutscene cannot be called from this GameState" + GameEnvironment.GameStateManager.PreviousGameState);
+            TextGameObject creditline = new TextGameObject("Assets/Fonts/ConversationFont")
+            {
+                Color = Color.Black,
+                Text = creditLines[i],
+            };
+            creditline.Position = new Vector2(GameEnvironment.Screen.X / 2 - creditline.Size.X / 2, 50 + i * 70);
+            credits.Add(creditline);
         }
     }
+
+    //public void ShowCredit()
+    //{
+    //    conversationFrame = new SpriteGameObject("Assets/Sprites/Conversation Boxes/conversationbox1", 0, "", 10, false);
+    //    Position = new Vector2(GameEnvironment.Screen.X / 2 - conversationFrame.Width / 2, GameEnvironment.Screen.Y * 3 / 4);
+    //    Add(conversationFrame);
+    //    TextGameObject currentText = new TextGameObject("Assets/Fonts/ConversationFont", 0, "currentlydisplayedtext")
+    //    {
+    //        Color = Color.White,
+    //        Text = textLines[convIndex],
+    //        Position = new Vector2(100, conversationFrame.Height / 2 - 20)
+    //    };
+    //    displayedText.Add(currentText);
+    //}
 
 }

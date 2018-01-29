@@ -1790,3 +1790,6 @@
 #begin Assets/Levels/level12.txt
 /copy:Assets/Levels/level12.txt
 
+#begin Assets/Credits/CreditText.txt
+/copy:Assets/Credits/CreditText.txt
+
