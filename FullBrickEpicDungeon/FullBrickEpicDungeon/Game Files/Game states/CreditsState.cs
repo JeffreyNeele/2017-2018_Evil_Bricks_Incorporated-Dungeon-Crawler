@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 class CreditsState : MenuState
 {
     private Texture2D settingsBackground;
-    protected Button SFX, music, back;
+    protected Button back;
     bool prevPause;
     /// <summary>
     /// Class that displays a settings screen.
@@ -23,11 +23,7 @@ class CreditsState : MenuState
 
     protected override void FillButtonList()
     {
-        // Load the buttons for the SFX toggler, music toggler and the back button.
-        SFX = new Button("Assets/Sprites/Settings/sfxbutton@2");
-        buttonList.Add(SFX);
-        music = new Button("Assets/Sprites/Settings/musicbutton@2");
-        buttonList.Add(music);
+        // Load the button the back button.
         back = new Button("Assets/Sprites/Settings/ReturnToMenu");
         buttonList.Add(back);
 
@@ -62,31 +58,7 @@ class CreditsState : MenuState
             {
                 switch (buttonnr)
                 {
-                    case 0: //SFX
-                        if (SFX.Sprite.SheetIndex == 0)
-                        {
-                            FullBrickEpicDungeon.DungeonCrawler.SFX = false;
-                            SFX.Sprite.SheetIndex = 1;
-                        }
-                        else
-                        {
-                            FullBrickEpicDungeon.DungeonCrawler.SFX = true;
-                            SFX.Sprite.SheetIndex = 0;
-                        }
-                        break;
-                    case 1: //Music
-                        if (music.Sprite.SheetIndex == 0)
-                        {
-                            FullBrickEpicDungeon.DungeonCrawler.music = false;
-                            music.Sprite.SheetIndex = 1;
-                        }
-                        else
-                        {
-                            FullBrickEpicDungeon.DungeonCrawler.music = true;
-                            music.Sprite.SheetIndex = 0;
-                        }
-                        break;
-                    case 2: //Back
+                    case 0: //Back
                         if (back.Pressed)
                         {
                             if (prevPause)
