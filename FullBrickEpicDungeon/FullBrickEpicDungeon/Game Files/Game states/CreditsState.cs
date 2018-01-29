@@ -15,7 +15,7 @@ class CreditsState : MenuState
     {
         // Load the background
         settingsBackground = GameEnvironment.AssetManager.GetSprite("Assets/Sprites/Settings/settingsbackground");
-
+        // vervangen door een goeie achtergrond !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
     }
 
 
@@ -25,9 +25,14 @@ class CreditsState : MenuState
     {
         // Load the button the back button.
         back = new Button("Assets/Sprites/Settings/ReturnToMenu");
-        buttonList.Add(back);
+            buttonList.Add(back);
+        //set button positions
+        back.Position = new Vector2(GameEnvironment.Screen.X / 2 - back.Width / 2, 850);
+        // align the marker
+        offsetMarker = new Vector2(-marker.Width, back.Height / 2 - marker.Height / 2);
+        marker.Position = new Vector2(back.Position.X + offsetMarker.X, back.Position.Y + offsetMarker.Y);
 
-        base.FillButtonList();
+
     }
 
     protected override void HandleXboxInput(InputHelper inputHelper, int controllernumber)
@@ -43,6 +48,7 @@ class CreditsState : MenuState
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
+        // vervangen door een goeie achtergornd met credits ipv settings. !!!!!
         spriteBatch.Draw(settingsBackground, Vector2.Zero, Color.White);
         base.Draw(gameTime, spriteBatch);
     }
