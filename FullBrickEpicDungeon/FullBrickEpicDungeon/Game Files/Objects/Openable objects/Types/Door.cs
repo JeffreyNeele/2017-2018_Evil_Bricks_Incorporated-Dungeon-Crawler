@@ -39,6 +39,18 @@ class Door : OpenableObject
                 }
             }
         }
+
+        foreach (var teacup in objectList.Children)
+        {
+            if (teacup is Teacup && ((Teacup)teacup).Objectnumber == this.Objectnumber)
+            {
+                if (((Teacup)teacup).TeacupSet == true)
+                 {
+                    DoorOpen = true;
+                    openUnlockedDoor(this);
+                }                  
+            }
+        }
     }
 
     public void openUnlockedDoor(Door openDoor)
