@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
+using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 class SettingsState : MenuState
 {
@@ -79,11 +80,14 @@ class SettingsState : MenuState
                         {
                             FullBrickEpicDungeon.DungeonCrawler.music = false;
                             music.Sprite.SheetIndex = 1;
+                            MediaPlayer.Stop();
                         }
                         else
                         {
                             FullBrickEpicDungeon.DungeonCrawler.music = true;
                             music.Sprite.SheetIndex = 0;
+                            if(MediaPlayer.State == MediaState.Stopped)
+                                GameEnvironment.AssetManager.PlayMusic("Assets/Music/menu");
                         }
                         break;
                     case 2: //Back

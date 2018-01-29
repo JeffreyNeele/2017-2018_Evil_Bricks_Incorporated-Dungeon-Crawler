@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 
 
@@ -90,6 +91,7 @@ class CharacterSelection : GameObjectList
             launchCount -= (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (launchCount <= 0)
             {
+                MediaPlayer.Stop();
                 GameEnvironment.GameStateManager.SwitchTo("cutscene");
             }
         }

@@ -1,8 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using System;
-using Microsoft.Xna.Framework.Input;
-using System.Collections.Generic;
 
 class TitleMenuState : MenuState
 {
@@ -30,10 +29,19 @@ class TitleMenuState : MenuState
         buttonList.Add(settingsButton);
 
 
+        creditsButton = new Button("Assets/Sprites/Paused/credits");
+        buttonList.Add(creditsButton);
+
+
         base.FillButtonList();
     }
 
-
+    public override void Initialize()
+    {
+        if(MediaPlayer.State == MediaState.Stopped && FullBrickEpicDungeon.DungeonCrawler.music)
+            GameEnvironment.AssetManager.PlayMusic("Assets/Music/menu");
+        base.Initialize();
+    }
 
 
     /// <summary>
