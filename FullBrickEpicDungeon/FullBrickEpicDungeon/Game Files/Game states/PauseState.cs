@@ -50,10 +50,10 @@ class PauseState : MenuState
         resetButton = new Button("Assets/Sprites/Paused/reset_level");
         buttonList.Add(resetButton);
 
-        disconnectController = new Button("Assets/Sprites/Menu/SettingsButton");
+        disconnectController = new Button("Assets/Sprites/Paused/disconnect");
         buttonList.Add(disconnectController);
 
-        connectController = new Button("Assets/Sprites/Menu/SettingsButton");
+        connectController = new Button("Assets/Sprites/Paused/connect");
         buttonList.Add(connectController);
 
         settingsButton = new Button("Assets/Sprites/Menu/SettingsButton");
