@@ -129,6 +129,17 @@ protected void LevelInformationLoader(List<string> informationStringList)
                     else
                         monsterList.Add(bossBunny);
                     break;
+                case "BOSSPENGUIN":
+                    BossPenguin bossPenguin = new BossPenguin(this)
+                    {
+                        StartPosition = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]))
+                    };
+                    bossPenguin.Reset();
+                    if (splitArray.Length == 4)
+                        addHandleSummon(bossPenguin, int.Parse(splitArray[3]));
+                    else
+                        monsterList.Add(bossPenguin);
+                    break;
                 case "SPIKETRAP":
                     AutomatedObject spikeTrap = new SpikeTrap("Assets/Sprites/InteractiveObjects/SpikeTrap@2", "spikeTrap", 0, this);
                     spikeTrap.Position = new Vector2(float.Parse(splitArray[1]), float.Parse(splitArray[2]));

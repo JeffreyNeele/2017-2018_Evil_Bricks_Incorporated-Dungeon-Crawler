@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 class PauseState : MenuState
 {
     protected PlayingState playingState;
-    protected Button continueButton, resetButton, disconnectController, connectController, settingsButton, creditsButton, quitButton;
+    protected Button continueButton, resetButton, disconnectController, connectController, settingsButton, controlsButton, quitButton;
     protected Texture2D overlay;
     enum ConnectionStates { Disconnected, VoluntaryDisconnect, Connect};
     int ConnectionState = 0;
@@ -59,11 +59,12 @@ class PauseState : MenuState
         settingsButton = new Button("Assets/Sprites/Menu/SettingsButton");
         buttonList.Add(settingsButton);
 
-        creditsButton = new Button("Assets/Credits/credits");
-        buttonList.Add(creditsButton);
+        controlsButton = new Button("Assets/Sprites/Menu/SettingsButton");
+        buttonList.Add(controlsButton);
 
         quitButton = new Button("Assets/Sprites/Paused/ReturnToMenu");
         buttonList.Add(quitButton);
+
 
         //set button positions
         for (int i = 1; i < 4; i++)
@@ -361,7 +362,7 @@ class PauseState : MenuState
                         GameEnvironment.GameStateManager.SwitchTo("settingsState");
                         break;
                     case 5:
-                        GameEnvironment.GameStateManager.SwitchTo("creditsState");
+                        GameEnvironment.GameStateManager.SwitchTo("controlsInfoState");
                         break;
                     case 6: //Quit button pressed
                         (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).ResetLevelIndex();

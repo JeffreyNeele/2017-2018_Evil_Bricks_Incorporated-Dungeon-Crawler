@@ -30,6 +30,10 @@ class TitleMenuState : MenuState
         buttonList.Add(settingsButton);
 
 
+        creditsButton = new Button("Assets/Sprites/Paused/credits");
+        buttonList.Add(creditsButton);
+
+
         base.FillButtonList();
     }
 
