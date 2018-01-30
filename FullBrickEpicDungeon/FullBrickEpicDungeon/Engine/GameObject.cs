@@ -31,9 +31,6 @@ public abstract class GameObject : IGameLoopObject
     {
     }
 
-    /// <summary>
-    /// Method which gets called at the SwitchTo gamestates command.
-    /// </summary>
     public virtual void Initialize(){ }
 
     public virtual void Reset()
