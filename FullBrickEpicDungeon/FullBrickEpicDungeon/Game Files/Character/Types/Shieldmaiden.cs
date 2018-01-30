@@ -41,6 +41,10 @@ class Shieldmaiden : Character
         LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_attack_" + playerColor + "_up", "attack_upwards", false);
         LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_attack_" + playerColor + "_left", "attack_fromleft", false);
         LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_attack_" + playerColor + "_right", "attack_fromright", false);
+        LoadAnimation("Assets/Sprites/Shieldmaiden/Paladin" + playerColor + "Shield", "shield_downwards", false);
+        LoadAnimation("Assets/Sprites/Shieldmaiden/Paladin" + playerColor + "ShieldUp", "shield_upwards", false);
+        LoadAnimation("Assets/Sprites/Shieldmaiden/Paladin" + playerColor + "ShieldLeft", "shield_fromleft", false);
+        LoadAnimation("Assets/Sprites/Shieldmaiden/Paladin" + playerColor + "ShieldRight", "shield_fromright", false);
         PlayAnimation("idle");
 
         characterSFX.Add("attack_hit", "Assets/SFX/Shieldmaiden/sword_hit");
