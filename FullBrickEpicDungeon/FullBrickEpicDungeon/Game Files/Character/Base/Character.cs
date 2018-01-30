@@ -163,6 +163,7 @@ abstract partial class Character : AnimatedGameObject
         else
         {
             PlayAnimation("die");
+            Visible = true;
             // Updates the death timer and if it expires, the character gets reset and loses some gold
             deathTimer.Update(gameTime);
             if (deathTimer.IsExpired)
