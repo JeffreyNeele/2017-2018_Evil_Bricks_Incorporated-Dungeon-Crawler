@@ -12,7 +12,8 @@ enum TileType
     Wood,
     Grass,
     Trapdoor,
-    DoorTile
+    DoorTile,
+    TeacupGoal
 }
 
 class Tile : SpriteGameObject
@@ -70,5 +71,16 @@ class Tile : SpriteGameObject
         }
         else
             return false;
+    }
+
+    public bool IsTeacupGoal
+    {
+        get
+        {
+            if (type == TileType.TeacupGoal)
+                return true;
+            else
+                return false;
+        }
     }
 }

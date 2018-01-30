@@ -75,6 +75,7 @@
     <Compile Include="Game Files\Cutscenes\Base\Cutscene.cs" />
     <Compile Include="Game Files\Equipment\Base\Equipment.cs" />
     <Compile Include="Game Files\Game states\CharacterSelection.cs" />
+    <Compile Include="Game Files\Game states\ControlsInfoState.cs" />
     <Compile Include="Game Files\Game states\ConversationState.cs" />
     <Compile Include="Game Files\Game states\CreditsState.cs" />
     <Compile Include="Game Files\Game states\CutsceneState.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Game Files\Objects\Interactive objects\Base\InteractiveObject.cs" />
     <Compile Include="Game Files\Objects\Interactive objects\Types\KeyItem.cs" />
     <Compile Include="Game Files\Objects\Interactive objects\Types\Lock.cs" />
+    <Compile Include="Game Files\Objects\Interactive objects\Types\Teacup.cs" />
     <Compile Include="Game Files\Objects\Openable objects\Base\OpenableObject.cs" />
     <Compile Include="Game Files\Objects\Interactive objects\Types\Handle.cs" />
     <Compile Include="Game Files\Objects\Openable objects\Types\Door.cs" />
@@ -145,10 +147,6 @@
     <ProjectReference Include="Libraries\AStar-master\Roy-T.AStar\Roy-T.AStar.csproj">
       <Project>{b9c572ad-526e-48c0-9b64-582cd83515eb}</Project>
       <Name>Roy-T.AStar</Name>
-    </ProjectReference>
-    <ProjectReference Include="Libraries\Penumbra\Source\MonoGame.Penumbra.WindowsDX.csproj">
-      <Project>{b021f95c-38bc-493a-bb92-c3c575e4b50f}</Project>
-      <Name>MonoGame.Penumbra.WindowsDX</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

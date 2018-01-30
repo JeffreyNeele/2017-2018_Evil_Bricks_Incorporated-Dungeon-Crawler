@@ -8,6 +8,7 @@ abstract partial class Character : AnimatedGameObject
 {
     protected Dictionary<Keys, Keys> keyboardControls;
     protected bool xboxControlled, isGliding = false, blockinput = false;
+    static protected int controllerNrDisconnected = -1;
 
     /// <summary>
     /// Method for handling input for the character
@@ -18,11 +19,12 @@ abstract partial class Character : AnimatedGameObject
         {
             
             Vector2 previousPosition = this.position;
-            if (this.xboxControlled && !inputHelper.ControllerConnected(controllerNumber))
+            if (this.xboxControlled && playerControlled && !inputHelper.ControllerConnected(controllerNumber))
             {
-                FullBrickEpicDungeon.DungeonCrawler.mouseVisible = true;
                 // will replace with another gamestate that tells you to reconnect your controller
+                ControllerNrDisconnected = controllerNumber;
                 GameEnvironment.GameStateManager.SwitchTo("pauseState");
+               
             }
 
             // Handle normal movement
@@ -352,8 +354,10 @@ abstract partial class Character : AnimatedGameObject
                 if (p.playerNumber == targetPlayerNumber && p != this)
                 {
                     //if the criteria are met we switch, otherwise we try another character instead
-                    if (!p.PlayerControlled && !p.IsDowned && p.SolidCollisionChecker())
+                    if (!p.PlayerControlled && !p.IsDowned)
                     {
+                        if (!p.SolidCollisionChecker())
+                            p.AI.GetOutWallChecker();
                         SwitchToCharacter(p);
                         return;
                     }
@@ -388,6 +392,8 @@ abstract partial class Character : AnimatedGameObject
         targetCharacter.playerControlled = true;
         targetCharacter.switchCharacterTimer.Reset();
     }
+
+
 
 
     /// <summary>
@@ -435,4 +441,62 @@ abstract partial class Character : AnimatedGameObject
     {
         get { return walkingdirection; }
     }
+
+    static public int ControllerNrDisconnected
+    {
+        get { return controllerNrDisconnected; }
+        set { controllerNrDisconnected = value; }
+    }
+
+    /// <summary>
+    /// Method that sets a controller to AI.
+    /// </summary>
+    /// <param name="targetCharacter">The character that the player will switch to control</param>
+    static public void DisconnectController(int controllernumber)
+    {
+        GameObjectList playerList = (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).CurrentLevel.GameWorld.Find("playerLIST") as GameObjectList;
+        foreach (Character p in playerList.Children)
+        {
+            if (p.controlsnumber == controllernumber)
+            {
+                p.controlsnumber = -1;
+                p.ControlsInitializer(p.controlsnumber);
+            }
+        }
+    }
+
+    static public void ConnectController(int controllernumber)
+    {
+        GameObjectList playerList = (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).CurrentLevel.GameWorld.Find("playerLIST") as GameObjectList;
+        foreach (Character p in playerList.Children)
+        {
+            if (p.controlsnumber == -1)
+            {
+                p.controlsnumber = controllernumber;
+                p.ControlsInitializer(p.controlsnumber);
+                p.playerControlled = true;
+                break;
+            }
+            
+        }
+    }
+
+    static public bool ControllerConnected(int controllernumber)
+    {
+        GameObjectList playerList = (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).CurrentLevel.GameWorld.Find("playerLIST") as GameObjectList;
+        foreach (Character p in playerList.Children)
+        {
+            if (p.controlsnumber == controllernumber)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Vector2 PreviousDirection
+    {
+        get { return previousWalkingDirection; }
+    }
+
 }

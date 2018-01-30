@@ -1,24 +1,27 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 using System;
-
+using System.IO;
 
 class CutsceneState : IGameLoopObject
 {
     int currentCutsceneNumber = 0;
     List<Cutscene> cutsceneList = new List<Cutscene>();
     enum Cutscenenames {LarryShits,LarryGetsCaptured,ThroneRoom1,ThroneRoom2};
-    
+    GameObjectList HintText;
 
 
-/// <summary>
-/// State for cutscenes
-/// </summary>
-public CutsceneState()
+
+    /// <summary>
+    /// State for cutscenes
+    /// </summary>
+    public CutsceneState()
     {
         LoadCutScenes();
+        HintText = new GameObjectList(100);
+        LoadHint("Assets/Cutscenes/HintText.txt");
     }
 
 
@@ -38,11 +41,13 @@ public CutsceneState()
     public void Update(GameTime gameTime)
     {
         CurrentCutscene.Update(gameTime);
+        HintText.Update(gameTime);
     }
 
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         CurrentCutscene.Draw(gameTime, spriteBatch);
+        HintText.Draw(gameTime, spriteBatch);
     }
 
     public void HandleInput(InputHelper inputHelper)
@@ -56,6 +61,8 @@ public CutsceneState()
     /// </summary>
     public void Initialize()
     {
+        if(FullBrickEpicDungeon.DungeonCrawler.music && MediaPlayer.State == MediaState.Stopped)
+            GameEnvironment.AssetManager.PlayMusic("Assets/Music/cutscene");
         GameEnvironment.GameStateManager.SwitchTo("conversation");
     }
 
@@ -86,6 +93,39 @@ public CutsceneState()
         }
 
     }
+
+
+    private void LoadHint(string path)
+    {
+        // call with "Assets/Credits/CreditText" //
+        path = "Content/" + path;
+        List<string> textLines = new List<string>();
+        StreamReader fileReader = new StreamReader(path);
+        string line = fileReader.ReadLine();
+        int width = line.Length;
+        while (line != null)
+        {
+            textLines.Add(line);
+            line = fileReader.ReadLine();
+        }
+        ShowHint(textLines);
+    }
+
+
+    private void ShowHint(List<string> hintLines)
+    {
+        for (int i = 0; i < hintLines.Count; i++)
+        {
+            TextGameObject hintline = new TextGameObject("Assets/Fonts/ConversationFont", 100)
+            {
+                Color = Color.Black,
+                Text = hintLines[i],
+            };
+            hintline.Position = new Vector2(GameEnvironment.Screen.X / 2 - hintline.Size.X / 2, 20 + i * 50);
+            HintText.Add(hintline);
+        }
+    }
+
 
 
 

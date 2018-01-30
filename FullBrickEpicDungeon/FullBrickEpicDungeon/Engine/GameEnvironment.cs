@@ -17,7 +17,7 @@ public class GameEnvironment : Game
     protected static AssetManager assetManager;
     protected static ContentManager contentManager;
     protected static GameSettingsManager gameSettingsManager;
-    protected static ControlGenerator settingsHelper;
+    protected static ControlsGenerator controlsGenerator;
 
     public GameEnvironment()
     {
@@ -28,7 +28,7 @@ public class GameEnvironment : Game
         random = new Random();
         assetManager = new AssetManager(Content);
         gameSettingsManager = new GameSettingsManager();
-        settingsHelper = new ControlGenerator();
+        controlsGenerator = new ControlsGenerator();
     }
 
     public static Point Screen
@@ -62,9 +62,9 @@ public class GameEnvironment : Game
         get { return gameSettingsManager; }
     }
 
-    public static ControlGenerator SettingsHelper
+    public static ControlsGenerator SettingsHelper
     {
-        get { return settingsHelper; }
+        get { return controlsGenerator; }
     }
     public bool FullScreen
     {

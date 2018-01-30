@@ -10,7 +10,7 @@ class BossBunny : AImonster
     {
         // Assign attributes (for tracking hp etc.) and baseattributes (for resetting)
         this.baseattributes.HP = 200;
-        this.baseattributes.Armour = 20;
+        this.baseattributes.Armour = 10;
         this.baseattributes.Attack = 50;
         this.baseattributes.Gold = 200;
         attributes.HP = baseattributes.HP;

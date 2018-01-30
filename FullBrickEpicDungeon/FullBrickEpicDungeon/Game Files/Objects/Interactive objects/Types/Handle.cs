@@ -16,6 +16,7 @@ class Handle : InteractiveObject
     /// <param name="sheetIndex">Defines which picture of the animation will be shown</param>
     public Handle(string assetname, Level currentlevel, string id, int sheetIndex, bool summonAbility = false) : base(assetname, currentlevel,  id, sheetIndex)
     {
+        PerPixelCollisionDetection = false;
         countDownTimer = new Timer((float)0.2);
         summonList = new List<Monster>();
         summoningHandle = summonAbility;
@@ -124,19 +125,19 @@ class Handle : InteractiveObject
             if (summonList[i] is LittlePenguin)
             {
                 Monster monster = new LittlePenguin(currentlevel);
-                monster.Position = summonList[i].Position;
+                monster.Position = new Vector2(summonList[i].Position.X, summonList[i].Position.Y);
                 monsters.Add(monster);
             }
             else if(summonList[i] is Bunny)
             {
                 Monster monster = new Bunny(currentlevel);
-                monster.Position = summonList[i].Position;
+                monster.Position = new Vector2(summonList[i].Position.X, summonList[i].Position.Y);
                 monsters.Add(monster);
             }
             else if(summonList[i] is BossBunny)
             {
                 Monster monster = new BossBunny(currentlevel);
-                monster.Position = summonList[i].Position;
+                monster.Position = new Vector2(summonList[i].Position.X, summonList[i].Position.Y);
                 monsters.Add(monster);
             }
         }

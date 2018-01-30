@@ -17,7 +17,8 @@ abstract partial class Character : AnimatedGameObject
     protected Weapon weapon;
     // Vector2s for startposition, movementspeed and icespeed
     protected Vector2 startPosition, movementSpeed, iceSpeed;
-    protected int playerNumber, controllerNumber;
+    //controllernumber is the number of the XboxController, controlsNumber is 0 to 5, 0 and 1, keyboard. 2-5, xbox.
+    protected int playerNumber, controllerNumber, controlsnumber;
     protected bool playerControlled = true;
     protected Vector2 walkingdirection, previousWalkingDirection;
     protected BaseAI AI;
@@ -59,10 +60,11 @@ abstract partial class Character : AnimatedGameObject
         this.iceSpeed = new Vector2(0, 0);
         this.movementSpeed = new Vector2(4, 4);
         // Make a new AI
-        AI = new BaseAI(this, 200F, currentLevel, false, 300, 1);
+        AI = new BaseAI(this, 200F, currentLevel, false, 600, 1);
         this.playerNumber = playerNumber;
         controllerNumber = playerNumber;
         ControlsInitializer(controlsNumber);
+        controlsnumber = controlsNumber;
         // Generates controls for the keyboard if the character is not controlled by xbox, keyboard is only used for 2 players so as a safeguard player 3 and 4 will become AI if this is called them.
 
     }
@@ -271,19 +273,18 @@ abstract partial class Character : AnimatedGameObject
     /// Checks whether a character collides with a tile
     /// </summary>
     /// <returns>whether the position the character is going is valid</returns>
-    private bool SolidCollisionChecker()
+    public bool SolidCollisionChecker()
     {
         GameObjectGrid Field = GameWorld.Find("TileField") as GameObjectGrid;
-        // Define a quarter bounding box (the feet plus part of the legs) for isometric collision
-        Rectangle quarterBoundingBox = new Rectangle((int)this.BoundingBox.X, (int)(this.BoundingBox.Y + 0.75 * Height), this.Width, (int)(this.Height / 4));
+
         foreach (Tile tile in Field.Objects)
         {
-            if (tile.IsSolid && quarterBoundingBox.Intersects(tile.BoundingBox))
+            if (tile.IsSolid && IsometricBoundingBox.Intersects(tile.BoundingBox))
             {
                 return false;
             }
             if (tile is VerticalDoor)
-                if(quarterBoundingBox.Intersects(((VerticalDoor)tile).BoundingBox2))
+                if(IsometricBoundingBox.Intersects(((VerticalDoor)tile).BoundingBox2))
                 return false;
         }
         return true;
@@ -366,6 +367,10 @@ abstract partial class Character : AnimatedGameObject
     {
         get { return weapon; }
         set { weapon = value; }
+    }
+    public Rectangle IsometricBoundingBox
+    {
+        get { return new Rectangle((int)this.BoundingBox.X, (int)(this.BoundingBox.Y + 0.75 * Height), this.Width, (int)(this.Height / 4)); }
     }
     // returns the attributes of the character
     public BaseAttributes Attributes

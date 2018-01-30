@@ -1,12 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using System;
-using Microsoft.Xna.Framework.Input;
-using System.Collections.Generic;
 
 class TitleMenuState : MenuState
 {
-    Button startButton, settingsButton, creditsButton;
+    Button startButton, settingsButton, creditsButton, quitButton;
     Texture2D background;
 
 
@@ -22,6 +21,7 @@ class TitleMenuState : MenuState
 
     protected override void FillButtonList()
     {
+        buttonSeparation = 200;
         // load a settings and start button
         startButton = new Button("Assets/Sprites/Menu/StartButton");
         buttonList.Add(startButton);
@@ -29,11 +29,23 @@ class TitleMenuState : MenuState
         settingsButton = new Button("Assets/Sprites/Menu/SettingsButton");
         buttonList.Add(settingsButton);
 
+        creditsButton = new Button("Assets/Credits/credits");
+        buttonList.Add(creditsButton);
+
+        quitButton = new Button("Assets/Sprites/Menu/exitgame");
+        buttonList.Add(quitButton);
+
+        
 
         base.FillButtonList();
     }
 
-
+    public override void Initialize()
+    {
+        if(MediaPlayer.State == MediaState.Stopped && FullBrickEpicDungeon.DungeonCrawler.music)
+            GameEnvironment.AssetManager.PlayMusic("Assets/Music/menu");
+        base.Initialize();
+    }
 
 
     /// <summary>
@@ -62,13 +74,17 @@ class TitleMenuState : MenuState
                 switch (buttonnr)
                 {
                     case 0: //Start button pressed
-                        FullBrickEpicDungeon.DungeonCrawler.mouseVisible = false;
                         GameEnvironment.GameStateManager.SwitchTo("characterSelection");
                         break;
                     case 1: //Settings button pressed
                         GameEnvironment.GameStateManager.SwitchTo("settingsState");
                         break;
-
+                    case 2:
+                        GameEnvironment.GameStateManager.SwitchTo("creditsState");
+                        break;
+                    case 3:
+                        FullBrickEpicDungeon.DungeonCrawler.exitGame = true;
+                        break;
                     default: throw new IndexOutOfRangeException("Buttonbehaviour not defined. Buttonnumber in buttonList: " + buttonnr);
 
                 }

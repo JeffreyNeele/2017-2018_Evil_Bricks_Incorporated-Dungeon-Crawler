@@ -55,8 +55,16 @@ class BaseAI
     public void Update(GameTime gameTime)
     {
         //find a target if the current target is null
-        if(targetedObject == null)
+        if (targetedObject == null)
+        {
             LineOfSightChecker(sightRange);
+            if (!isMonster)
+            {
+                LineOfSightChecker(sightRange);
+                GetOutWallChecker();
+            }
+        }
+
         // if the AI is not waiting for the idleTimer to expire it enters this code block
         else if (idleTimer.IsExpired)
         {
@@ -90,6 +98,30 @@ class BaseAI
             }
             // update the time in the idletimer
             idleTimer.Update(gameTime);
+        }
+    }
+
+    public void GetOutWallChecker()
+    {
+        Character owner_cast = owner as Character;
+        if (!owner_cast.SolidCollisionChecker())
+        {
+            GameObjectGrid field = currentLevel.GameWorld.Find("TileField") as GameObjectGrid;
+            Rectangle collidingBoundingBox = new Rectangle(0, 0, 0, 0);
+            // Define a quarter bounding box (the feet plus part of the legs) for isometric collision
+            for (int x = 0; x < field.Columns; x++)
+            {
+                for (int y = 0; y < field.Rows; y++)
+                {
+                    if ((field.Objects[x, y] as Tile).IsSolid && (field.Objects[x, y] as Tile).BoundingBox.Intersects(owner_cast.IsometricBoundingBox))
+                    {
+                        collidingBoundingBox = (field.Objects[x, y] as Tile).BoundingBox;
+                        break;
+                    }
+                }
+            }
+            Vector2 collisionDepth = Collision.CalculateIntersectionDepth(owner_cast.IsometricBoundingBox, collidingBoundingBox);
+            owner_cast.Position += collisionDepth;
         }
     }
 

@@ -2,6 +2,8 @@
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
+
 
 
 /// <summary>
@@ -23,7 +25,6 @@ class CharacterSelection : GameObjectList
     static int playersjoined = 0;
     bool[] keyboardjoined = new bool[2];
     bool[] xboxjoined = new bool[4];
-
 
 
     //left in this is 1,2,3,4,5,6. (0,1 for keyboard, 2-5 for xbox. Dictionary translates to the number of the playerborder the player joined in.
@@ -74,6 +75,8 @@ class CharacterSelection : GameObjectList
             controlSprites[i].Position = new Vector2(GameEnvironment.Screen.X / 4 * i + 40, 450);
             Add(controlSprites[i]);
         }
+
+
     }
 
 
@@ -88,6 +91,7 @@ class CharacterSelection : GameObjectList
             launchCount -= (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (launchCount <= 0)
             {
+                MediaPlayer.Stop();
                 GameEnvironment.GameStateManager.SwitchTo("cutscene");
             }
         }
@@ -386,9 +390,9 @@ class CharacterSelection : GameObjectList
 
     }
 
+
     public static int NumberOfPlayers
     {
         get { return playersjoined; }
     }
-
 }

@@ -11,7 +11,7 @@ class Dummy : Monster
         : base("dummy", currentLevel)
     {
         // assign the baseattributes (for resetting) and the actual attributes
-        this.baseattributes.HP = 50;
+        this.baseattributes.HP = 500;
         this.baseattributes.Armour = 0;
         this.baseattributes.Gold = 0;
         this.baseattributes.Attack = 0;
