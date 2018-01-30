@@ -32,3 +32,5 @@ BUNNY 1700 950
 TRAPDOOR 1150 750 99
 HANDLE 1150 900 99
 ENDOFFILE
+
+Hint: Cute bunnies!! Slide your way on the ice to go pet them

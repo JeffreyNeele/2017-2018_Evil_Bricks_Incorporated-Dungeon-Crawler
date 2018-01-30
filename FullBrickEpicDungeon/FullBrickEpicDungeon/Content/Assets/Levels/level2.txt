@@ -34,3 +34,5 @@ DUMMY 900 500
 TRAPDOOR 1750 300 99
 HANDLE 1750 500 99
 ENDOFFILE
+
+Hint: more dummies, what now...
