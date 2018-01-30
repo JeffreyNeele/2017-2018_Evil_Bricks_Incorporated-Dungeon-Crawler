@@ -1,3 +1,7 @@
+Het spel kan gespeeld worden met 2 spelers op een keyboard, of tot 4 spelers met 
+xboxcontrollers erbij. Voor de meest optimale ervaring worden 4 xboxcontrollers aangeraden.
+
+
 # Roy-T.AStar
 A fast 2D path finding library based on the A* algorithm for `.NETStandard 1.0` and `.Net 4.5` and higher. This library has no external dependencies. The library is licensed under the MIT license, see the `LICENSE` file for more details.
 
