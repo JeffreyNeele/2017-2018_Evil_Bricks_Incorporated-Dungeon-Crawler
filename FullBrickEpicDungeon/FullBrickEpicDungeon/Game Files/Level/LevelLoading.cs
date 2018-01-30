@@ -28,12 +28,9 @@ partial class Level : GameObjectList
         fileReader.Close();
         // a list for the currently stored lines in a for loop
         List<string> storedLines = new List<string>();
-        // list that loads the level information
 
         //Hints
         LoadHints(fileLines[fileLines.Count - 1]);
-
-
         for (int i = 0; i < fileLines.Count; i++)
         {
             // if we reach TILES this means that the qualification for the next for loop has been reached and we dont need any more information for this loop
