@@ -30,7 +30,21 @@ partial class Level : GameObjectList
         List<string> storedLines = new List<string>();
         // list that loads the level information
 
-        for(int i = 0; i < fileLines.Count; i++)
+        //Hints
+        GameObjectList hintField = new GameObjectList(100);
+        Add(hintField);
+        string hint = fileLines[fileLines.Count - 1];
+        SpriteGameObject hintFrame = new SpriteGameObject("Assets/Sprites/Conversation Boxes/Hintbox", 1);
+        hintField.Position = new Vector2((GameEnvironment.Screen.X - hintFrame.Width) / 2, 10);
+        hintField.Add(hintFrame);
+        TextGameObject hintText = new TextGameObject("Assets/Fonts/ConversationFont", 2);
+        hintText.Text = fileLines[fileLines.Count - 1];
+        hintText.Position = new Vector2(120, 25);
+        hintText.Color = Color.Black;
+        hintField.Add(hintText);
+
+
+        for (int i = 0; i < fileLines.Count; i++)
         {
             // if we reach TILES this means that the qualification for the next for loop has been reached and we dont need any more information for this loop
             if (fileLines[i] == "TILES")
@@ -48,13 +62,6 @@ partial class Level : GameObjectList
                 Add(levelTileField);
                 storedLines.Clear();
             }
-
-            //else if (fileLines[i] == "HINT")
-            //{
-            //    // displays the hint on the top of the screen
-            //    HintTextDisplayer(storedLines);
-            //    storedLines.Clear();
-            //}
 
             else if (fileLines[i] == "ENDOFFILE")
             {
