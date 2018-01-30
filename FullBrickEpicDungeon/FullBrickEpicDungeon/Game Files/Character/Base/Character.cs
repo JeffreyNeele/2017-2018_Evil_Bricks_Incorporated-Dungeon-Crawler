@@ -20,7 +20,7 @@ abstract partial class Character : AnimatedGameObject
     //controllernumber is the number of the XboxController, controlsNumber is 0 to 5, 0 and 1, keyboard. 2-5, xbox.
     protected int playerNumber, controllerNumber, controlsnumber;
     protected bool playerControlled = true;
-    protected Vector2 walkingdirection, previousWalkingDirection;
+    protected Vector2 walkingdirection, previousWalkingDirection, previousPosition = new Vector2(0, 0);
     protected BaseAI AI;
     protected Healthbar healthbar;
     protected KeyItem characterKey = null;
@@ -131,7 +131,8 @@ abstract partial class Character : AnimatedGameObject
             // Update for if the player is AI
             if (!playerControlled)
             {
-                Vector2 previousPosition = this.position;
+                if(this.position != previousPosition)
+                    previousPosition = this.position;
                 AI.Update(gameTime);
                 if (!(previousPosition == this.position) && stepSoundTimer.IsExpired)
                 {
@@ -141,9 +142,9 @@ abstract partial class Character : AnimatedGameObject
                 // Play animations for the AI
                 PlayAnimationDirection(position - previousPosition);
                 if(weapon.IsBaseAA)
-                    weapon.SwordDirectionCheckerManager(position - previousPosition);
+                    weapon.SwordDirectionCheckerManager(AI.DirectionAI);
                 else if(weapon.IsShieldAA)
-                    weapon.ShieldDirectionCheckerManager(position - previousPosition);
+                    weapon.ShieldDirectionCheckerManager(AI.DirectionAI);
             }
             
             //When a character takes damage, let the character blink as an indication.

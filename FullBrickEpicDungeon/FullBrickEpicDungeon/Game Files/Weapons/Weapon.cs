@@ -297,7 +297,7 @@ abstract class Weapon : AnimatedGameObject
             case "Right":
                 Position = new Vector2(Owner.Position.X + 30, Owner.Position.Y - 10);
                 PlayAnimation("shield_right");
-                owner.PlayAnimation("attack_fromright");
+                owner.PlayAnimation("attack_fromleft");
                 break;
             default:
                 throw new ArgumentException("No direction given to play animations for");

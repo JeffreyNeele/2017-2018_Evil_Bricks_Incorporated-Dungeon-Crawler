@@ -369,6 +369,11 @@ class BaseAI
         set { movementSpeed = value; }
     }
 
+    public Vector2 DirectionAI
+    {
+        get { return direction; }
+    }
+
     public SpriteGameObject Owner
     {
         get { return owner; }
