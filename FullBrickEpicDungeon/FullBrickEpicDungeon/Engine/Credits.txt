@@ -1,3 +1,3 @@
 ﻿Credits:
 
-Game uses a modified version of the GameManagement folder of the Tick Tick Game. (these classes wont be commented unless it is a change made by us)
+Game uses a modified version of the GameManagement folder of the Tick Tick Game.
