@@ -112,7 +112,7 @@ class PlayingState : IGameLoopObject
 
     public void ResetLevelIndex()
     {
-        currentLevelIndex = 2;
+        currentLevelIndex = 1;
     }
 
     // returns the current level being used in the state
@@ -128,6 +128,16 @@ class PlayingState : IGameLoopObject
     {
         get { return levelTimer; }
         set { levelTimer = value; }
+    }
+
+    public int LevelIndex
+    {
+        get { return currentLevelIndex; }
+    }
+
+    public int TotalLevels
+    {
+        get { return numberOfLevels; }
     }
 
 }

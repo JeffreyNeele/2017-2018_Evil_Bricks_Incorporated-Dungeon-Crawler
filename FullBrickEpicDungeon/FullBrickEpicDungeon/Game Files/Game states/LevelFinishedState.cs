@@ -29,9 +29,15 @@ class LevelFinishedState : IGameLoopObject
     {
         if (inputHelper.KeyPressed(Keys.E) || inputHelper.AnyPlayerPressed(Buttons.Y))
         {
-            (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).GoToNextLevel();
-            (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).Reset();
-            GameEnvironment.GameStateManager.SwitchTo("playingState");
+            if((GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).LevelIndex == (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).TotalLevels)
+                (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).GoToNextLevel();
+            else
+            {
+                (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).GoToNextLevel();
+                (GameEnvironment.GameStateManager.GetGameState("playingState") as PlayingState).Reset();
+                GameEnvironment.GameStateManager.SwitchTo("playingState");
+            }
+
 
         }
     }
