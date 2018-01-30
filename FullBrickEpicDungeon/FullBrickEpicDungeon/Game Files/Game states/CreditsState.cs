@@ -21,8 +21,7 @@ class CreditsState : MenuState
     {
         // Load the background
         creditsBackground = GameEnvironment.AssetManager.GetSprite("Assets/Credits/Achtergrond");
-        credits = new GameObjectList(99);
-        // vervangen door een goeie achtergrond !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        credits = new GameObjectList(100);
         LoadCredits("Assets/Credits/CreditText.txt");
     }
 
@@ -56,7 +55,6 @@ class CreditsState : MenuState
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
-        // vervangen door een goeie achtergrond met credits ipv settings. !!!!!
         spriteBatch.Draw(creditsBackground, Vector2.Zero, Color.White);
         credits.Draw(gameTime, spriteBatch);
         base.Draw(gameTime, spriteBatch);
@@ -100,8 +98,7 @@ class CreditsState : MenuState
 
 
     public void LoadCredits(string path)
-    {
-        // call with "Assets/Credits/CreditText" //
+    {  // leest de tekst uit de .txt file uit
         path = "Content/" + path;
         List<string> textLines = new List<string>();
         StreamReader fileReader = new StreamReader(path);
@@ -115,7 +112,7 @@ class CreditsState : MenuState
         ShowCredits(textLines);
     }
 
-
+       // tekent de tekst op het scherm
     private void ShowCredits(List<string> creditLines)
     {
         for (int i = 0; i < creditLines.Count; i++)
@@ -129,19 +126,4 @@ class CreditsState : MenuState
             credits.Add(creditline);
         }
     }
-
-    //public void ShowCredit()
-    //{
-    //    conversationFrame = new SpriteGameObject("Assets/Sprites/Conversation Boxes/conversationbox1", 0, "", 10, false);
-    //    Position = new Vector2(GameEnvironment.Screen.X / 2 - conversationFrame.Width / 2, GameEnvironment.Screen.Y * 3 / 4);
-    //    Add(conversationFrame);
-    //    TextGameObject currentText = new TextGameObject("Assets/Fonts/ConversationFont", 0, "currentlydisplayedtext")
-    //    {
-    //        Color = Color.White,
-    //        Text = textLines[convIndex],
-    //        Position = new Vector2(100, conversationFrame.Height / 2 - 20)
-    //    };
-    //    displayedText.Add(currentText);
-    //}
-
 }
