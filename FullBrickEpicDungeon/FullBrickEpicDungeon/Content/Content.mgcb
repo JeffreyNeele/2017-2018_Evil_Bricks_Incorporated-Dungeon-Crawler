@@ -1772,18 +1772,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Credits/credits.png
 
-#begin Assets/Credits/Achtergrond.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Credits/Achtergrond.jpg
-
 #begin Assets/Levels/level12.txt
 /copy:Assets/Levels/level12.txt
 
@@ -1945,4 +1933,16 @@
 
 #begin Assets/Cutscenes/HintText.txt
 /copy:Assets/Cutscenes/HintText.txt
+
+#begin Assets/Credits/Achtergrond.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Credits/Achtergrond.png
 
