@@ -101,7 +101,7 @@ class CreditsState : MenuState
 
     public void LoadCredits(string path)
     {
-            // call with "Assets/Credits/CreditText" //
+        // call with "Assets/Credits/CreditText" //
         path = "Content/" + path;
         List<string> textLines = new List<string>();
         StreamReader fileReader = new StreamReader(path);
@@ -118,7 +118,7 @@ class CreditsState : MenuState
 
     private void ShowCredits(List<string> creditLines)
     {
-        for(int i = 0; i < creditLines.Count; i++)
+        for (int i = 0; i < creditLines.Count; i++)
         {
             TextGameObject creditline = new TextGameObject("Assets/Fonts/ConversationFont")
             {

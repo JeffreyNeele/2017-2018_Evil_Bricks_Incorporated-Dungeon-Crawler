@@ -1943,3 +1943,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Menu/exitgame.png
 
+#begin Assets/Cutscenes/HintText.txt
+/copy:Assets/Cutscenes/HintText.txt
+

@@ -330,13 +330,13 @@ protected void LevelInformationLoader(List<string> informationStringList)
         switch (textArray[3])
         {
             case "RED":
-                teacup = new Teacup("Assets/Sprites/InteractiveObjects/Teapot Red", "redteacup", 0);
+                teacup = new Teacup("Assets/Sprites/InteractiveObjects/Teapot Red", this, "redteacup", 0);
                 break;
             case "GREEN":
-                teacup = new Teacup("Assets/Sprites/InteractiveObjects/Teapot Green", "greenteacup", 0);
+                teacup = new Teacup("Assets/Sprites/InteractiveObjects/Teapot Green", this, "greenteacup", 0);
                 break;
             case "BLUE":
-                teacup = new Teacup("Assets/Sprites/InteractiveObjects/Teapot Blue", "blueteacup", 0);
+                teacup = new Teacup("Assets/Sprites/InteractiveObjects/Teapot Blue", this, "blueteacup", 0);
                 break;
             default:
                 throw new ArgumentException("The given color " + textArray[3] + " was not found in the switch statement!");

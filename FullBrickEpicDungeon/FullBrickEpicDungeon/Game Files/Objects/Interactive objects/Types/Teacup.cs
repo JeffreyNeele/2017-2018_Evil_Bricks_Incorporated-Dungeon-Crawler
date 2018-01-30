@@ -8,7 +8,7 @@ class Teacup : InteractiveObject
 {
     int objectnumber = 0;
 
-    public Teacup(string assetname, string id, int sheetIndex) : base(assetname, id, sheetIndex)
+    public Teacup(string assetname, Level currentlevel, string id, int sheetIndex) : base(assetname, currentlevel,  id, sheetIndex)
     {
     }
 
