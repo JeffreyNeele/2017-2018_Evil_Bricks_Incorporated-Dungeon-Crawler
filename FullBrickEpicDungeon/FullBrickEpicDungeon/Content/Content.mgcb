@@ -1540,54 +1540,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Level_Finished/level_completed.png
 
-#begin Assets/Sprites/Shieldmaiden/shieldmaiden_die_blue@2.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/Shieldmaiden/shieldmaiden_die_blue@2.png
-
-#begin Assets/Sprites/Shieldmaiden/shieldmaiden_die_default@2.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/Shieldmaiden/shieldmaiden_die_default@2.png
-
-#begin Assets/Sprites/Shieldmaiden/shieldmaiden_die_green@2.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/Shieldmaiden/shieldmaiden_die_green@2.png
-
-#begin Assets/Sprites/Shieldmaiden/shieldmaiden_die_orange@2.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Sprites/Shieldmaiden/shieldmaiden_die_orange@2.png
-
 #begin Assets/Conversations/LarryCaptured.txt
 /copy:Assets/Conversations/LarryCaptured.txt
 
@@ -2338,6 +2290,54 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Shieldmaiden/PaladinOrangeShield.png
+
+#begin Assets/Sprites/Shieldmaiden/shieldmaiden_die_blue.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Shieldmaiden/shieldmaiden_die_blue.png
+
+#begin Assets/Sprites/Shieldmaiden/shieldmaiden_die_default.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Shieldmaiden/shieldmaiden_die_default.png
+
+#begin Assets/Sprites/Shieldmaiden/shieldmaiden_die_green.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Shieldmaiden/shieldmaiden_die_green.png
+
+#begin Assets/Sprites/Shieldmaiden/shieldmaiden_die_orange.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Sprites/Shieldmaiden/shieldmaiden_die_orange.png
 
 #begin Assets/Levels/level5.txt
 /copy:Assets/Levels/level5.txt
