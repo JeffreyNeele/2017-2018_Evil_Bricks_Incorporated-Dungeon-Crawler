@@ -18,7 +18,7 @@ abstract class Weapon : AnimatedGameObject
     protected string idBaseAA, idMainAbility, idSpecialAbility, idAnimation;
     protected GameObjectList monsterObjectList;
     protected GameObjectGrid fieldList;
-    protected bool isAttacking;
+    protected bool isAttacking, shieldAnimation, SwordAnimation;
     Timer attackAnimationTimer;
     /// <summary>
     /// Creates a weapon for a character
@@ -46,14 +46,23 @@ abstract class Weapon : AnimatedGameObject
         if (attackAnimationTimer.IsExpired)
         {
             isAttacking = false;
+            SwordAnimation = false;
+            shieldAnimation = false;
             attackAnimationTimer.Reset();
         }
 
         if (!this.CurrentAnimation.AnimationEnded)
+        {
             if (idAnimation == idBaseAA)
+            {
                 AnimationAttackCheck();
+            }
             else if (idAnimation == idMainAbility)
+            {
                 AnimationMainCheck();
+            }
+        }
+
 
         BasicAttack.Update(gameTime);
         mainAbility.Update(gameTime);
@@ -124,7 +133,7 @@ abstract class Weapon : AnimatedGameObject
     public void SwordDirectionCheckerManager(Vector2 walkingdirection)
     {
         string attackDirection = "";
-        if (isAttacking)
+        if (isAttacking && SwordAnimation)
         {
             if (Math.Abs(walkingdirection.X) >= Math.Abs(walkingdirection.Y))
             {
@@ -208,6 +217,93 @@ abstract class Weapon : AnimatedGameObject
         }
     }
 
+    public void ShieldDirectionCheckerManager(Vector2 walkingdirection)
+    {
+        string attackDirection = "";
+        if (isAttacking && shieldAnimation)
+        {
+            if (Math.Abs(walkingdirection.X) >= Math.Abs(walkingdirection.Y))
+            {
+                attackDirection = HorizontalShieldDirection(walkingdirection);
+            }
+            else if (Math.Abs(walkingdirection.Y) > Math.Abs(walkingdirection.X))
+            {
+                attackDirection = VerticalShieldDirection(walkingdirection);
+            }
+            PlayShieldAnimations(attackDirection);
+        }
+    }
+
+    private string HorizontalShieldDirection(Vector2 walkingdirection)
+    {
+        if (walkingdirection.X > 0)
+        {
+            return "Right";
+        }
+        else if (walkingdirection.X <= 0)
+        {
+            return "Left";
+        }
+        return "";
+    }
+
+    private string VerticalShieldDirection(Vector2 walkingdirection)
+    {
+        if (walkingdirection.Y > 0)
+        {
+            return "Down";
+        }
+        else if (Math.Abs(walkingdirection.Y) > Math.Abs(walkingdirection.X))
+        {
+            return "Up";
+        }
+        else if (Math.Abs(walkingdirection.X) == Math.Abs(walkingdirection.Y) && walkingdirection.X > 0)
+        {
+            return "Right";
+        }
+        else if (Math.Abs(walkingdirection.X) == Math.Abs(walkingdirection.Y) && walkingdirection.X <= 0)
+        {
+            return "Left";
+        }
+        return "";
+    }
+
+    /// <summary>
+    /// PLays the correct animations for shield attacks
+    /// </summary>
+    /// <param name="attackDirection">string that represents the attack direction</param>
+    private void PlayShieldAnimations(string attackDirection)
+    {
+        switch (attackDirection)
+        {
+            // If the string is empty, we have no animation to play so we return
+            case "":
+                return;
+            case "Up":
+                Position = new Vector2(Owner.Position.X, Owner.Position.Y - 30);
+                PlayAnimation("shield_up");
+                owner.PlayAnimation("attack_upwards");
+                break;
+            case "Down":
+                Position = new Vector2(Owner.Position.X, Owner.Position.Y + 30);
+                PlayAnimation("shield_down");
+                owner.PlayAnimation("attack_downwards");
+                break;
+            case "Left":
+                Position = new Vector2(Owner.Position.X - 30, Owner.Position.Y - 10);
+                PlayAnimation("shield_left");
+                owner.PlayAnimation("attack_fromleft");
+                break;
+            case "Right":
+                Position = new Vector2(Owner.Position.X + 30, Owner.Position.Y - 10);
+                PlayAnimation("shield_right");
+                owner.PlayAnimation("attack_fromleft");
+                break;
+            default:
+                throw new ArgumentException("No direction given to play animations for");
+        }
+    }
+
     // Properties for the weapon
     public int AttackDamage
     {
@@ -221,6 +317,17 @@ abstract class Weapon : AnimatedGameObject
         set { isAttacking = true; }
     }
 
+    public bool IsBaseAA
+    {
+        get { return SwordAnimation; }
+        set { SwordAnimation = value; }
+    }
+
+    public bool IsShieldAA
+    {
+        get { return shieldAnimation; }
+        set { shieldAnimation = value; }
+    }
     public int GoldWorth
     {
         get { return goldCost; }

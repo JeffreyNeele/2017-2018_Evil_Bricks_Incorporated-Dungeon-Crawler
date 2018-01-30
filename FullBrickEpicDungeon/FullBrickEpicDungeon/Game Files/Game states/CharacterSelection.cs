@@ -26,8 +26,7 @@ class CharacterSelection : GameObjectList
     bool[] keyboardjoined = new bool[2];
     bool[] xboxjoined = new bool[4];
 
-    GameObjectList hintText;
-
+    TextGameObject hintline;
 
     //left in this is 1,2,3,4,5,6. (0,1 for keyboard, 2-5 for xbox. Dictionary translates to the number of the playerborder the player joined in.
     static Dictionary<int, int> playerborder = new Dictionary<int, int>();
@@ -60,9 +59,6 @@ class CharacterSelection : GameObjectList
         SpriteGameObject backgroundSprite = new SpriteGameObject("Assets/Sprites/Character selection/Achtergrond");
         Add(backgroundSprite);
 
-        hintText = new GameObjectList(100);
-        LoadHint("Assets/CharacterSelection/HintText.txt");
-
         //Make a list of all the possible character sprites, also place all the necessary components
         for (int i = 0; i < 4; i++)
         {
@@ -81,6 +77,12 @@ class CharacterSelection : GameObjectList
             Add(controlSprites[i]);
         }
 
+        hintline = new TextGameObject("Assets/Fonts/ConversationFont", 100)
+        {
+            Color = Color.Black,
+            Text = "Press interact to lock in",
+            Position = new Vector2(50, 65)
+    };
     }
 
 
@@ -99,14 +101,15 @@ class CharacterSelection : GameObjectList
                 GameEnvironment.GameStateManager.SwitchTo("cutscene");
             }
         }
-        hintText.Update(gameTime);
+
         base.Update(gameTime);
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
-        hintText.Draw(gameTime, spriteBatch);
+
         base.Draw(gameTime, spriteBatch);
+        hintline.Draw(gameTime, spriteBatch);
     }
 
 
@@ -352,36 +355,6 @@ class CharacterSelection : GameObjectList
             GameEnvironment.AssetManager.PlaySound("Assets/SFX/button_click");
     }
 
-
-    private void LoadHint(string path)
-    {
-        path = "Content/" + path;
-        List<string> textLines = new List<string>();
-        StreamReader fileReader = new StreamReader(path);
-        string line = fileReader.ReadLine();
-        int width = line.Length;
-        while (line != null)
-        {
-            textLines.Add(line);
-            line = fileReader.ReadLine();
-        }
-        ShowHint(textLines);
-    }
-
-
-    private void ShowHint(List<string> hintLines)
-    {
-        for (int i = 0; i < hintLines.Count; i++)
-        {
-            TextGameObject hintline = new TextGameObject("Assets/Fonts/ConversationFont", 100)
-            {
-                Color = Color.Black,
-                Text = hintLines[i],
-            };
-            hintline.Position = new Vector2(GameEnvironment.Screen.X / 2 - hintline.Size.X / 2, 20 + i * 50);
-            hintText.Add(hintline);
-        }
-    }
 
 
 

@@ -20,7 +20,7 @@ class PlayingState : IGameLoopObject
     /// </summary>
     public PlayingState()
     {
-        currentLevelIndex = 1;
+        currentLevelIndex = 2;
         levelArray = new Level[numberOfLevels + 1]; //10 levels
     }
 

@@ -20,10 +20,11 @@ abstract partial class Character : AnimatedGameObject
     //controllernumber is the number of the XboxController, controlsNumber is 0 to 5, 0 and 1, keyboard. 2-5, xbox.
     protected int playerNumber, controllerNumber, controlsnumber;
     protected bool playerControlled = true;
-    protected Vector2 walkingdirection, previousWalkingDirection;
+    protected Vector2 walkingdirection, previousWalkingDirection, previousPosition = new Vector2(0, 0);
     protected BaseAI AI;
     protected Healthbar healthbar;
     protected KeyItem characterKey = null;
+    protected string playerColor;
     //Constructor: sets up the controls given to the constructor for each player (xbox or keyboard)
     protected Character(int playerNumber, int controlsNumber, Level currentLevel, string id = "") : base(0, id)
     {
@@ -130,7 +131,8 @@ abstract partial class Character : AnimatedGameObject
             // Update for if the player is AI
             if (!playerControlled)
             {
-                Vector2 previousPosition = this.position;
+                if(this.position != previousPosition)
+                    previousPosition = this.position;
                 AI.Update(gameTime);
                 if (!(previousPosition == this.position) && stepSoundTimer.IsExpired)
                 {
@@ -139,7 +141,10 @@ abstract partial class Character : AnimatedGameObject
                 }
                 // Play animations for the AI
                 PlayAnimationDirection(position - previousPosition);
-                weapon.SwordDirectionCheckerManager(position - previousPosition);
+                if(weapon.IsBaseAA)
+                    weapon.SwordDirectionCheckerManager(AI.DirectionAI);
+                else if(weapon.IsShieldAA)
+                    weapon.ShieldDirectionCheckerManager(AI.DirectionAI);
             }
             
             //When a character takes damage, let the character blink as an indication.
@@ -392,6 +397,11 @@ abstract partial class Character : AnimatedGameObject
     public int PlayerNumber
     {
         get { return playerNumber; }
+    }
+
+    public string PlayerColor
+    {
+        get { return playerColor; }
     }
 
     public bool XBOXcontrolled
