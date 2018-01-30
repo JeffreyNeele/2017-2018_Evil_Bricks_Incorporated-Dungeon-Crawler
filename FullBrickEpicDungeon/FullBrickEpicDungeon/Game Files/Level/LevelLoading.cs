@@ -31,17 +31,7 @@ partial class Level : GameObjectList
         // list that loads the level information
 
         //Hints
-        GameObjectList hintField = new GameObjectList(100);
-        Add(hintField);
-        string hint = fileLines[fileLines.Count - 1];
-        SpriteGameObject hintFrame = new SpriteGameObject("Assets/Sprites/Conversation Boxes/Hintbox", 1);
-        hintField.Position = new Vector2((GameEnvironment.Screen.X - hintFrame.Width) / 2, 10);
-        hintField.Add(hintFrame);
-        TextGameObject hintText = new TextGameObject("Assets/Fonts/ConversationFont", 2);
-        hintText.Text = fileLines[fileLines.Count - 1];
-        hintText.Position = new Vector2(120, 25);
-        hintText.Color = Color.Black;
-        hintField.Add(hintText);
+        LoadHints(fileLines[fileLines.Count - 1]);
 
 
         for (int i = 0; i < fileLines.Count; i++)
@@ -74,11 +64,27 @@ partial class Level : GameObjectList
         }
     }
 
-/// <summary>
-/// Loads the level information
-/// </summary>
-/// <param name="informationStringList">given string list that corresponds to the level information</param>
-protected void LevelInformationLoader(List<string> informationStringList)
+    private void LoadHints(string hint)
+    {
+        GameObjectList hintField = new GameObjectList(100);
+        Add(hintField);
+        SpriteGameObject hintFrame = new SpriteGameObject("Assets/Sprites/Conversation Boxes/Hintbox", 1);
+        hintField.Position = new Vector2((GameEnvironment.Screen.X - hintFrame.Width) / 2, 10);
+        hintField.Add(hintFrame);
+        TextGameObject hintText = new TextGameObject("Assets/Fonts/ConversationFont", 2)
+        {
+            Text = hint,
+            Position = new Vector2(120, 25),
+            Color = Color.Black
+        };
+        hintField.Add(hintText);
+    }
+
+    /// <summary>
+    /// Loads the level information
+    /// </summary>
+    /// <param name="informationStringList">given string list that corresponds to the level information</param>
+    protected void LevelInformationLoader(List<string> informationStringList)
     {
         this.id = "LEVEL_" + informationStringList[0];
     }
