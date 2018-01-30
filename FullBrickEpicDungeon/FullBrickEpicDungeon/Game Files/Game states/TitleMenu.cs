@@ -21,8 +21,9 @@ class TitleMenuState : MenuState
 
     protected override void FillButtonList()
     {
+        // Make the button seperation less so all buttons fit on screen
         buttonSeparation = 200;
-        // load a settings and start button
+        //Load buttons for the title screen
         startButton = new Button("Assets/Sprites/Menu/StartButton");
         buttonList.Add(startButton);
 
@@ -42,6 +43,7 @@ class TitleMenuState : MenuState
 
     public override void Initialize()
     {
+        // play music if there is no music already playing and the global boolean is set to true
         if(MediaPlayer.State == MediaState.Stopped && FullBrickEpicDungeon.DungeonCrawler.music)
             GameEnvironment.AssetManager.PlayMusic("Assets/Music/menu");
         base.Initialize();

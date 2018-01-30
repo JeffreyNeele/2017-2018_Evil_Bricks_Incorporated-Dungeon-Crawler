@@ -26,6 +26,7 @@ namespace FullBrickEpicDungeon
         protected override void Initialize()
         {
             base.Initialize();
+            // set the appropiate graphics settings
             screen = new Point(1900, 1050);
             windowSize = new Point(1920, 1080);
             FullScreen = false;
@@ -33,7 +34,7 @@ namespace FullBrickEpicDungeon
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-
+            // Load the gamestates
             GameStateManager.AddGameState("titleMenu", new TitleMenuState());
             GameStateManager.AddGameState("settingsState", new SettingsState());
             GameStateManager.AddGameState("characterSelection", new CharacterSelection());
@@ -76,6 +77,7 @@ namespace FullBrickEpicDungeon
             else
                 IsMouseVisible = false;
 
+            // If the exitgame boolean changes to true we immediately exit the game
             if (exitGame)
                 Exit();
 

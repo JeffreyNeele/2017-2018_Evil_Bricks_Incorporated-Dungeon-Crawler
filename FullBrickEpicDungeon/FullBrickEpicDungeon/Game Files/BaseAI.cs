@@ -58,6 +58,7 @@ class BaseAI
         if (targetedObject == null)
         {
             LineOfSightChecker(sightRange);
+            //if we do not find a target as a character AI and we are currently in a wall, get out of this wall
             if (!isMonster)
             {
                 LineOfSightChecker(sightRange);
@@ -101,26 +102,33 @@ class BaseAI
         }
     }
 
+    /// <summary>
+    /// Method that puts the AI out of a wall, is used because the AI does not have a complete obstacle avoidance,
+    /// and this method makes it so the player can always switch to the AI and not get stuck
+    /// </summary>
     public void GetOutWallChecker()
     {
         Character owner_cast = owner as Character;
         if (!owner_cast.SolidCollisionChecker())
         {
             GameObjectGrid field = currentLevel.GameWorld.Find("TileField") as GameObjectGrid;
+            // Rectangle that is set to zero but will be assigned to the tile the character is colloding with
             Rectangle collidingBoundingBox = new Rectangle(0, 0, 0, 0);
-            // Define a quarter bounding box (the feet plus part of the legs) for isometric collision
             for (int x = 0; x < field.Columns; x++)
             {
                 for (int y = 0; y < field.Rows; y++)
                 {
                     if ((field.Objects[x, y] as Tile).IsSolid && (field.Objects[x, y] as Tile).BoundingBox.Intersects(owner_cast.IsometricBoundingBox))
                     {
+                        // if we find the bounding box the AI collides with, assign it to the colliding bounding box
                         collidingBoundingBox = (field.Objects[x, y] as Tile).BoundingBox;
                         break;
                     }
                 }
             }
+            // Calculate the collisiondepth
             Vector2 collisionDepth = Collision.CalculateIntersectionDepth(owner_cast.IsometricBoundingBox, collidingBoundingBox);
+            // Place the character outside the wall
             owner_cast.Position += collisionDepth;
         }
     }

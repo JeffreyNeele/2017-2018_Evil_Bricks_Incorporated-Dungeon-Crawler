@@ -61,6 +61,7 @@ class CutsceneState : IGameLoopObject
     /// </summary>
     public void Initialize()
     {
+        // Play music if the conditions (global boolean and there is not already music) are met
         if(FullBrickEpicDungeon.DungeonCrawler.music && MediaPlayer.State == MediaState.Stopped)
             GameEnvironment.AssetManager.PlayMusic("Assets/Music/cutscene");
         GameEnvironment.GameStateManager.SwitchTo("conversation");
