@@ -80,12 +80,14 @@ class SettingsState : MenuState
                         {
                             FullBrickEpicDungeon.DungeonCrawler.music = false;
                             music.Sprite.SheetIndex = 1;
+                            // Instantly stop the music upon the button being turned off
                             MediaPlayer.Stop();
                         }
                         else
                         {
                             FullBrickEpicDungeon.DungeonCrawler.music = true;
                             music.Sprite.SheetIndex = 0;
+                            // restart the music if it was not already there
                             if(MediaPlayer.State == MediaState.Stopped)
                                 GameEnvironment.AssetManager.PlayMusic("Assets/Music/menu");
                         }

@@ -368,6 +368,9 @@ abstract partial class Character : AnimatedGameObject
         get { return weapon; }
         set { weapon = value; }
     }
+    /// <summary>
+    /// Isometric bounding box used for collision and tiles
+    /// </summary>
     public Rectangle IsometricBoundingBox
     {
         get { return new Rectangle((int)this.BoundingBox.X, (int)(this.BoundingBox.Y + 0.75 * Height), this.Width, (int)(this.Height / 4)); }

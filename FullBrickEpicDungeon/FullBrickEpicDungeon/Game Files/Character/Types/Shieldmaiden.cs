@@ -31,6 +31,7 @@ class Shieldmaiden : Character
                 throw new IndexOutOfRangeException("playerNumber was not between 1 and 4, the given number was: " +playerNumber);
         }
 
+        // Load the animations for the shield maiden
         LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_" + playerColor, "idle", false);
         LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_die_" + playerColor + "@2", "die", false);
         LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_walk_back_" + playerColor + "@4", "backcycle", true, 0.2F);

@@ -50,6 +50,9 @@ class PlayingState : IGameLoopObject
         
     }
 
+    /// <summary>
+    /// A cheat menu that allows the player to switch levels instantly
+    /// </summary>
     private void CheatsHandler(InputHelper inputHelper)
     {
         if((inputHelper.KeyPressed(Keys.F1) || inputHelper.ButtonPressed(1, Buttons.DPadLeft)) && currentLevelIndex > 1)
@@ -118,6 +121,9 @@ class PlayingState : IGameLoopObject
         get { return levelArray[currentLevelIndex]; }
     }
 
+    /// <summary>
+    /// Property used to tell the levelfinished state how long the players took over the current level
+    /// </summary>
     public TimeSpan LevelTime
     {
         get { return levelTimer; }
