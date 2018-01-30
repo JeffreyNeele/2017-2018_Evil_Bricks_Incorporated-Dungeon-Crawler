@@ -71,7 +71,7 @@ partial class Level : GameObjectList
         TextGameObject hintText = new TextGameObject("Assets/Fonts/ConversationFont", 2)
         {
             Text = hint,
-            Position = new Vector2(120, 25),
+            Position = new Vector2(90, 25),
             Color = Color.Black
         };
         hintField.Add(hintText);

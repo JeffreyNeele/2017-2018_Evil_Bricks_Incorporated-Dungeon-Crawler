@@ -131,4 +131,4 @@ BOSSBUNNY 1800 800 34
 PENGUIN 1800 850 35
 ENDOFFILE
 
-Hint: Finding the right handle is the key to success. Becareful of monsters!
+Hint: Finding the right handle is the key to success. Be careful of monsters!
