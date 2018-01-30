@@ -122,7 +122,7 @@ class CreditsState : MenuState
         {
             TextGameObject creditline = new TextGameObject("Assets/Fonts/ConversationFont")
             {
-                Color = Color.Black,
+                Color = Color.Red,
                 Text = creditLines[i],
             };
             creditline.Position = new Vector2(GameEnvironment.Screen.X / 2 - creditline.Size.X / 2, 200 + i * 50);
