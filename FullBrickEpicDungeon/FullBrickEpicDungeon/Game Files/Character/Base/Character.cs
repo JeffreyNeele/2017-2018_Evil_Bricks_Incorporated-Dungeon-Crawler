@@ -19,7 +19,6 @@ abstract partial class Character : AnimatedGameObject
     protected Vector2 startPosition, movementSpeed, iceSpeed;
     protected int playerNumber, controllerNumber;
     protected bool playerControlled = true;
-    public bool healthCheat = false;
     protected Vector2 walkingdirection, previousWalkingDirection;
     protected BaseAI AI;
     protected Healthbar healthbar;
@@ -316,10 +315,6 @@ abstract partial class Character : AnimatedGameObject
     /// <param name="damage">the amount of damage to take</param>
     public void TakeDamage(int damage)
     {
-        // if the infinite health cheat is enabled we return from the method immediately, as we do not take damage.
-        if (healthCheat)
-            return;
-
         // damage is reduced by this characters armour
         int takendamage = (damage - (int)(0.3F * this.attributes.Armour));
         if (takendamage < 5)

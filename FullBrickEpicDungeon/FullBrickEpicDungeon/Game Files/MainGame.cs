@@ -12,7 +12,7 @@ namespace FullBrickEpicDungeon
     public class DungeonCrawler : GameEnvironment
     {
 
-        public static bool SFX = true, music = true, mouseVisible = true, cheats = false;
+        public static bool SFX = true, music = true, mouseVisible = true;
         //SpriteGameObject conversationFrame;
         public DungeonCrawler()
         {
@@ -76,7 +76,7 @@ namespace FullBrickEpicDungeon
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+   
             base.Update(gameTime);
         }
 
