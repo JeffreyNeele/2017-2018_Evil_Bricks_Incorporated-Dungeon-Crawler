@@ -6,7 +6,6 @@ public class SpriteGameObject : GameObject
     protected SpriteSheet sprite;
     protected Vector2 origin, cameraOffset;
     protected Color color = Color.White;
-    protected bool affectedByCamera;
     protected string assetName;
     protected int sheetIndex;
     public bool PerPixelCollisionDetection = true;
@@ -15,7 +14,6 @@ public class SpriteGameObject : GameObject
     {
         this.assetName = assetName;
         this.sheetIndex = sheetIndex;
-        this.affectedByCamera = affectedByCamera;
         if (assetName != "")
         {
             sprite = new SpriteSheet(assetName, sheetIndex);
@@ -76,12 +74,6 @@ public class SpriteGameObject : GameObject
     {
         get { return origin; }
         set { origin = value; }
-    }
-
-    public bool CameraManipulation
-    {
-        get { return affectedByCamera; }
-        set { affectedByCamera = value; }
     }
 
     public Vector2 CameraOffset
