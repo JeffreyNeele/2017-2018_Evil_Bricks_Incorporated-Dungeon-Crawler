@@ -1946,3 +1946,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Credits/Achtergrond.png
 
+#begin Assets/CharacterSelection/HintText.txt
+/copy:Assets/CharacterSelection/HintText.txt
+

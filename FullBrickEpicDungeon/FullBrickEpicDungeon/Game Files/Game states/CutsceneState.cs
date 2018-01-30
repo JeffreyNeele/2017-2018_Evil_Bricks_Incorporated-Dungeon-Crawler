@@ -10,7 +10,7 @@ class CutsceneState : IGameLoopObject
     int currentCutsceneNumber = 0;
     List<Cutscene> cutsceneList = new List<Cutscene>();
     enum Cutscenenames {LarryShits,LarryGetsCaptured,ThroneRoom1,ThroneRoom2};
-    GameObjectList HintText;
+    GameObjectList hintText;
 
 
 
@@ -20,7 +20,7 @@ class CutsceneState : IGameLoopObject
     public CutsceneState()
     {
         LoadCutScenes();
-        HintText = new GameObjectList(100);
+        hintText = new GameObjectList(100);
         LoadHint("Assets/Cutscenes/HintText.txt");
     }
 
@@ -41,13 +41,13 @@ class CutsceneState : IGameLoopObject
     public void Update(GameTime gameTime)
     {
         CurrentCutscene.Update(gameTime);
-        HintText.Update(gameTime);
+        hintText.Update(gameTime);
     }
 
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         CurrentCutscene.Draw(gameTime, spriteBatch);
-        HintText.Draw(gameTime, spriteBatch);
+        hintText.Draw(gameTime, spriteBatch);
     }
 
     public void HandleInput(InputHelper inputHelper)
@@ -98,7 +98,6 @@ class CutsceneState : IGameLoopObject
 
     private void LoadHint(string path)
     {
-        // call with "Assets/Credits/CreditText" //
         path = "Content/" + path;
         List<string> textLines = new List<string>();
         StreamReader fileReader = new StreamReader(path);
@@ -123,7 +122,7 @@ class CutsceneState : IGameLoopObject
                 Text = hintLines[i],
             };
             hintline.Position = new Vector2(GameEnvironment.Screen.X / 2 - hintline.Size.X / 2, 20 + i * 50);
-            HintText.Add(hintline);
+            hintText.Add(hintline);
         }
     }
 
