@@ -60,6 +60,7 @@ class CharacterSelection : GameObjectList
         SpriteGameObject backgroundSprite = new SpriteGameObject("Assets/Sprites/Character selection/Achtergrond");
         Add(backgroundSprite);
 
+        hintText = new GameObjectList(100);
         LoadHint("Assets/CharacterSelection/HintText.txt");
 
         //Make a list of all the possible character sprites, also place all the necessary components
@@ -98,13 +99,13 @@ class CharacterSelection : GameObjectList
                 GameEnvironment.GameStateManager.SwitchTo("cutscene");
             }
         }
-        //hintText.Update(gameTime);
+        hintText.Update(gameTime);
         base.Update(gameTime);
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
-        //hintText.Draw(gameTime, spriteBatch);
+        hintText.Draw(gameTime, spriteBatch);
         base.Draw(gameTime, spriteBatch);
     }
 
@@ -378,7 +379,7 @@ class CharacterSelection : GameObjectList
                 Text = hintLines[i],
             };
             hintline.Position = new Vector2(GameEnvironment.Screen.X / 2 - hintline.Size.X / 2, 20 + i * 50);
-            //hintText.Add(hintline);
+            hintText.Add(hintline);
         }
     }
 
