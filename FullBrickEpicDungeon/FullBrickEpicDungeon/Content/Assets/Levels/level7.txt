@@ -94,4 +94,4 @@ KEY 1800 50 BLUE 2
 KEY 1800 900 RED 1
 ENDOFFILE
 
-note: this is not the actual tutorial level, more like a test level
+Hint:Do not get distracted by the cute bunnies, they still want to  kill you

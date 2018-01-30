@@ -12,7 +12,7 @@ class PlayingState : IGameLoopObject
     // current level that is being used
     protected int currentLevelIndex;
     // amount of levels in the game
-    protected const int numberOfLevels = 11;
+    protected const int numberOfLevels = 10;
     protected bool cheats;
 
     /// <summary>
@@ -20,8 +20,8 @@ class PlayingState : IGameLoopObject
     /// </summary>
     public PlayingState()
     {
-        currentLevelIndex = 2;
-        levelArray = new Level[numberOfLevels + 1]; //10 levels
+        currentLevelIndex = 10;
+        levelArray = new Level[numberOfLevels + 1]; //11 levels
     }
 
     /// <summary>

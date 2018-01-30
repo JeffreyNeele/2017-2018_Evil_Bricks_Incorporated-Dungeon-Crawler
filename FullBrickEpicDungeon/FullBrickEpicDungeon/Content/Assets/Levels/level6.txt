@@ -76,4 +76,4 @@ KEY 1150 650 GREEN 3
 KEY 900 450 ORANGE 4
 ENDOFFILE
 
-note: this is not the actual tutorial level, more like a test level
+Hint: Try to open the middle door first, your sisters will thank you later

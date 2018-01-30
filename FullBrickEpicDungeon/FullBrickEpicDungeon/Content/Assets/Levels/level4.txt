@@ -108,4 +108,4 @@ KEY 1400 50 ALL 5
 KEY 1400 950 ALL 5
 ENDOFFILE
 
-note: this is not the actual tutorial level, more like a test level
+Hint: Traps OMG, but no pain --> no gain. Go and get through the pain.

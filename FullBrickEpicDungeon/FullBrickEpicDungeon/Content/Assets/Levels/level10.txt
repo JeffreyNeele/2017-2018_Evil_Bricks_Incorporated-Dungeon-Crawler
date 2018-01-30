@@ -102,7 +102,7 @@ PENGUIN 1800 150 7
 BUNNY 800 400 8
 BUNNY 1000 640 9
 BOSSBUNNY 1800 900 10
-PENGUIN 10 900 400 13
+PENGUIN 900 400 13
 PENGUIN 80 80 14
 BUNNY 1650 850 15
 BOSSBUNNY 1800 200 16
@@ -130,4 +130,4 @@ BOSSBUNNY 1800 800 34
 PENGUIN 1800 850 35
 ENDOFFILE
 
-note: this is not the actual tutorial level, more like a test level
+Hint: Finding the right handle is the key to success. Becareful of monsters!

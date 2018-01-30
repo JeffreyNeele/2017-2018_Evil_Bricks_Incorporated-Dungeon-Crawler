@@ -95,4 +95,4 @@ KEY 1100 200 GREEN 3
 KEY 1150 850 BLUE 2
 ENDOFFILE
 
-note: this is not the actual tutorial level, more like a test level
+Hint: What a nice hotel, but don't be afraid to get what is yours
