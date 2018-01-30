@@ -108,7 +108,7 @@ partial class Level : GameObjectList
                     };
                     penguin.Reset();
                     if (splitArray.Length == 4)
-                        addHandleSummon(penguin, int.Parse(splitArray[3]));
+                        AddHandleSummon(penguin, int.Parse(splitArray[3]));
                     else
                         monsterList.Add(penguin);
                     break;
@@ -119,7 +119,7 @@ partial class Level : GameObjectList
                     };
                     dummy.Reset();
                     if (splitArray.Length == 4)
-                        addHandleSummon(dummy, int.Parse(splitArray[3]));
+                        AddHandleSummon(dummy, int.Parse(splitArray[3]));
                     else
                         monsterList.Add(dummy);
                     break;
@@ -130,7 +130,7 @@ partial class Level : GameObjectList
                     };
                     bunny.Reset();
                     if (splitArray.Length == 4)
-                        addHandleSummon(bunny, int.Parse(splitArray[3]));
+                        AddHandleSummon(bunny, int.Parse(splitArray[3]));
                     else
                         monsterList.Add(bunny);
                     break;
@@ -141,7 +141,7 @@ partial class Level : GameObjectList
                     };
                     bossBunny.Reset();
                     if (splitArray.Length == 4)
-                        addHandleSummon(bossBunny, int.Parse(splitArray[3]));
+                        AddHandleSummon(bossBunny, int.Parse(splitArray[3]));
                     else
                         monsterList.Add(bossBunny);
                     break;
@@ -152,7 +152,7 @@ partial class Level : GameObjectList
                     };
                     bossPenguin.Reset();
                     if (splitArray.Length == 4)
-                        addHandleSummon(bossPenguin, int.Parse(splitArray[3]));
+                        AddHandleSummon(bossPenguin, int.Parse(splitArray[3]));
                     else
                         monsterList.Add(bossPenguin);
                     break;
@@ -377,7 +377,7 @@ partial class Level : GameObjectList
         playerList.Add(shieldmaiden);
     }
 
-    private void addHandleSummon(Monster monster, int objNumber)
+    private void AddHandleSummon(Monster monster, int objNumber)
     {
         foreach (var obj in objectList.Children)
             if (obj is Handle)
@@ -468,20 +468,4 @@ partial class Level : GameObjectList
         }
         return tileField;
     }
-
-    private void HintTextDisplayer(List<string> text)
-    {
-        GameObjectList hintField = new GameObjectList(100);
-        Add(hintField);
-        string hint = text[1];
-        //SpriteGameObject hintFrame = new SpriteGameObject("Overlays/spr_frame_hint", 1);
-        hintField.Position = new Vector2((GameEnvironment.Screen.X /*- hintFrame.Width*/) / 2, 10);
-        //hintField.Add(hintFrame);
-        TextGameObject hintText = new TextGameObject("Assets/Fonts/ConversationFont.spritefont", 100);
-        hintText.Text = hint;
-        hintText.Position = new Vector2(120, 25);
-        hintText.Color = Color.Black;
-        hintField.Add(hintText);
-    }
-
 }

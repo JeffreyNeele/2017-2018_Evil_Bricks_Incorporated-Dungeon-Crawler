@@ -185,8 +185,8 @@ abstract partial class Character : AnimatedGameObject
         if (inputHelper.IsKeyDown(keyboardControls[Keys.E]))
         {
             InteractCollisionChecker();
-            if (carriedKey != null)
-                carriedKey.useKey();
+            if (CarriedKey != null)
+                CarriedKey.useKey();
         }
 
     }
@@ -206,8 +206,8 @@ abstract partial class Character : AnimatedGameObject
             if (inputHelper.IsKeyDown(keyboardControls[Keys.E]))
             {
                 InteractCollisionChecker();
-                if (carriedKey != null)
-                    carriedKey.useKey();
+                if (CarriedKey != null)
+                    CarriedKey.useKey();
             }
             if (inputHelper.IsKeyDown(keyboardControls[Keys.W]))
             {
@@ -270,8 +270,8 @@ abstract partial class Character : AnimatedGameObject
             if (inputHelper.IsButtonDown(controllerNumber, Buttons.Y))
             {
                 InteractCollisionChecker();
-                if (carriedKey != null)
-                    carriedKey.useKey();
+                if (CarriedKey != null)
+                    CarriedKey.useKey();
             }
             if (inputHelper.ButtonPressed(controllerNumber, Buttons.X) && switchCharacterTimer.IsExpired)
             {
@@ -302,8 +302,8 @@ abstract partial class Character : AnimatedGameObject
             if (inputHelper.IsButtonDown(controllerNumber, Buttons.Y))
             {
                 InteractCollisionChecker();
-                if (carriedKey != null)
-                    carriedKey.useKey();
+                if (CarriedKey != null)
+                    CarriedKey.useKey();
             }
             walkingdirection = inputHelper.WalkingDirection(controllerNumber) * this.movementSpeed;
             walkingdirection.Y = -walkingdirection.Y;

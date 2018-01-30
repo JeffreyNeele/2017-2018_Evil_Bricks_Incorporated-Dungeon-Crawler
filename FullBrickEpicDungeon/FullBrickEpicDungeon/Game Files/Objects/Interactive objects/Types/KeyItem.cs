@@ -38,7 +38,7 @@ class KeyItem : InteractiveObject
         }
         if (used)
         {
-            TargetCharacter.carriedKey = null;
+            TargetCharacter.CarriedKey = null;
             objectList.Remove(this);
         }
     }

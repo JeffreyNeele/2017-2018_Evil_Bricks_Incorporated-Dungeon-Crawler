@@ -261,7 +261,7 @@ abstract partial class Character : AnimatedGameObject
                         {
                             intObj_cast.TargetCharacter = this;
                             intObj_cast.IsInteracting = true;
-                            carriedKey = (KeyItem)intObj;
+                            CarriedKey = (KeyItem)intObj;
                         }
                     }
                     if(intObj is Handle)
@@ -410,7 +410,7 @@ abstract partial class Character : AnimatedGameObject
         set { xboxControlled = value; }
     }
 
-    public KeyItem carriedKey
+    public KeyItem CarriedKey
     {
         get { return characterKey; }
         set { characterKey = value; }
