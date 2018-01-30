@@ -622,9 +622,6 @@
 #begin Assets/Levels/level3.txt
 /copy:Assets/Levels/level3.txt
 
-#begin Assets/Levels/level4.txt
-/copy:Assets/Levels/level4.txt
-
 #begin Assets/Sprites/Paused/Continue.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1314,9 +1311,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Tiles/DoorUpperRight@2.png
-
-#begin Assets/Levels/level5.txt
-/copy:Assets/Levels/level5.txt
 
 #begin Assets/Levels/level6.txt
 /copy:Assets/Levels/level6.txt
@@ -2344,4 +2338,10 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/Shieldmaiden/PaladinOrangeShield.png
+
+#begin Assets/Levels/level5.txt
+/copy:Assets/Levels/level5.txt
+
+#begin Assets/Levels/level4.txt
+/copy:Assets/Levels/level4.txt
 

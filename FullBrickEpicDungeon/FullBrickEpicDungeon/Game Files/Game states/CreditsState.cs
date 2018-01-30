@@ -47,7 +47,7 @@ class CreditsState : MenuState
 
         if (inputHelper.ButtonPressed(controllernumber, Buttons.B))
         {
-            buttonList[2].Pressed = true; //Back to main menu if B is pressed.
+            buttonList[0].Pressed = true; //Back to main menu if B is pressed.
             ButtonPressedHandler();
         }
         base.HandleXboxInput(inputHelper, controllernumber);

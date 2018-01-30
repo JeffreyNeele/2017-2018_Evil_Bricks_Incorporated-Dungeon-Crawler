@@ -31,7 +31,7 @@ class PlayingState : IGameLoopObject
     {
         CurrentLevel.HandleInput(inputHelper);
         
-        if (inputHelper.KeyPressed(Keys.Space) || inputHelper.AnyPlayerPressed(Buttons.Start))
+        if (inputHelper.KeyPressed(Keys.Space) || inputHelper.KeyPressed(Keys.Escape) || inputHelper.AnyPlayerPressed(Buttons.Start))
         {
             if(FullBrickEpicDungeon.DungeonCrawler.SFX)
                 GameEnvironment.AssetManager.PlaySound("Assets/SFX/pause");

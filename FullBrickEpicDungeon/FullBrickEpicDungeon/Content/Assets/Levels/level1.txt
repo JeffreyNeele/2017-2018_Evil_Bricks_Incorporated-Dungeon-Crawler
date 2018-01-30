@@ -33,4 +33,4 @@ TRAPDOOR 300 750 99
 HANDLE 300 900 99
 ENDOFFILE
 
-Hint: just walk, you moron.
+Hint: just walk, press interact to pull the lever.
