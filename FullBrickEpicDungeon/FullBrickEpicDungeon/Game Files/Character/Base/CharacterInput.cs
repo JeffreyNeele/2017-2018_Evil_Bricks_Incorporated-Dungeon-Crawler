@@ -52,7 +52,10 @@ abstract partial class Character : AnimatedGameObject
                     previousWalkingDirection = walkingdirection;
                 // Play Animations
                 PlayAnimationDirection(walkingdirection);
-                weapon.SwordDirectionCheckerManager(previousWalkingDirection);
+                if(weapon.IsBaseAA)
+                    weapon.SwordDirectionCheckerManager(previousWalkingDirection);
+                else if(weapon.IsShieldAA)
+                    weapon.ShieldDirectionCheckerManager(previousWalkingDirection);
                 walkingdirection = Vector2.Zero;
                 base.HandleInput(inputHelper);
             }
@@ -107,6 +110,7 @@ abstract partial class Character : AnimatedGameObject
         if (inputHelper.KeyPressed(keyboardControls[Keys.Q]))
         {
             weapon.IsAttacking = true;
+            weapon.IsBaseAA = true;
             this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
             if (weapon.PreviousAttackHit)
                 PlaySFX("attack_hit");
@@ -119,6 +123,7 @@ abstract partial class Character : AnimatedGameObject
             if (!weapon.AbilityMain.IsOnCooldown)
             {
                 weapon.IsAttacking = true;
+                weapon.IsShieldAA = true;
                 this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
                 PlaySFX("basic_ability");
             }
@@ -240,6 +245,7 @@ abstract partial class Character : AnimatedGameObject
             if (inputHelper.ButtonPressed(controllerNumber, Buttons.A))
             {
                 weapon.IsAttacking = true;
+                weapon.IsBaseAA = true;
                 this.weapon.Attack(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
                 if (weapon.PreviousAttackHit)
                     PlaySFX("attack_hit");
@@ -251,6 +257,7 @@ abstract partial class Character : AnimatedGameObject
                 if (!weapon.AbilityMain.IsOnCooldown)
                 {
                     weapon.IsAttacking = true;
+                    weapon.IsShieldAA = true;
                     this.weapon.UseMainAbility(GameWorld.Find("monsterLIST") as GameObjectList, GameWorld.Find("TileField") as GameObjectGrid);
                     PlaySFX("basic_ability");
                 }

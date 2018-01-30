@@ -14,10 +14,17 @@ class SwordAndShield : Weapon
         AttackDamage = 10;
         GoldWorth = 0;
 
+        //SwordAA animations
         LoadAnimation("Assets/Sprites/Weapons/SwordUp", "attack_up", false, 0.2f);
         LoadAnimation("Assets/Sprites/Weapons/SwordDown", "attack_down", false, 0.2f);
         LoadAnimation("Assets/Sprites/Weapons/SwordLeft", "attack_left", false, 0.2f);
         LoadAnimation("Assets/Sprites/Weapons/SwordRight", "attack_right", false, 0.2f);
+
+        //Shieldbash animations
+        LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_" + owner.PlayerColor + "Shield", "shield_down", false, 0.2f);
+        LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_" + owner.PlayerColor + "ShieldUp", "shield_up", false, 0.2f);
+        LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_" + owner.PlayerColor + "ShieldLeft", "shield_left", false, 0.2f);
+        LoadAnimation("Assets/Sprites/Shieldmaiden/shieldmaiden_" + owner.PlayerColor + "ShieldRight", "shield_right", false, 0.2f);
 
         // IDs for the abilities this weapon has
         idBaseAA = "SwordAndShieldAA";

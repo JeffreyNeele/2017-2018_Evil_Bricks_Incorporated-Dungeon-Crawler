@@ -24,6 +24,7 @@ abstract partial class Character : AnimatedGameObject
     protected BaseAI AI;
     protected Healthbar healthbar;
     protected KeyItem characterKey = null;
+    protected string playerColor;
     //Constructor: sets up the controls given to the constructor for each player (xbox or keyboard)
     protected Character(int playerNumber, int controlsNumber, Level currentLevel, string id = "") : base(0, id)
     {
@@ -139,7 +140,10 @@ abstract partial class Character : AnimatedGameObject
                 }
                 // Play animations for the AI
                 PlayAnimationDirection(position - previousPosition);
-                weapon.SwordDirectionCheckerManager(position - previousPosition);
+                if(weapon.IsBaseAA)
+                    weapon.SwordDirectionCheckerManager(position - previousPosition);
+                else if(weapon.IsShieldAA)
+                    weapon.ShieldDirectionCheckerManager(position - previousPosition);
             }
             
             //When a character takes damage, let the character blink as an indication.
@@ -392,6 +396,11 @@ abstract partial class Character : AnimatedGameObject
     public int PlayerNumber
     {
         get { return playerNumber; }
+    }
+
+    public string PlayerColor
+    {
+        get { return playerColor; }
     }
 
     public bool XBOXcontrolled

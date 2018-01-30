@@ -170,12 +170,14 @@ class BaseAI
         // if our ability is not on cooldown we use it.
         if (!owner_cast.CurrentWeapon.AbilityMain.IsOnCooldown)
         {
+            owner_cast.CurrentWeapon.IsShieldAA = true;
             owner_cast.CurrentWeapon.UseMainAbility(monsterList, currentLevel.TileField);
             owner_cast.PlaySFX("basic_ability");
         }
         // otherwise perform a normal strike
         else
         {
+            owner_cast.CurrentWeapon.IsBaseAA = true;
             owner_cast.CurrentWeapon.Attack(monsterList, currentLevel.TileField);
             owner_cast.PlaySFX("attack_hit");
         }
